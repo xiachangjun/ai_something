@@ -1,0 +1,1538 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>数据处理工具集</title>
+    <style>
+        :root {
+            --neon-blue: #00f3ff;
+            --cyber-purple: #bc13fe;
+            --matrix-green: #0f0;
+            --dark-bg: #0a0a12;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #0d0d1a 100%);
+            color: var(--neon-blue);
+            font-family: 'Consolas', monospace;
+            min-height: 100vh;
+            margin: 0;
+            padding: 2rem;
+            overflow-x: hidden;
+        }
+
+        /* 主容器 */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* 页面标题 */
+        .page-title {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            background: linear-gradient(90deg, var(--neon-blue), var(--cyber-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 30px rgba(188, 19, 254, 0.5);
+        }
+
+        /* 赛博容器 */
+        .cyber-container {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: 0 0 50px rgba(11, 235, 255, 0.2);
+            border: 2px solid var(--neon-blue);
+            position: relative;
+            box-sizing: border-box;
+            margin-bottom: 2rem;
+        }
+
+        .cyber-container::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg,
+                var(--neon-blue) 0%,
+                var(--cyber-purple) 50%,
+                var(--neon-blue) 100%);
+            z-index: -1;
+            border-radius: 15px;
+            animation: borderGlow 3s linear infinite;
+            opacity: 0.5;
+        }
+
+        /* 分区标题 */
+        h2 {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            background: linear-gradient(90deg, var(--neon-blue), var(--cyber-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        h4 {
+            color: var(--neon-blue);
+            margin: 20px 0 10px 0;
+            font-size: 16px;
+        }
+
+        /* 输入输出区域 */
+        textarea {
+            width: 100%;
+            padding: 15px;
+            background: rgba(10, 10, 18, 0.95);
+            border: 1px solid var(--neon-blue);
+            color: var(--matrix-green);
+            font-family: 'Consolas', monospace;
+            border-radius: 6px;
+            resize: vertical;
+            transition: all 0.3s ease;
+            margin-bottom: 12px;
+            box-sizing: border-box;
+            font-size: 14px;
+            line-height: 1.5;
+            box-shadow: 0 0 10px rgba(0, 243, 255, 0.1) inset;
+        }
+
+        textarea:focus {
+            outline: none;
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.3);
+            border-color: var(--cyber-purple);
+        }
+
+        #sqlInput {
+            height: 250px;
+        }
+
+        #resultArea,
+        #stringInput,
+        #stringOutput,
+        #jsonInput,
+        #jsonResultArea {
+            height: 300px;
+        }
+
+        /* 赛博按钮 */
+        .cyber-button {
+            background: linear-gradient(45deg, var(--neon-blue) 0%, var(--cyber-purple) 100%);
+            border: none;
+            padding: 10px 24px;
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            margin: 0 12px 12px 0;
+            min-width: 100px;
+            font-size: 14px;
+            box-shadow: 0 4px 12px rgba(0, 243, 255, 0.2);
+        }
+
+        .cyber-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: 0.5s;
+        }
+
+        .cyber-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 243, 255, 0.3);
+            filter: brightness(1.05);
+        }
+
+        .cyber-button:hover::before {
+            left: 100%;
+        }
+
+        /* 字段按钮组 */
+        .columns {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .columns button {
+            padding: 8px 16px;
+            background: rgba(0, 243, 255, 0.1);
+            border: 1px solid var(--neon-blue);
+            color: var(--neon-blue);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .columns button:hover {
+            background: var(--neon-blue);
+            color: #000;
+            box-shadow: 0 0 15px var(--neon-blue);
+        }
+
+        /* 开关样式 */
+        .cyber-switch {
+            position: relative;
+            display: inline-block;
+            width: 72px;
+            height: 36px;
+            filter: drop-shadow(0 0 2px var(--neon-blue));
+            margin: 10px;
+        }
+
+        .cyber-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .cyber-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(145deg, #1a1a1a 0%, #0a0a0a 100%);
+            border: 2px solid var(--neon-blue);
+            transition: .4s;
+            border-radius: 6px;
+        }
+
+        .cyber-slider:before {
+            content: "OFF";
+            position: absolute;
+            height: 28px;
+            width: 28px;
+            left: 4px;
+            bottom: 4px;
+            background: linear-gradient(145deg, var(--neon-blue) 0%, rgba(188,19,254,0.8) 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: bold;
+            transition: .4s;
+            border-radius: 4px;
+            text-shadow: 0 0 5px var(--neon-blue);
+        }
+
+        input:checked + .cyber-slider:before {
+            content: "ON";
+            transform: translateX(32px);
+            background: linear-gradient(145deg, rgba(188,19,254,0.8) 0%, var(--neon-blue) 100%);
+        }
+
+        /* 动画效果 */
+        @keyframes borderGlow {
+            0% { opacity: 0.8; }
+            50% { opacity: 1; }
+            100% { opacity: 0.8; }
+        }
+
+        .processing::after {
+            content: '∙∙∙';
+            animation: processing 1.5s infinite;
+        }
+
+        @keyframes processing {
+            33% { content: '●∙∙'; }
+            66% { content: '∙∙●'; }
+            100% { content: '∙∙∙'; }
+        }
+
+        /* 淡入动画 */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cyber-container {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        /* 按钮点击反馈 */
+        .cyber-button:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        /* 统计信息动画 */
+        .stats-info {
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        /* 通知效果 */
+        .cyber-notification {
+            position: fixed;
+            top: 20px;
+            right: -300px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid var(--neon-blue);
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            color: var(--matrix-green);
+            transition: right 0.5s ease;
+            box-shadow: 0 0 20px rgba(0,243,255,0.3);
+            z-index: 1000;
+            font-family: 'Consolas', monospace;
+        }
+
+        .cyber-notification.show {
+            right: 20px;
+        }
+
+        /* 按钮容器 */
+        .button-container {
+            display: flex;
+            gap: 12px;
+            margin: 0 0 20px 0;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        /* 特殊按钮样式 */
+        .parse-button {
+            background: linear-gradient(45deg, #2196F3 0%, var(--cyber-purple) 100%);
+            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+        }
+
+        .dedup-button {
+            background: linear-gradient(45deg, #4CAF50 0%, #7b1fa2 100%);
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .process-button {
+            background: linear-gradient(45deg, #FF6B6B 0%, var(--cyber-purple) 100%);
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        /* 网格布局 - 字符串处理工具 */
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        /* 面包屑导航样式 */
+        #jsonBreadcrumb {
+            background: rgba(0, 243, 255, 0.05);
+            padding: 10px 15px;
+            border-radius: 6px;
+            border: 1px solid rgba(0, 243, 255, 0.2);
+        }
+
+        #jsonBreadcrumb span {
+            transition: all 0.3s ease;
+        }
+
+        #jsonBreadcrumb span:hover {
+            color: var(--cyber-purple) !important;
+            text-shadow: 0 0 10px var(--cyber-purple);
+            text-decoration: underline;
+        }
+
+        /* 统计信息样式 */
+        .stats-info {
+            background: rgba(0, 243, 255, 0.05);
+            border: 1px solid rgba(0, 243, 255, 0.2);
+            border-radius: 6px;
+            padding: 10px 15px;
+            margin: 10px 0;
+            color: var(--neon-blue);
+            font-size: 13px;
+            display: inline-block;
+        }
+
+        .stats-info strong {
+            color: var(--matrix-green);
+        }
+
+        /* 工具提示 */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: rgba(0, 0, 0, 0.95);
+            color: var(--matrix-green);
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px;
+            position: absolute;
+            z-index: 1001;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            border: 1px solid var(--neon-blue);
+            font-size: 12px;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* 清空按钮样式 */
+        .clear-button {
+            background: linear-gradient(45deg, #ff4444 0%, #cc0000 100%);
+            box-shadow: 0 4px 15px rgba(255, 68, 68, 0.3);
+        }
+
+        /* 导出按钮样式 */
+        .export-button {
+            background: linear-gradient(45deg, #FFA500 0%, #FF8C00 100%);
+            box-shadow: 0 4px 15px rgba(255, 165, 0, 0.3);
+        }
+
+        /* 快捷键帮助按钮 */
+        .help-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--neon-blue) 0%, var(--cyber-purple) 100%);
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0, 243, 255, 0.4);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .help-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(0, 243, 255, 0.6);
+        }
+
+        /* 帮助对话框 */
+        .help-dialog {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.95);
+            border: 2px solid var(--neon-blue);
+            border-radius: 15px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 90%;
+            z-index: 1001;
+            box-shadow: 0 0 50px rgba(0, 243, 255, 0.5);
+        }
+
+        .help-dialog.show {
+            display: block;
+        }
+
+        .help-dialog h3 {
+            color: var(--neon-blue);
+            margin-top: 0;
+            text-align: center;
+            font-size: 1.5rem;
+        }
+
+        .help-dialog ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .help-dialog li {
+            padding: 8px 0;
+            color: var(--matrix-green);
+            border-bottom: 1px solid rgba(0, 243, 255, 0.2);
+        }
+
+        .help-dialog kbd {
+            background: rgba(0, 243, 255, 0.1);
+            border: 1px solid var(--neon-blue);
+            border-radius: 4px;
+            padding: 3px 8px;
+            font-family: 'Consolas', monospace;
+            color: var(--cyber-purple);
+            margin: 0 5px;
+        }
+
+        .help-dialog .close-button {
+            display: block;
+            margin: 20px auto 0;
+            padding: 10px 30px;
+        }
+
+        .help-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+        }
+
+        .help-overlay.show {
+            display: block;
+        }
+
+        /* 页脚样式 */
+        .page-footer {
+            text-align: center;
+            padding: 2rem 0 1rem;
+            color: rgba(0, 243, 255, 0.5);
+            font-size: 0.9rem;
+            margin-top: 2rem;
+        }
+
+        .page-footer a {
+            color: var(--cyber-purple);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .page-footer a:hover {
+            color: var(--neon-blue);
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 1024px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .cyber-container {
+                padding: 1rem;
+            }
+            .page-title {
+                font-size: 2rem;
+            }
+            h2 {
+                font-size: 1.5rem;
+            }
+            .button-container {
+                justify-content: center;
+            }
+            .cyber-button {
+                min-width: 80px;
+                font-size: 12px;
+                padding: 8px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <h1 class="page-title">⚡ 数据处理工具集 ⚡</h1>
+
+        <!-- SQL数据处理器 -->
+        <div class="cyber-container">
+            <h2>🔧 SQL 数据处理器</h2>
+
+            <div class="options">
+                <label class="cyber-switch">
+                    <input type="checkbox" id="autoFormat" checked>
+                    <span class="cyber-slider"></span>
+                </label>
+                <span style="color: var(--neon-blue);">JSON格式化</span>
+            </div>
+
+            <h4>SQL 输入区域 <span style="font-size: 12px; color: var(--cyber-purple);">(快捷键: Ctrl+Enter 解析)</span></h4>
+            <textarea id="sqlInput" placeholder="粘贴SQL插入语句...例如：INSERT INTO itemcenter.category (id, gmt_create, gmt_modified, is_deleted, shop_id, title, type, sub_type, pcat, description, status, parent_id) VALUES (938342167588672, '2024-07-18 16:39:03', '2024-07-18 16:39:03', 0, 10001, 'Women', 'category', null, 'Women', 'Discover our collection...', 'enabled', 0);"></textarea>
+            
+            <div class="button-container">
+                <button class="cyber-button parse-button" onclick="parseSQL()">解析 SQL</button>
+                <button class="cyber-button clear-button" onclick="clearSQLInput()">清空输入</button>
+            </div>
+            
+            <div id="sqlStats" class="stats-info" style="display: none;"></div>
+
+            <div class="columns" id="columnList"></div>
+
+            <div class="result">
+                <h4>结果区域 <span style="font-size: 12px; color: var(--cyber-purple);">(快捷键: Ctrl+C 复制)</span></h4>
+                <textarea id="resultArea" readonly placeholder="选择字段后的结果将显示在这里..."></textarea>
+                <div class="button-container">
+                    <button class="cyber-button" onclick="copyResult()">复制</button>
+                    <button class="cyber-button dedup-button" onclick="removeDuplicatesSQL()">去重</button>
+                    <button class="cyber-button export-button" onclick="exportSQLResult()">导出文件</button>
+                    <button class="cyber-button clear-button" onclick="clearSQLResult()">清空结果</button>
+                </div>
+                <div id="resultStats" class="stats-info" style="display: none;"></div>
+            </div>
+        </div>
+
+        <!-- 字符串处理器 -->
+        <div class="cyber-container">
+            <h2>⚡ 字符串处理器</h2>
+
+            <div class="options">
+                <label class="cyber-switch">
+                    <input type="checkbox" id="addQuotes">
+                    <span class="cyber-slider"></span>
+                </label>
+                <span style="color: var(--neon-blue);">引号模式</span>
+            </div>
+
+            <div class="grid-container">
+                <div>
+                    <h4>输入区域 <span style="font-size: 12px; color: var(--cyber-purple);">(快捷键: Ctrl+Enter 处理)</span></h4>
+                    <textarea id="stringInput" placeholder="输入文本...&#10;每行一个项目&#10;"></textarea>
+                    <div class="button-container">
+                        <button class="cyber-button process-button" onclick="processText()">处理</button>
+                        <button class="cyber-button clear-button" onclick="clearStringInput()">清空输入</button>
+                    </div>
+                    <div id="stringInputStats" class="stats-info" style="display: none;"></div>
+                </div>
+                <div>
+                    <h4>输出区域</h4>
+                    <textarea id="stringOutput" readonly placeholder="处理后的结果将显示在这里..."></textarea>
+                    <div class="button-container">
+                        <button class="cyber-button" onclick="copyStringOutput()">复制</button>
+                        <button class="cyber-button dedup-button" onclick="removeDuplicatesString()">去重</button>
+                        <button class="cyber-button export-button" onclick="exportStringResult()">导出文件</button>
+                        <button class="cyber-button clear-button" onclick="clearStringOutput()">清空输出</button>
+                    </div>
+                    <div id="stringOutputStats" class="stats-info" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- JSON字段提取器 -->
+        <div class="cyber-container">
+            <h2>📋 JSON 字段提取器</h2>
+
+            <div class="options">
+                <label class="cyber-switch">
+                    <input type="checkbox" id="jsonAutoFormat" checked>
+                    <span class="cyber-slider"></span>
+                </label>
+                <span style="color: var(--neon-blue);">JSON格式化</span>
+            </div>
+
+            <h4>JSON 输入区域 <span style="font-size: 12px; color: var(--cyber-purple);">(快捷键: Ctrl+Enter 解析)</span></h4>
+            <textarea id="jsonInput" placeholder='粘贴JSON数据...支持对象或数组格式，支持多层嵌套解析&#10;&#10;对象示例：{"name":"张三","age":25,"city":"北京"}&#10;&#10;嵌套示例：[{"name":"张三","address":{"city":"北京","street":"长安街"}}]'></textarea>
+            <div class="button-container" style="justify-content: flex-start; margin-top: 10px;">
+                <button class="cyber-button parse-button" onclick="parseJSON()">解析 JSON</button>
+                <button class="cyber-button" onclick="resetJSON()" style="display:none;" id="resetButton">重置</button>
+                <button class="cyber-button clear-button" onclick="clearJSONInput()">清空输入</button>
+            </div>
+            
+            <div id="jsonStats" class="stats-info" style="display: none;"></div>
+
+            <!-- 面包屑导航 -->
+            <div id="jsonBreadcrumb" style="margin: 15px 0; color: var(--neon-blue); font-size: 14px; min-height: 20px;"></div>
+
+            <div class="columns" id="jsonColumnList"></div>
+
+            <div class="result">
+                <h4>结果区域</h4>
+                <textarea id="jsonResultArea" readonly placeholder="选择字段后的结果将显示在这里..."></textarea>
+                <div class="button-container" style="justify-content: flex-start; margin-top: 10px;">
+                    <button class="cyber-button" onclick="copyJSONResult()">复制</button>
+                    <button class="cyber-button dedup-button" onclick="removeDuplicatesJSON()">去重</button>
+                    <button class="cyber-button process-button" onclick="continueParseJSON()" style="display:none;" id="continueButton">继续解析此结果</button>
+                    <button class="cyber-button export-button" onclick="exportJSONResult()">导出文件</button>
+                    <button class="cyber-button clear-button" onclick="clearJSONResult()">清空结果</button>
+                </div>
+                <div id="jsonResultStats" class="stats-info" style="display: none;"></div>
+            </div>
+        </div>
+
+        <!-- 页脚 -->
+        <div class="page-footer">
+            <p>⚡ 数据处理工具集 v2.0 | 优化版</p>
+            <p>按 <kbd style="background: rgba(0,243,255,0.1); padding: 2px 6px; border-radius: 3px;">?</kbd> 查看快捷键帮助</p>
+        </div>
+    </div>
+
+    <!-- 快捷键帮助按钮 -->
+    <button class="help-button" onclick="toggleHelp()" title="快捷键帮助 (?)">?</button>
+
+    <!-- 帮助对话框 -->
+    <div class="help-overlay" id="helpOverlay" onclick="toggleHelp()"></div>
+    <div class="help-dialog" id="helpDialog">
+        <h3>⌨️ 快捷键指南</h3>
+        <ul>
+            <li><kbd>Ctrl</kbd> + <kbd>Enter</kbd> - 在输入区域执行解析/处理操作</li>
+            <li><kbd>Ctrl</kbd> + <kbd>C</kbd> - 在结果区域快速复制内容</li>
+            <li><kbd>Ctrl</kbd> + <kbd>K</kbd> - 清空所有输入和结果</li>
+            <li><kbd>?</kbd> - 显示/隐藏此帮助对话框</li>
+            <li><kbd>ESC</kbd> - 关闭帮助对话框</li>
+        </ul>
+        <h3>💡 使用技巧</h3>
+        <ul>
+            <li>📊 实时查看数据统计信息（行数和字符数）</li>
+            <li>📥 使用导出功能将结果保存为文件</li>
+            <li>🔄 使用去重功能快速移除重复项</li>
+            <li>🧹 使用清空按钮快速清理输入和结果</li>
+            <li>🔗 JSON支持多层嵌套解析，使用"继续解析"按钮深入</li>
+        </ul>
+        <button class="cyber-button close-button" onclick="toggleHelp()">关闭</button>
+    </div>
+
+    <script>
+        // ========== 工具函数 ==========
+        // 防抖函数
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // 导出文本到文件
+        function exportToFile(content, filename) {
+            const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(link.href);
+        }
+
+        // 更新统计信息
+        function updateStats(elementId, lines, chars) {
+            const statsEl = document.getElementById(elementId);
+            if (statsEl) {
+                statsEl.innerHTML = `<strong>统计:</strong> ${lines} 行 | ${chars} 字符`;
+                statsEl.style.display = 'inline-block';
+            }
+        }
+
+        // ========== SQL数据处理器相关函数 ==========
+        let allData = [];
+
+        function getAutoFormat() {
+            const el = document.getElementById('autoFormat');
+            return el ? el.checked : true;
+        }
+
+        function parseSQL() {
+            const sql = document.getElementById('sqlInput').value;
+            allData = [];
+
+            const insertPattern = /INSERT\s+INTO\s+(?:`?([\w.]+)`?\.)?`?([\w.]+)`?\s*\(([^)]+)\)\s*VALUES\s*\(([^)]+)\)/gi;
+            const columnPattern = /INSERT\s+INTO\s+(?:`?([\w.]+)`?\.)?`?([\w.]+)`?\s*\(([^)]+)\)/i;
+
+            const firstSQL = sql.split(';')[0];
+            const columnMatch = firstSQL.match(columnPattern);
+            
+            if (!columnMatch) {
+                showNotification('无法解析SQL语句，请检查格式', true);
+                return;
+            }
+
+            const columns = columnMatch[3].split(',').map(c => c.trim().replace(/^`|`$/g, ''));
+
+            let values;
+            while ((values = insertPattern.exec(sql)) !== null) {
+                const rowValues = parseValues(values[4]);
+                const row = {};
+                columns.forEach((col, i) => {
+                    row[col] = rowValues[i] ?? null;
+                });
+                allData.push(row);
+            }
+
+            if (allData.length === 0) {
+                showNotification('未找到有效的数据行', true);
+                return;
+            }
+
+            showColumnButtons(columns);
+            showNotification(`成功解析 ${allData.length} 行数据`);
+        }
+
+        function parseValues(valueStr) {
+            const values = [];
+            let current = '';
+            let inString = false;
+            let quoteChar = null;
+            let bracketDepth = 0;
+            let escape = false;
+
+            for (let i = 0; i < valueStr.length; i++) {
+                const char = valueStr[i];
+
+                if (escape) {
+                    current += char;
+                    escape = false;
+                    continue;
+                }
+
+                if (char === '\\') {
+                    escape = true;
+                    current += char;
+                    continue;
+                }
+
+                if (!inString) {
+                    if (char === '{' || char === '[') bracketDepth++;
+                    if (char === '}' || char === ']') bracketDepth--;
+                }
+
+                if ((char === "'" || char === '"') && !inString) {
+                    inString = true;
+                    quoteChar = char;
+                } else if (char === quoteChar && inString) {
+                    inString = false;
+                }
+
+                if (char === ',' && !inString && bracketDepth === 0) {
+                    values.push(processValue(current.trim()));
+                    current = '';
+                    continue;
+                }
+
+                current += char;
+            }
+            values.push(processValue(current.trim()));
+
+            return values;
+        }
+
+        function processValue(value) {
+            const isQuoted = (value.startsWith("'") && value.endsWith("'")) ||
+                            (value.startsWith('"') && value.endsWith('"'));
+
+            if (isQuoted) {
+                const quote = value[0];
+                value = value.slice(1, -1)
+                          .replace(new RegExp(quote+quote, 'g'), quote)
+                          .replace(/\\'/g, "'")
+                          .replace(/\\"/g, '"')
+                          .replace(/\\\\/g, '\\');
+            }
+
+            if (getAutoFormat()) {
+                try {
+                    return JSON.stringify(JSON.parse(value), null, 2);
+                } catch {
+                    return value;
+                }
+            }
+            return value;
+        }
+
+        function showColumnButtons(columns) {
+            const container = document.getElementById('columnList');
+            container.innerHTML = '<h4>选择要提取的字段：</h4>';
+
+            columns.forEach(col => {
+                const btn = document.createElement('button');
+                btn.textContent = col;
+                btn.onclick = () => showValues(col);
+                container.appendChild(btn);
+            });
+        }
+
+        function showValues(column) {
+            const values = allData.map(row => row[column]);
+            const result = values.join('\n');
+            document.getElementById('resultArea').value = result;
+            
+            // 更新统计信息
+            const lines = values.length;
+            const chars = result.length;
+            updateStats('resultStats', lines, chars);
+        }
+
+        function copyResult() {
+            const result = document.getElementById('resultArea');
+            if (!result.value.trim()) {
+                showNotification('没有内容可复制', true);
+                return;
+            }
+
+            result.select();
+            try {
+                navigator.clipboard.writeText(result.value);
+                showNotification('已复制到剪贴板！');
+            } catch (err) {
+                document.execCommand('copy');
+                showNotification('已复制到剪贴板！');
+            }
+        }
+
+        function removeDuplicatesSQL() {
+            const resultArea = document.getElementById('resultArea');
+            const currentText = resultArea.value;
+
+            if (!currentText.trim()) {
+                showNotification('没有内容可去重', true);
+                return;
+            }
+
+            const lines = currentText.split('\n');
+            const uniqueLines = [...new Set(lines)];
+            const newText = uniqueLines.join('\n');
+
+            if (lines.length === uniqueLines.length) {
+                showNotification('没有发现重复行');
+                return;
+            }
+
+            resultArea.value = newText;
+            updateStats('resultStats', uniqueLines.length, newText.length);
+            showNotification(`去重完成！已移除 ${lines.length - uniqueLines.length} 行重复内容`);
+        }
+
+        function clearSQLInput() {
+            document.getElementById('sqlInput').value = '';
+            document.getElementById('columnList').innerHTML = '';
+            document.getElementById('resultArea').value = '';
+            document.getElementById('sqlStats').style.display = 'none';
+            document.getElementById('resultStats').style.display = 'none';
+            allData = [];
+            showNotification('已清空SQL输入');
+        }
+
+        function clearSQLResult() {
+            document.getElementById('resultArea').value = '';
+            document.getElementById('resultStats').style.display = 'none';
+            showNotification('已清空结果');
+        }
+
+        function exportSQLResult() {
+            const result = document.getElementById('resultArea').value;
+            if (!result.trim()) {
+                showNotification('没有内容可导出', true);
+                return;
+            }
+            const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, -5);
+            exportToFile(result, `sql_result_${timestamp}.txt`);
+            showNotification('导出成功！');
+        }
+
+        // ========== 字符串处理器相关函数 ==========
+        function processText() {
+            const btn = document.querySelector('.process-button');
+            btn.classList.add('processing');
+
+            setTimeout(() => {
+                const inputText = document.getElementById('stringInput').value;
+                const addQuotes = document.getElementById('addQuotes').checked;
+
+                if (!inputText.trim()) {
+                    showNotification('请输入要处理的文本', true);
+                    btn.classList.remove('processing');
+                    return;
+                }
+
+                const lines = inputText.split(/\r?\n/).map(line => line.trim()).filter(line => line);
+                const result = lines
+                    .map(line => addQuotes ? `"${line}",` : `${line},`)
+                    .join('')
+                    .replace(/,$/, '');
+
+                document.getElementById('stringOutput').value = result;
+                
+                // 更新输入统计
+                updateStats('stringInputStats', lines.length, inputText.length);
+                
+                // 更新输出统计
+                updateStats('stringOutputStats', lines.length, result.length);
+                
+                btn.classList.remove('processing');
+                showNotification('处理完成！');
+            }, 300);
+        }
+
+        function copyStringOutput() {
+            const output = document.getElementById('stringOutput');
+            if (!output.value.trim()) {
+                showNotification('没有内容可复制', true);
+                return;
+            }
+
+            navigator.clipboard.writeText(output.value);
+            showNotification('已复制到剪贴板！');
+        }
+
+        function removeDuplicatesString() {
+            const output = document.getElementById('stringOutput');
+            const text = output.value;
+
+            if (!text.trim()) {
+                showNotification('没有内容可去重', true);
+                return;
+            }
+
+            let items = text.split(',');
+            const originalCount = items.length;
+
+            if (items[items.length - 1] === '') {
+                items.pop();
+            }
+
+            const hasQuotes = items.some(item => item.trim().startsWith('"') && item.trim().endsWith('"'));
+
+            if (hasQuotes) {
+                const cleanItems = items.map(item => item.trim().replace(/^"|"$/g, ''));
+                const uniqueCleanItems = [...new Set(cleanItems)];
+                items = uniqueCleanItems.map(item => `"${item}"`);
+            } else {
+                items = [...new Set(items.map(item => item.trim()))];
+            }
+
+            const result = items.join(',');
+            output.value = result;
+            updateStats('stringOutputStats', items.length, result.length);
+            showNotification(`去重完成！已移除 ${originalCount - items.length} 个重复项`);
+        }
+
+        function clearStringInput() {
+            document.getElementById('stringInput').value = '';
+            document.getElementById('stringInputStats').style.display = 'none';
+            showNotification('已清空输入');
+        }
+
+        function clearStringOutput() {
+            document.getElementById('stringOutput').value = '';
+            document.getElementById('stringOutputStats').style.display = 'none';
+            showNotification('已清空输出');
+        }
+
+        function exportStringResult() {
+            const result = document.getElementById('stringOutput').value;
+            if (!result.trim()) {
+                showNotification('没有内容可导出', true);
+                return;
+            }
+            const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, -5);
+            exportToFile(result, `string_result_${timestamp}.txt`);
+            showNotification('导出成功！');
+        }
+
+        // ========== JSON字段提取器相关函数 ==========
+        let jsonData = [];
+        let jsonOriginalData = null;
+        let jsonParsePath = [];
+        let lastSelectedField = '';
+        let lastExtractedValues = [];
+
+        function getJSONAutoFormat() {
+            const el = document.getElementById('jsonAutoFormat');
+            return el ? el.checked : true;
+        }
+
+        function parseJSON() {
+            const input = document.getElementById('jsonInput').value;
+            jsonData = [];
+            jsonOriginalData = null;
+            jsonParsePath = [];
+            lastSelectedField = '';
+            lastExtractedValues = [];
+
+            if (!input.trim()) {
+                showNotification('请输入JSON数据', true);
+                return;
+            }
+
+            try {
+                const parsed = JSON.parse(input);
+                jsonOriginalData = parsed;
+                
+                // 如果是数组，直接使用
+                if (Array.isArray(parsed)) {
+                    jsonData = parsed;
+                } 
+                // 如果是单个对象，包装成数组
+                else if (typeof parsed === 'object' && parsed !== null) {
+                    jsonData = [parsed];
+                } 
+                else {
+                    showNotification('JSON必须是对象或数组格式', true);
+                    return;
+                }
+
+                if (jsonData.length === 0) {
+                    showNotification('JSON数据为空', true);
+                    return;
+                }
+
+                // 收集所有字段
+                const fieldsSet = new Set();
+                jsonData.forEach(item => {
+                    if (typeof item === 'object' && item !== null) {
+                        Object.keys(item).forEach(key => fieldsSet.add(key));
+                    }
+                });
+
+                const fields = Array.from(fieldsSet);
+                
+                if (fields.length === 0) {
+                    showNotification('未找到任何字段', true);
+                    return;
+                }
+
+                showJSONColumnButtons(fields);
+                updateBreadcrumb();
+                document.getElementById('resetButton').style.display = 'inline-block';
+                document.getElementById('continueButton').style.display = 'none';
+                
+                // 更新统计信息
+                updateStats('jsonStats', jsonData.length, input.length);
+                
+                showNotification(`成功解析 ${jsonData.length} 条数据，发现 ${fields.length} 个字段`);
+            } catch (error) {
+                showNotification(`JSON解析错误：${error.message}`, true);
+            }
+        }
+
+        function showJSONColumnButtons(fields) {
+            const container = document.getElementById('jsonColumnList');
+            container.innerHTML = '<h4>选择要提取的字段：</h4>';
+
+            fields.forEach(field => {
+                const btn = document.createElement('button');
+                btn.textContent = field;
+                btn.onclick = () => showJSONValues(field);
+                container.appendChild(btn);
+            });
+        }
+
+        function showJSONValues(field) {
+            lastSelectedField = field;
+            lastExtractedValues = [];
+            let hasNestedObjects = false;
+
+            const values = jsonData.map(item => {
+                const value = item[field];
+                lastExtractedValues.push(value);
+                
+                // 检查是否有嵌套对象或数组
+                if (typeof value === 'object' && value !== null) {
+                    hasNestedObjects = true;
+                }
+                
+                // 如果开启了格式化且值是对象或数组
+                if (getJSONAutoFormat() && (typeof value === 'object' && value !== null)) {
+                    try {
+                        return JSON.stringify(value, null, 2);
+                    } catch {
+                        return String(value);
+                    }
+                }
+                
+                // 处理null和undefined
+                if (value === null) return 'null';
+                if (value === undefined) return 'undefined';
+                
+                return String(value);
+            });
+
+            const result = values.join('\n');
+            document.getElementById('jsonResultArea').value = result;
+            
+            // 更新统计信息
+            updateStats('jsonResultStats', values.length, result.length);
+            
+            // 如果有嵌套对象，显示"继续解析"按钮
+            if (hasNestedObjects) {
+                document.getElementById('continueButton').style.display = 'inline-block';
+            } else {
+                document.getElementById('continueButton').style.display = 'none';
+            }
+        }
+
+        function continueParseJSON() {
+            if (lastExtractedValues.length === 0) {
+                showNotification('没有可继续解析的数据', true);
+                return;
+            }
+
+            // 过滤掉非对象/数组的值
+            const validValues = lastExtractedValues.filter(v => 
+                typeof v === 'object' && v !== null
+            );
+
+            if (validValues.length === 0) {
+                showNotification('所选字段不包含可解析的对象或数组', true);
+                return;
+            }
+
+            // 展开所有值
+            let newData = [];
+            validValues.forEach(value => {
+                if (Array.isArray(value)) {
+                    // 如果是数组，展开数组元素
+                    newData = newData.concat(value);
+                } else {
+                    // 如果是对象，添加到新数据
+                    newData.push(value);
+                }
+            });
+
+            jsonData = newData;
+            jsonParsePath.push(lastSelectedField);
+
+            // 收集新的字段
+            const fieldsSet = new Set();
+            jsonData.forEach(item => {
+                if (typeof item === 'object' && item !== null) {
+                    Object.keys(item).forEach(key => fieldsSet.add(key));
+                }
+            });
+
+            const fields = Array.from(fieldsSet);
+
+            if (fields.length === 0) {
+                showNotification('未找到可解析的字段', true);
+                return;
+            }
+
+            showJSONColumnButtons(fields);
+            updateBreadcrumb();
+            document.getElementById('jsonResultArea').value = '';
+            document.getElementById('continueButton').style.display = 'none';
+            showNotification(`继续解析成功！发现 ${jsonData.length} 条数据，${fields.length} 个字段`);
+        }
+
+        function updateBreadcrumb() {
+            const breadcrumb = document.getElementById('jsonBreadcrumb');
+            if (jsonParsePath.length === 0) {
+                breadcrumb.innerHTML = '📍 解析路径: <span style="color: var(--matrix-green);">根节点</span>';
+            } else {
+                const path = jsonParsePath.map((p, index) => {
+                    return `<span style="color: var(--matrix-green); cursor: pointer;" onclick="backToLevel(${index})">${p}</span>`;
+                }).join(' → ');
+                breadcrumb.innerHTML = `📍 解析路径: 根节点 → ${path}`;
+            }
+        }
+
+        function backToLevel(level) {
+            // 重新解析到指定层级
+            if (level < 0) {
+                resetJSON();
+                return;
+            }
+
+            // 从原始数据开始，按路径重新解析
+            jsonParsePath = jsonParsePath.slice(0, level + 1);
+            
+            let currentData = jsonOriginalData;
+            if (Array.isArray(currentData)) {
+                jsonData = currentData;
+            } else {
+                jsonData = [currentData];
+            }
+
+            // 按路径深入
+            for (let i = 0; i <= level; i++) {
+                const field = jsonParsePath[i];
+                const values = [];
+                jsonData.forEach(item => {
+                    const value = item[field];
+                    if (Array.isArray(value)) {
+                        values.push(...value);
+                    } else if (typeof value === 'object' && value !== null) {
+                        values.push(value);
+                    }
+                });
+                jsonData = values;
+            }
+
+            // 收集字段
+            const fieldsSet = new Set();
+            jsonData.forEach(item => {
+                if (typeof item === 'object' && item !== null) {
+                    Object.keys(item).forEach(key => fieldsSet.add(key));
+                }
+            });
+
+            const fields = Array.from(fieldsSet);
+            showJSONColumnButtons(fields);
+            updateBreadcrumb();
+            document.getElementById('jsonResultArea').value = '';
+            document.getElementById('continueButton').style.display = 'none';
+            showNotification(`返回到层级 ${level + 1}`);
+        }
+
+        function resetJSON() {
+            if (jsonOriginalData) {
+                jsonParsePath = [];
+                lastSelectedField = '';
+                lastExtractedValues = [];
+                
+                if (Array.isArray(jsonOriginalData)) {
+                    jsonData = jsonOriginalData;
+                } else {
+                    jsonData = [jsonOriginalData];
+                }
+
+                const fieldsSet = new Set();
+                jsonData.forEach(item => {
+                    if (typeof item === 'object' && item !== null) {
+                        Object.keys(item).forEach(key => fieldsSet.add(key));
+                    }
+                });
+
+                const fields = Array.from(fieldsSet);
+                showJSONColumnButtons(fields);
+                updateBreadcrumb();
+                document.getElementById('jsonResultArea').value = '';
+                document.getElementById('continueButton').style.display = 'none';
+                showNotification('已重置到初始状态');
+            }
+        }
+
+        function copyJSONResult() {
+            const result = document.getElementById('jsonResultArea');
+            if (!result.value.trim()) {
+                showNotification('没有内容可复制', true);
+                return;
+            }
+
+            result.select();
+            try {
+                navigator.clipboard.writeText(result.value);
+                showNotification('已复制到剪贴板！');
+            } catch (err) {
+                document.execCommand('copy');
+                showNotification('已复制到剪贴板！');
+            }
+        }
+
+        function removeDuplicatesJSON() {
+            const resultArea = document.getElementById('jsonResultArea');
+            const currentText = resultArea.value;
+
+            if (!currentText.trim()) {
+                showNotification('没有内容可去重', true);
+                return;
+            }
+
+            const lines = currentText.split('\n');
+            const uniqueLines = [...new Set(lines)];
+            const newText = uniqueLines.join('\n');
+
+            if (lines.length === uniqueLines.length) {
+                showNotification('没有发现重复行');
+                return;
+            }
+
+            resultArea.value = newText;
+            updateStats('jsonResultStats', uniqueLines.length, newText.length);
+            showNotification(`去重完成！已移除 ${lines.length - uniqueLines.length} 行重复内容`);
+        }
+
+        function clearJSONInput() {
+            document.getElementById('jsonInput').value = '';
+            document.getElementById('jsonColumnList').innerHTML = '';
+            document.getElementById('jsonResultArea').value = '';
+            document.getElementById('jsonBreadcrumb').innerHTML = '';
+            document.getElementById('resetButton').style.display = 'none';
+            document.getElementById('continueButton').style.display = 'none';
+            document.getElementById('jsonStats').style.display = 'none';
+            document.getElementById('jsonResultStats').style.display = 'none';
+            jsonData = [];
+            jsonOriginalData = null;
+            jsonParsePath = [];
+            lastSelectedField = '';
+            lastExtractedValues = [];
+            showNotification('已清空JSON输入');
+        }
+
+        function clearJSONResult() {
+            document.getElementById('jsonResultArea').value = '';
+            document.getElementById('jsonResultStats').style.display = 'none';
+            document.getElementById('continueButton').style.display = 'none';
+            showNotification('已清空结果');
+        }
+
+        function exportJSONResult() {
+            const result = document.getElementById('jsonResultArea').value;
+            if (!result.trim()) {
+                showNotification('没有内容可导出', true);
+                return;
+            }
+            const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, -5);
+            exportToFile(result, `json_result_${timestamp}.txt`);
+            showNotification('导出成功！');
+        }
+
+        // ========== 通用函数 ==========
+        function showNotification(message, isError = false) {
+            const notification = document.createElement('div');
+            notification.className = 'cyber-notification';
+            notification.textContent = message;
+            notification.style.color = isError ? '#ff4444' : 'var(--matrix-green)';
+
+            document.body.appendChild(notification);
+
+            setTimeout(() => notification.classList.add('show'), 10);
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 500);
+            }, 2000);
+        }
+
+        // ========== 帮助对话框 ==========
+        function toggleHelp() {
+            const dialog = document.getElementById('helpDialog');
+            const overlay = document.getElementById('helpOverlay');
+            dialog.classList.toggle('show');
+            overlay.classList.toggle('show');
+        }
+
+        // ========== 快捷键支持 ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            // SQL输入区域快捷键
+            document.getElementById('sqlInput').addEventListener('keydown', function(e) {
+                if (e.ctrlKey && e.key === 'Enter') {
+                    e.preventDefault();
+                    parseSQL();
+                }
+            });
+
+            // 字符串输入区域快捷键
+            document.getElementById('stringInput').addEventListener('keydown', function(e) {
+                if (e.ctrlKey && e.key === 'Enter') {
+                    e.preventDefault();
+                    processText();
+                }
+            });
+
+            // JSON输入区域快捷键
+            document.getElementById('jsonInput').addEventListener('keydown', function(e) {
+                if (e.ctrlKey && e.key === 'Enter') {
+                    e.preventDefault();
+                    parseJSON();
+                }
+            });
+
+            // 结果区域快捷键（复制）
+            document.getElementById('resultArea').addEventListener('keydown', function(e) {
+                if (e.ctrlKey && e.key === 'c') {
+                    // 让浏览器默认复制行为执行
+                    setTimeout(() => showNotification('已复制到剪贴板！'), 100);
+                }
+            });
+
+            document.getElementById('stringOutput').addEventListener('keydown', function(e) {
+                if (e.ctrlKey && e.key === 'c') {
+                    setTimeout(() => showNotification('已复制到剪贴板！'), 100);
+                }
+            });
+
+            document.getElementById('jsonResultArea').addEventListener('keydown', function(e) {
+                if (e.ctrlKey && e.key === 'c') {
+                    setTimeout(() => showNotification('已复制到剪贴板！'), 100);
+                }
+            });
+
+            // 全局快捷键
+            document.addEventListener('keydown', function(e) {
+                // Ctrl+K 清空所有输入
+                if (e.ctrlKey && e.key === 'k') {
+                    e.preventDefault();
+                    if (confirm('确定要清空所有输入和结果吗？')) {
+                        clearSQLInput();
+                        clearStringInput();
+                        clearStringOutput();
+                        clearJSONInput();
+                        showNotification('已清空所有内容');
+                    }
+                }
+                
+                // ? 键显示帮助
+                if (e.key === '?' && !e.ctrlKey && !e.altKey && !e.metaKey) {
+                    const activeElement = document.activeElement;
+                    // 如果不是在输入区域，显示帮助
+                    if (activeElement.tagName !== 'TEXTAREA' && activeElement.tagName !== 'INPUT') {
+                        e.preventDefault();
+                        toggleHelp();
+                    }
+                }
+                
+                // ESC 关闭帮助
+                if (e.key === 'Escape') {
+                    const dialog = document.getElementById('helpDialog');
+                    if (dialog.classList.contains('show')) {
+                        toggleHelp();
+                    }
+                }
+            });
+
+            // 添加输入区域实时统计（防抖）
+            const updateInputStats = debounce(function(inputId, statsId) {
+                const input = document.getElementById(inputId);
+                const text = input.value;
+                if (text.trim()) {
+                    const lines = text.split('\n').length;
+                    const chars = text.length;
+                    updateStats(statsId, lines, chars);
+                } else {
+                    document.getElementById(statsId).style.display = 'none';
+                }
+            }, 500);
+
+            // 为输入区域添加实时统计
+            document.getElementById('sqlInput').addEventListener('input', function() {
+                updateInputStats('sqlInput', 'sqlStats');
+            });
+
+            document.getElementById('stringInput').addEventListener('input', function() {
+                updateInputStats('stringInput', 'stringInputStats');
+            });
+
+            document.getElementById('jsonInput').addEventListener('input', function() {
+                updateInputStats('jsonInput', 'jsonStats');
+            });
+        });
+
+        // 页面加载时显示欢迎信息
+        window.addEventListener('load', function() {
+            showNotification('⚡ 欢迎使用数据处理工具集！');
+        });
+    </script>
+</body>
+</html>
+
