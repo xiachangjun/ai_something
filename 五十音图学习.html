@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>五十音图学习 ✿</title>
+  <style>
+    :root {
+      --pink: #FFB7C5;
+      --lavender: #C8B6FF;
+      --mint: #B5EAD7;
+      --peach: #FFDAC1;
+      --sky: #B5D8F7;
+      --yellow: #FFEAA7;
+      --bg: #FFF5F7;
+      --text: #5D3F6A;
+      --text-light: #A08CB0;
+      --border: #EDD6F3;
+      --shadow: rgba(93, 63, 106, 0.1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+      background: linear-gradient(145deg, #fff0f7 0%, #f3eeff 50%, #eaf5ff 100%);
+      min-height: 100vh;
+      color: var(--text);
+      padding-bottom: 60px;
+    }
+
+    /* ───── Header ───── */
+    .header {
+      text-align: center;
+      padding: 36px 20px 12px;
+    }
+    .header h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #FF7FA7, #C47FFF, #6EB4FF);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.5px;
+    }
+    .header p {
+      margin-top: 8px;
+      font-size: 0.88rem;
+      color: var(--text-light);
+    }
+
+    /* ───── Tabs & Mode ───── */
+    .tab-bar, .mode-bar {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin: 14px 0;
+    }
+    .tab-btn, .mode-btn {
+      padding: 8px 22px;
+      border: 2px solid var(--border);
+      border-radius: 999px;
+      background: white;
+      color: var(--text-light);
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .tab-btn.active {
+      background: linear-gradient(135deg, #FF7FA7, #C47FFF);
+      border-color: transparent;
+      color: white;
+      box-shadow: 0 4px 14px rgba(196, 127, 255, 0.35);
+    }
+    .mode-btn.active {
+      background: linear-gradient(135deg, #6EB4FF, #A0E6C8);
+      border-color: transparent;
+      color: white;
+      box-shadow: 0 4px 14px rgba(110, 180, 255, 0.35);
+    }
+    .tab-btn:hover:not(.active), .mode-btn:hover:not(.active) {
+      border-color: #C47FFF;
+      color: #C47FFF;
+    }
+
+    /* ───── Grid ───── */
+    .grid-container {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 4px 16px 40px;
+      overflow-x: auto;
+    }
+    .gojuon-table {
+      border-collapse: separate;
+      border-spacing: 5px;
+      margin: 0 auto;
+    }
+    .col-header {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-light);
+      text-align: center;
+      padding: 4px 8px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .row-header {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-light);
+      text-align: center;
+      padding: 0 6px;
+      white-space: nowrap;
+    }
+    .char-cell {
+      width: 62px;
+      height: 62px;
+    }
+    .char-card {
+      width: 100%;
+      height: 100%;
+      border-radius: 14px;
+      background: white;
+      border: 2px solid var(--border);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 2px 8px var(--shadow);
+      user-select: none;
+    }
+    .char-card:hover {
+      transform: translateY(-4px) scale(1.06);
+      box-shadow: 0 8px 20px var(--shadow);
+    }
+    .char-card .jp { font-size: 1.45rem; line-height: 1; color: var(--text); }
+    .char-card .roma { font-size: 0.62rem; color: var(--text-light); font-weight: 700; letter-spacing: 0.4px; }
+    .char-card.playing { animation: pop 0.35s ease; }
+
+    /* per-row pastel border colors */
+    tr:nth-child(2) .char-card { border-color: #FFB7C5; }
+    tr:nth-child(3) .char-card { border-color: #FFCEB0; }
+    tr:nth-child(4) .char-card { border-color: #FFE899; }
+    tr:nth-child(5) .char-card { border-color: #B5EAD7; }
+    tr:nth-child(6) .char-card { border-color: #A8D8F0; }
+    tr:nth-child(7) .char-card { border-color: #C8B6FF; }
+    tr:nth-child(8) .char-card { border-color: #FFB7C5; }
+    tr:nth-child(9) .char-card { border-color: #FFE899; }
+    tr:nth-child(10) .char-card { border-color: #B5EAD7; }
+    tr:nth-child(11) .char-card { border-color: #A8D8F0; }
+    tr:nth-child(12) .char-card { border-color: #C8B6FF; }
+
+    .char-cell.empty .char-card {
+      background: transparent;
+      border: 2px dashed #EEE;
+      box-shadow: none;
+      cursor: default;
+      pointer-events: none;
+    }
+    .char-cell.empty .char-card .jp,
+    .char-cell.empty .char-card .roma { display: none; }
+
+    /* Ripple */
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(196, 127, 255, 0.35);
+      transform: scale(0);
+      animation: ripple-anim 0.5s ease-out;
+      pointer-events: none;
+    }
+    @keyframes ripple-anim {
+      to { transform: scale(4); opacity: 0; }
+    }
+    @keyframes pop {
+      0%,100% { transform: scale(1); }
+      40% { transform: scale(0.88); }
+      70% { transform: scale(1.1) translateY(-3px); }
+    }
+
+    /* ───── Flashcard View ───── */
+    .flashcard-container {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      padding: 8px 16px 40px;
+    }
+    .flashcard-container.visible { display: flex; }
+
+    /* Filter row buttons */
+    .fc-filter-wrap {
+      width: 100%;
+      max-width: 480px;
+      margin-bottom: 18px;
+    }
+    .fc-filter-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-light);
+      margin-bottom: 8px;
+      text-align: center;
+      letter-spacing: 0.5px;
+    }
+    .fc-filter {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px;
+    }
+    .filter-btn {
+      padding: 4px 13px;
+      border-radius: 999px;
+      border: 2px solid var(--border);
+      background: white;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      color: var(--text-light);
+      transition: all 0.15s ease;
+    }
+    .filter-btn.active {
+      background: linear-gradient(135deg, #FF7FA7, #C47FFF);
+      border-color: transparent;
+      color: white;
+    }
+    .filter-all-btn {
+      padding: 5px 16px;
+      border-radius: 999px;
+      border: 2px solid var(--border);
+      background: white;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      color: var(--text-light);
+      transition: all 0.15s ease;
+    }
+    .filter-all-btn.active {
+      background: linear-gradient(135deg, #6EB4FF, #A0E6C8);
+      border-color: transparent;
+      color: white;
+    }
+
+    /* Progress */
+    .fc-progress {
+      width: 100%;
+      max-width: 400px;
+      margin-bottom: 22px;
+    }
+    .fc-progress-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.83rem;
+      color: var(--text-light);
+      margin-bottom: 7px;
+      font-weight: 700;
+    }
+    .fc-progress-bar {
+      height: 8px;
+      background: #F0D6F5;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .fc-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #FF7FA7, #C47FFF);
+      border-radius: 999px;
+      transition: width 0.4s ease;
+    }
+
+    /* Flip Card */
+    .flip-card-wrapper {
+      perspective: 1200px;
+      width: 280px;
+      height: 320px;
+      margin-bottom: 24px;
+      cursor: pointer;
+    }
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.52s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-style: preserve-3d;
+    }
+    .flip-card-inner.flipped { transform: rotateY(180deg); }
+    .flip-front, .flip-back {
+      position: absolute;
+      inset: 0;
+      border-radius: 24px;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+    }
+    .flip-front {
+      background: linear-gradient(145deg, #fff5f9, #f7eeff);
+      border: 3px solid #EDD6F3;
+      box-shadow: 0 10px 36px rgba(93, 63, 106, 0.13);
+    }
+    .flip-back {
+      background: linear-gradient(145deg, #eef8ff, #f0e8ff);
+      border: 3px solid #C8B6FF;
+      box-shadow: 0 10px 36px rgba(93, 63, 106, 0.13);
+      transform: rotateY(180deg);
+    }
+    .flip-front .big-char {
+      font-size: 5.5rem;
+      line-height: 1;
+      color: var(--text);
+      margin-bottom: 14px;
+    }
+    .flip-front .hint {
+      font-size: 0.8rem;
+      color: var(--text-light);
+    }
+    .flip-front .card-row-label {
+      position: absolute;
+      top: 14px;
+      right: 16px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-light);
+      background: #F3E6FB;
+      padding: 2px 8px;
+      border-radius: 999px;
+    }
+    .flip-back .big-char {
+      font-size: 3.2rem;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .flip-back .romaji-big {
+      font-size: 2.2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #FF7FA7, #C47FFF);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 20px;
+    }
+    .sound-btn {
+      background: linear-gradient(135deg, #6EB4FF, #A0E6C8);
+      border: none;
+      border-radius: 999px;
+      padding: 9px 22px;
+      color: white;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(110, 180, 255, 0.3);
+      transition: transform 0.15s ease;
+    }
+    .sound-btn:hover { transform: scale(1.06); }
+
+    /* Navigation */
+    .fc-nav {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .nav-btn {
+      padding: 10px 28px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      border: none;
+    }
+    .nav-btn.prev {
+      background: white;
+      color: var(--text-light);
+      border: 2px solid var(--border);
+    }
+    .nav-btn.prev:hover:not(:disabled) { border-color: #C47FFF; color: #C47FFF; }
+    .nav-btn.next {
+      background: linear-gradient(135deg, #FF7FA7, #C47FFF);
+      color: white;
+      box-shadow: 0 4px 14px rgba(196, 127, 255, 0.35);
+    }
+    .nav-btn.next:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(196, 127, 255, 0.45);
+    }
+    .nav-btn:disabled { opacity: 0.35; cursor: default; transform: none !important; }
+
+    /* Actions */
+    .fc-actions {
+      display: flex;
+      gap: 10px;
+    }
+    .action-btn {
+      padding: 7px 18px;
+      border-radius: 999px;
+      border: 2px solid var(--border);
+      background: white;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      color: var(--text-light);
+      transition: all 0.15s ease;
+    }
+    .action-btn:hover { border-color: #6EB4FF; color: #6EB4FF; }
+
+    /* Done Screen */
+    .done-screen {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 32px 20px;
+    }
+    .done-screen.visible { display: flex; }
+    .done-emoji { font-size: 4rem; margin-bottom: 16px; animation: bounce-in 0.5s ease; }
+    .done-title { font-size: 1.5rem; font-weight: 800; color: var(--text); margin-bottom: 8px; }
+    .done-desc { font-size: 0.9rem; color: var(--text-light); margin-bottom: 28px; }
+    .restart-btn {
+      padding: 12px 36px;
+      background: linear-gradient(135deg, #FF7FA7, #C47FFF);
+      border: none;
+      border-radius: 999px;
+      color: white;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(196, 127, 255, 0.4);
+      transition: all 0.18s ease;
+    }
+    .restart-btn:hover { transform: translateY(-2px); box-shadow: 0 7px 22px rgba(196, 127, 255, 0.5); }
+
+    @keyframes bounce-in {
+      0% { transform: scale(0.5); opacity: 0; }
+      70% { transform: scale(1.2); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* Back link */
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 36px;
+      color: var(--text-light);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+      transition: color 0.15s;
+    }
+    .back-link:hover { color: #C47FFF; }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: linear-gradient(135deg, #FF7FA7, #C47FFF);
+      color: white;
+      padding: 10px 24px;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      box-shadow: 0 6px 20px rgba(196,127,255,0.4);
+      opacity: 0;
+      transition: all 0.3s ease;
+      pointer-events: none;
+      z-index: 999;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <h1>✿ 五十音图学习 ✿</h1>
+  <p>点击假名听读音 · 闪卡模式随时复习</p>
+</header>
+
+<!-- Type Tabs -->
+<div class="tab-bar">
+  <button class="tab-btn active" id="tabHira" onclick="setType('hiragana')">平假名 ひらがな</button>
+  <button class="tab-btn" id="tabKata" onclick="setType('katakana')">片假名 カタカナ</button>
+</div>
+
+<!-- Mode Toggle -->
+<div class="mode-bar">
+  <button class="mode-btn active" id="modeGrid" onclick="setMode('grid')">📊 图表查看</button>
+  <button class="mode-btn" id="modeFlash" onclick="setMode('flashcard')">🃏 闪卡复习</button>
+</div>
+
+<!-- Grid View -->
+<div class="grid-container" id="gridView">
+  <table class="gojuon-table" id="gojuonTable"></table>
+</div>
+
+<!-- Flashcard View -->
+<div class="flashcard-container" id="flashcardView">
+  <!-- Row filter -->
+  <div class="fc-filter-wrap">
+    <div class="fc-filter-label">选择练习的行</div>
+    <div class="fc-filter" id="fcFilter"></div>
+  </div>
+
+  <!-- Progress -->
+  <div class="fc-progress">
+    <div class="fc-progress-info">
+      <span>进度 <b id="fcCurrent">1</b> / <b id="fcTotal">46</b></span>
+      <span id="fcPercent">0%</span>
+    </div>
+    <div class="fc-progress-bar">
+      <div class="fc-progress-fill" id="fcProgressFill" style="width:0%"></div>
+    </div>
+  </div>
+
+  <!-- Flip card -->
+  <div class="flip-card-wrapper" id="flipWrapper" onclick="flipCard()">
+    <div class="flip-card-inner" id="flipCardInner">
+      <div class="flip-front">
+        <div class="card-row-label" id="fcRowLabel">あ行</div>
+        <div class="big-char" id="fcChar">あ</div>
+        <div class="hint">点击翻转 ✿</div>
+      </div>
+      <div class="flip-back">
+        <div class="big-char" id="fcCharBack">あ</div>
+        <div class="romaji-big" id="fcRomaji">a</div>
+        <button class="sound-btn" onclick="event.stopPropagation(); playSound()">🔊 听读音</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <div class="fc-nav">
+    <button class="nav-btn prev" id="prevBtn" onclick="prevCard()" disabled>← 上一个</button>
+    <button class="nav-btn next" id="nextBtn" onclick="nextCard()">下一个 →</button>
+  </div>
+
+  <!-- Actions -->
+  <div class="fc-actions">
+    <button class="action-btn" onclick="shuffleDeck()">🔀 随机顺序</button>
+    <button class="action-btn" onclick="resetDeck()">↩ 重新开始</button>
+  </div>
+
+  <!-- Done -->
+  <div class="done-screen" id="doneScreen">
+    <div class="done-emoji">🎉</div>
+    <div class="done-title">全部完成啦！</div>
+    <div class="done-desc">你太棒了，所有假名都看过了 ✿</div>
+    <button class="restart-btn" onclick="resetDeck()">再来一遍 ✿</button>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<a href="index.html" class="back-link">← 返回工具目录</a>
+
+<script>
+  // ═══════════════════════════════════════
+  // DATA
+  // ═══════════════════════════════════════
+  const ROWS = [
+    { label: 'あ行', hira: ['あ','い','う','え','お'], kata: ['ア','イ','ウ','エ','オ'], romaji: ['a','i','u','e','o'] },
+    { label: 'か行', hira: ['か','き','く','け','こ'], kata: ['カ','キ','ク','ケ','コ'], romaji: ['ka','ki','ku','ke','ko'] },
+    { label: 'さ行', hira: ['さ','し','す','せ','そ'], kata: ['サ','シ','ス','セ','ソ'], romaji: ['sa','shi','su','se','so'] },
+    { label: 'た行', hira: ['た','ち','つ','て','と'], kata: ['タ','チ','ツ','テ','ト'], romaji: ['ta','chi','tsu','te','to'] },
+    { label: 'な行', hira: ['な','に','ぬ','ね','の'], kata: ['ナ','ニ','ヌ','ネ','ノ'], romaji: ['na','ni','nu','ne','no'] },
+    { label: 'は行', hira: ['は','ひ','ふ','へ','ほ'], kata: ['ハ','ヒ','フ','ヘ','ホ'], romaji: ['ha','hi','fu','he','ho'] },
+    { label: 'ま行', hira: ['ま','み','む','め','も'], kata: ['マ','ミ','ム','メ','モ'], romaji: ['ma','mi','mu','me','mo'] },
+    { label: 'や行', hira: ['や', null,'ゆ', null,'よ'], kata: ['ヤ', null,'ユ', null,'ヨ'], romaji: ['ya',null,'yu',null,'yo'] },
+    { label: 'ら行', hira: ['ら','り','る','れ','ろ'], kata: ['ラ','リ','ル','レ','ロ'], romaji: ['ra','ri','ru','re','ro'] },
+    { label: 'わ行', hira: ['わ', null, null, null,'を'], kata: ['ワ', null, null, null,'ヲ'], romaji: ['wa',null,null,null,'wo'] },
+    { label: 'ん',  hira: ['ん', null, null, null, null], kata: ['ン', null, null, null, null], romaji: ['n', null,null,null,null] },
+  ];
+  const COLS = ['a', 'i', 'u', 'e', 'o'];
+
+  let currentType = 'hiragana'; // 'hiragana' | 'katakana'
+  let currentMode = 'grid';     // 'grid' | 'flashcard'
+
+  // Flashcard state
+  let deck = [];
+  let deckIndex = 0;
+  let selectedRows = new Set(ROWS.map(r => r.label)); // all selected by default
+  let isFlipped = false;
+
+  // ═══════════════════════════════════════
+  // SPEECH
+  // ═══════════════════════════════════════
+  function speak(text) {
+    if (!window.speechSynthesis) return;
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'ja-JP';
+    u.rate = 0.85;
+    u.pitch = 1.1;
+    speechSynthesis.speak(u);
+  }
+
+  function playSound() {
+    const card = deck[deckIndex];
+    if (card) speak(card.char);
+  }
+
+  // ═══════════════════════════════════════
+  // GRID
+  // ═══════════════════════════════════════
+  function buildGrid() {
+    const table = document.getElementById('gojuonTable');
+    table.innerHTML = '';
+
+    // Header row
+    const headRow = document.createElement('tr');
+    headRow.innerHTML = `<th class="col-header"></th>` +
+      COLS.map(c => `<th class="col-header">${c.toUpperCase()}</th>`).join('');
+    table.appendChild(headRow);
+
+    // Data rows
+    ROWS.forEach(row => {
+      const tr = document.createElement('tr');
+      const chars = currentType === 'hiragana' ? row.hira : row.kata;
+
+      tr.innerHTML = `<td class="row-header">${row.label}</td>`;
+      chars.forEach((ch, ci) => {
+        if (ch === null) {
+          tr.innerHTML += `<td class="char-cell empty"><div class="char-card"><span class="jp"></span></div></td>`;
+        } else {
+          const roma = row.romaji[ci];
+          tr.innerHTML += `
+            <td class="char-cell">
+              <div class="char-card" onclick="onGridClick(this, '${ch}', '${roma}')">
+                <span class="jp">${ch}</span>
+                <span class="roma">${roma}</span>
+              </div>
+            </td>`;
+        }
+      });
+      table.appendChild(tr);
+    });
+  }
+
+  function onGridClick(el, char, roma) {
+    // ripple effect
+    const ripple = document.createElement('span');
+    ripple.className = 'ripple';
+    ripple.style.width = ripple.style.height = '40px';
+    ripple.style.left = '50%';
+    ripple.style.top = '50%';
+    ripple.style.marginLeft = '-20px';
+    ripple.style.marginTop = '-20px';
+    el.appendChild(ripple);
+    setTimeout(() => ripple.remove(), 600);
+
+    el.classList.add('playing');
+    setTimeout(() => el.classList.remove('playing'), 400);
+
+    speak(char);
+    showToast(char + '  →  ' + roma);
+  }
+
+  // ═══════════════════════════════════════
+  // FLASHCARD
+  // ═══════════════════════════════════════
+  function buildFilterButtons() {
+    const container = document.getElementById('fcFilter');
+    container.innerHTML = '';
+
+    // "全部" button
+    const allBtn = document.createElement('button');
+    allBtn.className = 'filter-all-btn' + (selectedRows.size === ROWS.length ? ' active' : '');
+    allBtn.textContent = '全部';
+    allBtn.onclick = () => {
+      if (selectedRows.size === ROWS.length) {
+        // deselect all
+        selectedRows.clear();
+      } else {
+        ROWS.forEach(r => selectedRows.add(r.label));
+      }
+      buildFilterButtons();
+      rebuildDeck();
+    };
+    container.appendChild(allBtn);
+
+    ROWS.forEach(row => {
+      const btn = document.createElement('button');
+      btn.className = 'filter-btn' + (selectedRows.has(row.label) ? ' active' : '');
+      btn.textContent = row.label;
+      btn.onclick = () => {
+        if (selectedRows.has(row.label)) {
+          selectedRows.delete(row.label);
+        } else {
+          selectedRows.add(row.label);
+        }
+        buildFilterButtons();
+        rebuildDeck();
+      };
+      container.appendChild(btn);
+    });
+  }
+
+  function rebuildDeck() {
+    deck = [];
+    ROWS.forEach(row => {
+      if (!selectedRows.has(row.label)) return;
+      const chars = currentType === 'hiragana' ? row.hira : row.kata;
+      chars.forEach((ch, ci) => {
+        if (ch !== null) {
+          deck.push({ char: ch, romaji: row.romaji[ci], rowLabel: row.label });
+        }
+      });
+    });
+    deckIndex = 0;
+    isFlipped = false;
+    updateCard();
+  }
+
+  function shuffleDeck() {
+    for (let i = deck.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [deck[i], deck[j]] = [deck[j], deck[i]];
+    }
+    deckIndex = 0;
+    isFlipped = false;
+    updateCard();
+    showToast('已打乱顺序 🔀');
+  }
+
+  function resetDeck() {
+    rebuildDeck();
+    showToast('已重新开始 ✿');
+  }
+
+  function updateCard() {
+    const done = document.getElementById('doneScreen');
+    const wrapper = document.getElementById('flipWrapper');
+    const nav = document.querySelector('.fc-nav');
+    const actions = document.querySelector('.fc-actions');
+
+    // Reset flip
+    document.getElementById('flipCardInner').classList.remove('flipped');
+    isFlipped = false;
+
+    if (deck.length === 0) {
+      wrapper.style.display = 'none';
+      nav.style.display = 'none';
+      done.classList.remove('visible');
+      updateProgress();
+      return;
+    }
+
+    if (deckIndex >= deck.length) {
+      // Done
+      wrapper.style.display = 'none';
+      nav.style.display = 'none';
+      done.classList.add('visible');
+      updateProgress();
+      return;
+    }
+
+    done.classList.remove('visible');
+    wrapper.style.display = '';
+    nav.style.display = '';
+
+    const card = deck[deckIndex];
+    document.getElementById('fcChar').textContent = card.char;
+    document.getElementById('fcCharBack').textContent = card.char;
+    document.getElementById('fcRomaji').textContent = card.romaji;
+    document.getElementById('fcRowLabel').textContent = card.rowLabel;
+
+    document.getElementById('prevBtn').disabled = deckIndex === 0;
+    document.getElementById('nextBtn').disabled = false;
+
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const total = deck.length;
+    const current = Math.min(deckIndex + 1, total);
+    const pct = total === 0 ? 0 : Math.round((deckIndex / total) * 100);
+    document.getElementById('fcCurrent').textContent = total === 0 ? 0 : current;
+    document.getElementById('fcTotal').textContent = total;
+    document.getElementById('fcPercent').textContent = pct + '%';
+    document.getElementById('fcProgressFill').style.width = pct + '%';
+  }
+
+  function flipCard() {
+    if (deckIndex >= deck.length) return;
+    const inner = document.getElementById('flipCardInner');
+    isFlipped = !isFlipped;
+    inner.classList.toggle('flipped', isFlipped);
+    if (isFlipped) {
+      setTimeout(() => playSound(), 280);
+    }
+  }
+
+  function nextCard() {
+    if (deckIndex < deck.length) {
+      deckIndex++;
+      updateCard();
+    }
+  }
+
+  function prevCard() {
+    if (deckIndex > 0) {
+      deckIndex--;
+      updateCard();
+    }
+  }
+
+  // ═══════════════════════════════════════
+  // MODE / TYPE SWITCHING
+  // ═══════════════════════════════════════
+  function setType(type) {
+    currentType = type;
+    document.getElementById('tabHira').classList.toggle('active', type === 'hiragana');
+    document.getElementById('tabKata').classList.toggle('active', type === 'katakana');
+    if (currentMode === 'grid') {
+      buildGrid();
+    } else {
+      buildFilterButtons();
+      rebuildDeck();
+    }
+  }
+
+  function setMode(mode) {
+    currentMode = mode;
+    document.getElementById('modeGrid').classList.toggle('active', mode === 'grid');
+    document.getElementById('modeFlash').classList.toggle('active', mode === 'flashcard');
+    document.getElementById('gridView').style.display = mode === 'grid' ? '' : 'none';
+
+    const fcView = document.getElementById('flashcardView');
+    if (mode === 'flashcard') {
+      fcView.classList.add('visible');
+      buildFilterButtons();
+      rebuildDeck();
+    } else {
+      fcView.classList.remove('visible');
+      buildGrid();
+    }
+  }
+
+  // ═══════════════════════════════════════
+  // TOAST
+  // ═══════════════════════════════════════
+  let toastTimer = null;
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 1800);
+  }
+
+  // ═══════════════════════════════════════
+  // INIT
+  // ═══════════════════════════════════════
+  buildGrid();
+</script>
+</body>
+</html>
