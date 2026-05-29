@@ -1,0 +1,1773 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>宋朝皇帝世系简表 (960-1279)</title>
+<style>
+  :root {
+    --bg: #faf7f0;
+    --card-bg: #fff;
+    --north-color: #b8860b;
+    --south-color: #2e8b57;
+    --timeline-color: #8b7355;
+    --text: #2c2c2c;
+    --text-light: #666;
+    --border: #d4c5a9;
+    --event-bg: #fff8dc;
+    --minister-bg: #f0f8ff;
+    --highlight: #c41e3a;
+    --gold: #daa520;
+    --link-line: #999;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: "PingFang SC", "Microsoft YaHei", "Noto Serif SC", serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    padding: 50px 20px 30px;
+    background: linear-gradient(135deg, #1a0a00 0%, #3d1f00 30%, #6b3a1f 60%, #8b5e3c 100%);
+    color: #f5e6c8;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23daa520' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.5;
+  }
+  .header h1 {
+    font-size: 42px;
+    font-weight: 900;
+    letter-spacing: 12px;
+    position: relative;
+    z-index: 1;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  }
+  .header .subtitle {
+    font-size: 18px;
+    margin-top: 12px;
+    color: #daa520;
+    letter-spacing: 6px;
+    position: relative;
+    z-index: 1;
+  }
+  .header .period {
+    font-size: 14px;
+    margin-top: 8px;
+    color: #c4a882;
+    letter-spacing: 3px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Legend */
+  .legend {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 20px;
+    background: #fff;
+    border-bottom: 2px solid var(--border);
+    flex-wrap: wrap;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-light);
+  }
+  .legend-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .legend-line {
+    width: 30px;
+    height: 3px;
+    flex-shrink: 0;
+  }
+
+  /* Main Container */
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  /* Section Title */
+  .section-title {
+    text-align: center;
+    padding: 30px 20px 20px;
+    font-size: 28px;
+    font-weight: bold;
+    letter-spacing: 6px;
+    position: relative;
+  }
+  .section-title.north { color: var(--north-color); }
+  .section-title.south { color: var(--south-color); }
+  .section-title::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 3px;
+    margin: 12px auto 0;
+  }
+  .section-title.north::after { background: var(--north-color); }
+  .section-title.south::after { background: var(--south-color); }
+
+  /* Timeline Layout */
+  .timeline {
+    position: relative;
+    padding: 20px 0;
+  }
+
+  /* Central line */
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--north-color), var(--north-color));
+    transform: translateX(-50%);
+    z-index: 0;
+  }
+  .timeline.south::before {
+    background: linear-gradient(to bottom, var(--south-color), var(--south-color));
+  }
+
+  /* Timeline Entry */
+  .timeline-entry {
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+    margin-bottom: 20px;
+  }
+  .timeline-entry.left .entry-content { flex-direction: row; }
+  .timeline-entry.right .entry-content { flex-direction: row-reverse; }
+
+  .entry-content {
+    display: flex;
+    width: 100%;
+    align-items: flex-start;
+    gap: 0;
+  }
+
+  .entry-left, .entry-right {
+    width: 48%;
+    padding: 0 15px;
+  }
+
+  .entry-center {
+    width: 4%;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .year-marker {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    color: #fff;
+    flex-shrink: 0;
+    z-index: 2;
+    position: relative;
+  }
+  .north .year-marker { background: var(--north-color); }
+  .south .year-marker { background: var(--south-color); }
+
+  /* Emperor Card */
+  .emperor-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    border-left: 5px solid;
+    position: relative;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .emperor-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+  }
+  .north .emperor-card { border-left-color: var(--north-color); }
+  .south .emperor-card { border-left-color: var(--south-color); }
+
+  .emperor-card .order {
+    position: absolute;
+    top: -10px;
+    right: 15px;
+    background: var(--highlight);
+    color: #fff;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  .emperor-name {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 2px;
+  }
+  .emperor-realname {
+    font-size: 13px;
+    color: var(--text-light);
+    margin-bottom: 8px;
+  }
+
+  .emperor-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 12px;
+    margin: 10px 0;
+    font-size: 12px;
+  }
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .meta-label {
+    color: var(--text-light);
+    white-space: nowrap;
+  }
+  .meta-value {
+    font-weight: 600;
+  }
+
+  .life-bar {
+    height: 8px;
+    background: #eee;
+    border-radius: 4px;
+    margin: 10px 0 5px;
+    position: relative;
+    overflow: visible;
+  }
+  .life-bar .reign {
+    position: absolute;
+    height: 100%;
+    border-radius: 4px;
+    opacity: 0.8;
+  }
+  .north .life-bar .reign { background: var(--north-color); }
+  .south .life-bar .reign { background: var(--south-color); }
+  .life-bar-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: var(--text-light);
+  }
+
+  .relation-tag {
+    display: inline-block;
+    background: #fef3e2;
+    color: #b8860b;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-top: 6px;
+    border: 1px solid #f0d9a0;
+  }
+  .south .relation-tag {
+    background: #e8f5e9;
+    color: #2e7d32;
+    border-color: #a5d6a7;
+  }
+
+  /* Events Panel */
+  .events-panel {
+    background: var(--event-bg);
+    border-radius: 10px;
+    padding: 14px;
+    margin-top: 5px;
+    border: 1px solid #e8dcc0;
+  }
+  .events-panel h4 {
+    font-size: 13px;
+    color: var(--highlight);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .event-item {
+    font-size: 12px;
+    padding: 4px 0;
+    border-bottom: 1px dashed #e0d5bf;
+    display: flex;
+    gap: 6px;
+  }
+  .event-item:last-child { border-bottom: none; }
+  .event-year {
+    color: var(--highlight);
+    font-weight: bold;
+    white-space: nowrap;
+    min-width: 42px;
+  }
+
+  /* Ministers Panel */
+  .ministers-panel {
+    background: var(--minister-bg);
+    border-radius: 10px;
+    padding: 14px;
+    margin-top: 8px;
+    border: 1px solid #c8dce8;
+  }
+  .ministers-panel h4 {
+    font-size: 13px;
+    color: #2c5f8a;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .minister-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  .minister-tag {
+    font-size: 11px;
+    padding: 3px 8px;
+    background: #dceaf5;
+    color: #2c5f8a;
+    border-radius: 12px;
+    border: 1px solid #b8d4e8;
+  }
+  .minister-tag.negative {
+    background: #fde8e8;
+    color: #c41e3a;
+    border-color: #f0b8b8;
+  }
+
+  /* Family Tree */
+  .family-tree-section {
+    margin: 40px 0;
+    padding: 30px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  }
+  .family-tree-section h2 {
+    text-align: center;
+    font-size: 24px;
+    color: var(--text);
+    margin-bottom: 30px;
+    letter-spacing: 4px;
+  }
+
+  .tree-container {
+    overflow-x: auto;
+    padding: 20px 0;
+  }
+
+  .tree-svg {
+    display: block;
+    margin: 0 auto;
+  }
+
+  /* Lifecycle Chart */
+  .lifecycle-section {
+    margin: 40px 0;
+    padding: 30px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  }
+  .lifecycle-section h2 {
+    text-align: center;
+    font-size: 24px;
+    color: var(--text);
+    margin-bottom: 10px;
+    letter-spacing: 4px;
+  }
+  .lifecycle-section .note {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-light);
+    margin-bottom: 20px;
+  }
+
+  .gantt-container {
+    overflow-x: auto;
+    padding: 10px 0;
+  }
+  .gantt-chart {
+    min-width: 900px;
+  }
+  .gantt-row {
+    display: flex;
+    align-items: center;
+    height: 32px;
+    margin: 2px 0;
+  }
+  .gantt-label {
+    width: 120px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: right;
+    padding-right: 15px;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .gantt-bar-area {
+    flex: 1;
+    position: relative;
+    height: 100%;
+  }
+  .gantt-bar {
+    position: absolute;
+    height: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 5px;
+    opacity: 0.35;
+    cursor: pointer;
+  }
+  .gantt-bar.reign-bar {
+    height: 20px;
+    opacity: 0.85;
+    z-index: 1;
+  }
+  .gantt-bar:hover {
+    opacity: 1;
+  }
+  .gantt-bar .tooltip {
+    display: none;
+    position: absolute;
+    bottom: calc(100% + 5px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    white-space: nowrap;
+    z-index: 10;
+  }
+  .gantt-bar:hover .tooltip { display: block; }
+
+  .gantt-header {
+    display: flex;
+    align-items: center;
+    height: 30px;
+    border-bottom: 2px solid var(--border);
+    margin-bottom: 10px;
+  }
+  .gantt-header .gantt-label {
+    font-size: 12px;
+    color: var(--text-light);
+  }
+  .gantt-header .gantt-bar-area {
+    display: flex;
+  }
+  .gantt-year-tick {
+    position: absolute;
+    font-size: 10px;
+    color: var(--text-light);
+    transform: translateX(-50%);
+    top: 0;
+  }
+  .gantt-grid-line {
+    position: absolute;
+    width: 1px;
+    background: #eee;
+    top: 0;
+    bottom: 0;
+  }
+  .gantt-body {
+    position: relative;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 30px;
+    color: var(--text-light);
+    font-size: 13px;
+    border-top: 2px solid var(--border);
+    margin-top: 40px;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .entry-content {
+      flex-direction: column !important;
+      align-items: center;
+    }
+    .entry-left, .entry-right {
+      width: 100%;
+      padding: 10px 0;
+    }
+    .entry-center { width: 100%; justify-content: center; margin: 10px 0; }
+    .timeline::before { display: none; }
+  }
+
+  /* Transition Divider */
+  .transition-divider {
+    text-align: center;
+    padding: 40px 20px;
+    position: relative;
+  }
+  .transition-divider .divider-line {
+    height: 2px;
+    background: linear-gradient(to right, transparent, var(--highlight), transparent);
+    margin: 0 auto;
+    max-width: 600px;
+  }
+  .transition-divider .divider-text {
+    display: inline-block;
+    background: var(--bg);
+    padding: 8px 25px;
+    position: relative;
+    top: -14px;
+    font-size: 16px;
+    color: var(--highlight);
+    font-weight: bold;
+    letter-spacing: 4px;
+    border: 2px solid var(--highlight);
+    border-radius: 20px;
+  }
+
+  .overview-stats {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 20px;
+    flex-wrap: wrap;
+  }
+  .stat-box {
+    text-align: center;
+    padding: 15px 25px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    min-width: 120px;
+  }
+  .stat-number {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--highlight);
+  }
+  .stat-desc {
+    font-size: 12px;
+    color: var(--text-light);
+    margin-top: 4px;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>宋朝皇帝世系简表</h1>
+  <div class="subtitle">大宋三百一十九年国祚</div>
+  <div class="period">北宋 (960-1127) ─ 南宋 (1127-1279)</div>
+</div>
+
+<div class="legend">
+  <div class="legend-item">
+    <div class="legend-dot" style="background:var(--north-color)"></div>
+    <span>北宋皇帝</span>
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background:var(--south-color)"></div>
+    <span>南宋皇帝</span>
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background:var(--highlight)"></div>
+    <span>重大历史事件</span>
+  </div>
+  <div class="legend-item">
+    <div class="legend-dot" style="background:#2c5f8a"></div>
+    <span>重要大臣</span>
+  </div>
+  <div class="legend-item">
+    <div class="legend-line" style="background:linear-gradient(to right,#daa520,#eee,#daa520)"></div>
+    <span>生卒时间</span>
+  </div>
+  <div class="legend-item">
+    <div class="legend-line" style="background:var(--north-color);height:6px;border-radius:3px"></div>
+    <span>在位时间</span>
+  </div>
+</div>
+
+<div class="overview-stats">
+  <div class="stat-box">
+    <div class="stat-number">319</div>
+    <div class="stat-desc">国祚（年）</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-number">18</div>
+    <div class="stat-desc">皇帝总数</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-number">9+9</div>
+    <div class="stat-desc">北宋 + 南宋</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-number">960</div>
+    <div class="stat-desc">开国年份</div>
+  </div>
+  <div class="stat-box">
+    <div class="stat-number">1279</div>
+    <div class="stat-desc">亡国年份</div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ==================== 生卒在位甘特图 ==================== -->
+  <div class="lifecycle-section">
+    <h2>皇帝生卒与在位时间对照图</h2>
+    <div class="note">浅色条为生卒跨度，深色条为在位时间，鼠标悬停查看详情</div>
+    <div class="gantt-container">
+      <div class="gantt-chart" id="ganttChart"></div>
+    </div>
+  </div>
+
+  <!-- ==================== 北宋 ==================== -->
+  <div class="section-title north">北 宋</div>
+  <div class="period" style="text-align:center;color:#999;font-size:13px;margin-bottom:20px;">公元960年 — 1127年 · 都城：东京开封府</div>
+
+  <div class="timeline north">
+
+    <!-- 太祖 -->
+    <div class="timeline-entry">
+      <div class="entry-content">
+        <div class="entry-left">
+          <div class="emperor-card">
+            <div class="order">1</div>
+            <div class="emperor-name">宋太祖</div>
+            <div class="emperor-realname">赵匡胤 · 年号：建隆、乾德、开宝</div>
+            <div class="emperor-meta">
+              <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">927-976（49岁）</span></div>
+              <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">960-976（16年）</span></div>
+            </div>
+            <div class="life-bar" data-birth="927" data-death="976" data-start="960" data-end="976">
+              <div class="reign"></div>
+            </div>
+            <div class="life-bar-labels"><span>927</span><span>960 在位</span><span>976</span></div>
+            <div class="relation-tag">开国皇帝 · 后周殿前都点检</div>
+          </div>
+          <div class="ministers-panel">
+            <h4>👤 重要大臣</h4>
+            <div class="minister-list">
+              <span class="minister-tag">赵普</span>
+              <span class="minister-tag">石守信</span>
+              <span class="minister-tag">曹彬</span>
+              <span class="minister-tag">潘美</span>
+              <span class="minister-tag">薛居正</span>
+            </div>
+          </div>
+        </div>
+        <div class="entry-center">
+          <div class="year-marker">960</div>
+        </div>
+        <div class="entry-right">
+          <div class="events-panel">
+            <h4>📜 重大事件</h4>
+            <div class="event-item"><span class="event-year">960</span><span>陈桥兵变，黄袍加身，建立宋朝</span></div>
+            <div class="event-item"><span class="event-year">961</span><span>杯酒释兵权，解除藩镇割据</span></div>
+            <div class="event-item"><span class="event-year">963</span><span>灭荆南、湖南，统一战争开始</span></div>
+            <div class="event-item"><span class="event-year">965</span><span>灭后蜀</span></div>
+            <div class="event-item"><span class="event-year">971</span><span>灭南汉</span></div>
+            <div class="event-item"><span class="event-year">975</span><span>灭南唐，统一大业基本完成</span></div>
+            <div class="event-item"><span class="event-year">976</span><span>烛影斧声，太祖驾崩</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 太宗 -->
+    <div class="timeline-entry">
+      <div class="entry-content">
+        <div class="entry-left">
+          <div class="events-panel">
+            <h4>📜 重大事件</h4>
+            <div class="event-item"><span class="event-year">978</span><span>灭吴越、漳泉，完成统一</span></div>
+            <div class="event-item"><span class="event-year">979</span><span>灭北汉；高梁河之战大败于辽</span></div>
+            <div class="event-item"><span class="event-year">986</span><span>雍熙北伐失败，杨业战死</span></div>
+            <div class="event-item"><span class="event-year">992</span><span>淳化改革</span></div>
+          </div>
+          <div class="ministers-panel">
+            <h4>👤 重要大臣</h4>
+            <div class="minister-list">
+              <span class="minister-tag">赵普</span>
+              <span class="minister-tag">吕蒙正</span>
+              <span class="minister-tag">寇准</span>
+              <span class="minister-tag">杨业</span>
+              <span class="minister-tag">李昉</span>
+            </div>
+          </div>
+        </div>
+        <div class="entry-center">
+          <div class="year-marker">976</div>
+        </div>
+        <div class="entry-right">
+          <div class="emperor-card">
+            <div class="order">2</div>
+            <div class="emperor-name">宋太宗</div>
+            <div class="emperor-realname">赵光义（赵炅） · 年号：太平兴国、雍熙、端拱、淳化、至道</div>
+            <div class="emperor-meta">
+              <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">939-997（58岁）</span></div>
+              <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">976-997（21年）</span></div>
+            </div>
+            <div class="life-bar" data-birth="939" data-death="997" data-start="976" data-end="997">
+              <div class="reign"></div>
+            </div>
+            <div class="life-bar-labels"><span>939</span><span>976 在位</span><span>997</span></div>
+            <div class="relation-tag">太祖之弟（兄终弟及）</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 真宗 -->
+    <div class="timeline-entry">
+      <div class="entry-content">
+        <div class="entry-left">
+          <div class="emperor-card">
+            <div class="order">3</div>
+            <div class="emperor-name">宋真宗</div>
+            <div class="emperor-realname">赵恒 · 年号：咸平、景德、大中祥符、天禧</div>
+            <div class="emperor-meta">
+              <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">968-1022（54岁）</span></div>
+              <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">997-1022（25年）</span></div>
+            </div>
+            <div class="life-bar" data-birth="968" data-death="1022" data-start="997" data-end="1022">
+              <div class="reign"></div>
+            </div>
+            <div class="life-bar-labels"><span>968</span><span>997 在位</span><span>1022</span></div>
+            <div class="relation-tag">太宗第三子</div>
+          </div>
+          <div class="ministers-panel">
+            <h4>👤 重要大臣</h4>
+            <div class="minister-list">
+              <span class="minister-tag">寇准</span>
+              <span class="minister-tag">王旦</span>
+              <span class="minister-tag">王钦若</span>
+              <span class="minister-tag">丁谓</span>
+              <span class="minister-tag">刘娥（太后）</span>
+            </div>
+          </div>
+        </div>
+        <div class="entry-center">
+          <div class="year-marker">997</div>
+        </div>
+        <div class="entry-right">
+          <div class="events-panel">
+            <h4>📜 重大事件</h4>
+            <div class="event-item"><span class="event-year">1004</span><span>澶渊之盟，宋辽和议</span></div>
+            <div class="event-item"><span class="event-year">1008</span><span>东封泰山，天书运动</span></div>
+            <div class="event-item"><span class="event-year">1016</span><span>交子（世界最早纸币）出现</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 仁宗 -->
+    <div class="timeline-entry">
+      <div class="entry-content">
+        <div class="entry-left">
+          <div class="events-panel">
+            <h4>📜 重大事件</h4>
+            <div class="event-item"><span class="event-year">1038</span><span>西夏建国，宋夏战争爆发</span></div>
+            <div class="event-item"><span class="event-year">1043</span><span>庆历新政（范仲淹改革）</span></div>
+            <div class="event-item"><span class="event-year">1044</span><span>庆历和议，宋夏议和</span></div>
+            <div class="event-item"><span class="event-year">1049</span><span>毕昇活字印刷术推广</span></div>
+          </div>
+        </div>
+        <div class="entry-center">
+          <div class="year-marker">1022</div>
+        </div>
+        <div class="entry-right">
+          <div class="emperor-card">
+            <div class="order">4</div>
+            <div class="emperor-name">宋仁宗</div>
+            <div class="emperor-realname">赵祯 · 年号：天圣、明道、景祐、宝元、康定、庆历、皇祐、至和、嘉祐</div>
+            <div class="emperor-meta">
+              <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1010-1063（53岁）</span></div>
+              <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1022-1063（41年）</span></div>
+            </div>
+            <div class="life-bar" data-birth="1010" data-death="1063" data-start="1022" data-end="1063">
+              <div class="reign"></div>
+            </div>
+            <div class="life-bar-labels"><span>1010</span><span>1022 在位</span><span>1063</span></div>
+            <div class="relation-tag">真宗第六子 · 北宋在位最长</div>
+          </div>
+          <div class="ministers-panel">
+            <h4>👤 重要大臣</h4>
+            <div class="minister-list">
+              <span class="minister-tag">范仲淹</span>
+              <span class="minister-tag">欧阳修</span>
+              <span class="minister-tag">韩琦</span>
+              <span class="minister-tag">富弼</span>
+              <span class="minister-tag">包拯</span>
+              <span class="minister-tag">狄青</span>
+              <span class="minister-tag">司马光</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 英宗 -->
+    <div class="timeline-entry">
+      <div class="entry-content">
+        <div class="entry-left">
+          <div class="emperor-card">
+            <div class="order">5</div>
+            <div class="emperor-name">宋英宗</div>
+            <div class="emperor-realname">赵曙 · 年号：治平</div>
+            <div class="emperor-meta">
+              <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1032-1067（35岁）</span></div>
+              <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1063-1067（4年）</span></div>
+            </div>
+            <div class="life-bar" data-birth="1032" data-death="1067" data-start="1063" data-end="1067">
+              <div class="reign"></div>
+            </div>
+            <div class="life-bar-labels"><span>1032</span><span>1063 在位</span><span>1067</span></div>
+            <div class="relation-tag">太宗曾孙 · 仁宗养子（濮议之争）</div>
+          </div>
+          <div class="ministers-panel">
+            <h4>👤 重要大臣</h4>
+            <div class="minister-list">
+              <span class="minister-tag">韩琦</span>
+              <span class="minister-tag">欧阳修</span>
+              <span class="minister-tag">司马光</span>
+            </div>
+          </div>
+        </div>
+        <div class="entry-center">
+          <div class="year-marker">1063</div>
+        </div>
+        <div class="entry-right">
+          <div class="events-panel">
+            <h4>📜 重大事件</h4>
+            <div class="event-item"><span class="event-year">1064</span><span>濮议之争（追尊生父之争）</span></div>
+            <div class="event-item"><span class="event-year">1065</span><span>诏修《资治通鉴》</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 神宗 -->
+    <div class="timeline-entry">
+      <div class="entry-content">
+        <div class="entry-left">
+          <div class="events-panel">
+            <h4>📜 重大事件</h4>
+            <div class="event-item"><span class="event-year">1069</span><span>王安石变法（熙宁变法）</span></div>
+            <div class="event-item"><span class="event-year">1074</span><span>王安石第一次罢相</span></div>
+            <div class="event-item"><span class="event-year">1076</span><span>王安石第二次罢相</span></div>
+            <div class="event-item"><span class="event-year">1081</span><span>元丰西征（五路伐夏）</span></div>
+            <div class="event-item"><span class="event-year">1084</span><span>《资治通鉴》修成</span></div>
+          </div>
+        </div>
+        <div class="entry-center">
+          <div class="year-marker">1067</div>
+        </div>
+        <div class="entry-right">
+          <div class="emperor-card">
+            <div class="order">6</div>
+            <div class="emperor-name">宋神宗</div>
+            <div class="emperor-realname">赵顼 · 年号：熙宁、元丰</div>
+            <div class="emperor-meta">
+              <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1048-1085（37岁）</span></div>
+              <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1067-1085（18年）</span></div>
+            </div>
+            <div class="life-bar" data-birth="1048" data-death="1085" data-start="1067" data-end="1085">
+              <div class="reign"></div>
+            </div>
+            <div class="life-bar-labels"><span>1048</span><span>1067 在位</span><span>1085</span></div>
+            <div class="relation-tag">英宗长子</div>
+          </div>
+          <div class="ministers-panel">
+            <h4>👤 重要大臣</h4>
+            <div class="minister-list">
+              <span class="minister-tag">王安石</span>
+              <span class="minister-tag">司马光</span>
+              <span class="minister-tag">苏轼</span>
+              <span class="minister-tag">吕惠卿</span>
+              <span class="minister-tag">章惇</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 哲宗 -->
+    <div class="timeline-entry">
+      <div class="entry-content">
+        <div class="entry-left">
+          <div class="emperor-card">
+            <div class="order">7</div>
+            <div class="emperor-name">宋哲宗</div>
+            <div class="emperor-realname">赵煦 · 年号：元祐、绍圣、元符</div>
+            <div class="emperor-meta">
+              <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1077-1100（23岁）</span></div>
+              <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1085-1100（15年）</span></div>
+            </div>
+            <div class="life-bar" data-birth="1077" data-death="1100" data-start="1085" data-end="1100">
+              <div class="reign"></div>
+            </div>
+            <div class="life-bar-labels"><span>1077</span><span>1085 在位</span><span>1100</span></div>
+            <div class="relation-tag">神宗第六子 · 9岁即位</div>
+          </div>
+          <div class="ministers-panel">
+            <h4>👤 重要大臣</h4>
+            <div class="minister-list">
+              <span class="minister-tag">司马光</span>
+              <span class="minister-tag">苏轼</span>
+              <span class="minister-tag">章惇</span>
+              <span class="minister-tag">曾布</span>
+              <span class="minister-tag">高太后（垂帘）</span>
+            </div>
+          </div>
+        </div>
+        <div class="entry-center">
+          <div class="year-marker">1085</div>
+        </div>
+        <div class="entry-right">
+          <div class="events-panel">
+            <h4>📜 重大事件</h4>
+            <div class="event-item"><span class="event-year">1085</span><span>高太后垂帘，司马光废新法（元祐更化）</span></div>
+            <div class="event-item"><span class="event-year">1093</span><span>高太后去世，哲宗亲政恢复新法</span></div>
+            <div class="event-item"><span class="event-year">1098</span><span>绍圣开边，收复河湟</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 徽宗 -->
+    <div class="timeline-entry">
+      <div class="entry-content">
+        <div class="entry-left">
+          <div class="events-panel">
+            <h4>📜 重大事件</h4>
+            <div class="event-item"><span class="event-year">1100</span><span>向太后立端王为帝</span></div>
+            <div class="event-item"><span class="event-year">1102</span><span>蔡京为相，大兴党禁</span></div>
+            <div class="event-item"><span class="event-year">1104</span><span>崇宁兴学</span></div>
+            <div class="event-item"><span class="event-year">1115</span><span>金朝建立</span></div>
+            <div class="event-item"><span class="event-year">1120</span><span>方腊起义 · 海上之盟（联金灭辽）</span></div>
+            <div class="event-item"><span class="event-year">1125</span><span>金兵南下，徽宗传位钦宗</span></div>
+          </div>
+        </div>
+        <div class="entry-center">
+          <div class="year-marker">1100</div>
+        </div>
+        <div class="entry-right">
+          <div class="emperor-card">
+            <div class="order">8</div>
+            <div class="emperor-name">宋徽宗</div>
+            <div class="emperor-realname">赵佶 · 年号：建中靖国、崇宁、大观、政和、重和、宣和</div>
+            <div class="emperor-meta">
+              <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1082-1135（53岁）</span></div>
+              <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1100-1125（25年）</span></div>
+            </div>
+            <div class="life-bar" data-birth="1082" data-death="1135" data-start="1100" data-end="1125">
+              <div class="reign"></div>
+            </div>
+            <div class="life-bar-labels"><span>1082</span><span>1100 在位 1125</span><span>†1135</span></div>
+            <div class="relation-tag">神宗第十一子 · 哲宗之弟 · 亡国之君</div>
+          </div>
+          <div class="ministers-panel">
+            <h4>👤 重要大臣</h4>
+            <div class="minister-list">
+              <span class="minister-tag negative">蔡京</span>
+              <span class="minister-tag negative">童贯</span>
+              <span class="minister-tag negative">高俅</span>
+              <span class="minister-tag negative">朱勔</span>
+              <span class="minister-tag">李纲</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 钦宗 -->
+    <div class="timeline-entry">
+      <div class="entry-content">
+        <div class="entry-left">
+          <div class="emperor-card">
+            <div class="order">9</div>
+            <div class="emperor-name">宋钦宗</div>
+            <div class="emperor-realname">赵桓 · 年号：靖康</div>
+            <div class="emperor-meta">
+              <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1100-1161（61岁）</span></div>
+              <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1125-1127（2年）</span></div>
+            </div>
+            <div class="life-bar" data-birth="1100" data-death="1161" data-start="1125" data-end="1127">
+              <div class="reign"></div>
+            </div>
+            <div class="life-bar-labels"><span>1100</span><span>1125-1127</span><span>†1161（囚于金）</span></div>
+            <div class="relation-tag">徽宗长子 · 北宋末帝</div>
+          </div>
+          <div class="ministers-panel">
+            <h4>👤 重要大臣</h4>
+            <div class="minister-list">
+              <span class="minister-tag">李纲</span>
+              <span class="minister-tag">种师道</span>
+              <span class="minister-tag negative">张邦昌</span>
+            </div>
+          </div>
+        </div>
+        <div class="entry-center">
+          <div class="year-marker">1125</div>
+        </div>
+        <div class="entry-right">
+          <div class="events-panel">
+            <h4>📜 重大事件</h4>
+            <div class="event-item"><span class="event-year">1125</span><span>金兵第一次围攻开封</span></div>
+            <div class="event-item"><span class="event-year">1126</span><span>金兵第二次围攻开封</span></div>
+            <div class="event-item"><span class="event-year">1127</span><span>靖康之变 · 二帝被掳北上 · 北宋灭亡</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end north timeline -->
+
+  <!-- ==================== 过渡 ==================== -->
+  <div class="transition-divider">
+    <div class="divider-line"></div>
+    <div class="divider-text">靖康之变 · 1127年 · 北宋灭亡</div>
+  </div>
+
+  <!-- ==================== 南宋 ==================== -->
+  <div class="section-title south">南 宋</div>
+  <div class="period" style="text-align:center;color:#999;font-size:13px;margin-bottom:20px;">公元1127年 — 1279年 · 都城：临安（杭州）</div>
+
+  <div class="timeline south">
+
+    <!-- 高宗 -->
+    <div class="timeline-entry">
+      <div class="entry-content">
+        <div class="entry-left">
+          <div class="emperor-card">
+            <div class="order">10</div>
+            <div class="emperor-name">宋高宗</div>
+            <div class="emperor-realname">赵构 · 年号：建炎、绍兴</div>
+            <div class="emperor-meta">
+              <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1107-1187（80岁）</span></div>
+              <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1127-1162（35年）</span></div>
+            </div>
+            <div class="life-bar" data-birth="1107" data-death="1187" data-start="1127" data-end="1162">
+              <div class="reign"></div>
+            </div>
+            <div class="life-bar-labels"><span>1107</span><span>1127 在位 1162</span><span>†1187</span></div>
+            <div class="relation-tag">徽宗第九子 · 南宋开国皇帝</div>
+          </div>
+          <div class="ministers-panel">
+            <h4>👤 重要大臣</h4>
+            <div class="minister-list">
+              <span class="minister-tag">岳飞</span>
+              <span class="minister-tag">韩世忠</span>
+              <span class="minister-tag">李纲</span>
+              <span class="minister-tag">宗泽</span>
+              <span class="minister-tag negative">秦桧</span>
+              <span class="minister-tag">张俊</span>
+              <span class="minister-tag">刘光世</span>
+            </div>
+          </div>
+        </div>
+        <div class="entry-center">
+          <div class="year-marker">1127</div>
+        </div>
+        <div class="entry-right">
+          <div class="events-panel">
+            <h4>📜 重大事件</h4>
+            <div class="event-item"><span class="event-year">1127</span><span>赵构南渡，建立南宋</span></div>
+            <div class="event-item"><span class="event-year">1130</span><span>黄天荡之战</span></div>
+            <div class="event-item"><span class="event-year">1134</span><span>岳飞北伐收复襄阳六郡</span></div>
+            <div class="event-item"><span class="event-year">1140</span><span>郾城大捷，岳家军大破金兀术</span></div>
+            <div class="event-item"><span class="event-year">1141</span><span>绍兴和议 · 岳飞被害（莫须有）</span></div>
+            <div class="event-item"><span class="event-year">1162</span><span>禅位于孝宗，做太上皇</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 孝宗 -->
+    <div class="timeline-entry">
+      <div class="entry-content">
+        <div class="entry-left">
+          <div class="events-panel">
+            <h4>📜 重大事件</h4>
+            <div class="event-item"><span class="event-year">1162</span><span>为岳飞平反</span></div>
+            <div class="event-item"><span class="event-year">1163</span><span>隆兴北伐（失败）</span></div>
+            <div class="event-item"><span class="event-year">1164</span><span>隆兴和议</span></div>
+            <div class="event-item"><span class="event-year">1170</span><span>乾淳之治，南宋最盛时期</span></div>
+          </div>
+        </div>
+        <div class="entry-center">
+          <div class="year-marker">1162</div>
+        </div>
+        <div class="entry-right">
+          <div class="emperor-card">
+            <div class="order">11</div>
+            <div class="emperor-name">宋孝宗</div>
+            <div class="emperor-realname">赵昚 · 年号：隆兴、乾道、淳熙</div>
+            <div class="emperor-meta">
+              <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1127-1194（67岁）</span></div>
+              <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1162-1189（27年）</span></div>
+            </div>
+            <div class="life-bar" data-birth="1127" data-death="1194" data-start="1162" data-end="1189">
+              <div class="reign"></div>
+            </div>
+            <div class="life-bar-labels"><span>1127</span><span>1162 在位 1189</span><span>†1194</span></div>
+            <div class="relation-tag">太祖七世孙 · 高宗养子 · 南宋最贤明</div>
+          </div>
+          <div class="ministers-panel">
+            <h4>👤 重要大臣</h4>
+            <div class="minister-list">
+              <span class="minister-tag">虞允文</span>
+              <span class="minister-tag">陆游</span>
+              <span class="minister-tag">朱熹</span>
+              <span class="minister-tag">辛弃疾</span>
+              <span class="minister-tag">陈亮</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 光宗 -->
+    <div class="timeline-entry">
+      <div class="entry-content">
+        <div class="entry-left">
+          <div class="emperor-card">
+            <div class="order">12</div>
+            <div class="emperor-name">宋光宗</div>
+            <div class="emperor-realname">赵惇 · 年号：绍熙</div>
+            <div class="emperor-meta">
+              <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1147-1200（53岁）</span></div>
+              <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1189-1194（5年）</span></div>
+            </div>
+            <div class="life-bar" data-birth="1147" data-death="1200" data-start="1189" data-end="1194">
+              <div class="reign"></div>
+            </div>
+            <div class="life-bar-labels"><span>1147</span><span>1189-1194</span><span>†1200</span></div>
+            <div class="relation-tag">孝宗第三子 · 精神疾病被迫退位</div>
+          </div>
+        </div>
+        <div class="entry-center">
+          <div class="year-marker">1189</div>
+        </div>
+        <div class="entry-right">
+          <div class="events-panel">
+            <h4>📜 重大事件</h4>
+            <div class="event-item"><span class="event-year">1189</span><span>金世宗去世，金章宗即位</span></div>
+            <div class="event-item"><span class="event-year">1194</span><span>绍熙内禅，被迫退位</span></div>
+          </div>
+          <div class="ministers-panel" style="margin-top:8px;">
+            <h4>👤 重要大臣</h4>
+            <div class="minister-list">
+              <span class="minister-tag">赵汝愚</span>
+              <span class="minister-tag">韩侂胄</span>
+              <span class="minister-tag">留正</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 宁宗 -->
+    <div class="timeline-entry">
+      <div class="entry-content">
+        <div class="entry-left">
+          <div class="events-panel">
+            <h4>📜 重大事件</h4>
+            <div class="event-item"><span class="event-year">1195</span><span>庆元党禁（禁理学）</span></div>
+            <div class="event-item"><span class="event-year">1206</span><span>开禧北伐（韩侂胄，失败）</span></div>
+            <div class="event-item"><span class="event-year">1207</span><span>韩侂胄被杀，嘉定和议</span></div>
+            <div class="event-item"><span class="event-year">1206</span><span>蒙古成吉思汗建国</span></div>
+          </div>
+        </div>
+        <div class="entry-center">
+          <div class="year-marker">1194</div>
+        </div>
+        <div class="entry-right">
+          <div class="emperor-card">
+            <div class="order">13</div>
+            <div class="emperor-name">宋宁宗</div>
+            <div class="emperor-realname">赵扩 · 年号：庆元、嘉泰、开禧、嘉定</div>
+            <div class="emperor-meta">
+              <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1168-1224（56岁）</span></div>
+              <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1194-1224（30年）</span></div>
+            </div>
+            <div class="life-bar" data-birth="1168" data-death="1224" data-start="1194" data-end="1224">
+              <div class="reign"></div>
+            </div>
+            <div class="life-bar-labels"><span>1168</span><span>1194 在位</span><span>1224</span></div>
+            <div class="relation-tag">光宗第二子</div>
+          </div>
+          <div class="ministers-panel">
+            <h4>👤 重要大臣</h4>
+            <div class="minister-list">
+              <span class="minister-tag negative">韩侂胄</span>
+              <span class="minister-tag negative">史弥远</span>
+              <span class="minister-tag">朱熹</span>
+              <span class="minister-tag">辛弃疾</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 理宗 -->
+    <div class="timeline-entry">
+      <div class="entry-content">
+        <div class="entry-left">
+          <div class="emperor-card">
+            <div class="order">14</div>
+            <div class="emperor-name">宋理宗</div>
+            <div class="emperor-realname">赵昀 · 年号：宝庆、绍定、端平、嘉熙、淳祐、宝祐、开庆、景定</div>
+            <div class="emperor-meta">
+              <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1205-1264（59岁）</span></div>
+              <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1224-1264（40年）</span></div>
+            </div>
+            <div class="life-bar" data-birth="1205" data-death="1264" data-start="1224" data-end="1264">
+              <div class="reign"></div>
+            </div>
+            <div class="life-bar-labels"><span>1205</span><span>1224 在位</span><span>1264</span></div>
+            <div class="relation-tag">太祖十世孙 · 宁宗养子 · 非嫡系入继</div>
+          </div>
+          <div class="ministers-panel">
+            <h4>👤 重要大臣</h4>
+            <div class="minister-list">
+              <span class="minister-tag negative">史弥远</span>
+              <span class="minister-tag negative">贾似道</span>
+              <span class="minister-tag">孟珙</span>
+              <span class="minister-tag">余玠</span>
+              <span class="minister-tag">杜杲</span>
+            </div>
+          </div>
+        </div>
+        <div class="entry-center">
+          <div class="year-marker">1224</div>
+        </div>
+        <div class="entry-right">
+          <div class="events-panel">
+            <h4>📜 重大事件</h4>
+            <div class="event-item"><span class="event-year">1233</span><span>端平入洛（收复三京，旋即失败）</span></div>
+            <div class="event-item"><span class="event-year">1234</span><span>联蒙灭金</span></div>
+            <div class="event-item"><span class="event-year">1235</span><span>蒙宋战争全面爆发</span></div>
+            <div class="event-item"><span class="event-year">1241</span><span>理学成为官方哲学</span></div>
+            <div class="event-item"><span class="event-year">1259</span><span>钓鱼城之战，蒙哥汗身亡</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 度宗 -->
+    <div class="timeline-entry">
+      <div class="entry-content">
+        <div class="entry-left">
+          <div class="events-panel">
+            <h4>📜 重大事件</h4>
+            <div class="event-item"><span class="event-year">1267</span><span>忽必烈围攻襄阳（襄樊之战开始）</span></div>
+            <div class="event-item"><span class="event-year">1271</span><span>忽必烈建国号"元"</span></div>
+            <div class="event-item"><span class="event-year">1273</span><span>襄阳失陷（坚守六年）</span></div>
+          </div>
+        </div>
+        <div class="entry-center">
+          <div class="year-marker">1264</div>
+        </div>
+        <div class="entry-right">
+          <div class="emperor-card">
+            <div class="order">15</div>
+            <div class="emperor-name">宋度宗</div>
+            <div class="emperor-realname">赵禥 · 年号：咸淳</div>
+            <div class="emperor-meta">
+              <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1240-1274（34岁）</span></div>
+              <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1264-1274（10年）</span></div>
+            </div>
+            <div class="life-bar" data-birth="1240" data-death="1274" data-start="1264" data-end="1274">
+              <div class="reign"></div>
+            </div>
+            <div class="life-bar-labels"><span>1240</span><span>1264 在位</span><span>1274</span></div>
+            <div class="relation-tag">理宗之侄（荣王赵与芮之子）</div>
+          </div>
+          <div class="ministers-panel">
+            <h4>👤 重要大臣</h4>
+            <div class="minister-list">
+              <span class="minister-tag negative">贾似道</span>
+              <span class="minister-tag">文天祥</span>
+              <span class="minister-tag">吕文焕</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 恭帝 -->
+    <div class="timeline-entry">
+      <div class="entry-content">
+        <div class="entry-left">
+          <div class="emperor-card">
+            <div class="order">16</div>
+            <div class="emperor-name">宋恭帝</div>
+            <div class="emperor-realname">赵㬎 · 年号：德祐</div>
+            <div class="emperor-meta">
+              <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1271-1323（52岁）</span></div>
+              <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1274-1276（2年）</span></div>
+            </div>
+            <div class="life-bar" data-birth="1271" data-death="1323" data-start="1274" data-end="1276">
+              <div class="reign"></div>
+            </div>
+            <div class="life-bar-labels"><span>1271</span><span>1274-1276</span><span>†1323（出家为僧）</span></div>
+            <div class="relation-tag">度宗次子 · 4岁即位</div>
+          </div>
+        </div>
+        <div class="entry-center">
+          <div class="year-marker">1274</div>
+        </div>
+        <div class="entry-right">
+          <div class="events-panel">
+            <h4>📜 重大事件</h4>
+            <div class="event-item"><span class="event-year">1275</span><span>丁家洲之战，贾似道兵败被杀</span></div>
+            <div class="event-item"><span class="event-year">1276</span><span>元军入临安，恭帝降元</span></div>
+          </div>
+          <div class="ministers-panel" style="margin-top:8px;">
+            <h4>👤 重要大臣</h4>
+            <div class="minister-list">
+              <span class="minister-tag">文天祥</span>
+              <span class="minister-tag">陆秀夫</span>
+              <span class="minister-tag">张世杰</span>
+              <span class="minister-tag">谢太后（垂帘）</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 端宗 -->
+    <div class="timeline-entry">
+      <div class="entry-content">
+        <div class="entry-left">
+          <div class="events-panel">
+            <h4>📜 重大事件</h4>
+            <div class="event-item"><span class="event-year">1276</span><span>陈宜中、陆秀夫等拥立端宗于福州</span></div>
+            <div class="event-item"><span class="event-year">1277</span><span>文天祥兵败被俘</span></div>
+            <div class="event-item"><span class="event-year">1278</span><span>端宗病死于碙洲</span></div>
+          </div>
+        </div>
+        <div class="entry-center">
+          <div class="year-marker">1276</div>
+        </div>
+        <div class="entry-right">
+          <div class="emperor-card">
+            <div class="order">17</div>
+            <div class="emperor-name">宋端宗</div>
+            <div class="emperor-realname">赵昰 · 年号：景炎</div>
+            <div class="emperor-meta">
+              <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1269-1278（9岁）</span></div>
+              <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1276-1278（2年）</span></div>
+            </div>
+            <div class="life-bar" data-birth="1269" data-death="1278" data-start="1276" data-end="1278">
+              <div class="reign"></div>
+            </div>
+            <div class="life-bar-labels"><span>1269</span><span>1276 在位</span><span>1278</span></div>
+            <div class="relation-tag">度宗长子 · 流亡政权</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 帝昺 -->
+    <div class="timeline-entry">
+      <div class="entry-content">
+        <div class="entry-left">
+          <div class="emperor-card">
+            <div class="order">18</div>
+            <div class="emperor-name">宋末帝（帝昺）</div>
+            <div class="emperor-realname">赵昺 · 年号：祥兴</div>
+            <div class="emperor-meta">
+              <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1272-1279（7岁）</span></div>
+              <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1278-1279（1年）</span></div>
+            </div>
+            <div class="life-bar" data-birth="1272" data-death="1279" data-start="1278" data-end="1279">
+              <div class="reign"></div>
+            </div>
+            <div class="life-bar-labels"><span>1272</span><span>1278 在位</span><span>1279</span></div>
+            <div class="relation-tag">度宗第三子 · 宋朝末帝</div>
+          </div>
+        </div>
+        <div class="entry-center">
+          <div class="year-marker">1278</div>
+        </div>
+        <div class="entry-right">
+          <div class="events-panel">
+            <h4>📜 重大事件</h4>
+            <div class="event-item"><span class="event-year">1279</span><span>崖山海战，陆秀夫负帝昺投海</span></div>
+            <div class="event-item"><span class="event-year">1279</span><span>十万军民蹈海殉国，宋朝灭亡</span></div>
+            <div class="event-item"><span class="event-year">1283</span><span>文天祥于大都就义："人生自古谁无死，留取丹心照汗青"</span></div>
+          </div>
+          <div class="ministers-panel" style="margin-top:8px;">
+            <h4>👤 重要大臣</h4>
+            <div class="minister-list">
+              <span class="minister-tag">陆秀夫</span>
+              <span class="minister-tag">张世杰</span>
+              <span class="minister-tag">文天祥</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end south timeline -->
+
+  <!-- ==================== 世系关系图（SVG） ==================== -->
+  <div class="family-tree-section">
+    <h2>宋朝皇帝世系关系图</h2>
+    <div class="tree-container">
+      <svg class="tree-svg" viewBox="0 0 1300 920" width="1300" height="920" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="northGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#b8860b;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#daa520;stop-opacity:1" />
+          </linearGradient>
+          <linearGradient id="southGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#2e8b57;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#3cb371;stop-opacity:1" />
+          </linearGradient>
+          <filter id="shadow">
+            <feDropShadow dx="1" dy="2" stdDeviation="3" flood-opacity="0.15"/>
+          </filter>
+          <marker id="arrowN" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#b8860b"/>
+          </marker>
+          <marker id="arrowS" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#2e8b57"/>
+          </marker>
+          <marker id="arrowR" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#c41e3a"/>
+          </marker>
+        </defs>
+
+        <!-- 背景分区 -->
+        <rect x="0" y="0" width="1300" height="460" fill="#fdf8ed" rx="12"/>
+        <rect x="0" y="470" width="1300" height="450" fill="#f0f8f2" rx="12"/>
+        <text x="25" y="35" font-size="18" fill="#b8860b" font-weight="bold" font-family="PingFang SC,serif">北宋世系</text>
+        <text x="25" y="505" font-size="18" fill="#2e8b57" font-weight="bold" font-family="PingFang SC,serif">南宋世系</text>
+
+        <!-- ===== 北宋 ===== -->
+
+        <!-- 太祖 -->
+        <rect x="80" y="60" width="140" height="60" rx="8" fill="url(#northGrad)" filter="url(#shadow)"/>
+        <text x="150" y="85" text-anchor="middle" fill="#fff" font-size="15" font-weight="bold" font-family="PingFang SC,serif">①太祖 赵匡胤</text>
+        <text x="150" y="107" text-anchor="middle" fill="#fef3e2" font-size="11" font-family="PingFang SC,serif">960-976 在位</text>
+
+        <!-- 太宗 -->
+        <rect x="300" y="60" width="140" height="60" rx="8" fill="url(#northGrad)" filter="url(#shadow)"/>
+        <text x="370" y="85" text-anchor="middle" fill="#fff" font-size="15" font-weight="bold" font-family="PingFang SC,serif">②太宗 赵光义</text>
+        <text x="370" y="107" text-anchor="middle" fill="#fef3e2" font-size="11" font-family="PingFang SC,serif">976-997 在位</text>
+
+        <!-- 太祖→太宗（兄弟） -->
+        <line x1="220" y1="90" x2="298" y2="90" stroke="#b8860b" stroke-width="2" marker-end="url(#arrowN)"/>
+        <text x="260" y="82" text-anchor="middle" fill="#c41e3a" font-size="10" font-family="PingFang SC,serif">弟</text>
+
+        <!-- 真宗 -->
+        <rect x="300" y="160" width="140" height="60" rx="8" fill="url(#northGrad)" filter="url(#shadow)"/>
+        <text x="370" y="185" text-anchor="middle" fill="#fff" font-size="15" font-weight="bold" font-family="PingFang SC,serif">③真宗 赵恒</text>
+        <text x="370" y="207" text-anchor="middle" fill="#fef3e2" font-size="11" font-family="PingFang SC,serif">997-1022 在位</text>
+
+        <!-- 太宗→真宗 -->
+        <line x1="370" y1="120" x2="370" y2="158" stroke="#b8860b" stroke-width="2" marker-end="url(#arrowN)"/>
+        <text x="385" y="142" fill="#b8860b" font-size="10" font-family="PingFang SC,serif">第三子</text>
+
+        <!-- 仁宗 -->
+        <rect x="300" y="260" width="140" height="60" rx="8" fill="url(#northGrad)" filter="url(#shadow)"/>
+        <text x="370" y="285" text-anchor="middle" fill="#fff" font-size="15" font-weight="bold" font-family="PingFang SC,serif">④仁宗 赵祯</text>
+        <text x="370" y="307" text-anchor="middle" fill="#fef3e2" font-size="11" font-family="PingFang SC,serif">1022-1063 在位</text>
+
+        <!-- 真宗→仁宗 -->
+        <line x1="370" y1="220" x2="370" y2="258" stroke="#b8860b" stroke-width="2" marker-end="url(#arrowN)"/>
+        <text x="385" y="242" fill="#b8860b" font-size="10" font-family="PingFang SC,serif">第六子</text>
+
+        <!-- 英宗（太宗曾孙、仁宗养子） -->
+        <rect x="540" y="260" width="140" height="60" rx="8" fill="url(#northGrad)" filter="url(#shadow)"/>
+        <text x="610" y="285" text-anchor="middle" fill="#fff" font-size="15" font-weight="bold" font-family="PingFang SC,serif">⑤英宗 赵曙</text>
+        <text x="610" y="307" text-anchor="middle" fill="#fef3e2" font-size="11" font-family="PingFang SC,serif">1063-1067 在位</text>
+
+        <!-- 仁宗→英宗（养子关系） -->
+        <line x1="440" y1="290" x2="538" y2="290" stroke="#c41e3a" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#arrowR)"/>
+        <text x="490" y="282" text-anchor="middle" fill="#c41e3a" font-size="10" font-family="PingFang SC,serif">养子</text>
+
+        <!-- 太宗→英宗（血缘虚线） -->
+        <path d="M440 95 Q500 95 500 180 Q500 240 540 265" stroke="#999" stroke-width="1.5" stroke-dasharray="4,3" fill="none"/>
+        <text x="510" y="180" fill="#999" font-size="9" font-family="PingFang SC,serif">曾孙</text>
+
+        <!-- 神宗 -->
+        <rect x="540" y="360" width="140" height="60" rx="8" fill="url(#northGrad)" filter="url(#shadow)"/>
+        <text x="610" y="385" text-anchor="middle" fill="#fff" font-size="15" font-weight="bold" font-family="PingFang SC,serif">⑥神宗 赵顼</text>
+        <text x="610" y="407" text-anchor="middle" fill="#fef3e2" font-size="11" font-family="PingFang SC,serif">1067-1085 在位</text>
+
+        <!-- 英宗→神宗 -->
+        <line x1="610" y1="320" x2="610" y2="358" stroke="#b8860b" stroke-width="2" marker-end="url(#arrowN)"/>
+        <text x="625" y="342" fill="#b8860b" font-size="10" font-family="PingFang SC,serif">长子</text>
+
+        <!-- 哲宗 -->
+        <rect x="750" y="260" width="140" height="60" rx="8" fill="url(#northGrad)" filter="url(#shadow)"/>
+        <text x="820" y="285" text-anchor="middle" fill="#fff" font-size="15" font-weight="bold" font-family="PingFang SC,serif">⑦哲宗 赵煦</text>
+        <text x="820" y="307" text-anchor="middle" fill="#fef3e2" font-size="11" font-family="PingFang SC,serif">1085-1100 在位</text>
+
+        <!-- 神宗→哲宗 -->
+        <path d="M680 380 Q720 380 740 340 Q755 310 750 285" stroke="#b8860b" stroke-width="2" fill="none" marker-end="url(#arrowN)"/>
+        <text x="730" y="345" fill="#b8860b" font-size="10" font-family="PingFang SC,serif">第六子</text>
+
+        <!-- 徽宗 -->
+        <rect x="950" y="260" width="140" height="60" rx="8" fill="url(#northGrad)" filter="url(#shadow)"/>
+        <text x="1020" y="285" text-anchor="middle" fill="#fff" font-size="15" font-weight="bold" font-family="PingFang SC,serif">⑧徽宗 赵佶</text>
+        <text x="1020" y="307" text-anchor="middle" fill="#fef3e2" font-size="11" font-family="PingFang SC,serif">1100-1125 在位</text>
+
+        <!-- 神宗→徽宗 -->
+        <path d="M680 390 Q800 430 950 300" stroke="#b8860b" stroke-width="2" fill="none" marker-end="url(#arrowN)"/>
+        <text x="830" y="385" fill="#b8860b" font-size="10" font-family="PingFang SC,serif">第十一子</text>
+
+        <!-- 哲宗→徽宗（兄弟） -->
+        <line x1="890" y1="290" x2="948" y2="290" stroke="#b8860b" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <text x="920" y="282" text-anchor="middle" fill="#c41e3a" font-size="10" font-family="PingFang SC,serif">弟</text>
+
+        <!-- 钦宗 -->
+        <rect x="950" y="360" width="140" height="60" rx="8" fill="url(#northGrad)" filter="url(#shadow)"/>
+        <text x="1020" y="385" text-anchor="middle" fill="#fff" font-size="15" font-weight="bold" font-family="PingFang SC,serif">⑨钦宗 赵桓</text>
+        <text x="1020" y="407" text-anchor="middle" fill="#fef3e2" font-size="11" font-family="PingFang SC,serif">1125-1127 在位</text>
+
+        <!-- 徽宗→钦宗 -->
+        <line x1="1020" y1="320" x2="1020" y2="358" stroke="#b8860b" stroke-width="2" marker-end="url(#arrowN)"/>
+        <text x="1040" y="342" fill="#b8860b" font-size="10" font-family="PingFang SC,serif">长子</text>
+
+        <!-- ===== 分隔线 ===== -->
+        <line x1="20" y1="465" x2="1280" y2="465" stroke="#c41e3a" stroke-width="2" stroke-dasharray="10,5"/>
+        <text x="650" y="462" text-anchor="middle" fill="#c41e3a" font-size="12" font-weight="bold" font-family="PingFang SC,serif">── 靖康之变 1127 ──</text>
+
+        <!-- ===== 南宋 ===== -->
+
+        <!-- 高宗 -->
+        <rect x="80" y="520" width="140" height="60" rx="8" fill="url(#southGrad)" filter="url(#shadow)"/>
+        <text x="150" y="545" text-anchor="middle" fill="#fff" font-size="15" font-weight="bold" font-family="PingFang SC,serif">⑩高宗 赵构</text>
+        <text x="150" y="567" text-anchor="middle" fill="#e8f5e9" font-size="11" font-family="PingFang SC,serif">1127-1162 在位</text>
+
+        <!-- 徽宗→高宗 -->
+        <path d="M960 320 Q900 440 220 530" stroke="#c41e3a" stroke-width="2" fill="none" marker-end="url(#arrowR)"/>
+        <text x="600" y="430" fill="#c41e3a" font-size="10" font-family="PingFang SC,serif">徽宗第九子</text>
+
+        <!-- 孝宗 -->
+        <rect x="310" y="520" width="140" height="60" rx="8" fill="url(#southGrad)" filter="url(#shadow)"/>
+        <text x="380" y="545" text-anchor="middle" fill="#fff" font-size="15" font-weight="bold" font-family="PingFang SC,serif">⑪孝宗 赵昚</text>
+        <text x="380" y="567" text-anchor="middle" fill="#e8f5e9" font-size="11" font-family="PingFang SC,serif">1162-1189 在位</text>
+
+        <!-- 高宗→孝宗（养子） -->
+        <line x1="220" y1="550" x2="308" y2="550" stroke="#c41e3a" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#arrowR)"/>
+        <text x="265" y="540" text-anchor="middle" fill="#c41e3a" font-size="10" font-family="PingFang SC,serif">养子</text>
+
+        <!-- 太祖→孝宗（血缘虚线） -->
+        <path d="M150 120 Q60 340 60 500 Q60 550 310 545" stroke="#999" stroke-width="1.5" stroke-dasharray="4,3" fill="none"/>
+        <text x="60" y="400" fill="#999" font-size="9" font-family="PingFang SC,serif" transform="rotate(-90,60,400)">太祖七世孙</text>
+
+        <!-- 光宗 -->
+        <rect x="310" y="620" width="140" height="60" rx="8" fill="url(#southGrad)" filter="url(#shadow)"/>
+        <text x="380" y="645" text-anchor="middle" fill="#fff" font-size="15" font-weight="bold" font-family="PingFang SC,serif">⑫光宗 赵惇</text>
+        <text x="380" y="667" text-anchor="middle" fill="#e8f5e9" font-size="11" font-family="PingFang SC,serif">1189-1194 在位</text>
+
+        <!-- 孝宗→光宗 -->
+        <line x1="380" y1="580" x2="380" y2="618" stroke="#2e8b57" stroke-width="2" marker-end="url(#arrowS)"/>
+        <text x="395" y="602" fill="#2e8b57" font-size="10" font-family="PingFang SC,serif">第三子</text>
+
+        <!-- 宁宗 -->
+        <rect x="310" y="720" width="140" height="60" rx="8" fill="url(#southGrad)" filter="url(#shadow)"/>
+        <text x="380" y="745" text-anchor="middle" fill="#fff" font-size="15" font-weight="bold" font-family="PingFang SC,serif">⑬宁宗 赵扩</text>
+        <text x="380" y="767" text-anchor="middle" fill="#e8f5e9" font-size="11" font-family="PingFang SC,serif">1194-1224 在位</text>
+
+        <!-- 光宗→宁宗 -->
+        <line x1="380" y1="680" x2="380" y2="718" stroke="#2e8b57" stroke-width="2" marker-end="url(#arrowS)"/>
+        <text x="395" y="702" fill="#2e8b57" font-size="10" font-family="PingFang SC,serif">第二子</text>
+
+        <!-- 理宗 -->
+        <rect x="560" y="720" width="140" height="60" rx="8" fill="url(#southGrad)" filter="url(#shadow)"/>
+        <text x="630" y="745" text-anchor="middle" fill="#fff" font-size="15" font-weight="bold" font-family="PingFang SC,serif">⑭理宗 赵昀</text>
+        <text x="630" y="767" text-anchor="middle" fill="#e8f5e9" font-size="11" font-family="PingFang SC,serif">1224-1264 在位</text>
+
+        <!-- 宁宗→理宗（养子） -->
+        <line x1="450" y1="750" x2="558" y2="750" stroke="#c41e3a" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#arrowR)"/>
+        <text x="504" y="740" text-anchor="middle" fill="#c41e3a" font-size="10" font-family="PingFang SC,serif">太祖十世孙</text>
+
+        <!-- 度宗 -->
+        <rect x="560" y="820" width="140" height="60" rx="8" fill="url(#southGrad)" filter="url(#shadow)"/>
+        <text x="630" y="845" text-anchor="middle" fill="#fff" font-size="15" font-weight="bold" font-family="PingFang SC,serif">⑮度宗 赵禥</text>
+        <text x="630" y="867" text-anchor="middle" fill="#e8f5e9" font-size="11" font-family="PingFang SC,serif">1264-1274 在位</text>
+
+        <!-- 理宗→度宗 -->
+        <line x1="630" y1="780" x2="630" y2="818" stroke="#2e8b57" stroke-width="2" marker-end="url(#arrowS)"/>
+        <text x="650" y="802" fill="#2e8b57" font-size="10" font-family="PingFang SC,serif">侄子</text>
+
+        <!-- 恭帝 -->
+        <rect x="800" y="720" width="130" height="55" rx="8" fill="url(#southGrad)" filter="url(#shadow)"/>
+        <text x="865" y="743" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">⑯恭帝 赵㬎</text>
+        <text x="865" y="763" text-anchor="middle" fill="#e8f5e9" font-size="10" font-family="PingFang SC,serif">1274-1276</text>
+
+        <!-- 端宗 -->
+        <rect x="950" y="720" width="130" height="55" rx="8" fill="url(#southGrad)" filter="url(#shadow)"/>
+        <text x="1015" y="743" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">⑰端宗 赵昰</text>
+        <text x="1015" y="763" text-anchor="middle" fill="#e8f5e9" font-size="10" font-family="PingFang SC,serif">1276-1278</text>
+
+        <!-- 帝昺 -->
+        <rect x="1100" y="720" width="130" height="55" rx="8" fill="url(#southGrad)" filter="url(#shadow)"/>
+        <text x="1165" y="743" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">⑱帝昺 赵昺</text>
+        <text x="1165" y="763" text-anchor="middle" fill="#e8f5e9" font-size="10" font-family="PingFang SC,serif">1278-1279</text>
+
+        <!-- 度宗→恭帝/端宗/帝昺 -->
+        <path d="M700 850 Q780 850 865 775" stroke="#2e8b57" stroke-width="2" fill="none" marker-end="url(#arrowS)"/>
+        <text x="770" y="830" fill="#2e8b57" font-size="10" font-family="PingFang SC,serif">次子</text>
+
+        <path d="M700 860 Q860 890 1015 775" stroke="#2e8b57" stroke-width="2" fill="none" marker-end="url(#arrowS)"/>
+        <text x="900" y="855" fill="#2e8b57" font-size="10" font-family="PingFang SC,serif">长子</text>
+
+        <path d="M700 870 Q950 910 1165 775" stroke="#2e8b57" stroke-width="2" fill="none" marker-end="url(#arrowS)"/>
+        <text x="1020" y="880" fill="#2e8b57" font-size="10" font-family="PingFang SC,serif">第三子</text>
+
+        <!-- 图例 -->
+        <rect x="1050" y="500" width="220" height="120" rx="8" fill="#fff" stroke="#ccc" stroke-width="1"/>
+        <text x="1070" y="522" font-size="12" font-weight="bold" fill="#333" font-family="PingFang SC,serif">图例</text>
+        <line x1="1070" y1="540" x2="1110" y2="540" stroke="#b8860b" stroke-width="2" marker-end="url(#arrowN)"/>
+        <text x="1120" y="544" font-size="11" fill="#333" font-family="PingFang SC,serif">父子传承</text>
+        <line x1="1070" y1="560" x2="1110" y2="560" stroke="#c41e3a" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#arrowR)"/>
+        <text x="1120" y="564" font-size="11" fill="#333" font-family="PingFang SC,serif">养子 / 旁系入继</text>
+        <line x1="1070" y1="580" x2="1110" y2="580" stroke="#b8860b" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <text x="1120" y="584" font-size="11" fill="#333" font-family="PingFang SC,serif">兄弟关系</text>
+        <line x1="1070" y1="600" x2="1110" y2="600" stroke="#999" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <text x="1120" y="604" font-size="11" fill="#333" font-family="PingFang SC,serif">远祖血缘</text>
+
+      </svg>
+    </div>
+  </div>
+
+</div><!-- end container -->
+
+<div class="footer">
+  <p>宋朝（960-1279），中国历史上承五代十国下启元朝的朝代，分北宋和南宋两个阶段，共历十八帝，享国三百一十九年。</p>
+  <p style="margin-top:8px;">数据来源：《宋史》《续资治通鉴长编》等 · 仅供学习参考</p>
+</div>
+
+<script>
+// ===== 甘特图：皇帝生卒与在位时间对照 =====
+(function() {
+  const emperors = [
+    { name: '太祖', birth: 927, death: 976, rs: 960, re: 976, type: 'north' },
+    { name: '太宗', birth: 939, death: 997, rs: 976, re: 997, type: 'north' },
+    { name: '真宗', birth: 968, death: 1022, rs: 997, re: 1022, type: 'north' },
+    { name: '仁宗', birth: 1010, death: 1063, rs: 1022, re: 1063, type: 'north' },
+    { name: '英宗', birth: 1032, death: 1067, rs: 1063, re: 1067, type: 'north' },
+    { name: '神宗', birth: 1048, death: 1085, rs: 1067, re: 1085, type: 'north' },
+    { name: '哲宗', birth: 1077, death: 1100, rs: 1085, re: 1100, type: 'north' },
+    { name: '徽宗', birth: 1082, death: 1135, rs: 1100, re: 1125, type: 'north' },
+    { name: '钦宗', birth: 1100, death: 1161, rs: 1125, re: 1127, type: 'north' },
+    { name: '高宗', birth: 1107, death: 1187, rs: 1127, re: 1162, type: 'south' },
+    { name: '孝宗', birth: 1127, death: 1194, rs: 1162, re: 1189, type: 'south' },
+    { name: '光宗', birth: 1147, death: 1200, rs: 1189, re: 1194, type: 'south' },
+    { name: '宁宗', birth: 1168, death: 1224, rs: 1194, re: 1224, type: 'south' },
+    { name: '理宗', birth: 1205, death: 1264, rs: 1224, re: 1264, type: 'south' },
+    { name: '度宗', birth: 1240, death: 1274, rs: 1264, re: 1274, type: 'south' },
+    { name: '恭帝', birth: 1271, death: 1323, rs: 1274, re: 1276, type: 'south' },
+    { name: '端宗', birth: 1269, death: 1278, rs: 1276, re: 1278, type: 'south' },
+    { name: '帝昺', birth: 1272, death: 1279, rs: 1278, re: 1279, type: 'south' },
+  ];
+
+  const minYear = 920;
+  const maxYear = 1330;
+  const totalYears = maxYear - minYear;
+
+  const container = document.getElementById('ganttChart');
+  
+  // Header with year ticks
+  let headerHTML = '<div class="gantt-header"><div class="gantt-label">年份</div><div class="gantt-bar-area" style="position:relative;height:30px;">';
+  for (let y = 950; y <= 1300; y += 50) {
+    const pct = ((y - minYear) / totalYears) * 100;
+    headerHTML += `<span class="gantt-year-tick" style="left:${pct}%">${y}</span>`;
+  }
+  headerHTML += '</div></div>';
+  container.innerHTML = headerHTML;
+
+  // Grid lines and rows
+  let bodyHTML = '<div class="gantt-body">';
+
+  emperors.forEach(emp => {
+    const color = emp.type === 'north' ? '#b8860b' : '#2e8b57';
+    const lifeLeft = ((emp.birth - minYear) / totalYears) * 100;
+    const lifeWidth = ((emp.death - emp.birth) / totalYears) * 100;
+    const reignLeft = ((emp.rs - minYear) / totalYears) * 100;
+    const reignWidth = ((emp.re - emp.rs) / totalYears) * 100;
+
+    bodyHTML += `
+      <div class="gantt-row">
+        <div class="gantt-label" style="color:${color}">${emp.name}</div>
+        <div class="gantt-bar-area">
+          <div class="gantt-bar" style="left:${lifeLeft}%;width:${lifeWidth}%;background:${color};">
+            <div class="tooltip">生卒：${emp.birth}-${emp.death}（${emp.death-emp.birth}岁）</div>
+          </div>
+          <div class="gantt-bar reign-bar" style="left:${reignLeft}%;width:${reignWidth}%;background:${color};">
+            <div class="tooltip">在位：${emp.rs}-${emp.re}（${emp.re-emp.rs}年）</div>
+          </div>
+        </div>
+      </div>`;
+  });
+
+  // Add grid lines
+  let gridHTML = '';
+  for (let y = 950; y <= 1300; y += 50) {
+    const pct = ((y - minYear) / totalYears) * 100;
+    gridHTML += `<div class="gantt-grid-line" style="left:calc(120px + (100% - 120px) * ${pct/100})"></div>`;
+  }
+
+  bodyHTML += '</div>';
+  container.innerHTML += bodyHTML;
+
+  // Life bars in timeline cards
+  document.querySelectorAll('.life-bar').forEach(bar => {
+    const birth = parseInt(bar.dataset.birth);
+    const death = parseInt(bar.dataset.death);
+    const start = parseInt(bar.dataset.start);
+    const end = parseInt(bar.dataset.end);
+    const total = death - birth;
+    const reignStart = ((start - birth) / total) * 100;
+    const reignWidth = ((end - start) / total) * 100;
+    const reign = bar.querySelector('.reign');
+    if (reign) {
+      reign.style.left = reignStart + '%';
+      reign.style.width = reignWidth + '%';
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>🎂 生日记录</title>
+<!-- Solar2Lunar: 农历转换库 -->
+<script src="https://cdn.jsdelivr.net/npm/solar2lunar@2.0.5/dist/index.min.js"></script>
+<script>window.solar2lunar = window.returnExports;</script>
+<style>
+/* ═══════════════ 像素风全局 ═══════════════ */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --px-bg:        #1a1a2e;
+  --px-surface:   #16213e;
+  --px-card:      #0f3460;
+  --px-accent:    #e94560;
+  --px-pink:      #ff6b9d;
+  --px-gold:      #ffd700;
+  --px-green:     #4ade80;
+  --px-cyan:      #22d3ee;
+  --px-text:      #e8e8e8;
+  --px-dim:       #8892a0;
+  --px-border:    #2a2a4a;
+  --px-shadow:    rgba(233,69,96,0.25);
+  --px-font:      'Press Start 2P', monospace;
+  --px-size:      10px;
+}
+
+body {
+  background: var(--px-bg);
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(233,69,96,0.06) 0%, transparent 60%),
+    radial-gradient(circle at 80% 70%, rgba(34,211,238,0.06) 0%, transparent 60%),
+    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.01) 2px, rgba(255,255,255,0.01) 4px);
+  color: var(--px-text);
+  font-family: var(--px-font);
+  font-size: var(--px-size);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 12px 40px;
+  image-rendering: pixelated;
+}
+
+/* ───── 扫描线 overlay ───── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(0deg,
+    transparent, transparent 2px,
+    rgba(0,0,0,0.08) 2px, rgba(0,0,0,0.08) 4px);
+  z-index: 9999;
+}
+
+/* ───── 像素容器 ───── */
+.px-box {
+  background: var(--px-surface);
+  border: 3px solid var(--px-border);
+  border-radius: 0;
+  padding: 24px 20px;
+  box-shadow:
+    inset 0 0 0 1px rgba(233,69,96,0.08),
+    4px 4px 0 rgba(0,0,0,0.4);
+  image-rendering: pixelated;
+  position: relative;
+}
+.px-box::before {
+  content: '';
+  position: absolute;
+  top: -3px; left: -3px; right: -3px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--px-accent), var(--px-cyan), var(--px-gold));
+}
+
+/* ───── 像素按钮 ───── */
+.px-btn {
+  font-family: var(--px-font);
+  font-size: 9px;
+  padding: 10px 20px;
+  border: 2px solid var(--px-border);
+  background: var(--px-card);
+  color: var(--px-text);
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.1s step-start;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+  image-rendering: pixelated;
+}
+.px-btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 rgba(0,0,0,0.5);
+}
+.px-btn:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+}
+.px-btn.primary {
+  background: var(--px-accent);
+  border-color: var(--px-pink);
+  color: #fff;
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+}
+.px-btn.danger {
+  background: #991b1b;
+  border-color: #dc2626;
+  color: #fff;
+}
+.px-btn.small {
+  padding: 6px 12px;
+  font-size: 8px;
+}
+
+/* ───── 像素输入框 ───── */
+.px-input {
+  font-family: var(--px-font);
+  font-size: 9px;
+  padding: 10px 12px;
+  background: #0a0a1a;
+  border: 2px solid var(--px-border);
+  color: var(--px-cyan);
+  outline: none;
+  width: 100%;
+  transition: border-color 0.1s step-start;
+  letter-spacing: 0.5px;
+}
+.px-input:focus {
+  border-color: var(--px-cyan);
+  box-shadow: 0 0 12px rgba(34,211,238,0.2);
+}
+.px-input::placeholder {
+  color: #3a3a5a;
+  letter-spacing: 0.5px;
+}
+
+/* ───── 标题 ───── */
+.title {
+  text-align: center;
+  margin-bottom: 28px;
+}
+.title h1 {
+  font-size: 18px;
+  color: var(--px-accent);
+  text-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+  letter-spacing: 3px;
+  margin-bottom: 6px;
+}
+.title h1 .blink {
+  animation: blink 1s step-end infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+.title p {
+  font-size: 8px;
+  color: var(--px-dim);
+  letter-spacing: 2px;
+}
+
+/* ───── 密码锁 ───── */
+#passwordGate {
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+#passwordGate .lock-icon {
+  font-size: 48px;
+  display: block;
+  margin-bottom: 16px;
+}
+#passwordGate h2 {
+  font-size: 12px;
+  color: var(--px-accent);
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+}
+#passwordGate .px-input {
+  text-align: center;
+  letter-spacing: 4px;
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+#passwordGate .error {
+  font-size: 8px;
+  color: var(--px-accent);
+  margin-top: 8px;
+  letter-spacing: 1px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+#passwordGate .error.show { opacity: 1; }
+#mainApp.hidden { display: none; }
+
+/* ───── 主界面 ───── */
+#mainApp {
+  width: 100%;
+  max-width: 560px;
+}
+
+/* ───── 添加表单 ───── */
+.form-box {
+  margin-bottom: 24px;
+}
+.form-row {
+  margin-bottom: 12px;
+}
+.form-row label {
+  display: block;
+  font-size: 8px;
+  color: var(--px-dim);
+  margin-bottom: 4px;
+  letter-spacing: 1px;
+}
+.form-row-inline {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.form-row-inline .px-input { flex: 1; }
+
+/* 日期类型切换 */
+.type-toggle {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+.type-btn {
+  flex: 1;
+  font-family: var(--px-font);
+  font-size: 8px;
+  padding: 8px;
+  border: 2px solid var(--px-border);
+  background: var(--px-card);
+  color: var(--px-dim);
+  cursor: pointer;
+  transition: all 0.1s step-start;
+  text-align: center;
+}
+.type-btn.active {
+  background: var(--px-accent);
+  border-color: var(--px-pink);
+  color: #fff;
+}
+.type-btn:hover:not(.active) {
+  border-color: var(--px-cyan);
+  color: var(--px-cyan);
+}
+
+/* ───── 生日卡片列表 ───── */
+.birthday-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.bday-card {
+  background: var(--px-card);
+  border: 2px solid var(--px-border);
+  padding: 16px;
+  position: relative;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+  animation: cardIn 0.3s step-start;
+}
+@keyframes cardIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.bday-card .name {
+  font-size: 12px;
+  color: var(--px-gold);
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+.bday-card .dates {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+.bday-card .dates span {
+  font-size: 8px;
+  color: var(--px-dim);
+  letter-spacing: 0.5px;
+}
+.bday-card .dates strong {
+  color: var(--px-text);
+  font-weight: normal;
+}
+.bday-card .countdown {
+  font-size: 10px;
+  color: var(--px-cyan);
+  letter-spacing: 1px;
+  padding-top: 8px;
+  border-top: 1px solid var(--px-border);
+}
+.bday-card .countdown.today {
+  color: var(--px-gold);
+  text-shadow: 0 0 8px rgba(255,215,0,0.3);
+}
+.bday-card .countdown.past {
+  color: var(--px-dim);
+}
+.bday-card .del-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-family: var(--px-font);
+  font-size: 8px;
+  padding: 4px 8px;
+  border: 1px solid #991b1b;
+  background: transparent;
+  color: #991b1b;
+  cursor: pointer;
+  transition: all 0.1s step-start;
+}
+.bday-card .del-btn:hover {
+  background: #991b1b;
+  color: #fff;
+}
+
+/* ───── 空状态 ───── */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--px-dim);
+  font-size: 9px;
+  letter-spacing: 1px;
+  line-height: 2;
+}
+.empty-state .emoji-big {
+  font-size: 32px;
+  margin-bottom: 12px;
+  display: block;
+}
+
+/* ───── 导航 ───── */
+.nav-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--px-border);
+}
+.nav-bar .nav-title {
+  font-size: 10px;
+  color: var(--px-dim);
+  letter-spacing: 1px;
+}
+
+/* ───── Toast ───── */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--px-card);
+  border: 2px solid var(--px-border);
+  padding: 12px 24px;
+  font-size: 8px;
+  color: var(--px-text);
+  letter-spacing: 1px;
+  z-index: 10001;
+  opacity: 0;
+  transition: opacity 0.2s step-start;
+  pointer-events: none;
+  white-space: nowrap;
+}
+.toast.show { opacity: 1; }
+
+/* ───── 进度条（倒计时装饰） ───── */
+.progress-bar {
+  height: 4px;
+  background: var(--px-border);
+  margin-top: 6px;
+  position: relative;
+}
+.progress-bar .fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--px-accent), var(--px-cyan));
+  transition: width 0.3s step-start;
+}
+
+/* ───── 加载中 ───── */
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: var(--px-dim);
+  font-size: 9px;
+  letter-spacing: 2px;
+}
+.loading .spin {
+  display: inline-block;
+  animation: spin 1s steps(8) infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ───── 响应式 ───── */
+@media (max-width: 480px) {
+  .title h1 { font-size: 14px; }
+  .bday-card .dates { flex-direction: column; gap: 4px; }
+  .form-row-inline { flex-direction: column; }
+  .px-box { padding: 16px 12px; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ═══ 密码锁 ═══ -->
+<div id="passwordGate">
+  <div class="title">
+    <h1>🔒 BIRTHDAY <span class="blink">_</span></h1>
+    <p>✦ 请输入密码 ✦</p>
+  </div>
+  <div class="px-box" style="text-align:center;">
+    <span class="lock-icon">🔒</span>
+    <h2>PASSWORD REQUIRED</h2>
+    <input type="password" id="passwordInput" class="px-input" placeholder="输入密码" maxlength="20" autocomplete="off">
+    <button class="px-btn primary" onclick="checkPassword()" style="width:100%;">UNLOCK</button>
+    <div class="error" id="passwordError">❌ 密码错误</div>
+  </div>
+</div>
+
+<!-- ═══ 主应用 ═══ -->
+<div id="mainApp" class="hidden">
+  <div class="title" style="margin-bottom:20px;">
+    <h1>🎂 BIRTHDAY <span class="blink">_</span></h1>
+    <p>✦ 生日记录 · 农历阳历 · 倒计时 ✦</p>
+  </div>
+  <div class="nav-bar">
+    <span class="nav-title">📋 BIRTHDAY LIST</span>
+    <button class="px-btn small primary" onclick="showAddForm()">+ ADD</button>
+  </div>
+
+  <!-- 添加表单（默认隐藏） -->
+  <div id="addForm" class="form-box px-box" style="display:none;">
+    <p style="font-size:9px; letter-spacing:1px; margin-bottom:16px;">+ NEW BIRTHDAY</p>
+
+    <div class="form-row">
+      <label>NAME</label>
+      <input type="text" id="inputName" class="px-input" placeholder="姓名" maxlength="30">
+    </div>
+
+    <div class="form-row">
+      <label>BIRTHDAY TYPE</label>
+      <div class="type-toggle">
+        <button class="type-btn active" id="typeSolar" onclick="setDateType('solar')">☀ 阳历</button>
+        <button class="type-btn" id="typeLunar" onclick="setDateType('lunar')">🌙 阴历</button>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label id="dateLabel">☀ 阳历日期</label>
+      <input type="date" id="inputDate" class="px-input">
+    </div>
+
+    <div id="lunarPreview" style="display:none; font-size:8px; color:var(--px-dim); letter-spacing:1px; margin-bottom:12px; padding:8px; background:rgba(34,211,238,0.05); border:1px solid var(--px-border);"></div>
+
+    <div class="form-row-inline" style="justify-content:flex-end; margin-top:16px;">
+      <button class="px-btn" onclick="hideAddForm()">CANCEL</button>
+      <button class="px-btn primary" onclick="saveBirthday()">SAVE</button>
+    </div>
+  </div>
+
+  <!-- 生日列表 -->
+  <div class="birthday-list" id="birthdayList"></div>
+
+  <!-- 空状态（JS 控制） -->
+  <div class="empty-state" id="emptyState" style="display:none;">
+    <span class="emoji-big">🎂</span>
+    还没有记录生日<br>
+    点击 [+ ADD] 添加吧
+  </div>
+  
+  <!-- 加载中 -->
+  <div class="loading" id="loadingState">
+    <span class="spin">⏳</span> 加载中...
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- ═══════════════ JavaScript ═══════════════ -->
+<script>
+// ═══ 密码验证 ═══
+let unlocked = false;
+let apiToken = '';
+
+async function checkPassword() {
+  const input = document.getElementById('passwordInput');
+  const error = document.getElementById('passwordError');
+  const btn = document.querySelector('#passwordGate .px-btn');
+  
+  btn.disabled = true;
+  btn.textContent = '验证中...';
+  
+  try {
+    const res = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: input.value })
+    });
+    const data = await res.json();
+    
+    if (res.ok && data.success) {
+      unlocked = true;
+      apiToken = data.token;
+      document.getElementById('passwordGate').style.display = 'none';
+      document.getElementById('mainApp').classList.remove('hidden');
+      loadBirthdays();
+    } else if (data.locked) {
+      error.textContent = data.message || '❌ 尝试次数过多，请稍后再试';
+      error.classList.add('show');
+      input.value = '';
+      setTimeout(() => error.classList.remove('show'), 3000);
+    } else {
+      error.textContent = data.message || '❌ 密码错误';
+      error.classList.add('show');
+      input.value = '';
+      input.focus();
+      setTimeout(() => error.classList.remove('show'), 2000);
+    }
+  } catch(e) {
+    error.textContent = '❌ 验证失败，请检查网络';
+    error.classList.add('show');
+    setTimeout(() => error.classList.remove('show'), 3000);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'UNLOCK';
+  }
+}
+
+// 回车提交密码
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('passwordInput').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') checkPassword();
+  });
+  document.getElementById('passwordInput').focus();
+});
+
+// ═══ 状态 ═══
+let currentType = 'solar'; // 'solar' | 'lunar'
+let editingId = null;
+let countdownTimer = null;
+let birthdays = [];
+const API_BASE = '/api/birthdays';
+
+// ═══ API 调用（带 Token） ═══
+async function apiGet() {
+  const res = await fetch(API_BASE, {
+    headers: { 'x-api-token': apiToken }
+  });
+  if (res.status === 401) { showToast('🔒 登录已过期，请刷新页面'); return []; }
+  if (!res.ok) throw new Error('API error: ' + res.status);
+  return res.json();
+}
+
+async function apiPost(data) {
+  const res = await fetch(API_BASE, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'x-api-token': apiToken },
+    body: JSON.stringify(data)
+  });
+  if (res.status === 401) { showToast('🔒 登录已过期，请刷新页面'); return null; }
+  if (!res.ok) throw new Error('API error: ' + res.status);
+  return res.json();
+}
+
+async function apiDelete(id) {
+  const res = await fetch(API_BASE + '/' + id, {
+    method: 'DELETE',
+    headers: { 'x-api-token': apiToken }
+  });
+  if (res.status === 401) { showToast('🔒 登录已过期，请刷新页面'); return null; }
+  if (!res.ok) throw new Error('API error: ' + res.status);
+  return res.json();
+}
+
+// ═══ 日期类型切换 ═══
+function setDateType(type) {
+  currentType = type;
+  document.getElementById('typeSolar').classList.toggle('active', type === 'solar');
+  document.getElementById('typeLunar').classList.toggle('active', type === 'lunar');
+  const label = document.getElementById('dateLabel');
+  label.textContent = type === 'solar' ? '☀ 阳历日期' : '🌙 阴历日期';
+  document.getElementById('lunarPreview').style.display = 'none';
+}
+
+// ═══ 农历转换预览 ═══
+function updateLunarPreview() {
+  const dateVal = document.getElementById('inputDate').value;
+  const preview = document.getElementById('lunarPreview');
+  if (!dateVal || currentType === 'solar') {
+    preview.style.display = 'none';
+    return;
+  }
+  const parts = dateVal.split('-');
+  if (parts.length !== 3) { preview.style.display = 'none'; return; }
+  const ly = parseInt(parts[0]), lm = parseInt(parts[1]), ld = parseInt(parts[2]);
+  try {
+    const result = solar2lunar.lunar2solar(ly, lm, ld, false);
+    if (result) {
+      const sd = `${result.cYear}-${String(result.cMonth).padStart(2,'0')}-${String(result.cDay).padStart(2,'0')}`;
+      preview.innerHTML = `🌙 农历 ${ly}年 ${lm}月 ${ld}日 → ☀ ${sd}`;
+      preview.style.display = 'block';
+    }
+  } catch(e) {
+    preview.style.display = 'none';
+  }
+}
+
+// ═══ 加载数据 ═══
+async function loadBirthdays() {
+  try {
+    document.getElementById('loadingState').style.display = 'block';
+    document.getElementById('emptyState').style.display = 'none';
+    birthdays = await apiGet();
+    document.getElementById('loadingState').style.display = 'none';
+    renderList();
+  } catch(e) {
+    document.getElementById('loadingState').style.display = 'none';
+    document.getElementById('emptyState').style.display = 'block';
+    document.getElementById('emptyState').innerHTML = '<span class="emoji-big">😵</span>加载失败<br>请检查网络连接';
+    showToast('❌ 加载失败: ' + e.message);
+  }
+}
+
+// ═══ 显示/隐藏表单 ═══
+function showAddForm() {
+  editingId = null;
+  document.getElementById('inputName').value = '';
+  document.getElementById('inputDate').value = '';
+  setDateType('solar');
+  document.getElementById('lunarPreview').style.display = 'none';
+  document.getElementById('addForm').style.display = 'block';
+  document.getElementById('inputName').focus();
+}
+function hideAddForm() {
+  document.getElementById('addForm').style.display = 'none';
+}
+
+// ═══ 保存生日 ═══
+async function saveBirthday() {
+  const name = document.getElementById('inputName').value.trim();
+  const dateVal = document.getElementById('inputDate').value;
+  if (!name) { showToast('请输入姓名'); return; }
+  if (!dateVal) { showToast('请选择日期'); return; }
+
+  const payload = {
+    name: name,
+    type: currentType,
+    date: dateVal
+  };
+
+  // 如果是阴历，存储阴历年份
+  if (currentType === 'lunar') {
+    const parts = dateVal.split('-');
+    payload.lunarYear = parseInt(parts[0]);
+    payload.lunarMonth = parseInt(parts[1]);
+    payload.lunarDay = parseInt(parts[2]);
+  }
+
+  try {
+    if (editingId) {
+      // 编辑功能暂不支持（API 无 PUT），先删后加
+      await apiDelete(editingId);
+      await apiPost(payload);
+      showToast('✅ 已更新');
+    } else {
+      await apiPost(payload);
+      showToast('✅ 已添加');
+    }
+    hideAddForm();
+    await loadBirthdays();
+  } catch(e) {
+    showToast('❌ 保存失败: ' + e.message);
+  }
+}
+
+// ═══ 删除 ═══
+async function deleteBirthday(id) {
+  if (!confirm('删除此生日记录？')) return;
+  try {
+    await apiDelete(id);
+    await loadBirthdays();
+    showToast('🗑️ 已删除');
+  } catch(e) {
+    showToast('❌ 删除失败: ' + e.message);
+  }
+}
+
+// ═══ 计算倒计时 ═══
+function calcCountdown(bday) {
+  const now = new Date();
+  const currentYear = now.getFullYear();
+
+  let targetDate = null;
+
+  if (bday.type === 'solar') {
+    const parts = bday.date.split('-');
+    targetDate = new Date(currentYear, parseInt(parts[1]) - 1, parseInt(parts[2]));
+    if (targetDate < new Date(currentYear, now.getMonth(), now.getDate())) {
+      targetDate = new Date(currentYear + 1, parseInt(parts[1]) - 1, parseInt(parts[2]));
+    }
+  } else {
+    try {
+      let result = solar2lunar.lunar2solar(currentYear, bday.lunarMonth, bday.lunarDay, false);
+      if (result) {
+        targetDate = new Date(result.cYear, result.cMonth - 1, result.cDay);
+        if (targetDate < new Date(currentYear, now.getMonth(), now.getDate())) {
+          result = solar2lunar.lunar2solar(currentYear + 1, bday.lunarMonth, bday.lunarDay, false);
+          if (result) targetDate = new Date(result.cYear, result.cMonth - 1, result.cDay);
+        }
+      }
+    } catch(e) {
+      return { text: '--', isToday: false, isPast: false, diffMs: 0 };
+    }
+  }
+
+  if (!targetDate) return { text: '--', isToday: false, isPast: false, diffMs: 0 };
+
+  const diffMs = targetDate.getTime() - now.getTime();
+  const isToday = targetDate.toDateString() === now.toDateString();
+
+  if (isToday) return { text: '🎉 今天就是生日！', isToday: true, isPast: false, diffMs: 0 };
+
+  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+  let text = '';
+  if (diffDays > 0) {
+    text = `距离生日还有 ${diffDays} 天`;
+  } else {
+    text = `距离生日还有不到 1 天`;
+  }
+
+  return { text, isToday: false, isPast: diffMs < 0, diffMs };
+}
+
+// ═══ 格式化日期显示 ═══
+function formatDateDisplay(bday) {
+  if (bday.type === 'solar') {
+    const parts = bday.date.split('-');
+    return `☀ ${parts[0]}年 ${parseInt(parts[1])}月 ${parseInt(parts[2])}日`;
+  } else {
+    const monthNames = ['正','二','三','四','五','六','七','八','九','十','冬','腊'];
+    const dayNames = ['初一','初二','初三','初四','初五','初六','初七','初八','初九','初十',
+      '十一','十二','十三','十四','十五','十六','十七','十八','十九','二十',
+      '廿一','廿二','廿三','廿四','廿五','廿六','廿七','廿八','廿九','三十'];
+    const m = monthNames[bday.lunarMonth - 1] || bday.lunarMonth;
+    const d = dayNames[bday.lunarDay - 1] || bday.lunarDay + '日';
+    return `🌙 ${m}月${d} (${bday.lunarYear}年)`;
+  }
+}
+
+// ═══ 渲染列表 ═══
+function renderList() {
+  const container = document.getElementById('birthdayList');
+  const empty = document.getElementById('emptyState');
+
+  if (birthdays.length === 0) {
+    container.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+
+  // 按距离最近生日排序
+  const withCountdown = birthdays.map(b => ({ ...b, cd: calcCountdown(b) }));
+  withCountdown.sort((a, b) => {
+    if (a.cd.isToday) return -1;
+    if (b.cd.isToday) return 1;
+    // 已过的放最后，未过的按剩余天数从小到大
+    if (a.cd.isPast && !b.cd.isPast) return 1;
+    if (!a.cd.isPast && b.cd.isPast) return -1;
+    return a.cd.diffMs - b.cd.diffMs;
+  });
+
+  container.innerHTML = withCountdown.map(b => {
+    const cd = b.cd;
+    let cdClass = '';
+    let cdText = cd.text;
+    if (cd.isToday) cdClass = 'today';
+    else if (cd.isPast) cdClass = 'past';
+
+    const dateDisplay = formatDateDisplay(b);
+
+    const now = new Date();
+    let progress = 0;
+    if (cd.diffMs > 0 && !cd.isToday) {
+      progress = Math.max(0, Math.min(100, (365 * 86400000 - cd.diffMs) / (365 * 86400000) * 100));
+    }
+
+    return `
+      <div class="bday-card">
+        <button class="del-btn" onclick="deleteBirthday('${b.id}')">✕</button>
+        <div class="name">🎂 ${b.name}</div>
+        <div class="dates">
+          <span>${dateDisplay}</span>
+        </div>
+        <div class="countdown ${cdClass}">${cdText}</div>
+        ${cd.diffMs > 0 && !cd.isToday ? `<div class="progress-bar"><div class="fill" style="width:${progress.toFixed(0)}%"></div></div>` : ''}
+      </div>
+    `;
+  }).join('');
+}
+
+// ═══ Toast ═══
+function showToast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(el._timer);
+  el._timer = setTimeout(() => el.classList.remove('show'), 2500);
+}
+
+// ═══ 暴露全局 ═══
+window.setDateType = setDateType;
+window.showAddForm = showAddForm;
+window.hideAddForm = hideAddForm;
+window.saveBirthday = saveBirthday;
+window.deleteBirthday = deleteBirthday;
+window.checkPassword = checkPassword;
+
+// ═══ 初始化（启动时由密码锁触发 loadBirthdays） ═══
+// 输入监听农历预览
+document.getElementById('inputDate').addEventListener('change', updateLunarPreview);
+// 倒计时更新
+countdownTimer = setInterval(renderList, 60000);
+</script>
+</body>
+</html>

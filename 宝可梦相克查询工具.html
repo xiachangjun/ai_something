@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>宝可梦属性相克大师指南</title>
+    <style>
+        :root {
+            --primary: #ee1515;
+            --secondary: #222222;
+            --white: #ffffff;
+            --gray-100: #f8f9fa;
+            --gray-200: #e9ecef;
+            --gray-300: #dee2e6;
+            --gray-800: #343a40;
+            
+            /* Type Colors */
+            --normal: #A8A878;
+            --fire: #F08030;
+            --water: #6890F0;
+            --grass: #78C850;
+            --electric: #F8D030;
+            --ice: #98D8D8;
+            --fighting: #C03028;
+            --poison: #A040A0;
+            --ground: #E0C068;
+            --flying: #A890F0;
+            --psychic: #F85888;
+            --bug: #A8B820;
+            --rock: #B8A038;
+            --ghost: #705898;
+            --dragon: #7038F8;
+            --dark: #705848;
+            --steel: #B8B8D0;
+            --fairy: #EE99AC;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+
+        body {
+            background-color: var(--gray-100);
+            color: var(--gray-800);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            background: white;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        /* Card View Styles */
+        .search-container {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .search-input {
+            width: 100%;
+            max-width: 500px;
+            padding: 1rem 1.5rem;
+            border-radius: 25px;
+            border: 2px solid var(--gray-300);
+            font-size: 1.1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+        }
+
+        .type-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .type-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-top: 5px solid transparent;
+        }
+
+        .type-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .type-badge {
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 5px;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        .card-section {
+            margin-top: 1rem;
+        }
+
+        .card-section h4 {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: white;
+            font-weight: 500;
+        }
+
+        /* Chart View Styles */
+        .chart-wrapper {
+            overflow-x: auto;
+            background: white;
+            padding: 1rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        table.type-chart {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+
+        .type-chart th, .type-chart td {
+            border: 1px solid #eee;
+            width: 45px;
+            height: 45px;
+            text-align: center;
+            padding: 2px;
+        }
+
+        .type-chart th {
+            background: var(--gray-100);
+        }
+
+        .type-chart th.type-col {
+            width: 80px;
+        }
+
+        .chart-badge {
+            display: inline-block;
+            width: 100%;
+            height: 100%;
+            line-height: 40px;
+            border-radius: 4px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .effect-cell {
+            font-weight: bold;
+            border-radius: 4px;
+        }
+
+        .eff-2 { background-color: #4CAF50; color: white; }
+        .eff-05 { background-color: #FF9800; color: white; }
+        .eff-0 { background-color: #333; color: white; }
+        .eff-1 { background-color: transparent; color: #999; }
+
+        /* Calculator Styles */
+        .calc-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .calc-selectors {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            justify-content: center;
+        }
+
+        .calc-select {
+            padding: 0.8rem;
+            border-radius: 8px;
+            border: 1px solid var(--gray-300);
+            min-width: 150px;
+        }
+
+        .calc-results {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .res-group {
+            background: var(--gray-100);
+            padding: 1rem;
+            border-radius: 10px;
+        }
+
+        .res-group h5 {
+            margin-bottom: 0.8rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--gray-300);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .multiplier {
+            background: var(--primary);
+            color: white;
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+        }
+
+        /* Type specific colors applied via JS or inline */
+        .bg-normal { background-color: var(--normal); }
+        .bg-fire { background-color: var(--fire); }
+        .bg-water { background-color: var(--water); }
+        .bg-grass { background-color: var(--grass); }
+        .bg-electric { background-color: var(--electric); }
+        .bg-ice { background-color: var(--ice); }
+        .bg-fighting { background-color: var(--fighting); }
+        .bg-poison { background-color: var(--poison); }
+        .bg-ground { background-color: var(--ground); }
+        .bg-flying { background-color: var(--flying); }
+        .bg-psychic { background-color: var(--psychic); }
+        .bg-bug { background-color: var(--bug); }
+        .bg-rock { background-color: var(--rock); }
+        .bg-ghost { background-color: var(--ghost); }
+        .bg-dragon { background-color: var(--dragon); }
+        .bg-dark { background-color: var(--dark); }
+        .bg-steel { background-color: var(--steel); }
+        .bg-fairy { background-color: var(--fairy); }
+
+        @media (max-width: 768px) {
+            .type-grid { grid-template-columns: 1fr; }
+            .calc-selectors { flex-direction: column; }
+            .type-chart { font-size: 0.7rem; }
+            .type-chart th, .type-chart td { width: 35px; height: 35px; }
+            .type-chart th.type-col { width: 60px; }
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #888;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>宝可梦属性相克大师指南</h1>
+        <p>全面的属性数据，助你成为顶尖训练家</p>
+    </header>
+
+    <div class="container">
+        <div class="tabs">
+            <button class="tab-btn active" onclick="showTab('cards')">🔍 属性详情</button>
+            <button class="tab-btn" onclick="showTab('chart')">📊 相克总表</button>
+            <button class="tab-btn" onclick="showTab('calc')">⚖️ 双属性计算器</button>
+        </div>
+
+        <!-- Card View -->
+        <section id="cards-section" class="content-section active">
+            <div class="search-container">
+                <input type="text" class="search-input" id="typeSearch" placeholder="搜索属性名..." oninput="filterCards()">
+            </div>
+            <div class="type-grid" id="cardsGrid">
+                <!-- Cards will be injected by JS -->
+            </div>
+        </section>
+
+        <!-- Chart View -->
+        <section id="chart-section" class="content-section">
+            <div class="chart-wrapper">
+                <table class="type-chart" id="matchupChart">
+                    <!-- Chart will be injected by JS -->
+                </table>
+            </div>
+            <div style="margin-top: 1rem; font-size: 0.8rem; color: #666; display: flex; gap: 1rem; justify-content: center;">
+                <span>🟩 2x (拔群)</span>
+                <span>🟧 0.5x (不佳)</span>
+                <span>⬛ 0x (无效)</span>
+            </div>
+        </section>
+
+        <!-- Calculator View -->
+        <section id="calc-section" class="content-section">
+            <div class="calc-container">
+                <h3 style="margin-bottom: 1.5rem; text-align: center;">防御属性弱点分析</h3>
+                <div class="calc-selectors">
+                    <select class="calc-select" id="type1" onchange="calculateDualType()">
+                        <option value="">属性 1</option>
+                    </select>
+                    <select class="calc-select" id="type2" onchange="calculateDualType()">
+                        <option value="">属性 2 (可选)</option>
+                    </select>
+                </div>
+                <div class="calc-results" id="calcResults">
+                    <p style="grid-column: 1/-1; text-align: center; color: #999;">请选择一个或两个属性来查看防御表现</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        &copy; 2026 宝可梦数据中心 | 基于第八世代及以后版本数据
+    </footer>
+
+    <script>
+        const types = [
+            { id: 'normal', name: '一般', color: '#A8A878' },
+            { id: 'fire', name: '火', color: '#F08030' },
+            { id: 'water', name: '水', color: '#6890F0' },
+            { id: 'grass', name: '草', color: '#78C850' },
+            { id: 'electric', name: '电', color: '#F8D030' },
+            { id: 'ice', name: '冰', color: '#98D8D8' },
+            { id: 'fighting', name: '格斗', color: '#C03028' },
+            { id: 'poison', name: '毒', color: '#A040A0' },
+            { id: 'ground', name: '地面', color: '#E0C068' },
+            { id: 'flying', name: '飞行', color: '#A890F0' },
+            { id: 'psychic', name: '超能力', color: '#F85888' },
+            { id: 'bug', name: '虫', color: '#A8B820' },
+            { id: 'rock', name: '岩石', color: '#B8A038' },
+            { id: 'ghost', name: '幽灵', color: '#705898' },
+            { id: 'dragon', name: '龙', color: '#7038F8' },
+            { id: 'dark', name: '恶', color: '#705848' },
+            { id: 'steel', name: '钢', color: '#B8B8D0' },
+            { id: 'fairy', name: '妖精', color: '#EE99AC' }
+        ];
+
+        // Matchup data: [attackerIndex][defenderIndex]
+        // 1: normal, 2: super effective, 0.5: not very effective, 0: no effect
+        const matchupMatrix = [
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.5, 0, 1, 1, 0.5, 1], // Normal
+            [1, 0.5, 0.5, 2, 1, 2, 1, 1, 1, 1, 1, 2, 0.5, 1, 0.5, 1, 2, 1], // Fire
+            [1, 2, 0.5, 0.5, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 0.5, 1, 1, 1], // Water
+            [1, 0.5, 2, 0.5, 1, 1, 1, 0.5, 2, 0.5, 1, 0.5, 2, 1, 0.5, 1, 0.5, 1], // Grass
+            [1, 1, 2, 0.5, 0.5, 1, 1, 1, 0, 2, 1, 1, 1, 1, 0.5, 1, 1, 1], // Electric
+            [1, 0.5, 0.5, 2, 1, 0.5, 1, 1, 2, 2, 1, 1, 1, 1, 2, 1, 0.5, 1], // Ice
+            [2, 1, 1, 1, 1, 2, 1, 0.5, 1, 0.5, 0.5, 0.5, 2, 0, 1, 2, 2, 0.5], // Fighting
+            [1, 1, 1, 2, 1, 1, 1, 0.5, 0.5, 1, 1, 1, 0.5, 0.5, 1, 1, 0, 2], // Poison
+            [1, 2, 1, 0.5, 2, 1, 1, 2, 1, 0, 1, 0.5, 2, 1, 1, 1, 2, 1], // Ground
+            [1, 1, 1, 2, 0.5, 1, 2, 1, 1, 1, 1, 2, 0.5, 1, 1, 1, 0.5, 1], // Flying
+            [1, 1, 1, 1, 1, 1, 2, 2, 1, 1, 0.5, 1, 1, 1, 1, 0, 0.5, 1], // Psychic
+            [1, 0.5, 1, 2, 1, 1, 0.5, 0.5, 1, 0.5, 2, 1, 1, 0.5, 1, 2, 0.5, 0.5], // Bug
+            [1, 2, 1, 1, 1, 2, 0.5, 1, 0.5, 2, 1, 2, 1, 1, 1, 1, 0.5, 1], // Rock
+            [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 2, 1, 0.5, 1, 1], // Ghost
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 0.5, 0], // Dragon
+            [1, 1, 1, 1, 1, 1, 0.5, 1, 1, 1, 2, 1, 1, 2, 1, 0.5, 1, 0.5], // Dark
+            [1, 0.5, 0.5, 1, 0.5, 2, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 0.5, 2], // Steel
+            [1, 0.5, 1, 1, 1, 1, 2, 0.5, 1, 1, 1, 1, 1, 1, 2, 2, 0.5, 1] // Fairy
+        ];
+
+        function init() {
+            renderCards();
+            renderChart();
+            initCalculator();
+        }
+
+        function showTab(tabId) {
+            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(tabId + '-section').classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        function renderCards() {
+            const grid = document.getElementById('cardsGrid');
+            grid.innerHTML = types.map((type, i) => {
+                const advantages = types.filter((_, j) => matchupMatrix[i][j] === 2);
+                const disadvantages = types.filter((_, j) => matchupMatrix[i][j] === 0.5);
+                const noEffect = types.filter((_, j) => matchupMatrix[i][j] === 0);
+                const weaknesses = types.filter((_, j) => matchupMatrix[j][i] === 2);
+                const resistances = types.filter((_, j) => matchupMatrix[j][i] === 0.5);
+                const immunity = types.filter((_, j) => matchupMatrix[j][i] === 0);
+
+                return `
+                    <div class="type-card" style="border-top-color: ${type.color}" data-name="${type.name}">
+                        <div class="type-header">
+                            <span class="type-badge bg-${type.id}">${type.name}</span>
+                        </div>
+                        <div class="card-section">
+                            <h4>⚔️ 攻击强项 (2x)</h4>
+                            <div class="tag-container">
+                                ${advantages.map(t => `<span class="tag bg-${t.id}">${t.name}</span>`).join('') || '<span style="color:#ccc;font-size:0.8rem">无</span>'}
+                            </div>
+                        </div>
+                        <div class="card-section">
+                            <h4>🛡️ 防御弱点 (2x)</h4>
+                            <div class="tag-container">
+                                ${weaknesses.map(t => `<span class="tag bg-${t.id}">${t.name}</span>`).join('') || '<span style="color:#ccc;font-size:0.8rem">无</span>'}
+                            </div>
+                        </div>
+                        <div class="card-section">
+                            <h4>🛡️ 防御抗性 (0.5x)</h4>
+                            <div class="tag-container">
+                                ${resistances.map(t => `<span class="tag bg-${t.id}">${t.name}</span>`).join('') || '<span style="color:#ccc;font-size:0.8rem">无</span>'}
+                                ${immunity.map(t => `<span class="tag" style="background:#333">${t.name}(0x)</span>`).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function filterCards() {
+            const query = document.getElementById('typeSearch').value.toLowerCase();
+            document.querySelectorAll('.type-card').forEach(card => {
+                card.style.display = card.dataset.name.toLowerCase().includes(query) ? 'block' : 'none';
+            });
+        }
+
+        function renderChart() {
+            const table = document.getElementById('matchupChart');
+            let html = `<thead><tr><th class="type-col">防守 \\ 进攻</th>${types.map(t => `<th><div class="bg-${t.id}" style="color:white;writing-mode:vertical-lr;padding:5px;height:60px;margin:auto">${t.name}</div></th>`).join('')}</tr></thead><tbody>`;
+            
+            for (let i = 0; i < types.length; i++) {
+                html += `<tr><td class="type-col"><span class="type-badge bg-${types[i].id}">${types[i].name}</span></td>`;
+                for (let j = 0; j < types.length; j++) {
+                    const val = matchupMatrix[j][i]; // Attacker j, Defender i
+                    let display = '';
+                    let cls = 'effect-cell';
+                    if (val === 2) { display = '2'; cls += ' eff-2'; }
+                    else if (val === 0.5) { display = '½'; cls += ' eff-05'; }
+                    else if (val === 0) { display = '0'; cls += ' eff-0'; }
+                    else { display = ''; cls += ' eff-1'; }
+                    html += `<td class="${cls}">${display}</td>`;
+                }
+                html += `</tr>`;
+            }
+            html += '</tbody>';
+            table.innerHTML = html;
+        }
+
+        function initCalculator() {
+            const s1 = document.getElementById('type1');
+            const s2 = document.getElementById('type2');
+            const options = types.map(t => `<option value="${t.id}">${t.name}</option>`).join('');
+            s1.innerHTML += options;
+            s2.innerHTML += options;
+        }
+
+        function calculateDualType() {
+            const t1Id = document.getElementById('type1').value;
+            const t2Id = document.getElementById('type2').value;
+            if (!t1Id && !t2Id) {
+                document.getElementById('calcResults').innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #999;">请选择一个或两个属性来查看防御表现</p>';
+                return;
+            }
+
+            const t1Idx = types.findIndex(t => t.id === t1Id);
+            const t2Idx = types.findIndex(t => t.id === t2Id);
+            
+            const results = types.map((attacker, i) => {
+                let multiplier = 1;
+                if (t1Idx !== -1) multiplier *= matchupMatrix[i][t1Idx];
+                if (t2Idx !== -1) multiplier *= matchupMatrix[i][t2Idx];
+                return { type: attacker, multiplier };
+            });
+
+            const groups = {
+                '4x': results.filter(r => r.multiplier === 4),
+                '2x': results.filter(r => r.multiplier === 2),
+                '0.5x': results.filter(r => r.multiplier === 0.5),
+                '0.25x': results.filter(r => r.multiplier === 0.25),
+                '0x': results.filter(r => r.multiplier === 0)
+            };
+
+            const labels = {
+                '4x': '极度弱点',
+                '2x': '弱点',
+                '0.5x': '抗性',
+                '0.25x': '极高抗性',
+                '0x': '免疫'
+            };
+
+            let html = '';
+            for (let key in groups) {
+                if (groups[key].length > 0) {
+                    html += `
+                        <div class="res-group">
+                            <h5>${labels[key]} <span class="multiplier">${key}</span></h5>
+                            <div class="tag-container">
+                                ${groups[key].map(r => `<span class="tag bg-${r.type.id}">${r.type.name}</span>`).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+
+            if (html === '') html = '<p style="grid-column: 1/-1; text-align: center;">该属性组合没有特殊的防御特征（全是 1x）</p>';
+            document.getElementById('calcResults').innerHTML = html;
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>

@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>法兰西君主世系简表 (987-1870)</title>
+<style>
+  :root{--bg:#f3f4f6;--card-bg:#fff;--early-color:#1e3a8a;--late-color:#991b1b;--text:#1c1917;--text-light:#6b7280;--border:#d1d5db;--event-bg:#eff6ff;--minister-bg:#fef9ee;--highlight:#2563eb;--gold:#b8860b;--rev-color:#dc2626}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:"PingFang SC","Microsoft YaHei","Noto Serif SC",serif;background:var(--bg);color:var(--text);line-height:1.6}
+  .header{text-align:center;padding:50px 20px 30px;background:linear-gradient(135deg,#0c1445 0%,#1e3a8a 40%,#1e40af 70%,#b8860b 100%);color:#e0e7ff;position:relative;overflow:hidden}
+  .header::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffd700' fill-opacity='0.06'%3E%3Cpath d='M20 5l3 10h10l-8 6 3 10-8-6-8 6 3-10-8-6h10z'/%3E%3C/g%3E%3C/svg%3E");opacity:.6}
+  .header h1{font-size:40px;font-weight:900;letter-spacing:10px;position:relative;z-index:1;text-shadow:2px 2px 4px rgba(0,0,0,.5)}
+  .header .subtitle{font-size:18px;margin-top:12px;color:#fbbf24;letter-spacing:6px;position:relative;z-index:1}
+  .header .period{font-size:14px;margin-top:8px;color:#93c5fd;letter-spacing:3px;position:relative;z-index:1}
+  .header .latin{font-size:13px;margin-top:4px;color:#a5b4fc;letter-spacing:2px;position:relative;z-index:1;font-style:italic}
+  .legend{display:flex;justify-content:center;gap:28px;padding:18px;background:#fff;border-bottom:2px solid var(--border);flex-wrap:wrap}
+  .legend-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-light)}
+  .legend-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0}
+  .container{max-width:1400px;margin:0 auto;padding:20px}
+  .section-title{text-align:center;padding:30px 20px 20px;font-size:28px;font-weight:bold;letter-spacing:6px;position:relative}
+  .section-title.early{color:var(--early-color)}.section-title.late{color:var(--late-color)}
+  .section-title::after{content:'';display:block;width:80px;height:3px;margin:12px auto 0}
+  .section-title.early::after{background:var(--early-color)}.section-title.late::after{background:var(--late-color)}
+  .timeline{position:relative;padding:20px 0}
+  .timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:4px;transform:translateX(-50%);z-index:0}
+  .timeline.early::before{background:var(--early-color)}.timeline.late::before{background:var(--late-color)}
+  .timeline-entry{display:flex;align-items:flex-start;position:relative;margin-bottom:20px}
+  .entry-content{display:flex;width:100%;align-items:flex-start}.entry-left,.entry-right{width:48%;padding:0 15px}
+  .entry-center{width:4%;display:flex;justify-content:center;position:relative;z-index:1}
+  .year-marker{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold;color:#fff;flex-shrink:0;z-index:2}
+  .early .year-marker{background:var(--early-color)}.late .year-marker{background:var(--late-color)}
+  .emperor-card{background:var(--card-bg);border-radius:12px;padding:20px;box-shadow:0 4px 20px rgba(0,0,0,.08);border-left:5px solid;position:relative;transition:transform .3s,box-shadow .3s}
+  .emperor-card:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,.15)}
+  .early .emperor-card{border-left-color:var(--early-color)}.late .emperor-card{border-left-color:var(--late-color)}
+  .emperor-card .order{position:absolute;top:-10px;right:15px;background:var(--highlight);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold}
+  .emperor-name{font-size:20px;font-weight:bold;margin-bottom:2px}
+  .emperor-latin{font-size:12px;color:var(--text-light);font-style:italic;margin-bottom:4px}
+  .emperor-meta{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;margin:10px 0;font-size:12px}
+  .meta-item{display:flex;align-items:center;gap:4px}.meta-label{color:var(--text-light);white-space:nowrap}.meta-value{font-weight:600}
+  .life-bar{height:8px;background:#eee;border-radius:4px;margin:10px 0 5px;position:relative;overflow:visible}
+  .life-bar .reign{position:absolute;height:100%;border-radius:4px;opacity:.8}
+  .early .life-bar .reign{background:var(--early-color)}.late .life-bar .reign{background:var(--late-color)}
+  .life-bar-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--text-light)}
+  .relation-tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;margin-top:6px;border:1px solid}
+  .early .relation-tag{background:#eff6ff;color:#1e3a8a;border-color:#93c5fd}
+  .late .relation-tag{background:#fef2f2;color:#991b1b;border-color:#fca5a5}
+  .dynasty-tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:10px;margin-top:4px;margin-left:4px;background:#fef3c7;color:#92400e;border:1px solid #fcd34d}
+  .events-panel{background:var(--event-bg);border-radius:10px;padding:14px;margin-top:5px;border:1px solid #bfdbfe}
+  .events-panel h4{font-size:13px;color:var(--highlight);margin-bottom:8px;display:flex;align-items:center;gap:5px}
+  .event-item{font-size:12px;padding:4px 0;border-bottom:1px dashed #bfdbfe;display:flex;gap:6px}
+  .event-item:last-child{border-bottom:none}
+  .event-year{color:var(--highlight);font-weight:bold;white-space:nowrap;min-width:42px}
+  .ministers-panel{background:var(--minister-bg);border-radius:10px;padding:14px;margin-top:8px;border:1px solid #fcd34d}
+  .ministers-panel h4{font-size:13px;color:#92400e;margin-bottom:8px;display:flex;align-items:center;gap:5px}
+  .minister-list{display:flex;flex-wrap:wrap;gap:5px}
+  .minister-tag{font-size:11px;padding:3px 8px;background:#fef9ee;color:#92400e;border-radius:12px;border:1px solid #fcd34d}
+  .minister-tag.negative{background:#fde8e8;color:#b91c1c;border-color:#f0b8b8}
+  .family-tree-section{margin:40px 0;padding:30px;background:#fff;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.06)}
+  .family-tree-section h2{text-align:center;font-size:24px;color:var(--text);margin-bottom:30px;letter-spacing:4px}
+  .tree-container{overflow-x:auto;padding:20px 0}
+  .lifecycle-section{margin:40px 0;padding:30px;background:#fff;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.06)}
+  .lifecycle-section h2{text-align:center;font-size:24px;color:var(--text);margin-bottom:10px;letter-spacing:4px}
+  .lifecycle-section .note{text-align:center;font-size:12px;color:var(--text-light);margin-bottom:20px}
+  .gantt-container{overflow-x:auto;padding:10px 0}.gantt-chart{min-width:900px}
+  .gantt-row{display:flex;align-items:center;height:30px;margin:2px 0}
+  .gantt-label{width:110px;font-size:11px;font-weight:600;text-align:right;padding-right:12px;flex-shrink:0;white-space:nowrap}
+  .gantt-bar-area{flex:1;position:relative;height:100%}
+  .gantt-bar{position:absolute;height:10px;top:50%;transform:translateY(-50%);border-radius:5px;opacity:.3;cursor:pointer}
+  .gantt-bar.reign-bar{height:18px;opacity:.85;z-index:1}
+  .gantt-bar:hover{opacity:1}
+  .gantt-bar .tooltip{display:none;position:absolute;bottom:calc(100% + 5px);left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:4px 8px;border-radius:4px;font-size:11px;white-space:nowrap;z-index:10}
+  .gantt-bar:hover .tooltip{display:block}
+  .gantt-header{display:flex;align-items:center;height:30px;border-bottom:2px solid var(--border);margin-bottom:10px}
+  .gantt-header .gantt-label{font-size:12px;color:var(--text-light)}
+  .gantt-year-tick{position:absolute;font-size:10px;color:var(--text-light);transform:translateX(-50%);top:0}
+  .transition-divider{text-align:center;padding:40px 20px;position:relative}
+  .transition-divider .divider-line{height:2px;background:linear-gradient(to right,transparent,var(--rev-color),transparent);margin:0 auto;max-width:600px}
+  .transition-divider .divider-text{display:inline-block;background:var(--bg);padding:8px 25px;position:relative;top:-14px;font-size:16px;color:var(--rev-color);font-weight:bold;letter-spacing:4px;border:2px solid var(--rev-color);border-radius:20px}
+  .mini-divider{text-align:center;padding:18px}
+  .mini-divider .mini-text{display:inline-block;background:#eff6ff;padding:5px 18px;font-size:12px;color:#1e3a8a;font-weight:bold;letter-spacing:2px;border:1px solid #93c5fd;border-radius:14px}
+  .mini-divider .mini-text.red{background:#fef2f2;color:#991b1b;border-color:#fca5a5}
+  .overview-stats{display:flex;justify-content:center;gap:28px;padding:20px;flex-wrap:wrap}
+  .stat-box{text-align:center;padding:15px 22px;background:#fff;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.06);min-width:110px}
+  .stat-number{font-size:26px;font-weight:bold;color:var(--highlight)}
+  .stat-desc{font-size:12px;color:var(--text-light);margin-top:4px}
+  .footer{text-align:center;padding:30px;color:var(--text-light);font-size:13px;border-top:2px solid var(--border);margin-top:40px}
+  @media(max-width:900px){.entry-content{flex-direction:column!important;align-items:center}.entry-left,.entry-right{width:100%;padding:10px 0}.entry-center{width:100%;justify-content:center;margin:10px 0}.timeline::before{display:none}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>法兰西君主世系简表</h1>
+  <div class="subtitle">Royaume de France</div>
+  <div class="period">中世纪王朝 (987-1589) ─ 波旁王朝与近代 (1589-1870)</div>
+  <div class="latin">⚜ 一个国王，一个法律，一个信仰 ⚜</div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:var(--early-color)"></div><span>中世纪王朝 (987-1589)</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--late-color)"></div><span>波旁/近代 (1589-1870)</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div><span>重要人物</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--rev-color)"></div><span>重大事件</span></div>
+</div>
+
+<div class="overview-stats">
+  <div class="stat-box"><div class="stat-number">883</div><div class="stat-desc">王朝跨度（年）</div></div>
+  <div class="stat-box"><div class="stat-number">22</div><div class="stat-desc">本表收录</div></div>
+  <div class="stat-box"><div class="stat-number">3+2</div><div class="stat-desc">王朝 + 帝国</div></div>
+  <div class="stat-box"><div class="stat-number">987</div><div class="stat-desc">卡佩开国</div></div>
+  <div class="stat-box"><div class="stat-number">1870</div><div class="stat-desc">帝制终结</div></div>
+  <div class="stat-box"><div class="stat-number">巴黎</div><div class="stat-desc">首都</div></div>
+</div>
+
+<div class="container">
+
+<div class="lifecycle-section">
+  <h2>君主生卒与在位时间对照图</h2>
+  <div class="note">浅色条为生卒跨度，深色条为在位时间，鼠标悬停查看详情</div>
+  <div class="gantt-container"><div class="gantt-chart" id="ganttChart"></div></div>
+</div>
+
+<!-- ==================== 中世纪王朝 ==================== -->
+<div class="section-title early">中 世 纪 王 朝</div>
+<div style="text-align:center;color:#999;font-size:13px;margin-bottom:20px;">987年 — 1589年 · 卡佩王朝 → 瓦卢瓦王朝 · 都城：巴黎</div>
+
+<div class="timeline early">
+
+  <!-- 于格·卡佩 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">1</div>
+        <div class="emperor-name">于格·卡佩</div>
+        <div class="emperor-latin">Hugues Capet</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">941-996（55岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">987-996（9年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:83.6%;width:16.4%"></div></div>
+        <div class="life-bar-labels"><span>941</span><span>987 在位</span><span>996</span></div>
+        <div class="relation-tag">卡佩王朝创建者 · 巴黎伯爵</div>
+        <div class="dynasty-tag">卡佩王朝</div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">987</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">987</span><span>贵族推选为法兰克国王，开创卡佩王朝</span></div>
+        <div class="event-item"><span class="event-year">987</span><span>确立世袭制，子罗贝尔加冕为共治国王</span></div>
+        <div class="event-item"><span class="event-year">996</span><span>王朝初创，实际控制仅限巴黎周边</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 腓力二世 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1190</span><span>参加第三次十字军东征</span></div>
+        <div class="event-item"><span class="event-year">1202</span><span>没收英王在法领地（诺曼底等）</span></div>
+        <div class="event-item"><span class="event-year">1214</span><span>布汶战役大胜，确立法国霸权</span></div>
+        <div class="event-item"><span class="event-year">1215</span><span>巴黎大学获特许状</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1180</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">2</div>
+        <div class="emperor-name">腓力二世（奥古斯都）</div>
+        <div class="emperor-latin">Philippe II Auguste</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1165-1223（57岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1180-1223（43年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:25.9%;width:74.1%"></div></div>
+        <div class="life-bar-labels"><span>1165</span><span>1180 在位</span><span>1223</span></div>
+        <div class="relation-tag">王权大扩张 · 领土翻四倍</div>
+        <div class="dynasty-tag">卡佩王朝</div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 路易九世 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">3</div>
+        <div class="emperor-name">路易九世（圣路易）</div>
+        <div class="emperor-latin">Louis IX · Saint Louis</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1214-1270（56岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1226-1270（44年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:21.4%;width:78.6%"></div></div>
+        <div class="life-bar-labels"><span>1214</span><span>1226 在位</span><span>1270</span></div>
+        <div class="relation-tag">腓力二世之孙 · 唯一封圣的法王</div>
+        <div class="dynasty-tag">卡佩王朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">让·德·茹安维尔</span>
+          <span class="minister-tag">布朗什（母后摄政）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1226</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1242</span><span>击败英王亨利三世</span></div>
+        <div class="event-item"><span class="event-year">1248</span><span>第七次十字军东征（被俘后赎回）</span></div>
+        <div class="event-item"><span class="event-year">1258</span><span>巴黎条约，英法暂时和平</span></div>
+        <div class="event-item"><span class="event-year">1270</span><span>第八次十字军东征，病死于突尼斯</span></div>
+        <div class="event-item"><span class="event-year">1297</span><span>被教廷封为圣人</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 腓力四世 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1302</span><span>首次召开三级会议</span></div>
+        <div class="event-item"><span class="event-year">1303</span><span>阿纳尼事件，教皇被软禁</span></div>
+        <div class="event-item"><span class="event-year">1307</span><span>逮捕圣殿骑士团，没收其财产</span></div>
+        <div class="event-item"><span class="event-year">1309</span><span>教廷迁至阿维尼翁（巴比伦之囚）</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1285</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">4</div>
+        <div class="emperor-name">腓力四世（美男子）</div>
+        <div class="emperor-latin">Philippe IV le Bel</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1268-1314（46岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1285-1314（29年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:37%;width:63%"></div></div>
+        <div class="life-bar-labels"><span>1268</span><span>1285 在位</span><span>1314</span></div>
+        <div class="relation-tag">路易九世之孙 · 卡佩王朝鼎盛</div>
+        <div class="dynasty-tag">卡佩王朝末期</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">纪尧姆·德·诺加雷</span>
+          <span class="minister-tag">昂盖朗·德·马里尼</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+</div>
+
+<div class="mini-divider"><div class="mini-text">卡佩绝嗣 · 1328年 · 瓦卢瓦旁支继位</div></div>
+
+<div class="timeline early">
+  <!-- 腓力六世 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">5</div>
+        <div class="emperor-name">腓力六世</div>
+        <div class="emperor-latin">Philippe VI de Valois</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1293-1350（57岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1328-1350（22年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:61.4%;width:38.6%"></div></div>
+        <div class="life-bar-labels"><span>1293</span><span>1328 在位</span><span>1350</span></div>
+        <div class="relation-tag">卡佩旁支 · 英王不服引发百年战争</div>
+        <div class="dynasty-tag">瓦卢瓦王朝</div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1328</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1337</span><span>百年战争爆发（1337-1453）</span></div>
+        <div class="event-item"><span class="event-year">1346</span><span>克雷西战役惨败，法国骑士遭英军长弓屠杀</span></div>
+        <div class="event-item"><span class="event-year">1348</span><span>黑死病席卷法国，死亡三分之一人口</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 查理五世 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1364</span><span>继位后大力整军，收复失地</span></div>
+        <div class="event-item"><span class="event-year">1369</span><span>重启百年战争，节节胜利</span></div>
+        <div class="event-item"><span class="event-year">1378</span><span>收回大部分领土</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1364</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">6</div>
+        <div class="emperor-name">查理五世（智者）</div>
+        <div class="emperor-latin">Charles V le Sage</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1338-1380（42岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1364-1380（16年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:61.9%;width:38.1%"></div></div>
+        <div class="life-bar-labels"><span>1338</span><span>1364 在位</span><span>1380</span></div>
+        <div class="relation-tag">腓力六世之孙 · 百年战争中兴</div>
+        <div class="dynasty-tag">瓦卢瓦王朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list"><span class="minister-tag">贝特朗·杜·盖克兰（统帅）</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 查理七世 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">7</div>
+        <div class="emperor-name">查理七世（胜利者）</div>
+        <div class="emperor-latin">Charles VII le Victorieux</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1403-1461（58岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1422-1461（39年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:32.8%;width:67.2%"></div></div>
+        <div class="life-bar-labels"><span>1403</span><span>1422 在位</span><span>1461</span></div>
+        <div class="relation-tag">查理六世之子 · 在圣女贞德帮助下翻转局势</div>
+        <div class="dynasty-tag">瓦卢瓦王朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">圣女贞德 ⚔</span>
+          <span class="minister-tag">雅克·柯尔（财政大臣）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1422</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1429</span><span>圣女贞德解奥尔良之围，查理加冕兰斯</span></div>
+        <div class="event-item"><span class="event-year">1431</span><span>贞德被英军烧死</span></div>
+        <div class="event-item"><span class="event-year">1435</span><span>阿拉斯和约，勃艮第倒戈</span></div>
+        <div class="event-item"><span class="event-year">1453</span><span>百年战争结束，法国胜利</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 路易十一 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1465</span><span>公益同盟战争（贵族叛乱）</span></div>
+        <div class="event-item"><span class="event-year">1477</span><span>勃艮第公爵查理战死，吞并勃艮第</span></div>
+        <div class="event-item"><span class="event-year">1481</span><span>兼并普罗旺斯、安茹</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1461</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">8</div>
+        <div class="emperor-name">路易十一（蜘蛛王）</div>
+        <div class="emperor-latin">Louis XI · "l'Universelle Araigne"</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1423-1483（60岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1461-1483（22年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:63.3%;width:36.7%"></div></div>
+        <div class="life-bar-labels"><span>1423</span><span>1461 在位</span><span>1483</span></div>
+        <div class="relation-tag">查理七世之子 · 以谋略统一法国</div>
+        <div class="dynasty-tag">瓦卢瓦王朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list"><span class="minister-tag">菲利普·德·科米纳</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 弗朗索瓦一世 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">9</div>
+        <div class="emperor-name">弗朗索瓦一世</div>
+        <div class="emperor-latin">François Iᵉʳ · "文艺复兴之王"</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1494-1547（52岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1515-1547（32年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:39.6%;width:60.4%"></div></div>
+        <div class="life-bar-labels"><span>1494</span><span>1515 在位</span><span>1547</span></div>
+        <div class="relation-tag">路易十二堂侄 · 法国文艺复兴推动者</div>
+        <div class="dynasty-tag">瓦卢瓦-昂古莱姆</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">达·芬奇（受邀来法）</span>
+          <span class="minister-tag">纪尧姆·布代</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1515</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1515</span><span>马里尼亚诺战役大胜</span></div>
+        <div class="event-item"><span class="event-year">1519</span><span>邀达·芬奇来法，推动文艺复兴</span></div>
+        <div class="event-item"><span class="event-year">1525</span><span>帕维亚战役被俘于西班牙</span></div>
+        <div class="event-item"><span class="event-year">1534</span><span>雅克·卡蒂埃探索加拿大</span></div>
+        <div class="event-item"><span class="event-year">1539</span><span>法语取代拉丁语成为官方语言</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 亨利二世 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1552</span><span>夺取梅斯、图尔、凡尔登</span></div>
+        <div class="event-item"><span class="event-year">1559</span><span>《卡托-康布雷齐和约》结束意大利战争</span></div>
+        <div class="event-item"><span class="event-year">1559</span><span>骑枪比武意外身亡</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1547</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">10</div>
+        <div class="emperor-name">亨利二世</div>
+        <div class="emperor-latin">Henri II</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1519-1559（40岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1547-1559（12年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:70%;width:30%"></div></div>
+        <div class="life-bar-labels"><span>1519</span><span>1547-1559</span><span>1559</span></div>
+        <div class="relation-tag">弗朗索瓦一世之子</div>
+        <div class="dynasty-tag">瓦卢瓦-昂古莱姆</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">凯瑟琳·德·美第奇（王后）</span>
+          <span class="minister-tag">黛安·德·普瓦捷</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 查理九世 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">11</div>
+        <div class="emperor-name">查理九世</div>
+        <div class="emperor-latin">Charles IX</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1550-1574（23岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1560-1574（14年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:41.7%;width:58.3%"></div></div>
+        <div class="life-bar-labels"><span>1550</span><span>1560 在位</span><span>1574</span></div>
+        <div class="relation-tag">亨利二世第三子 · 母后凯瑟琳摄政</div>
+        <div class="dynasty-tag">瓦卢瓦-昂古莱姆</div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1560</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1562</span><span>法国宗教战争爆发（1562-1598）</span></div>
+        <div class="event-item"><span class="event-year">1572</span><span>圣巴托罗缪之夜大屠杀，数千新教徒被杀</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 亨利三世 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1576</span><span>三亨利之战（天主教联盟 vs 新教 vs 国王）</span></div>
+        <div class="event-item"><span class="event-year">1588</span><span>刺杀吉斯公爵</span></div>
+        <div class="event-item"><span class="event-year">1589</span><span>被修士刺杀，瓦卢瓦王朝终结</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1574</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">12</div>
+        <div class="emperor-name">亨利三世</div>
+        <div class="emperor-latin">Henri III</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1551-1589（38岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1574-1589（15年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:60.5%;width:39.5%"></div></div>
+        <div class="life-bar-labels"><span>1551</span><span>1574 在位</span><span>1589</span></div>
+        <div class="relation-tag">查理九世之弟 · 瓦卢瓦王朝末帝</div>
+        <div class="dynasty-tag">瓦卢瓦末帝</div>
+      </div>
+    </div>
+  </div></div>
+</div>
+
+<!-- ===== 王朝更替 ===== -->
+<div class="transition-divider">
+  <div class="divider-line"></div>
+  <div class="divider-text">宗教战争 · 1589年 · 波旁王朝登场</div>
+</div>
+
+<!-- ==================== 波旁王朝与近代 ==================== -->
+<div class="section-title late">波 旁 王 朝 与 近 代</div>
+<div style="text-align:center;color:#999;font-size:13px;margin-bottom:20px;">1589年 — 1870年 · 绝对君主制 · 大革命 · 帝国 · 复辟</div>
+
+<div class="timeline late">
+
+  <!-- 亨利四世 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">13</div>
+        <div class="emperor-name">亨利四世（好国王亨利）</div>
+        <div class="emperor-latin">Henri IV · "Le bon roi Henri"</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1553-1610（56岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1589-1610（21年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:63.2%;width:36.8%"></div></div>
+        <div class="life-bar-labels"><span>1553</span><span>1589 在位</span><span>1610</span></div>
+        <div class="relation-tag">纳瓦拉王 · 从新教改宗天主教</div>
+        <div class="dynasty-tag">波旁王朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list"><span class="minister-tag">苏利公爵（财政大臣）</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1589</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1593</span><span>"巴黎值得一场弥撒"，改宗天主教</span></div>
+        <div class="event-item"><span class="event-year">1598</span><span>《南特敕令》，宗教宽容，宗教战争结束</span></div>
+        <div class="event-item"><span class="event-year">1608</span><span>建立魁北克殖民地（新法兰西）</span></div>
+        <div class="event-item"><span class="event-year">1610</span><span>被天主教狂热分子刺杀</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 路易十三 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1624</span><span>黎塞留成为首席大臣</span></div>
+        <div class="event-item"><span class="event-year">1628</span><span>攻陷拉罗歇尔（新教堡垒）</span></div>
+        <div class="event-item"><span class="event-year">1635</span><span>法国加入三十年战争</span></div>
+        <div class="event-item"><span class="event-year">1635</span><span>创建法兰西学术院</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1610</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">14</div>
+        <div class="emperor-name">路易十三</div>
+        <div class="emperor-latin">Louis XIII</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1601-1643（41岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1610-1643（33年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:21.4%;width:78.6%"></div></div>
+        <div class="life-bar-labels"><span>1601</span><span>1610 在位</span><span>1643</span></div>
+        <div class="relation-tag">亨利四世之子 · 黎塞留时代</div>
+        <div class="dynasty-tag">波旁王朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">红衣主教黎塞留 ★</span>
+          <span class="minister-tag">玛丽·德·美第奇（母后）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 路易十四 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">15</div>
+        <div class="emperor-name">路易十四（太阳王）</div>
+        <div class="emperor-latin">Louis XIV · Le Roi-Soleil</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1638-1715（76岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1643-1715（72年！）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:6.5%;width:93.5%"></div></div>
+        <div class="life-bar-labels"><span>1638</span><span>1643 在位</span><span>1715</span></div>
+        <div class="relation-tag">路易十三之子 · 欧洲在位最长君主 · 绝对王权巅峰</div>
+        <div class="dynasty-tag">波旁王朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">马扎然（首相，早期）</span>
+          <span class="minister-tag">科尔贝尔（财政大臣）</span>
+          <span class="minister-tag">沃邦（军事工程师）</span>
+          <span class="minister-tag">莫里哀（剧作家）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1643</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1648</span><span>投石党之乱</span></div>
+        <div class="event-item"><span class="event-year">1661</span><span>"朕即国家"，亲政，绝对君主制</span></div>
+        <div class="event-item"><span class="event-year">1682</span><span>凡尔赛宫成为政府所在地</span></div>
+        <div class="event-item"><span class="event-year">1685</span><span>撤销《南特敕令》，迫害新教徒</span></div>
+        <div class="event-item"><span class="event-year">1701</span><span>西班牙王位继承战争（1701-1714）</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 路易十五 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1715</span><span>5岁继位，摄政时期</span></div>
+        <div class="event-item"><span class="event-year">1748</span><span>奥地利王位继承战争结束</span></div>
+        <div class="event-item"><span class="event-year">1756</span><span>七年战争（1756-1763），法国惨败</span></div>
+        <div class="event-item"><span class="event-year">1763</span><span>丧失加拿大和印度殖民地</span></div>
+      </div>
+      <div class="ministers-panel" style="margin-top:8px">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">弗勒里枢机（首相）</span>
+          <span class="minister-tag">蓬帕杜尔夫人</span>
+          <span class="minister-tag">伏尔泰</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1715</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">16</div>
+        <div class="emperor-name">路易十五</div>
+        <div class="emperor-latin">Louis XV · "被爱者"→"被恨者"</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1710-1774（64岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1715-1774（59年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:7.8%;width:92.2%"></div></div>
+        <div class="life-bar-labels"><span>1710</span><span>1715 在位</span><span>1774</span></div>
+        <div class="relation-tag">路易十四曾孙 · "我死后，哪管洪水滔天"</div>
+        <div class="dynasty-tag">波旁王朝</div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 路易十六 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">17</div>
+        <div class="emperor-name">路易十六</div>
+        <div class="emperor-latin">Louis XVI</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1754-1793（38岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1774-1792（18年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:51.3%;width:46.2%"></div></div>
+        <div class="life-bar-labels"><span>1754</span><span>1774 在位 1792</span><span>†1793</span></div>
+        <div class="relation-tag">路易十五之孙 · 法国大革命中被送上断头台</div>
+        <div class="dynasty-tag">波旁王朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">内克尔（财政大臣）</span>
+          <span class="minister-tag">玛丽·安托瓦内特（王后）</span>
+          <span class="minister-tag">拉法耶特</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1774</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1778</span><span>支持美国独立战争</span></div>
+        <div class="event-item"><span class="event-year">1789</span><span>三级会议召开 → 攻占巴士底狱 → 大革命爆发</span></div>
+        <div class="event-item"><span class="event-year">1791</span><span>出逃被捕（瓦朗事件）</span></div>
+        <div class="event-item"><span class="event-year">1792</span><span>君主制被废除，法兰西第一共和国成立</span></div>
+        <div class="event-item"><span class="event-year">1793</span><span>路易十六被送上断头台</span></div>
+      </div>
+    </div>
+  </div></div>
+</div>
+
+<div class="mini-divider"><div class="mini-text red">法国大革命 · 1789-1799 · 恐怖统治 · 第一共和国</div></div>
+
+<div class="timeline late">
+  <!-- 拿破仑一世 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1799</span><span>雾月政变，拿破仑掌权</span></div>
+        <div class="event-item"><span class="event-year">1804</span><span>加冕为法兰西皇帝</span></div>
+        <div class="event-item"><span class="event-year">1805</span><span>奥斯特里茨大捷（三皇会战）</span></div>
+        <div class="event-item"><span class="event-year">1806</span><span>《拿破仑法典》颁布</span></div>
+        <div class="event-item"><span class="event-year">1812</span><span>入侵俄国，惨败</span></div>
+        <div class="event-item"><span class="event-year">1814</span><span>反法联军入巴黎，退位流放厄尔巴</span></div>
+        <div class="event-item"><span class="event-year">1815</span><span>百日王朝 → 滑铁卢战败 → 流放圣赫勒拿</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1804</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">18</div>
+        <div class="emperor-name">拿破仑一世</div>
+        <div class="emperor-latin">Napoléon Iᵉʳ · Empereur des Français</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1769-1821（51岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1804-1814/15（~11年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:67.3%;width:21.2%"></div></div>
+        <div class="life-bar-labels"><span>1769</span><span>1804 在位 1815</span><span>†1821</span></div>
+        <div class="relation-tag">科西嘉人 · 非王族出身 · 军事天才</div>
+        <div class="dynasty-tag">波拿巴（第一帝国）</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">塔列朗（外交大臣）</span>
+          <span class="minister-tag">富歇（警察大臣）</span>
+          <span class="minister-tag">缪拉元帅</span>
+          <span class="minister-tag">内伊元帅</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 路易十八 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">19</div>
+        <div class="emperor-name">路易十八</div>
+        <div class="emperor-latin">Louis XVIII</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1755-1824（68岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1814-1824（10年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:85.5%;width:14.5%"></div></div>
+        <div class="life-bar-labels"><span>1755</span><span>1814 在位</span><span>1824</span></div>
+        <div class="relation-tag">路易十六之弟 · 波旁复辟</div>
+        <div class="dynasty-tag">波旁复辟</div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1814</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1814</span><span>波旁王朝复辟，颁布宪章</span></div>
+        <div class="event-item"><span class="event-year">1815</span><span>百日王朝期间逃亡，后再次复辟</span></div>
+        <div class="event-item"><span class="event-year">1820</span><span>贝里公爵遇刺</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 查理十世 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1825</span><span>在兰斯隆重加冕，复古倾向</span></div>
+        <div class="event-item"><span class="event-year">1830</span><span>颁布《七月敕令》压制新闻自由</span></div>
+        <div class="event-item"><span class="event-year">1830</span><span>七月革命爆发，被迫退位流亡</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1824</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">20</div>
+        <div class="emperor-name">查理十世</div>
+        <div class="emperor-latin">Charles X</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1757-1836（79岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1824-1830（6年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:84.8%;width:7.6%"></div></div>
+        <div class="life-bar-labels"><span>1757</span><span>1824-1830</span><span>†1836</span></div>
+        <div class="relation-tag">路易十六幼弟 · 波旁最后一位国王</div>
+        <div class="dynasty-tag">波旁复辟末期</div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 路易-菲利普 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">21</div>
+        <div class="emperor-name">路易-菲利普（公民国王）</div>
+        <div class="emperor-latin">Louis-Philippe Iᵉʳ · "Roi des Français"</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1773-1850（76岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1830-1848（18年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:74%;width:23.4%"></div></div>
+        <div class="life-bar-labels"><span>1773</span><span>1830 在位 1848</span><span>†1850</span></div>
+        <div class="relation-tag">奥尔良公爵 · 路易十四弟弟后裔</div>
+        <div class="dynasty-tag">七月王朝（奥尔良）</div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1830</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1830</span><span>七月革命后登基，三色旗取代白旗</span></div>
+        <div class="event-item"><span class="event-year">1831</span><span>里昂丝织工人起义</span></div>
+        <div class="event-item"><span class="event-year">1848</span><span>二月革命，被迫退位，流亡英国</span></div>
+        <div class="event-item"><span class="event-year">1848</span><span>法兰西第二共和国成立</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 拿破仑三世 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1851</span><span>政变夺权</span></div>
+        <div class="event-item"><span class="event-year">1852</span><span>称帝，建立法兰西第二帝国</span></div>
+        <div class="event-item"><span class="event-year">1853</span><span>奥斯曼男爵改造巴黎</span></div>
+        <div class="event-item"><span class="event-year">1856</span><span>克里米亚战争胜利</span></div>
+        <div class="event-item"><span class="event-year">1870</span><span>普法战争惨败，色当被俘</span></div>
+        <div class="event-item"><span class="event-year">1870</span><span>第二帝国崩溃，法国帝制永久终结</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1852</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">22</div>
+        <div class="emperor-name">拿破仑三世</div>
+        <div class="emperor-latin">Napoléon III · 末代皇帝</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1808-1873（64岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1852-1870（18年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:67.7%;width:27.7%"></div></div>
+        <div class="life-bar-labels"><span>1808</span><span>1852 在位 1870</span><span>†1873</span></div>
+        <div class="relation-tag">拿破仑一世之侄 · 法国最后一位君主</div>
+        <div class="dynasty-tag">波拿巴（第二帝国）</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">奥斯曼男爵（巴黎改造）</span>
+          <span class="minister-tag">欧仁妮皇后</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+</div>
+
+<!-- ==================== 世系关系图 ==================== -->
+<div class="family-tree-section">
+  <h2>法兰西君主世系关系图</h2>
+  <div class="tree-container">
+    <svg class="tree-svg" viewBox="0 0 1300 820" width="1300" height="820" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="capG" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#1e3a8a"/><stop offset="100%" style="stop-color:#3b82f6"/></linearGradient>
+        <linearGradient id="valG" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#1d4ed8"/><stop offset="100%" style="stop-color:#60a5fa"/></linearGradient>
+        <linearGradient id="bouG" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#991b1b"/><stop offset="100%" style="stop-color:#dc2626"/></linearGradient>
+        <linearGradient id="bonG" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#713f12"/><stop offset="100%" style="stop-color:#b8860b"/></linearGradient>
+        <linearGradient id="orlG" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#166534"/><stop offset="100%" style="stop-color:#22c55e"/></linearGradient>
+        <filter id="sh"><feDropShadow dx="1" dy="2" stdDeviation="3" flood-opacity="0.15"/></filter>
+        <marker id="aB" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#1e3a8a"/></marker>
+        <marker id="aR" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#991b1b"/></marker>
+        <marker id="aG" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#57534e"/></marker>
+      </defs>
+
+      <!-- 背景 -->
+      <rect x="0" y="0" width="1300" height="300" fill="#eff6ff" rx="12"/>
+      <rect x="0" y="310" width="1300" height="510" fill="#fef2f2" rx="12"/>
+      <text x="20" y="30" font-size="16" fill="#1e3a8a" font-weight="bold" font-family="PingFang SC,serif">卡佩 / 瓦卢瓦王朝 (987-1589)</text>
+      <text x="20" y="340" font-size="16" fill="#991b1b" font-weight="bold" font-family="PingFang SC,serif">波旁王朝 / 近代 (1589-1870)</text>
+
+      <!-- 卡佩王朝 -->
+      <rect x="40" y="55" width="140" height="50" rx="8" fill="url(#capG)" filter="url(#sh)"/>
+      <text x="110" y="76" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">①于格·卡佩</text>
+      <text x="110" y="94" text-anchor="middle" fill="#bfdbfe" font-size="9" font-family="PingFang SC,serif">987-996</text>
+
+      <text x="230" y="83" fill="#1e3a8a" font-size="10" font-family="PingFang SC,serif">...卡佩直系...</text>
+      <line x1="180" y1="80" x2="220" y2="80" stroke="#1e3a8a" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <line x1="280" y1="80" x2="315" y2="80" stroke="#1e3a8a" stroke-width="1.5" stroke-dasharray="4,3"/>
+
+      <rect x="320" y="55" width="155" height="50" rx="8" fill="url(#capG)" filter="url(#sh)"/>
+      <text x="397" y="76" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold" font-family="PingFang SC,serif">②腓力二世（奥古斯都）</text>
+      <text x="397" y="94" text-anchor="middle" fill="#bfdbfe" font-size="9" font-family="PingFang SC,serif">1180-1223</text>
+
+      <rect x="520" y="55" width="155" height="50" rx="8" fill="url(#capG)" filter="url(#sh)"/>
+      <text x="597" y="76" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold" font-family="PingFang SC,serif">③路易九世（圣路易）</text>
+      <text x="597" y="94" text-anchor="middle" fill="#bfdbfe" font-size="9" font-family="PingFang SC,serif">1226-1270</text>
+      <line x1="475" y1="80" x2="518" y2="80" stroke="#1e3a8a" stroke-width="2" marker-end="url(#aB)"/>
+      <text x="496" y="73" fill="#1e3a8a" font-size="8" font-family="PingFang SC,serif">孙</text>
+
+      <rect x="720" y="55" width="155" height="50" rx="8" fill="url(#capG)" filter="url(#sh)"/>
+      <text x="797" y="76" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold" font-family="PingFang SC,serif">④腓力四世（美男子）</text>
+      <text x="797" y="94" text-anchor="middle" fill="#bfdbfe" font-size="9" font-family="PingFang SC,serif">1285-1314</text>
+      <line x1="675" y1="80" x2="718" y2="80" stroke="#1e3a8a" stroke-width="2" marker-end="url(#aB)"/>
+      <text x="696" y="73" fill="#1e3a8a" font-size="8" font-family="PingFang SC,serif">孙</text>
+
+      <!-- 瓦卢瓦 -->
+      <text x="900" y="83" fill="#dc2626" font-size="10" font-weight="bold" font-family="PingFang SC,serif">1328 绝嗣</text>
+
+      <rect x="40" y="145" width="140" height="50" rx="8" fill="url(#valG)" filter="url(#sh)"/>
+      <text x="110" y="166" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">⑤腓力六世</text>
+      <text x="110" y="184" text-anchor="middle" fill="#bfdbfe" font-size="9" font-family="PingFang SC,serif">瓦卢瓦 1328-1350</text>
+      <path d="M797 105 Q700 130 180 150" stroke="#1e3a8a" stroke-width="1.5" stroke-dasharray="6,3" fill="none" marker-end="url(#aB)"/>
+      <text x="450" y="128" fill="#dc2626" font-size="9" font-family="PingFang SC,serif">旁支继位</text>
+
+      <rect x="230" y="145" width="140" height="50" rx="8" fill="url(#valG)" filter="url(#sh)"/>
+      <text x="300" y="166" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold" font-family="PingFang SC,serif">⑥查理五世（智者）</text>
+      <text x="300" y="184" text-anchor="middle" fill="#bfdbfe" font-size="9" font-family="PingFang SC,serif">1364-1380</text>
+      <line x1="180" y1="170" x2="228" y2="170" stroke="#1d4ed8" stroke-width="2" marker-end="url(#aB)"/>
+      <text x="204" y="163" fill="#1d4ed8" font-size="8" font-family="PingFang SC,serif">孙</text>
+
+      <rect x="420" y="145" width="155" height="50" rx="8" fill="url(#valG)" filter="url(#sh)"/>
+      <text x="497" y="166" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold" font-family="PingFang SC,serif">⑦查理七世（胜利者）</text>
+      <text x="497" y="184" text-anchor="middle" fill="#bfdbfe" font-size="9" font-family="PingFang SC,serif">1422-1461</text>
+      <line x1="370" y1="170" x2="418" y2="170" stroke="#1d4ed8" stroke-width="2" stroke-dasharray="4,3" marker-end="url(#aB)"/>
+
+      <rect x="620" y="145" width="140" height="50" rx="8" fill="url(#valG)" filter="url(#sh)"/>
+      <text x="690" y="166" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold" font-family="PingFang SC,serif">⑧路易十一</text>
+      <text x="690" y="184" text-anchor="middle" fill="#bfdbfe" font-size="9" font-family="PingFang SC,serif">1461-1483</text>
+      <line x1="575" y1="170" x2="618" y2="170" stroke="#1d4ed8" stroke-width="2" marker-end="url(#aB)"/>
+      <text x="596" y="163" fill="#1d4ed8" font-size="8" font-family="PingFang SC,serif">子</text>
+
+      <!-- 昂古莱姆支 -->
+      <rect x="40" y="230" width="145" height="50" rx="8" fill="url(#valG)" filter="url(#sh)"/>
+      <text x="112" y="251" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold" font-family="PingFang SC,serif">⑨弗朗索瓦一世</text>
+      <text x="112" y="269" text-anchor="middle" fill="#bfdbfe" font-size="9" font-family="PingFang SC,serif">1515-1547</text>
+      <path d="M690 195 Q400 220 180 235" stroke="#1d4ed8" stroke-width="1.5" stroke-dasharray="4,3" fill="none" marker-end="url(#aB)"/>
+      <text x="380" y="218" fill="#1d4ed8" font-size="8" font-family="PingFang SC,serif">昂古莱姆支（堂侄孙）</text>
+
+      <rect x="230" y="230" width="120" height="50" rx="8" fill="url(#valG)" filter="url(#sh)"/>
+      <text x="290" y="251" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold" font-family="PingFang SC,serif">⑩亨利二世</text>
+      <text x="290" y="269" text-anchor="middle" fill="#bfdbfe" font-size="9" font-family="PingFang SC,serif">1547-1559</text>
+      <line x1="185" y1="255" x2="228" y2="255" stroke="#1d4ed8" stroke-width="2" marker-end="url(#aB)"/>
+      <text x="206" y="248" fill="#1d4ed8" font-size="8" font-family="PingFang SC,serif">子</text>
+
+      <rect x="400" y="230" width="120" height="50" rx="8" fill="url(#valG)" filter="url(#sh)"/>
+      <text x="460" y="251" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold" font-family="PingFang SC,serif">⑪查理九世</text>
+      <text x="460" y="269" text-anchor="middle" fill="#bfdbfe" font-size="9" font-family="PingFang SC,serif">1560-1574</text>
+      <line x1="350" y1="255" x2="398" y2="255" stroke="#1d4ed8" stroke-width="2" marker-end="url(#aB)"/>
+      <text x="374" y="248" fill="#1d4ed8" font-size="8" font-family="PingFang SC,serif">三子</text>
+
+      <rect x="570" y="230" width="120" height="50" rx="8" fill="url(#valG)" filter="url(#sh)"/>
+      <text x="630" y="251" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold" font-family="PingFang SC,serif">⑫亨利三世</text>
+      <text x="630" y="269" text-anchor="middle" fill="#bfdbfe" font-size="9" font-family="PingFang SC,serif">1574-1589</text>
+      <line x1="520" y1="260" x2="568" y2="260" stroke="#999" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <text x="544" y="253" fill="#dc2626" font-size="8" font-family="PingFang SC,serif">弟</text>
+
+      <!-- 分隔线 -->
+      <line x1="20" y1="305" x2="1280" y2="305" stroke="#dc2626" stroke-width="2" stroke-dasharray="10,5"/>
+      <text x="650" y="302" text-anchor="middle" fill="#dc2626" font-size="11" font-weight="bold" font-family="PingFang SC,serif">── 宗教战争 · 王朝更替 1589 ──</text>
+
+      <!-- 波旁 -->
+      <rect x="40" y="370" width="155" height="55" rx="8" fill="url(#bouG)" filter="url(#sh)"/>
+      <text x="117" y="393" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">⑬亨利四世</text>
+      <text x="117" y="413" text-anchor="middle" fill="#fca5a5" font-size="9" font-family="PingFang SC,serif">波旁 1589-1610</text>
+      <path d="M597 105 Q900 200 900 300 Q900 370 195 375" stroke="#991b1b" stroke-width="2" stroke-dasharray="6,3" fill="none" marker-end="url(#aR)"/>
+      <text x="910" y="260" fill="#991b1b" font-size="9" font-family="PingFang SC,serif">路易九世后裔（波旁支系）</text>
+
+      <rect x="250" y="370" width="130" height="55" rx="8" fill="url(#bouG)" filter="url(#sh)"/>
+      <text x="315" y="393" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">⑭路易十三</text>
+      <text x="315" y="413" text-anchor="middle" fill="#fca5a5" font-size="9" font-family="PingFang SC,serif">1610-1643</text>
+      <line x1="195" y1="397" x2="248" y2="397" stroke="#991b1b" stroke-width="2" marker-end="url(#aR)"/>
+      <text x="221" y="390" fill="#991b1b" font-size="8" font-family="PingFang SC,serif">子</text>
+
+      <rect x="440" y="370" width="155" height="55" rx="8" fill="url(#bouG)" filter="url(#sh)"/>
+      <text x="517" y="391" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold" font-family="PingFang SC,serif">⑮路易十四 ☀</text>
+      <text x="517" y="413" text-anchor="middle" fill="#fca5a5" font-size="9" font-family="PingFang SC,serif">太阳王 1643-1715</text>
+      <line x1="380" y1="397" x2="438" y2="397" stroke="#991b1b" stroke-width="2" marker-end="url(#aR)"/>
+      <text x="409" y="390" fill="#991b1b" font-size="8" font-family="PingFang SC,serif">子</text>
+
+      <rect x="650" y="370" width="130" height="55" rx="8" fill="url(#bouG)" filter="url(#sh)"/>
+      <text x="715" y="393" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">⑯路易十五</text>
+      <text x="715" y="413" text-anchor="middle" fill="#fca5a5" font-size="9" font-family="PingFang SC,serif">1715-1774</text>
+      <line x1="595" y1="397" x2="648" y2="397" stroke="#991b1b" stroke-width="2" marker-end="url(#aR)"/>
+      <text x="621" y="390" fill="#991b1b" font-size="8" font-family="PingFang SC,serif">曾孙</text>
+
+      <rect x="840" y="370" width="130" height="55" rx="8" fill="url(#bouG)" filter="url(#sh)"/>
+      <text x="905" y="393" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">⑰路易十六</text>
+      <text x="905" y="413" text-anchor="middle" fill="#fca5a5" font-size="9" font-family="PingFang SC,serif">1774-1792 ✝1793</text>
+      <line x1="780" y1="397" x2="838" y2="397" stroke="#991b1b" stroke-width="2" marker-end="url(#aR)"/>
+      <text x="809" y="390" fill="#991b1b" font-size="8" font-family="PingFang SC,serif">孙</text>
+
+      <!-- 复辟的弟弟们 -->
+      <rect x="830" y="470" width="110" height="45" rx="8" fill="url(#bouG)" filter="url(#sh)"/>
+      <text x="885" y="489" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold" font-family="PingFang SC,serif">⑲路易十八</text>
+      <text x="885" y="505" text-anchor="middle" fill="#fca5a5" font-size="9" font-family="PingFang SC,serif">1814-1824</text>
+      <line x1="905" y1="425" x2="890" y2="468" stroke="#991b1b" stroke-width="1.5" marker-end="url(#aR)"/>
+      <text x="910" y="448" fill="#991b1b" font-size="8" font-family="PingFang SC,serif">弟</text>
+
+      <rect x="960" y="470" width="110" height="45" rx="8" fill="url(#bouG)" filter="url(#sh)"/>
+      <text x="1015" y="489" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold" font-family="PingFang SC,serif">⑳查理十世</text>
+      <text x="1015" y="505" text-anchor="middle" fill="#fca5a5" font-size="9" font-family="PingFang SC,serif">1824-1830</text>
+      <line x1="940" y1="492" x2="958" y2="492" stroke="#999" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <text x="949" y="485" fill="#dc2626" font-size="7" font-family="PingFang SC,serif">弟</text>
+
+      <!-- 大革命标记 -->
+      <text x="905" y="445" text-anchor="middle" fill="#dc2626" font-size="10" font-weight="bold" font-family="PingFang SC,serif">1789 大革命</text>
+
+      <!-- 拿破仑 -->
+      <rect x="40" y="560" width="175" height="55" rx="8" fill="url(#bonG)" filter="url(#sh)"/>
+      <text x="127" y="583" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold" font-family="PingFang SC,serif">⑱拿破仑一世</text>
+      <text x="127" y="603" text-anchor="middle" fill="#fef3c7" font-size="9" font-family="PingFang SC,serif">波拿巴 1804-1815</text>
+
+      <rect x="280" y="560" width="165" height="55" rx="8" fill="url(#bonG)" filter="url(#sh)"/>
+      <text x="362" y="583" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">㉒拿破仑三世</text>
+      <text x="362" y="603" text-anchor="middle" fill="#fef3c7" font-size="9" font-family="PingFang SC,serif">侄子 1852-1870</text>
+      <line x1="215" y1="587" x2="278" y2="587" stroke="#713f12" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#aG)"/>
+      <text x="246" y="580" fill="#713f12" font-size="8" font-family="PingFang SC,serif">侄</text>
+
+      <!-- 奥尔良 -->
+      <rect x="530" y="560" width="165" height="55" rx="8" fill="url(#orlG)" filter="url(#sh)"/>
+      <text x="612" y="583" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">㉑路易-菲利普</text>
+      <text x="612" y="603" text-anchor="middle" fill="#bbf7d0" font-size="9" font-family="PingFang SC,serif">奥尔良 1830-1848</text>
+      <path d="M517 425 Q470 500 530 565" stroke="#166534" stroke-width="1.5" stroke-dasharray="6,3" fill="none" marker-end="url(#aG)"/>
+      <text x="470" y="500" fill="#166534" font-size="8" font-family="PingFang SC,serif">路易十四弟弟后裔</text>
+
+      <!-- 图例 -->
+      <rect x="1050" y="370" width="220" height="165" rx="8" fill="#fff" stroke="#ccc"/>
+      <text x="1070" y="392" font-size="12" font-weight="bold" fill="#333" font-family="PingFang SC,serif">图例 — 王朝/家族</text>
+      <rect x="1070" y="403" width="15" height="12" rx="3" fill="url(#capG)"/>
+      <text x="1095" y="414" font-size="10" fill="#333" font-family="PingFang SC,serif">卡佩王朝 (987-1328)</text>
+      <rect x="1070" y="423" width="15" height="12" rx="3" fill="url(#valG)"/>
+      <text x="1095" y="434" font-size="10" fill="#333" font-family="PingFang SC,serif">瓦卢瓦王朝 (1328-1589)</text>
+      <rect x="1070" y="443" width="15" height="12" rx="3" fill="url(#bouG)"/>
+      <text x="1095" y="454" font-size="10" fill="#333" font-family="PingFang SC,serif">波旁王朝 (1589-1830)</text>
+      <rect x="1070" y="463" width="15" height="12" rx="3" fill="url(#bonG)"/>
+      <text x="1095" y="474" font-size="10" fill="#333" font-family="PingFang SC,serif">波拿巴家族 (帝国)</text>
+      <rect x="1070" y="483" width="15" height="12" rx="3" fill="url(#orlG)"/>
+      <text x="1095" y="494" font-size="10" fill="#333" font-family="PingFang SC,serif">奥尔良家族 (七月王朝)</text>
+      <line x1="1070" y1="508" x2="1110" y2="508" stroke="#1e3a8a" stroke-width="2" marker-end="url(#aB)"/>
+      <text x="1120" y="512" font-size="10" fill="#333" font-family="PingFang SC,serif">直系传承</text>
+      <line x1="1070" y1="526" x2="1110" y2="526" stroke="#999" stroke-width="1.5" stroke-dasharray="6,3"/>
+      <text x="1120" y="530" font-size="10" fill="#333" font-family="PingFang SC,serif">旁系 / 远亲继承</text>
+    </svg>
+  </div>
+</div>
+
+</div>
+
+<div class="footer">
+  <p>法兰西王国与帝国（987-1870），从卡佩王朝到第二帝国，历经五个王朝/政权，跨越近九个世纪。</p>
+  <p style="margin-top:8px;">卡佩王朝（含瓦卢瓦、波旁）是欧洲历史上延续最久的王室，其后裔至今仍是西班牙等国的王室。</p>
+  <p style="margin-top:8px;">1870年第二帝国崩溃后，法国正式成为共和国（法兰西第三共和国），帝制时代永久终结。</p>
+  <p style="margin-top:8px;">数据来源：《法国史》等 · 仅供学习参考</p>
+</div>
+
+<script>
+(function(){
+  const emperors=[
+    {name:'于格·卡佩',birth:941,death:996,reigns:[{s:987,e:996}],type:'early'},
+    {name:'腓力二世',birth:1165,death:1223,reigns:[{s:1180,e:1223}],type:'early'},
+    {name:'路易九世',birth:1214,death:1270,reigns:[{s:1226,e:1270}],type:'early'},
+    {name:'腓力四世',birth:1268,death:1314,reigns:[{s:1285,e:1314}],type:'early'},
+    {name:'腓力六世',birth:1293,death:1350,reigns:[{s:1328,e:1350}],type:'early'},
+    {name:'查理五世',birth:1338,death:1380,reigns:[{s:1364,e:1380}],type:'early'},
+    {name:'查理七世',birth:1403,death:1461,reigns:[{s:1422,e:1461}],type:'early'},
+    {name:'路易十一',birth:1423,death:1483,reigns:[{s:1461,e:1483}],type:'early'},
+    {name:'弗朗索瓦一世',birth:1494,death:1547,reigns:[{s:1515,e:1547}],type:'early'},
+    {name:'亨利二世',birth:1519,death:1559,reigns:[{s:1547,e:1559}],type:'early'},
+    {name:'查理九世',birth:1550,death:1574,reigns:[{s:1560,e:1574}],type:'early'},
+    {name:'亨利三世',birth:1551,death:1589,reigns:[{s:1574,e:1589}],type:'early'},
+    {name:'亨利四世',birth:1553,death:1610,reigns:[{s:1589,e:1610}],type:'late'},
+    {name:'路易十三',birth:1601,death:1643,reigns:[{s:1610,e:1643}],type:'late'},
+    {name:'路易十四',birth:1638,death:1715,reigns:[{s:1643,e:1715}],type:'late'},
+    {name:'路易十五',birth:1710,death:1774,reigns:[{s:1715,e:1774}],type:'late'},
+    {name:'路易十六',birth:1754,death:1793,reigns:[{s:1774,e:1792}],type:'late'},
+    {name:'拿破仑一世',birth:1769,death:1821,reigns:[{s:1804,e:1815}],type:'late'},
+    {name:'路易十八',birth:1755,death:1824,reigns:[{s:1814,e:1824}],type:'late'},
+    {name:'查理十世',birth:1757,death:1836,reigns:[{s:1824,e:1830}],type:'late'},
+    {name:'路易-菲利普',birth:1773,death:1850,reigns:[{s:1830,e:1848}],type:'late'},
+    {name:'拿破仑三世',birth:1808,death:1873,reigns:[{s:1852,e:1870}],type:'late'},
+  ];
+  const minYear=930,maxYear=1880,totalYears=maxYear-minYear;
+  const colors={early:'#1e3a8a',late:'#991b1b'};
+  const container=document.getElementById('ganttChart');
+  let hdr='<div class="gantt-header"><div class="gantt-label" style="width:110px">年份</div><div class="gantt-bar-area" style="position:relative;height:30px">';
+  for(let y=1000;y<=1850;y+=50){hdr+=`<span class="gantt-year-tick" style="left:${((y-minYear)/totalYears)*100}%">${y}</span>`;}
+  hdr+='</div></div>';container.innerHTML=hdr;
+  let body='<div class="gantt-body">';
+  emperors.forEach(emp=>{
+    const c=colors[emp.type];
+    const ll=((emp.birth-minYear)/totalYears)*100;
+    const lw=((emp.death-emp.birth)/totalYears)*100;
+    let rb='';emp.reigns.forEach(r=>{
+      const rl=((r.s-minYear)/totalYears)*100;
+      const rw=Math.max(((r.e-r.s)/totalYears)*100,0.3);
+      rb+=`<div class="gantt-bar reign-bar" style="left:${rl}%;width:${rw}%;background:${c}"><div class="tooltip">在位：${r.s}-${r.e}（${r.e-r.s}年）</div></div>`;
+    });
+    body+=`<div class="gantt-row"><div class="gantt-label" style="color:${c};width:110px">${emp.name}</div><div class="gantt-bar-area"><div class="gantt-bar" style="left:${ll}%;width:${lw}%;background:${c}"><div class="tooltip">生卒：${emp.birth}-${emp.death}（${emp.death-emp.birth}岁）</div></div>${rb}</div></div>`;
+  });
+  body+='</div>';container.innerHTML+=body;
+})();
+</script>
+
+</body>
+</html>

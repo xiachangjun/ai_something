@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>🎲 DICE ROLLER</title>
+<style>
+/* ═══════════════ 龙与地下城 像素 RPG 风 ═══════════════ */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --dnd-bg:        #0c0a12;
+  --dnd-surface:   #1a1528;
+  --dnd-card:      #241e3a;
+  --dnd-red:       #c43a31;
+  --dnd-gold:      #d4a33d;
+  --dnd-glow:      #f0c75e;
+  --dnd-green:     #4a9e5a;
+  --dnd-blue:      #3b82b9;
+  --dnd-purple:    #7c3aed;
+  --dnd-text:      #d4cbaa;
+  --dnd-dim:       #8a7e6b;
+  --dnd-border:    #3a2f4a;
+  --dnd-shadow:    rgba(196,58,49,0.2);
+  --px-font:       'Press Start 2P', monospace;
+  --px-size:       10px;
+}
+
+body {
+  background: var(--dnd-bg);
+  background-image:
+    radial-gradient(ellipse at 30% 20%, rgba(124,58,237,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 80%, rgba(196,58,49,0.06) 0%, transparent 60%),
+    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(212,163,61,0.02) 2px, rgba(212,163,61,0.02) 4px);
+  color: var(--dnd-text);
+  font-family: var(--px-font);
+  font-size: var(--px-size);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 12px 60px;
+  image-rendering: pixelated;
+  position: relative;
+}
+
+/* 羊皮纸纹理 overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    45deg, transparent, transparent 4px,
+    rgba(139,126,107,0.02) 4px, rgba(139,126,107,0.02) 8px
+  );
+  pointer-events: none;
+  z-index: 9998;
+}
+
+/* 扫描线 */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(0deg,
+    transparent, transparent 2px,
+    rgba(0,0,0,0.06) 2px, rgba(0,0,0,0.06) 4px);
+  z-index: 9999;
+}
+
+/* ───── 像素边框容器 ───── */
+.px-box {
+  background: var(--dnd-surface);
+  border: 2px solid var(--dnd-border);
+  border-radius: 0;
+  padding: 20px 18px;
+  box-shadow:
+    inset 0 0 0 1px rgba(212,163,61,0.06),
+    3px 3px 0 rgba(0,0,0,0.5);
+  image-rendering: pixelated;
+  position: relative;
+}
+.px-box::before {
+  content: '◆';
+  position: absolute;
+  top: -8px; left: 50%;
+  transform: translateX(-50%);
+  color: var(--dnd-gold);
+  font-size: 10px;
+  text-shadow: 0 0 6px rgba(212,163,61,0.3);
+  background: var(--dnd-surface);
+  padding: 0 8px;
+}
+
+/* ───── 标题 ───── */
+.title {
+  text-align: center;
+  margin-bottom: 24px;
+  width: 100%;
+  max-width: 600px;
+  position: relative;
+}
+.title::after {
+  content: '';
+  display: block;
+  margin: 10px auto 0;
+  width: 60%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--dnd-gold), transparent);
+}
+.title h1 {
+  font-size: 16px;
+  color: var(--dnd-gold);
+  text-shadow: 2px 2px 0 rgba(0,0,0,0.6), 0 0 20px rgba(212,163,61,0.15);
+  letter-spacing: 4px;
+  margin-bottom: 6px;
+}
+.title h1 .blink { animation: blink 1s step-end infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+.title p {
+  font-size: 7px;
+  color: var(--dnd-dim);
+  letter-spacing: 2px;
+}
+
+/* ───── 返回链接 ───── */
+.back-link {
+  font-size: 7px;
+  color: var(--dnd-dim);
+  text-decoration: none;
+  letter-spacing: 1px;
+  margin-bottom: 14px;
+  display: inline-block;
+  align-self: flex-start;
+  width: 100%;
+  max-width: 600px;
+  transition: color 0.1s step-start;
+}
+.back-link:hover { color: var(--dnd-gold); }
+
+/* ───── 骰子选择 ───── */
+.dice-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 16px;
+}
+
+.dice-btn {
+  font-family: var(--px-font);
+  font-size: 7px;
+  padding: 10px 6px;
+  border: 2px solid var(--dnd-border);
+  background: var(--dnd-card);
+  color: var(--dnd-dim);
+  cursor: pointer;
+  transition: all 0.1s step-start;
+  text-align: center;
+  letter-spacing: 0.5px;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.4);
+  text-transform: uppercase;
+  position: relative;
+}
+.dice-btn:hover {
+  border-color: var(--dnd-gold);
+  color: var(--dnd-gold);
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 rgba(0,0,0,0.5);
+}
+.dice-btn:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+}
+.dice-btn.active {
+  background: linear-gradient(180deg, var(--dnd-card), #2a1e3a);
+  border-color: var(--dnd-gold);
+  color: var(--dnd-glow);
+  box-shadow: 0 0 12px rgba(212,163,61,0.15), 2px 2px 0 rgba(0,0,0,0.4);
+}
+.dice-btn.active::after {
+  content: '▼';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--dnd-gold);
+  font-size: 7px;
+}
+.dice-btn .icon { font-size: 16px; display: block; margin-bottom: 4px; }
+.dice-btn .label { font-size: 7px; }
+
+/* ───── 自定义 ───── */
+.custom-area {
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  padding: 12px;
+  background: var(--dnd-surface);
+  border: 1px solid var(--dnd-border);
+}
+
+.px-input {
+  font-family: var(--px-font);
+  font-size: 9px;
+  padding: 8px 12px;
+  background: #0a0812;
+  border: 2px solid var(--dnd-border);
+  color: var(--dnd-gold);
+  outline: none;
+  text-align: center;
+  transition: border-color 0.1s step-start;
+}
+.px-input:focus {
+  border-color: var(--dnd-gold);
+  box-shadow: 0 0 8px rgba(212,163,61,0.15);
+}
+
+/* ───── 按钮 ───── */
+.px-btn {
+  font-family: var(--px-font);
+  font-size: 8px;
+  padding: 10px 16px;
+  border: 2px solid var(--dnd-border);
+  background: var(--dnd-card);
+  color: var(--dnd-text);
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.1s step-start;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+}
+.px-btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 rgba(0,0,0,0.5);
+}
+.px-btn:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+}
+.px-btn.primary {
+  background: linear-gradient(180deg, #7c1a14, #c43a31);
+  border-color: var(--dnd-red);
+  color: #fff;
+  text-shadow: 1px 1px 0 rgba(0,0,0,0.6);
+  box-shadow: 0 0 10px rgba(196,58,49,0.2), 2px 2px 0 rgba(0,0,0,0.5);
+}
+.px-btn.primary:hover {
+  box-shadow: 0 0 16px rgba(196,58,49,0.35), 3px 3px 0 rgba(0,0,0,0.5);
+}
+.px-btn.secondary {
+  background: var(--dnd-surface);
+  border-color: var(--dnd-dim);
+  color: var(--dnd-dim);
+}
+.px-btn.small { padding: 6px 10px; font-size: 7px; }
+
+/* ───── 控制区 ───── */
+.controls {
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 16px;
+}
+
+.control-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: var(--dnd-surface);
+  border: 1px solid var(--dnd-border);
+}
+.control-row label {
+  font-size: 7px;
+  color: var(--dnd-dim);
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+.count-selector {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+.count-display {
+  font-size: 14px;
+  color: var(--dnd-glow);
+  min-width: 30px;
+  text-align: center;
+  text-shadow: 0 0 8px rgba(212,163,61,0.2);
+}
+
+.dice-info {
+  font-size: 7px;
+  color: var(--dnd-dim);
+  letter-spacing: 0.5px;
+  margin-left: auto;
+}
+
+/* ───── 结果区域 ───── */
+.result-area {
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 16px;
+  text-align: center;
+  padding: 24px 20px !important;
+}
+
+#diceAnimation {
+  font-size: 52px;
+  margin-bottom: 10px;
+  display: block;
+  filter: drop-shadow(0 0 10px rgba(212,163,61,0.2));
+  transition: transform 0.05s step-start;
+}
+#diceAnimation.rolling {
+  animation: dndShake 0.6s step-end infinite;
+}
+@keyframes dndShake {
+  0% { transform: rotate(-25deg) scale(1.15); filter: drop-shadow(0 0 25px rgba(212,163,61,0.5)); }
+  20% { transform: rotate(25deg) scale(1.2); filter: drop-shadow(0 0 30px rgba(196,58,49,0.4)); }
+  40% { transform: rotate(-20deg) scale(1.1); filter: drop-shadow(0 0 25px rgba(212,163,61,0.5)); }
+  60% { transform: rotate(20deg) scale(1.2); filter: drop-shadow(0 0 30px rgba(196,58,49,0.4)); }
+  80% { transform: rotate(-15deg) scale(1.1); filter: drop-shadow(0 0 25px rgba(212,163,61,0.5)); }
+  100% { transform: rotate(0deg) scale(1); filter: drop-shadow(0 0 10px rgba(212,163,61,0.2)); }
+}
+
+/* 数字滚动效果 */
+.roll-numbers {
+  font-size: 32px;
+  color: var(--dnd-glow);
+  text-shadow: 0 0 20px rgba(212,163,61,0.3), 2px 2px 0 rgba(0,0,0,0.5);
+  font-family: var(--px-font);
+  margin-bottom: 8px;
+  min-height: 40px;
+  letter-spacing: 4px;
+}
+.roll-numbers.scrolling {
+  animation: numScroll 0.1s step-end infinite;
+}
+@keyframes numScroll {
+  0% { opacity: 1; transform: translateY(0); }
+  25% { opacity: 0.7; transform: translateY(-2px); }
+  50% { opacity: 1; transform: translateY(0); }
+  75% { opacity: 0.7; transform: translateY(2px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.result-number {
+  font-size: 40px;
+  color: var(--dnd-glow);
+  text-shadow: 0 0 20px rgba(212,163,61,0.3), 2px 2px 0 rgba(0,0,0,0.5);
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+
+.result-detail {
+  font-size: 7px;
+  color: var(--dnd-dim);
+  letter-spacing: 0.5px;
+  line-height: 2.2;
+}
+.result-detail .highlight { color: var(--dnd-blue); }
+.result-detail .crit { color: var(--dnd-glow); text-shadow: 0 0 8px rgba(212,163,61,0.3); }
+.result-detail .fail { color: var(--dnd-red); text-shadow: 0 0 8px rgba(196,58,49,0.3); }
+
+/* ───── 历史记录 ───── */
+.history-box {
+  width: 100%;
+  max-width: 600px;
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--dnd-border);
+}
+.history-header h2 {
+  font-size: 8px;
+  color: var(--dnd-dim);
+  letter-spacing: 1px;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.history-item {
+  font-size: 7px;
+  color: var(--dnd-dim);
+  letter-spacing: 0.3px;
+  padding: 8px 10px;
+  background: rgba(36,30,58,0.4);
+  border: 1px solid var(--dnd-border);
+  line-height: 1.8;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background 0.1s step-start;
+}
+.history-item:hover {
+  background: rgba(36,30,58,0.7);
+}
+.history-item .roll { color: var(--dnd-text); }
+.history-item .total {
+  color: var(--dnd-gold);
+  font-size: 10px;
+  text-shadow: 0 0 6px rgba(212,163,61,0.15);
+}
+
+.history-empty {
+  font-size: 7px;
+  color: #3a2f4a;
+  letter-spacing: 1px;
+  text-align: center;
+  padding: 20px;
+}
+
+/* ───── 动作按钮行 ───── */
+.action-row {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.action-row .px-btn.primary {
+  flex: 3;
+  padding: 14px;
+  text-align: center;
+}
+.action-row .px-btn.secondary {
+  flex: 0 0 auto;
+  padding: 14px 20px;
+  text-align: center;
+}
+
+/* ───── 页脚 ───── */
+footer {
+  margin-top: 30px;
+  font-size: 6px;
+  color: #2a2040;
+  letter-spacing: 1px;
+}
+
+/* ───── 响应式 ───── */
+@media (max-width: 480px) {
+  .title h1 { font-size: 12px; }
+  .dice-grid { grid-template-columns: repeat(4, 1fr); }
+  .dice-btn { padding: 8px 4px; }
+  .dice-btn .icon { font-size: 14px; }
+  .result-number { font-size: 30px; }
+  .px-box { padding: 14px 10px; }
+  body { padding: 20px 8px 40px; }
+}
+</style>
+</head>
+<body>
+
+<a class="back-link" href="/">◂ 返回工坊</a>
+
+<div class="title">
+  <h1>🎲 DICE<span class="blink">_</span>ROLLER</h1>
+  <p>✦ 龙 与 地 下 城 骰 子 工 具 ✦</p>
+</div>
+
+<!-- ═══ 骰子选择 ═══ -->
+<div class="dice-grid" id="diceGrid">
+  <button class="dice-btn active" data-sides="4"  onclick="selectDice(4)">
+    <span class="icon">🟢</span><span class="label">d4</span>
+  </button>
+  <button class="dice-btn" data-sides="6"  onclick="selectDice(6)">
+    <span class="icon">🔶</span><span class="label">d6</span>
+  </button>
+  <button class="dice-btn" data-sides="8"  onclick="selectDice(8)">
+    <span class="icon">🔷</span><span class="label">d8</span>
+  </button>
+  <button class="dice-btn" data-sides="10" onclick="selectDice(10)">
+    <span class="icon">💎</span><span class="label">d10</span>
+  </button>
+  <button class="dice-btn" data-sides="12" onclick="selectDice(12)">
+    <span class="icon">⭐</span><span class="label">d12</span>
+  </button>
+  <button class="dice-btn" data-sides="20" onclick="selectDice(20)">
+    <span class="icon">🗡️</span><span class="label">d20</span>
+  </button>
+  <button class="dice-btn" data-sides="100" onclick="selectDice(100)">
+    <span class="icon">🌍</span><span class="label">d100</span>
+  </button>
+  <button class="dice-btn" data-sides="0" onclick="showCustom()">
+    <span class="icon">⚙️</span><span class="label">自制</span>
+  </button>
+</div>
+
+<!-- ═══ 自定义 ═══ -->
+<div class="custom-area" id="customArea" style="display:none;">
+  <span style="font-size:7px; color:var(--dnd-dim); letter-spacing:1px;">⚙️ 自定义面数:</span>
+  <input type="number" class="px-input" id="customSides" value="6" min="6" max="999" style="width:70px;">
+  <span style="font-size:6px; color:var(--dnd-dim); letter-spacing:0.5px;">(6~999)</span>
+  <button class="px-btn small primary" onclick="applyCustom()">✓ 确认</button>
+</div>
+
+<!-- ═══ 数量控制 ═══ -->
+<div class="controls">
+  <div class="control-row">
+    <label>🎲 骰子数量</label>
+    <div class="count-selector">
+      <button class="px-btn small" onclick="changeCount(-1)">−</button>
+      <span class="count-display" id="countDisplay">1</span>
+      <button class="px-btn small" onclick="changeCount(1)">+</button>
+    </div>
+    <span class="dice-info">
+      d<span id="currentDiceLabel">4</span> × <span id="currentCountLabel">1</span>
+    </span>
+  </div>
+</div>
+
+<!-- ═══ 投掷与清除 ═══ -->
+<div class="action-row">
+  <button class="px-btn primary" onclick="rollDice()">🎲 掷 骰 子</button>
+  <button class="px-btn secondary" onclick="clearHistory()">🗑️ 清除</button>
+</div>
+
+<!-- ═══ 结果展示 ═══ -->
+<div class="result-area px-box" id="resultBox" style="display:none;">
+  <span id="diceAnimation">🎲</span>
+  <div class="roll-numbers" id="resultTotal">—</div>
+  <div class="result-detail" id="resultDetail">等待命运之骰...</div>
+</div>
+
+<!-- ═══ 历史记录 ═══ -->
+<div class="history-box px-box">
+  <div class="history-header">
+    <h2>📜 冒 险 日 志</h2>
+    <span style="font-size:6px; color:var(--dnd-dim); letter-spacing:0.5px;" id="historyCount">0 次</span>
+  </div>
+  <div class="history-list" id="historyList">
+    <div class="history-empty">— 尚未掷出命运之骰 —</div>
+  </div>
+</div>
+
+<footer>✦ 诸 神 眷 顾 你 的 骰 子 ✦</footer>
+
+<script>
+// ═══ 状态 ═══
+let currentSides = 4;
+let diceCount = 1;
+let history = [];
+
+const DICE_ICONS = { 4: '🟢', 6: '🔶', 8: '🔷', 10: '💎', 12: '⭐', 20: '🗡️', 100: '🌍' };
+const DICE_NAMES = { 4: 'd4', 6: 'd6', 8: 'd8', 10: 'd10', 12: 'd12', 20: 'd20', 100: 'd100' };
+
+// ═══ 选择骰子 ═══
+function selectDice(sides) {
+  currentSides = sides;
+  document.querySelectorAll('.dice-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`.dice-btn[data-sides="${sides}"]`)?.classList.add('active');
+  document.getElementById('customArea').style.display = 'none';
+  updateLabels();
+}
+
+function showCustom() {
+  document.querySelectorAll('.dice-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.dice-btn[data-sides="0"]')?.classList.add('active');
+  document.getElementById('customArea').style.display = 'flex';
+  document.getElementById('customSides').focus();
+}
+
+function applyCustom() {
+  let v = parseInt(document.getElementById('customSides').value);
+  if (v < 6) v = 6;
+  if (v > 999) v = 999;
+  if (isNaN(v)) v = 6;
+  currentSides = v;
+  document.getElementById('customSides').value = v;
+  updateLabels();
+}
+
+// ═══ 数量调整 ═══
+function changeCount(delta) {
+  diceCount = Math.max(1, Math.min(999, diceCount + delta));
+  document.getElementById('countDisplay').textContent = diceCount;
+  updateLabels();
+}
+
+function updateLabels() {
+  document.getElementById('currentDiceLabel').textContent = currentSides;
+  document.getElementById('currentCountLabel').textContent = diceCount;
+}
+
+// ═══ 掷骰 ═══
+function rollDice() {
+  const anim = document.getElementById('diceAnimation');
+  const numDisplay = document.getElementById('resultTotal');
+  const detail = document.getElementById('resultDetail');
+  const box = document.getElementById('resultBox');
+
+  box.style.display = 'block';
+
+  // 开启动画
+  anim.classList.add('rolling');
+  numDisplay.classList.add('scrolling');
+
+  // 滚动音效
+  playRollSound();
+
+  // 滚动数字
+  let rollInterval = setInterval(() => {
+    const fake = Math.floor(Math.random() * currentSides) + 1;
+    numDisplay.textContent = fake;
+    // 骰子图标快速切换
+    const icons = ['🟢','🔶','🔷','💎','⭐','🗡️','🌍','🎲'];
+    anim.textContent = icons[Math.floor(Math.random() * icons.length)];
+  }, 80);
+
+  // 真实结果
+  const results = [];
+  let total = 0;
+  for (let i = 0; i < diceCount; i++) {
+    const r = Math.floor(Math.random() * currentSides) + 1;
+    results.push(r);
+    total += r;
+  }
+
+  const isCrit = results.some(r => r === currentSides);
+  const isFail = results.some(r => r === 1);
+  let maxResult = Math.max(...results);
+  let minResult = Math.min(...results);
+
+  // 动画时长 ~1.2秒
+  setTimeout(() => {
+    clearInterval(rollInterval);
+    anim.classList.remove('rolling');
+    numDisplay.classList.remove('scrolling');
+
+    const icon = DICE_ICONS[currentSides] || '🎲';
+    anim.textContent = icon;
+    numDisplay.textContent = total;
+
+    // 结果音效
+    playResultSound(isCrit, isFail);
+
+    let detailText = `<span class="highlight">${diceCount}</span>d<span class="highlight">${currentSides}</span>`;
+
+    if (diceCount === 1) {
+      const r = results[0];
+      detailText += ` = <span class="highlight">${r}</span>`;
+      if (r === currentSides && r !== 1) detailText += `  <span class="crit">⚡ 自 然 20 ！ 大 成 功 ！</span>`;
+      else if (r === 1) detailText += `  <span class="fail">💀 自 然 1 ！ 大 失 败 ！</span>`;
+    } else {
+      detailText += ` = [ ${results.join(', ')} ]`;
+      detailText += `  |  最大: <span class="highlight">${maxResult}</span>`;
+      detailText += `  最小: <span class="fail">${minResult}</span>`;
+      if (isCrit) detailText += `  <span class="crit">⚡ 含 暴 击 !</span>`;
+      if (isFail) detailText += `  <span class="fail">💀 含 大 失 败 !</span>`;
+    }
+
+    detail.innerHTML = detailText;
+
+    const entry = { sides: currentSides, count: diceCount, results: [...results], total, time: new Date().toLocaleTimeString() };
+    history.unshift(entry);
+    if (history.length > 100) history.pop();
+    renderHistory();
+  }, 1200);
+}
+
+// ═══ 渲染历史 ═══
+function renderHistory() {
+  const list = document.getElementById('historyList');
+  document.getElementById('historyCount').textContent = `${history.length} 次`;
+  if (history.length === 0) {
+    list.innerHTML = '<div class="history-empty">— 尚未掷出命运之骰 —</div>';
+    return;
+  }
+  list.innerHTML = history.map(e => {
+    const icon = DICE_ICONS[e.sides] || '🎲';
+    const name = DICE_NAMES[e.sides] || `d${e.sides}`;
+    return `<div class="history-item">
+      <span>${e.time} ${icon} ${e.count}${name} — <span class="roll">${e.results.join(', ')}</span></span>
+      <span class="total">${e.total}</span>
+    </div>`;
+  }).join('');
+}
+
+function clearHistory() { history = []; renderHistory(); }
+
+// ═══ 音效（Web Audio API 合成） ═══
+let audioCtx = null;
+function getAudioCtx() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
+}
+
+// 骰子滚动音效
+function playRollSound() {
+  try {
+    const ctx = getAudioCtx();
+    const dur = 0.12;
+    // 多个快速振荡器模拟骰子碰撞
+    for (let i = 0; i < 6; i++) {
+      setTimeout(() => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'square';
+        osc.frequency.value = 200 + Math.random() * 600;
+        gain.gain.setValueAtTime(0.06, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + dur);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(ctx.currentTime);
+        osc.stop(ctx.currentTime + dur);
+      }, i * 50);
+    }
+  } catch(e) { /* 静默 */ }
+}
+
+// 结果音效
+function playResultSound(isCrit, isFail) {
+  try {
+    const ctx = getAudioCtx();
+    if (isCrit) {
+      // 胜利上升音
+      [523, 659, 784, 1047].forEach((freq, i) => {
+        setTimeout(() => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'square';
+          osc.frequency.value = freq;
+          gain.gain.setValueAtTime(0.08, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(ctx.currentTime);
+          osc.stop(ctx.currentTime + 0.3);
+        }, i * 120);
+      });
+    } else if (isFail) {
+      // 低沉下降音
+      [400, 300, 200].forEach((freq, i) => {
+        setTimeout(() => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.value = freq;
+          gain.gain.setValueAtTime(0.07, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(ctx.currentTime);
+          osc.stop(ctx.currentTime + 0.25);
+        }, i * 100);
+      });
+    } else {
+      // 正常落定音 - 短促叮
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.value = 800;
+      gain.gain.setValueAtTime(0.08, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.15);
+    }
+  } catch(e) { /* 静默 */ }
+}
+
+// ═══ 摇一摇检测（改进版） ═══
+let shakeListening = false;
+let lastShakeTime = 0;
+let SHAKE_THRESHOLD = 8;
+let SHAKE_COOLDOWN = 1000; // 触发后冷却1秒
+
+function startShakeListener() {
+  if (shakeListening) return;
+  shakeListening = true;
+
+  let lastX = 0, lastY = 0, lastZ = 0;
+  let lastCheck = 0;
+
+  window.addEventListener('devicemotion', function handler(e) {
+    const acc = e.accelerationIncludingGravity || e.acceleration;
+    if (!acc) return;
+
+    const x = acc.x || 0, y = acc.y || 0, z = acc.z || 0;
+    const now = Date.now();
+
+    // 首次初始化
+    if (lastCheck === 0) {
+      lastX = x; lastY = y; lastZ = z; lastCheck = now;
+      return;
+    }
+
+    // 每50ms检查一次
+    if (now - lastCheck < 50) return;
+    lastCheck = now;
+
+    // 计算加速度变化量（平方和的平方根）
+    const dx = x - lastX, dy = y - lastY, dz = z - lastZ;
+    const force = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+    if (force > SHAKE_THRESHOLD) {
+      // 冷却期内不重复触发
+      if (now - lastShakeTime > SHAKE_COOLDOWN) {
+        lastShakeTime = now;
+        rollDice();
+      }
+    }
+
+    lastX = x; lastY = y; lastZ = z;
+  });
+}
+
+// 页面加载即尝试启动摇一摇
+if (window.DeviceMotionEvent) {
+  // iOS 13+ 需要先请求权限
+  if (typeof DeviceMotionEvent.requestPermission === 'function') {
+    // 挂一个一次性点击事件来请求权限
+    document.addEventListener('click', function iosAuth() {
+      DeviceMotionEvent.requestPermission().then(state => {
+        if (state === 'granted') startShakeListener();
+      }).catch(() => {});
+    }, { once: true });
+  } else {
+    // 非 iOS 设备直接启动
+    startShakeListener();
+  }
+}
+
+// ═══ 键盘 ═══
+document.addEventListener('keydown', e => {
+  if ((e.key === 'Enter' || e.key === ' ') && !e.target.matches('input')) {
+    e.preventDefault(); rollDice();
+  }
+});
+
+updateLabels();
+</script>
+</body>
+</html>

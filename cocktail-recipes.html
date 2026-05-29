@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>🍸 COCKTAIL RECIPES</title>
+<style>
+/* ═══════════════ 像素风全局 ═══════════════ */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --px-bg:        #1a1a2e;
+  --px-surface:   #16213e;
+  --px-card:      #0f3460;
+  --px-accent:    #e94560;
+  --px-pink:      #ff6b9d;
+  --px-gold:      #ffd700;
+  --px-green:     #4ade80;
+  --px-cyan:      #22d3ee;
+  --px-text:      #e8e8e8;
+  --px-dim:       #8892a0;
+  --px-border:    #2a2a4a;
+  --px-shadow:    rgba(233,69,96,0.25);
+  --px-font:      'Press Start 2P', monospace;
+  --px-size:      10px;
+}
+
+body {
+  background: var(--px-bg);
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(233,69,96,0.06) 0%, transparent 60%),
+    radial-gradient(circle at 80% 70%, rgba(34,211,238,0.06) 0%, transparent 60%),
+    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.01) 2px, rgba(255,255,255,0.01) 4px);
+  color: var(--px-text);
+  font-family: var(--px-font);
+  font-size: var(--px-size);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 12px 60px;
+  image-rendering: pixelated;
+}
+
+/* 扫描线 overlay */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(0deg,
+    transparent, transparent 2px,
+    rgba(0,0,0,0.08) 2px, rgba(0,0,0,0.08) 4px);
+  z-index: 9999;
+}
+
+/* ───── 标题 ───── */
+.title {
+  text-align: center;
+  margin-bottom: 28px;
+  width: 100%;
+  max-width: 800px;
+}
+.title h1 {
+  font-size: 18px;
+  color: var(--px-accent);
+  text-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+  letter-spacing: 3px;
+  margin-bottom: 6px;
+}
+.title h1 .blink {
+  animation: blink 1s step-end infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+.title p {
+  font-size: 8px;
+  color: var(--px-dim);
+  letter-spacing: 2px;
+}
+
+/* ───── 搜索栏 ───── */
+.search-area {
+  width: 100%;
+  max-width: 800px;
+  margin-bottom: 20px;
+}
+.px-input {
+  font-family: var(--px-font);
+  font-size: 9px;
+  padding: 10px 14px;
+  background: #0a0a1a;
+  border: 2px solid var(--px-border);
+  color: var(--px-cyan);
+  outline: none;
+  width: 100%;
+  transition: border-color 0.1s step-start;
+  letter-spacing: 0.5px;
+}
+.px-input:focus {
+  border-color: var(--px-cyan);
+  box-shadow: 0 0 12px rgba(34,211,238,0.2);
+}
+.px-input::placeholder {
+  color: #3a3a5a;
+}
+
+/* ───── 分类标签 ───── */
+.tags {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 24px;
+}
+.px-tag {
+  font-family: var(--px-font);
+  font-size: 7px;
+  padding: 6px 10px;
+  border: 2px solid var(--px-border);
+  background: var(--px-card);
+  color: var(--px-dim);
+  cursor: pointer;
+  transition: all 0.1s step-start;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.px-tag:hover {
+  border-color: var(--px-cyan);
+  color: var(--px-cyan);
+}
+.px-tag.active {
+  background: var(--px-accent);
+  border-color: var(--px-pink);
+  color: #fff;
+}
+
+/* ───── 鸡尾酒卡片网格 ───── */
+.grid {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ───── 像素容器 ───── */
+.px-box {
+  background: var(--px-surface);
+  border: 3px solid var(--px-border);
+  border-radius: 0;
+  padding: 20px 18px;
+  box-shadow:
+    inset 0 0 0 1px rgba(233,69,96,0.08),
+    4px 4px 0 rgba(0,0,0,0.4);
+  image-rendering: pixelated;
+  position: relative;
+  animation: cardIn 0.3s step-start;
+}
+.px-box::before {
+  content: '';
+  position: absolute;
+  top: -3px; left: -3px; right: -3px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--px-accent), var(--px-cyan), var(--px-gold));
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.px-box h2 {
+  font-size: 11px;
+  color: var(--px-gold);
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+.px-box .meta {
+  font-size: 7px;
+  color: var(--px-dim);
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--px-border);
+}
+.px-box .meta .label {
+  color: var(--px-cyan);
+}
+.px-box .section-label {
+  font-size: 8px;
+  color: var(--px-accent);
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+  margin-top: 10px;
+  text-transform: uppercase;
+}
+.px-box .ingredients {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 6px;
+}
+.px-box .ingredients li {
+  font-size: 8px;
+  color: var(--px-text);
+  letter-spacing: 0.5px;
+  line-height: 2.2;
+  padding-left: 12px;
+  position: relative;
+}
+.px-box .ingredients li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--px-cyan);
+}
+.px-box .instructions {
+  font-size: 8px;
+  color: var(--px-dim);
+  letter-spacing: 0.5px;
+  line-height: 2;
+  margin-top: 4px;
+}
+.px-box .difficulty {
+  display: inline-block;
+  font-size: 7px;
+  color: var(--px-gold);
+  letter-spacing: 1px;
+  margin-left: 8px;
+}
+
+/* ───── 空状态 ───── */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--px-dim);
+  font-size: 9px;
+  letter-spacing: 1px;
+  line-height: 2;
+}
+
+/* ───── 返回链接 ───── */
+.back-link {
+  font-size: 8px;
+  color: var(--px-cyan);
+  text-decoration: none;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+  display: inline-block;
+  align-self: flex-start;
+  width: 100%;
+  max-width: 800px;
+  transition: color 0.1s step-start;
+}
+.back-link:hover {
+  color: var(--px-gold);
+}
+
+/* ───── 页脚 ───── */
+footer {
+  margin-top: 40px;
+  font-size: 7px;
+  color: #3a3a5a;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+/* ───── 响应式 ───── */
+@media (max-width: 480px) {
+  .title h1 { font-size: 14px; }
+  .px-box { padding: 14px 12px; }
+  body { padding: 20px 10px 40px; }
+}
+</style>
+</head>
+<body>
+
+<a class="back-link" href="/">◂ BACK TO TOOLSHED</a>
+
+<div class="title">
+  <h1>🍸 COCKTAIL<span class="blink">_</span>RECIPES</h1>
+  <p>✦ 30 款传世经典 · 像素调酒指南 ✦</p>
+</div>
+
+<div class="search-area">
+  <input type="text" class="px-input" id="searchInput" placeholder="🔍 搜索酒名、基酒或材料..." oninput="filterRecipes()">
+</div>
+
+<div class="tags" id="tagContainer">
+  <button class="px-tag active" onclick="filterByTag('all')">全部</button>
+  <button class="px-tag" onclick="filterByTag('金酒')">金酒</button>
+  <button class="px-tag" onclick="filterByTag('威士忌')">威士忌</button>
+  <button class="px-tag" onclick="filterByTag('朗姆酒')">朗姆酒</button>
+  <button class="px-tag" onclick="filterByTag('龙舌兰')">龙舌兰</button>
+  <button class="px-tag" onclick="filterByTag('白兰地')">白兰地</button>
+  <button class="px-tag" onclick="filterByTag('伏特加')">伏特加</button>
+  <button class="px-tag" onclick="filterByTag('起泡酒')">起泡酒</button>
+  <button class="px-tag" onclick="filterByTag('利口酒')">利口酒</button>
+</div>
+
+<div class="grid" id="recipeGrid"></div>
+
+<div class="empty-state" id="emptyState" style="display:none;">
+  😵 没有匹配的鸡尾酒<br>
+  试试换个关键词
+</div>
+
+<footer>
+  ✦ 2026 · 像 素 工 坊 ✦
+</footer>
+
+<script>
+// ═══ 鸡尾酒数据 ═══
+const recipes = [
+  { name:"马天尼", en:"Martini", base:"金酒", glass:"鸡尾酒杯", abv:"30%", difficulty:"★★☆", tags:"金酒",
+    ingredients:["金酒 60ml","干味美思 10ml","柠檬皮 twist（装饰）","橄榄 1颗（装饰）"],
+    steps:"将所有原料加冰搅拌至充分冷却，滤入冰镇鸡尾酒杯。挤柠檬皮油在酒面，用橄榄装饰。" },
+  { name:"内格罗尼", en:"Negroni", base:"金酒", glass:"老式杯", abv:"24%", difficulty:"★☆☆", tags:"金酒",
+    ingredients:["金酒 30ml","金巴利 30ml","甜味美思 30ml","橙皮 twist（装饰）"],
+    steps:"将所有原料加冰搅拌，滤入加满冰的老式杯。橙皮装饰。" },
+  { name:"曼哈顿", en:"Manhattan", base:"威士忌", glass:"鸡尾酒杯", abv:"30%", difficulty:"★★☆", tags:"威士忌",
+    ingredients:["黑麦威士忌 60ml","甜味美思 30ml","安哥斯图娜苦精 2滴","黑樱桃 1颗（装饰）"],
+    steps:"将所有原料加冰搅拌，滤入冰镇鸡尾酒杯。用黑樱桃装饰。" },
+  { name:"得其利", en:"Daiquiri", base:"朗姆酒", glass:"鸡尾酒杯", abv:"25%", difficulty:"★★☆", tags:"朗姆酒",
+    ingredients:["白朗姆酒 60ml","青柠汁 25ml","单糖浆 15ml"],
+    steps:"将所有原料放入摇壶加冰，剧烈摇荡10-12秒。双重滤入冰镇鸡尾酒杯。" },
+  { name:"莫吉托", en:"Mojito", base:"朗姆酒", glass:"海波杯", abv:"14%", difficulty:"★★☆", tags:"朗姆酒",
+    ingredients:["白朗姆酒 45ml","青柠 半个（切块）","薄荷叶 6-8片","白砂糖 2茶匙","苏打水 适量","碎冰 适量"],
+    steps:"将薄荷叶、青柠块和糖放入杯中轻轻捣压。加碎冰，倒入朗姆酒，加苏打水至满。轻轻搅拌，薄荷枝装饰。" },
+  { name:"玛格丽特", en:"Margarita", base:"龙舌兰", glass:"玛格丽特杯", abv:"24%", difficulty:"★★☆", tags:"龙舌兰",
+    ingredients:["银龙舌兰 50ml","橙味利口酒 20ml","青柠汁 20ml","盐 适量（杯口）"],
+    steps:"杯口用青柠抹湿，蘸盐。将所有原料加冰摇荡，滤入冰镇杯。" },
+  { name:"威士忌酸", en:"Whiskey Sour", base:"威士忌", glass:"老式杯", abv:"20%", difficulty:"★☆☆", tags:"威士忌",
+    ingredients:["波本威士忌 60ml","柠檬汁 25ml","单糖浆 20ml","蛋清（可选） 半个","安哥斯图娜苦精 几滴（装饰）"],
+    steps:"如有蛋清，先干摇（不加冰）10秒乳化。加冰继续摇荡10秒。双重滤入加冰的老式杯。苦精装饰。" },
+  { name:"Old Fashioned", en:"Old Fashioned", base:"威士忌", glass:"老式杯", abv:"28%", difficulty:"★☆☆", tags:"威士忌",
+    ingredients:["波本威士忌 60ml","方糖 1块","安哥斯图娜苦精 3滴","橙皮 twist（装饰）","大冰球 1个"],
+    steps:"杯中放方糖，滴入苦精，加少量水化开。加大冰球，倒入威士忌轻轻搅拌。橙皮挤油后装饰。" },
+  { name:"干马天尼", en:"Dry Martini", base:"金酒", glass:"鸡尾酒杯", abv:"32%", difficulty:"★★☆", tags:"金酒",
+    ingredients:["金酒 75ml","干味美思 10ml","柠檬皮 twist（装饰）","橄榄 1颗（可选）"],
+    steps:"将金酒和干味美思加冰搅拌30秒充分冷却。滤入冰镇鸡尾酒杯。柠檬皮挤油，用橄榄装饰。" },
+  { name:"边车", en:"Sidecar", base:"白兰地", glass:"鸡尾酒杯", abv:"24%", difficulty:"★★☆", tags:"白兰地",
+    ingredients:["白兰地 50ml","橙味利口酒 20ml","柠檬汁 20ml","糖（杯口装饰，可选）"],
+    steps:"可选在杯口沾糖边。将所有原料加冰摇荡10秒。滤入冰镇鸡尾酒杯。" },
+  { name:"新加坡司令", en:"Singapore Sling", base:"金酒", glass:"飓风杯", abv:"16%", difficulty:"★★★", tags:"金酒",
+    ingredients:["金酒 40ml","樱桃白兰地 15ml","君度 15ml","菠萝汁 30ml","青柠汁 15ml","石榴糖浆 10ml","安哥斯图娜苦精 2滴","苏打水 适量","菠萝片/樱桃（装饰）"],
+    steps:"将所有液体原料加冰摇荡。滤入加满冰的飓风杯。苏打水补满。菠萝片和樱桃装饰。" },
+  { name:"椰林飘香", en:"Piña Colada", base:"朗姆酒", glass:"飓风杯", abv:"15%", difficulty:"★☆☆", tags:"朗姆酒",
+    ingredients:["白朗姆酒 50ml","菠萝汁 90ml","椰奶 60ml","菠萝角/樱桃（装饰）"],
+    steps:"将所有原料加碎冰放入搅拌机，搅打至冰沙状。倒入飓风杯。菠萝角和樱桃装饰。" },
+  { name:"血腥玛丽", en:"Bloody Mary", base:"伏特加", glass:"海波杯", abv:"12%", difficulty:"★☆☆", tags:"伏特加",
+    ingredients:["伏特加 45ml","番茄汁 120ml","柠檬汁 10ml","伍斯特酱 2滴","塔巴斯科辣酱 1滴","盐和黑胡椒 各少许","芹菜杆/柠檬角（装饰）"],
+    steps:"将所有原料加冰摇荡或搅拌充分混合。滤入加冰的海波杯。芹菜杆和柠檬角装饰。" },
+  { name:"莫斯科骡子", en:"Moscow Mule", base:"伏特加", glass:"铜马克杯", abv:"14%", difficulty:"★☆☆", tags:"伏特加",
+    ingredients:["伏特加 50ml","青柠汁 15ml","姜汁啤酒 90ml","青柠角（装饰）","薄荷枝（装饰）"],
+    steps:"铜马克杯加满冰，倒入伏特加和青柠汁。姜汁啤酒补满。轻轻搅拌。青柠角和薄荷装饰。" },
+  { name:"尼克罗尼", en:"Negroni Sbagliato", base:"起泡酒", glass:"老式杯", abv:"15%", difficulty:"★☆☆", tags:"起泡酒",
+    ingredients:["金巴利 30ml","甜味美思 30ml","普罗塞克起泡酒 30ml","橙角（装饰）"],
+    steps:"老式杯加冰，倒入金巴利和甜味美思搅拌。普罗塞克补满。橙角装饰。" },
+  { name:"迈泰", en:"Mai Tai", base:"朗姆酒", glass:"双老式杯", abv:"22%", difficulty:"★★★", tags:"朗姆酒",
+    ingredients:["陈年朗姆酒 45ml","青柠汁 25ml","橙味利口酒 15ml","杏仁糖浆 10ml","单糖浆 10ml","薄荷枝/青柠角（装饰）"],
+    steps:"将所有原料加碎冰摇荡。倒入加碎冰的双老式杯。薄荷枝和青柠角装饰。" },
+  { name:"亚历山大", en:"Alexander", base:"白兰地", glass:"鸡尾酒杯", abv:"20%", difficulty:"★★☆", tags:"白兰地",
+    ingredients:["白兰地 30ml","深色可可利口酒 30ml","鲜奶油 30ml","豆蔻粉（装饰）"],
+    steps:"将所有原料加冰摇荡至充分冷却。滤入冰镇鸡尾酒杯。表面撒豆蔻粉。" },
+  { name:"萨泽拉克", en:"Sazerac", base:"威士忌", glass:"老式杯", abv:"30%", difficulty:"★★★", tags:"威士忌",
+    ingredients:["黑麦威士忌 50ml","苦艾酒 少量（涮杯）","方糖 1块","佩肖苦精 3滴","安哥斯图娜苦精 2滴","柠檬皮 twist（装饰）"],
+    steps:"用苦艾酒涮老式杯后倒出。另取一杯将方糖溶解于苦精中，加威士忌和冰搅拌。滤入备好的杯中。柠檬皮挤油后装饰。" },
+  { name:"汤姆柯林斯", en:"Tom Collins", base:"金酒", glass:"柯林斯杯", abv:"14%", difficulty:"★☆☆", tags:"金酒",
+    ingredients:["金酒 45ml","柠檬汁 30ml","单糖浆 15ml","苏打水 适量","柠檬角/樱桃（装饰）"],
+    steps:"将金酒、柠檬汁和糖浆加冰摇荡。滤入加满冰的柯林斯杯。苏打水补满。柠檬角和樱桃装饰。" },
+  { name:"海明威黛琦莉", en:"Hemingway Daiquiri", base:"朗姆酒", glass:"鸡尾酒杯", abv:"22%", difficulty:"★★☆", tags:"朗姆酒",
+    ingredients:["白朗姆酒 60ml","西柚汁 30ml","青柠汁 20ml","黑樱桃利口酒 10ml","樱桃（装饰）"],
+    steps:"将所有原料加冰摇荡10秒。双重滤入冰镇鸡尾酒杯。樱桃装饰。" },
+  { name:"法兰西75", en:"French 75", base:"金酒", glass:"香槟笛杯", abv:"18%", difficulty:"★★☆", tags:"金酒,起泡酒",
+    ingredients:["金酒 30ml","柠檬汁 15ml","单糖浆 10ml","香槟/起泡酒 适量","柠檬皮 twist（装饰）"],
+    steps:"将金酒、柠檬汁和糖浆加冰摇荡。滤入冰镇香槟笛杯。香槟补满。柠檬皮装饰。" },
+  { name:"神风特攻队", en:"Kamikaze", base:"伏特加", glass:"鸡尾酒杯", abv:"22%", difficulty:"★☆☆", tags:"伏特加",
+    ingredients:["伏特加 45ml","橙味利口酒 15ml","青柠汁 15ml","青柠角（装饰）"],
+    steps:"将所有原料加冰摇荡。滤入冰镇鸡尾酒杯。青柠角装饰。" },
+  { name:"飞行", en:"Aviation", base:"金酒", glass:"鸡尾酒杯", abv:"24%", difficulty:"★★☆", tags:"金酒",
+    ingredients:["金酒 50ml","黑樱桃利口酒 15ml","柠檬汁 15ml","紫罗兰利口酒 5ml","黑樱桃（装饰）"],
+    steps:"将所有原料加冰摇荡。滤入冰镇鸡尾酒杯。黑樱桃装饰。" },
+  { name:"教父", en:"Godfather", base:"威士忌", glass:"老式杯", abv:"26%", difficulty:"★☆☆", tags:"威士忌",
+    ingredients:["苏格兰威士忌 50ml","杏仁利口酒 25ml","橙皮 twist（装饰）"],
+    steps:"老式杯加大冰球，倒入威士忌和杏仁利口酒。轻轻搅拌。橙皮装饰。" },
+  { name:"B-52", en:"B-52", base:"利口酒", glass:"利口酒杯", abv:"22%", difficulty:"★★★", tags:"利口酒",
+    ingredients:["咖啡利口酒 15ml","百利甜酒 15ml","橙味利口酒 15ml"],
+    steps:"按密度顺序用勺背引流，依次缓慢倒入咖啡利口酒、百利甜酒和橙味利口酒，保持三层分明。可点燃顶层饮用。" },
+  { name:"僵尸", en:"Zombie", base:"朗姆酒", glass:"飓风杯", abv:"28%", difficulty:"★★★", tags:"朗姆酒",
+    ingredients:["白朗姆酒 30ml","陈年朗姆酒 30ml","151朗姆酒 15ml","菠萝汁 30ml","西柚汁 20ml","青柠汁 20ml","杏仁糖浆 10ml","单糖浆 10ml","安哥斯图娜苦精 2滴","薄荷枝（装饰）"],
+    steps:"将所有原料加碎冰摇荡。倒入加满碎冰的飓风杯。薄荷枝装饰。" },
+  { name:"薄荷朱莉普", en:"Mint Julep", base:"威士忌", glass:"银杯/老式杯", abv:"25%", difficulty:"★★☆", tags:"威士忌",
+    ingredients:["波本威士忌 60ml","薄荷叶 8-10片","单糖浆 15ml","碎冰 适量","薄荷枝（装饰）"],
+    steps:"杯中放入薄荷叶和糖浆，轻轻捣压出香。加满碎冰，倒入波本威士忌。搅拌至杯壁结霜。薄荷枝装饰。" },
+  { name:"浓缩咖啡马天尼", en:"Espresso Martini", base:"伏特加", glass:"鸡尾酒杯", abv:"20%", difficulty:"★★☆", tags:"伏特加",
+    ingredients:["伏特加 50ml","浓缩咖啡 30ml","咖啡利口酒 15ml","单糖浆 10ml","咖啡豆 3颗（装饰）"],
+    steps:"将所有原料加冰剧烈摇荡10秒（产生绵密泡沫）。双重滤入冰镇鸡尾酒杯。咖啡豆装饰。" },
+  { name:"黛绮莉之花", en:"Floridita Daiquiri", base:"朗姆酒", glass:"鸡尾酒杯", abv:"20%", difficulty:"★★☆", tags:"朗姆酒",
+    ingredients:["白朗姆酒 45ml","青柠汁 20ml","黑樱桃利口酒 10ml","单糖浆 10ml","樱桃（装饰）"],
+    steps:"将所有原料加冰摇荡10秒。双重滤入冰镇鸡尾酒杯。樱桃装饰。" },
+  { name:"自由古巴", en:"Cuba Libre", base:"朗姆酒", glass:"海波杯", abv:"12%", difficulty:"★☆☆", tags:"朗姆酒",
+    ingredients:["白朗姆酒 50ml","可乐 120ml","青柠角 1个","冰块"],
+    steps:"海波杯加满冰。挤入青柠角后投入杯中。倒入朗姆酒，可乐补满。轻轻搅拌。" },
+];
+
+// ═══ 状态 ═══
+let currentTag = 'all';
+
+// ═══ 渲染 ═══
+function renderRecipes(data) {
+  const grid = document.getElementById('recipeGrid');
+  const empty = document.getElementById('emptyState');
+  if (data.length === 0) {
+    grid.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+  empty.style.display = 'none';
+  grid.innerHTML = data.map(r => `
+    <div class="px-box">
+      <h2>${r.name} <span style="font-size:7px;color:var(--px-dim);letter-spacing:0.5px;">${r.en}</span></h2>
+      <div class="meta">
+        <span class="label">🍸</span> ${r.glass} &nbsp;|&nbsp; <span class="label">🔞</span> ${r.abv}
+        <span class="difficulty">${r.difficulty}</span>
+      </div>
+      <div class="section-label">▸ INGREDIENTS</div>
+      <ul class="ingredients">
+        ${r.ingredients.map(i => `<li>${i}</li>`).join('')}
+      </ul>
+      <div class="section-label">▸ INSTRUCTIONS</div>
+      <div class="instructions">${r.steps}</div>
+    </div>
+  `).join('');
+}
+
+// ═══ 搜索 ═══
+function filterRecipes() {
+  const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  let filtered = recipes;
+  if (currentTag !== 'all') {
+    filtered = filtered.filter(r => r.tags && r.tags.includes(currentTag));
+  }
+  if (q) {
+    filtered = filtered.filter(r =>
+      r.name.toLowerCase().includes(q) ||
+      r.en.toLowerCase().includes(q) ||
+      r.base.toLowerCase().includes(q) ||
+      r.ingredients.some(i => i.toLowerCase().includes(q))
+    );
+  }
+  renderRecipes(filtered);
+}
+
+// ═══ 标签筛选 ═══
+function filterByTag(tag) {
+  currentTag = tag;
+  document.querySelectorAll('.px-tag').forEach(b => b.classList.toggle('active', b.textContent === (tag === 'all' ? '全部' : tag)));
+  filterRecipes();
+}
+
+// ═══ 初始化 ═══
+renderRecipes(recipes);
+</script>
+</body>
+</html>

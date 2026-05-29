@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>罗马帝国皇帝世系简表 (前27年-476年)</title>
+<style>
+  :root {
+    --bg: #f5f3f0;
+    --card-bg: #fff;
+    --early-color: #6d28d9;
+    --late-color: #57534e;
+    --timeline-color: #6d28d9;
+    --text: #1c1917;
+    --text-light: #78716c;
+    --border: #d6d3d1;
+    --event-bg: #faf5ff;
+    --minister-bg: #f0f4ff;
+    --highlight: #7c3aed;
+    --gold: #b8860b;
+    --crisis-color: #dc2626;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:"PingFang SC","Microsoft YaHei","Noto Serif SC",serif;background:var(--bg);color:var(--text);line-height:1.6}
+  .header{text-align:center;padding:50px 20px 30px;background:linear-gradient(135deg,#1a0a2e 0%,#2d1065 30%,#4c1d95 60%,#6d28d9 100%);color:#e8d5ff;position:relative;overflow:hidden}
+  .header::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffd700' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");opacity:.5}
+  .header h1{font-size:40px;font-weight:900;letter-spacing:10px;position:relative;z-index:1;text-shadow:2px 2px 4px rgba(0,0,0,.5)}
+  .header .subtitle{font-size:18px;margin-top:12px;color:#fbbf24;letter-spacing:6px;position:relative;z-index:1}
+  .header .period{font-size:14px;margin-top:8px;color:#c4b5fd;letter-spacing:3px;position:relative;z-index:1}
+  .header .latin{font-size:13px;margin-top:4px;color:#a78bfa;letter-spacing:2px;position:relative;z-index:1;font-style:italic}
+  .legend{display:flex;justify-content:center;gap:28px;padding:18px;background:#fff;border-bottom:2px solid var(--border);flex-wrap:wrap}
+  .legend-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-light)}
+  .legend-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0}
+  .container{max-width:1400px;margin:0 auto;padding:20px}
+  .section-title{text-align:center;padding:30px 20px 20px;font-size:28px;font-weight:bold;letter-spacing:6px;position:relative}
+  .section-title.early{color:var(--early-color)}
+  .section-title.late{color:var(--late-color)}
+  .section-title::after{content:'';display:block;width:80px;height:3px;margin:12px auto 0}
+  .section-title.early::after{background:var(--early-color)}
+  .section-title.late::after{background:var(--late-color)}
+  .timeline{position:relative;padding:20px 0}
+  .timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:4px;transform:translateX(-50%);z-index:0}
+  .timeline.early::before{background:var(--early-color)}
+  .timeline.late::before{background:var(--late-color)}
+  .timeline-entry{display:flex;align-items:flex-start;position:relative;margin-bottom:20px}
+  .entry-content{display:flex;width:100%;align-items:flex-start;gap:0}
+  .entry-left,.entry-right{width:48%;padding:0 15px}
+  .entry-center{width:4%;display:flex;justify-content:center;position:relative;z-index:1}
+  .year-marker{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold;color:#fff;flex-shrink:0;z-index:2;position:relative;line-height:1.1;text-align:center}
+  .early .year-marker{background:var(--early-color)}
+  .late .year-marker{background:var(--late-color)}
+  .emperor-card{background:var(--card-bg);border-radius:12px;padding:20px;box-shadow:0 4px 20px rgba(0,0,0,.08);border-left:5px solid;position:relative;transition:transform .3s,box-shadow .3s}
+  .emperor-card:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,.15)}
+  .early .emperor-card{border-left-color:var(--early-color)}
+  .late .emperor-card{border-left-color:var(--late-color)}
+  .emperor-card .order{position:absolute;top:-10px;right:15px;background:var(--highlight);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold}
+  .emperor-name{font-size:20px;font-weight:bold;margin-bottom:2px}
+  .emperor-latin{font-size:12px;color:var(--text-light);font-style:italic;margin-bottom:4px}
+  .emperor-realname{font-size:12px;color:var(--text-light);margin-bottom:8px}
+  .emperor-meta{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;margin:10px 0;font-size:12px}
+  .meta-item{display:flex;align-items:center;gap:4px}
+  .meta-label{color:var(--text-light);white-space:nowrap}
+  .meta-value{font-weight:600}
+  .life-bar{height:8px;background:#eee;border-radius:4px;margin:10px 0 5px;position:relative;overflow:visible}
+  .life-bar .reign{position:absolute;height:100%;border-radius:4px;opacity:.8}
+  .early .life-bar .reign{background:var(--early-color)}
+  .late .life-bar .reign{background:var(--late-color)}
+  .life-bar-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--text-light)}
+  .relation-tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;margin-top:6px;border:1px solid}
+  .early .relation-tag{background:#f5f0ff;color:#6d28d9;border-color:#c4b5fd}
+  .late .relation-tag{background:#f5f5f4;color:#57534e;border-color:#d6d3d1}
+  .dynasty-tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:10px;margin-top:4px;margin-left:4px;background:#fef3c7;color:#92400e;border:1px solid #fcd34d}
+  .events-panel{background:var(--event-bg);border-radius:10px;padding:14px;margin-top:5px;border:1px solid #e9d5ff}
+  .events-panel h4{font-size:13px;color:var(--highlight);margin-bottom:8px;display:flex;align-items:center;gap:5px}
+  .event-item{font-size:12px;padding:4px 0;border-bottom:1px dashed #e9d5ff;display:flex;gap:6px}
+  .event-item:last-child{border-bottom:none}
+  .event-year{color:var(--highlight);font-weight:bold;white-space:nowrap;min-width:48px}
+  .ministers-panel{background:var(--minister-bg);border-radius:10px;padding:14px;margin-top:8px;border:1px solid #c0d0e8}
+  .ministers-panel h4{font-size:13px;color:#2c5f8a;margin-bottom:8px;display:flex;align-items:center;gap:5px}
+  .minister-list{display:flex;flex-wrap:wrap;gap:5px}
+  .minister-tag{font-size:11px;padding:3px 8px;background:#dceaf5;color:#2c5f8a;border-radius:12px;border:1px solid #b8d4e8}
+  .minister-tag.negative{background:#fde8e8;color:#b91c1c;border-color:#f0b8b8}
+  .family-tree-section{margin:40px 0;padding:30px;background:#fff;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.06)}
+  .family-tree-section h2{text-align:center;font-size:24px;color:var(--text);margin-bottom:30px;letter-spacing:4px}
+  .tree-container{overflow-x:auto;padding:20px 0}
+  .tree-svg{display:block;margin:0 auto}
+  .lifecycle-section{margin:40px 0;padding:30px;background:#fff;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.06)}
+  .lifecycle-section h2{text-align:center;font-size:24px;color:var(--text);margin-bottom:10px;letter-spacing:4px}
+  .lifecycle-section .note{text-align:center;font-size:12px;color:var(--text-light);margin-bottom:20px}
+  .gantt-container{overflow-x:auto;padding:10px 0}
+  .gantt-chart{min-width:900px}
+  .gantt-row{display:flex;align-items:center;height:30px;margin:2px 0}
+  .gantt-label{width:110px;font-size:11px;font-weight:600;text-align:right;padding-right:12px;flex-shrink:0;white-space:nowrap}
+  .gantt-bar-area{flex:1;position:relative;height:100%}
+  .gantt-bar{position:absolute;height:10px;top:50%;transform:translateY(-50%);border-radius:5px;opacity:.3;cursor:pointer}
+  .gantt-bar.reign-bar{height:18px;opacity:.85;z-index:1}
+  .gantt-bar:hover{opacity:1}
+  .gantt-bar .tooltip{display:none;position:absolute;bottom:calc(100% + 5px);left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:4px 8px;border-radius:4px;font-size:11px;white-space:nowrap;z-index:10}
+  .gantt-bar:hover .tooltip{display:block}
+  .gantt-header{display:flex;align-items:center;height:30px;border-bottom:2px solid var(--border);margin-bottom:10px}
+  .gantt-header .gantt-label{font-size:12px;color:var(--text-light)}
+  .gantt-year-tick{position:absolute;font-size:10px;color:var(--text-light);transform:translateX(-50%);top:0}
+  .gantt-body{position:relative}
+  .transition-divider{text-align:center;padding:40px 20px;position:relative}
+  .transition-divider .divider-line{height:2px;background:linear-gradient(to right,transparent,var(--crisis-color),transparent);margin:0 auto;max-width:600px}
+  .transition-divider .divider-text{display:inline-block;background:var(--bg);padding:8px 25px;position:relative;top:-14px;font-size:16px;color:var(--crisis-color);font-weight:bold;letter-spacing:4px;border:2px solid var(--crisis-color);border-radius:20px}
+  .mini-divider{text-align:center;padding:18px}
+  .mini-divider .mini-text{display:inline-block;background:#fef3c7;padding:5px 18px;font-size:12px;color:#92400e;font-weight:bold;letter-spacing:2px;border:1px solid #fcd34d;border-radius:14px}
+  .overview-stats{display:flex;justify-content:center;gap:28px;padding:20px;flex-wrap:wrap}
+  .stat-box{text-align:center;padding:15px 22px;background:#fff;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.06);min-width:110px}
+  .stat-number{font-size:26px;font-weight:bold;color:var(--highlight)}
+  .stat-desc{font-size:12px;color:var(--text-light);margin-top:4px}
+  .footer{text-align:center;padding:30px;color:var(--text-light);font-size:13px;border-top:2px solid var(--border);margin-top:40px}
+  @media(max-width:900px){
+    .entry-content{flex-direction:column!important;align-items:center}
+    .entry-left,.entry-right{width:100%;padding:10px 0}
+    .entry-center{width:100%;justify-content:center;margin:10px 0}
+    .timeline::before{display:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>罗马帝国皇帝世系简表</h1>
+  <div class="subtitle">IMPERIUM ROMANUM</div>
+  <div class="period">帝国盛世 (前27年-192年) ─ 帝国衰亡 (193年-476年)</div>
+  <div class="latin">S·P·Q·R — Senātus Populusque Rōmānus</div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:var(--early-color)"></div><span>帝国盛世 (前27-192)</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--late-color)"></div><span>帝国衰亡 (193-476)</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--crisis-color)"></div><span>重大历史事件</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:#2c5f8a"></div><span>重要人物</span></div>
+</div>
+
+<div class="overview-stats">
+  <div class="stat-box"><div class="stat-number">503</div><div class="stat-desc">国祚（年）</div></div>
+  <div class="stat-box"><div class="stat-number">~80+</div><div class="stat-desc">皇帝总数</div></div>
+  <div class="stat-box"><div class="stat-number">23</div><div class="stat-desc">本表收录</div></div>
+  <div class="stat-box"><div class="stat-number">前27</div><div class="stat-desc">建立年份</div></div>
+  <div class="stat-box"><div class="stat-number">476</div><div class="stat-desc">西罗马灭亡</div></div>
+  <div class="stat-box"><div class="stat-number">罗马</div><div class="stat-desc">首都</div></div>
+</div>
+
+<div class="container">
+
+<!-- ===== 甘特图 ===== -->
+<div class="lifecycle-section">
+  <h2>皇帝生卒与在位时间对照图</h2>
+  <div class="note">浅色条为生卒跨度，深色条为在位时间，鼠标悬停查看详情（仅展示重要皇帝）</div>
+  <div class="gantt-container"><div class="gantt-chart" id="ganttChart"></div></div>
+</div>
+
+<!-- ==================== 帝国盛世 ==================== -->
+<div class="section-title early">帝 国 盛 世</div>
+<div style="text-align:center;color:#999;font-size:13px;margin-bottom:20px;">前27年 — 192年 · 元首制 (Principate) · 罗马和平 (Pax Romana)</div>
+
+<div class="timeline early">
+
+  <!-- 奥古斯都 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">1</div>
+        <div class="emperor-name">奥古斯都</div>
+        <div class="emperor-latin">Augustus · 原名: 盖乌斯·屋大维</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">前63-14年（77岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">前27-14年（41年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:46.8%;width:53.2%"></div></div>
+        <div class="life-bar-labels"><span>前63</span><span>前27 在位</span><span>14年</span></div>
+        <div class="relation-tag">罗马帝国开创者 · 凯撒养子</div>
+        <div class="dynasty-tag">朱里亚-克劳狄王朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">阿格里帕</span><span class="minister-tag">梅塞纳斯</span>
+          <span class="minister-tag">莉维娅（皇后）</span><span class="minister-tag">维吉尔</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">前27</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">前31</span><span>亚克兴海战，击败安东尼与克利奥帕特拉</span></div>
+        <div class="event-item"><span class="event-year">前27</span><span>元老院授予"奥古斯都"称号，帝国建立</span></div>
+        <div class="event-item"><span class="event-year">前19</span><span>维吉尔完成《埃涅阿斯纪》</span></div>
+        <div class="event-item"><span class="event-year">前2</span><span>获"祖国之父"称号</span></div>
+        <div class="event-item"><span class="event-year">9年</span><span>条顿堡森林之战，三个军团覆灭</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 提比略 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">14年</span><span>奥古斯都去世，提比略继位</span></div>
+        <div class="event-item"><span class="event-year">19年</span><span>日耳曼尼库斯去世（疑遭毒杀）</span></div>
+        <div class="event-item"><span class="event-year">26年</span><span>隐居卡普里岛，塞扬努斯专权</span></div>
+        <div class="event-item"><span class="event-year">~30年</span><span>耶稣被钉十字架（传统时间）</span></div>
+        <div class="event-item"><span class="event-year">31年</span><span>塞扬努斯被处死</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">14</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">2</div>
+        <div class="emperor-name">提比略</div>
+        <div class="emperor-latin">Tiberius</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">前42-37年（78岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">14-37年（23年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:70.9%;width:29.1%"></div></div>
+        <div class="life-bar-labels"><span>前42</span><span>14 在位</span><span>37</span></div>
+        <div class="relation-tag">奥古斯都继子（养子）</div>
+        <div class="dynasty-tag">朱里亚-克劳狄王朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag negative">塞扬努斯（禁卫军长官）</span>
+          <span class="minister-tag">日耳曼尼库斯</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 卡利古拉 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">3</div>
+        <div class="emperor-name">卡利古拉</div>
+        <div class="emperor-latin">Caligula · 盖乌斯·凯撒</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">12-41年（28岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">37-41年（4年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:86.2%;width:13.8%"></div></div>
+        <div class="life-bar-labels"><span>12</span><span>37-41</span><span>41</span></div>
+        <div class="relation-tag">提比略侄孙 / 养孙 · 暴君</div>
+        <div class="dynasty-tag">朱里亚-克劳狄王朝</div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">37</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">37年</span><span>初期施政良好，后精神失常</span></div>
+        <div class="event-item"><span class="event-year">40年</span><span>声称自己是神，行为荒诞</span></div>
+        <div class="event-item"><span class="event-year">41年</span><span>被禁卫军刺杀</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 克劳狄乌斯 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">41年</span><span>禁卫军拥立克劳狄乌斯为帝</span></div>
+        <div class="event-item"><span class="event-year">43年</span><span>征服不列颠</span></div>
+        <div class="event-item"><span class="event-year">48年</span><span>皇后美撒琳娜因谋反被杀</span></div>
+        <div class="event-item"><span class="event-year">54年</span><span>被第二任皇后阿格里皮娜毒杀</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">41</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">4</div>
+        <div class="emperor-name">克劳狄乌斯</div>
+        <div class="emperor-latin">Claudius</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">前10-54年（63岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">41-54年（13年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:79.7%;width:20.3%"></div></div>
+        <div class="life-bar-labels"><span>前10</span><span>41 在位</span><span>54</span></div>
+        <div class="relation-tag">卡利古拉叔父 · 禁卫军拥立</div>
+        <div class="dynasty-tag">朱里亚-克劳狄王朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">纳西苏斯</span>
+          <span class="minister-tag negative">阿格里皮娜（皇后）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 尼禄 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">5</div>
+        <div class="emperor-name">尼禄</div>
+        <div class="emperor-latin">Nero</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">37-68年（30岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">54-68年（14年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:54.8%;width:45.2%"></div></div>
+        <div class="life-bar-labels"><span>37</span><span>54 在位</span><span>68</span></div>
+        <div class="relation-tag">克劳狄乌斯继子（养子）· 朱里亚-克劳狄末帝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">塞内卡（哲学家）</span><span class="minister-tag">布鲁斯</span>
+          <span class="minister-tag negative">阿格里皮娜（被弑母）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">54</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">59年</span><span>弑母阿格里皮娜</span></div>
+        <div class="event-item"><span class="event-year">64年</span><span>罗马大火，迫害基督徒</span></div>
+        <div class="event-item"><span class="event-year">65年</span><span>赐死塞内卡</span></div>
+        <div class="event-item"><span class="event-year">66年</span><span>犹太大起义</span></div>
+        <div class="event-item"><span class="event-year">68年</span><span>各省叛乱，尼禄自杀，王朝终结</span></div>
+      </div>
+    </div>
+  </div></div>
+</div>
+
+<div class="mini-divider"><div class="mini-text">四帝之年 · 68-69年 · 内战</div></div>
+
+<div class="timeline early">
+  <!-- 韦斯巴芗 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">69年</span><span>四帝之年结束，韦斯巴芗胜出</span></div>
+        <div class="event-item"><span class="event-year">70年</span><span>提图斯攻陷耶路撒冷，摧毁第二圣殿</span></div>
+        <div class="event-item"><span class="event-year">72年</span><span>开始建造罗马大竞技场（斗兽场）</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">69</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">6</div>
+        <div class="emperor-name">韦斯巴芗</div>
+        <div class="emperor-latin">Vespasian</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">9-79年（69岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">69-79年（10年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:85.7%;width:14.3%"></div></div>
+        <div class="life-bar-labels"><span>9</span><span>69 在位</span><span>79</span></div>
+        <div class="relation-tag">军事夺权 · 出身平民</div>
+        <div class="dynasty-tag">弗拉维王朝</div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 提图斯 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">7</div>
+        <div class="emperor-name">提图斯</div>
+        <div class="emperor-latin">Titus</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">39-81年（41岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">79-81年（2年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:95.2%;width:4.8%"></div></div>
+        <div class="life-bar-labels"><span>39</span><span></span><span>81</span></div>
+        <div class="relation-tag">韦斯巴芗长子 · "人类之爱"</div>
+        <div class="dynasty-tag">弗拉维王朝</div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">79</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">79年</span><span>维苏威火山喷发，庞贝城覆灭</span></div>
+        <div class="event-item"><span class="event-year">80年</span><span>罗马大竞技场（斗兽场）落成</span></div>
+        <div class="event-item"><span class="event-year">80年</span><span>罗马大火</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 图密善 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">85年</span><span>达契亚战争</span></div>
+        <div class="event-item"><span class="event-year">89年</span><span>日耳曼叛乱</span></div>
+        <div class="event-item"><span class="event-year">96年</span><span>宫廷政变，被近臣刺杀</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">81</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">8</div>
+        <div class="emperor-name">图密善</div>
+        <div class="emperor-latin">Domitian</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">51-96年（44岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">81-96年（15年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:66.7%;width:33.3%"></div></div>
+        <div class="life-bar-labels"><span>51</span><span>81 在位</span><span>96</span></div>
+        <div class="relation-tag">提图斯之弟 · 弗拉维末帝</div>
+      </div>
+    </div>
+  </div></div>
+</div>
+
+<div class="mini-divider"><div class="mini-text">五贤帝时代开始 · 96年 · 养子继承制</div></div>
+
+<div class="timeline early">
+  <!-- 涅尔瓦 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">9</div>
+        <div class="emperor-name">涅尔瓦</div>
+        <div class="emperor-latin">Nerva</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">30-98年（67岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">96-98年（2年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:97.1%;width:2.9%"></div></div>
+        <div class="life-bar-labels"><span>30</span><span></span><span>98</span></div>
+        <div class="relation-tag">元老院推选 · 开创养子继承制</div>
+        <div class="dynasty-tag">安敦尼王朝（五贤帝）</div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">96</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">96年</span><span>元老院推选涅尔瓦，终结恐怖统治</span></div>
+        <div class="event-item"><span class="event-year">97年</span><span>收养图拉真为继承人</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 图拉真 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">101</span><span>第一次达契亚战争</span></div>
+        <div class="event-item"><span class="event-year">106</span><span>征服达契亚，建图拉真纪功柱</span></div>
+        <div class="event-item"><span class="event-year">113</span><span>帕提亚战争，帝国疆域达到极盛</span></div>
+        <div class="event-item"><span class="event-year">116</span><span>攻占美索不达米亚，抵达波斯湾</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">98</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">10</div>
+        <div class="emperor-name">图拉真</div>
+        <div class="emperor-latin">Trajan · "最佳元首" (Optimus Princeps)</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">53-117年（63岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">98-117年（19年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:70.3%;width:29.7%"></div></div>
+        <div class="life-bar-labels"><span>53</span><span>98 在位</span><span>117</span></div>
+        <div class="relation-tag">涅尔瓦养子 · 帝国疆域最大</div>
+        <div class="dynasty-tag">安敦尼王朝（五贤帝）</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">小普林尼</span><span class="minister-tag">普洛提娜（皇后）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 哈德良 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">11</div>
+        <div class="emperor-name">哈德良</div>
+        <div class="emperor-latin">Hadrian</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">76-138年（62岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">117-138年（21年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:66.1%;width:33.9%"></div></div>
+        <div class="life-bar-labels"><span>76</span><span>117 在位</span><span>138</span></div>
+        <div class="relation-tag">图拉真养子 · 守成之君</div>
+        <div class="dynasty-tag">安敦尼王朝（五贤帝）</div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">117</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">122</span><span>修建哈德良长城（不列颠）</span></div>
+        <div class="event-item"><span class="event-year">130</span><span>巡视帝国各行省</span></div>
+        <div class="event-item"><span class="event-year">132</span><span>巴尔·科赫巴起义（犹太）</span></div>
+        <div class="event-item"><span class="event-year">134</span><span>重建万神殿</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 安敦尼·庇护 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">142</span><span>修建安敦尼长城（苏格兰）</span></div>
+        <div class="event-item"><span class="event-year">148</span><span>罗马建城900周年庆典</span></div>
+        <div class="event-item"><span class="event-year">161</span><span>23年和平统治，帝国繁荣</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">138</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">12</div>
+        <div class="emperor-name">安敦尼·庇护</div>
+        <div class="emperor-latin">Antoninus Pius</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">86-161年（74岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">138-161年（23年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:69.3%;width:30.7%"></div></div>
+        <div class="life-bar-labels"><span>86</span><span>138 在位</span><span>161</span></div>
+        <div class="relation-tag">哈德良养子 · 最和平的统治</div>
+        <div class="dynasty-tag">安敦尼王朝（五贤帝）</div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 马可·奥勒留 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">13</div>
+        <div class="emperor-name">马可·奥勒留</div>
+        <div class="emperor-latin">Marcus Aurelius · "哲学家皇帝"</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">121-180年（58岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">161-180年（19年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:67.8%;width:32.2%"></div></div>
+        <div class="life-bar-labels"><span>121</span><span>161 在位</span><span>180</span></div>
+        <div class="relation-tag">安敦尼养子 · 五贤帝之末 · 斯多葛哲学家</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">卢奇乌斯·维鲁斯（共治帝）</span>
+          <span class="minister-tag">盖伦（医学家）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">161</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">162</span><span>帕提亚战争</span></div>
+        <div class="event-item"><span class="event-year">166</span><span>安敦尼瘟疫（可能天花），死亡数百万</span></div>
+        <div class="event-item"><span class="event-year">167</span><span>马可曼尼战争（日耳曼人入侵）</span></div>
+        <div class="event-item"><span class="event-year">175</span><span>著《沉思录》</span></div>
+        <div class="event-item"><span class="event-year">180</span><span>病逝于前线，五贤帝时代终结</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 康茂德 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">180</span><span>放弃日耳曼前线，与蛮族议和</span></div>
+        <div class="event-item"><span class="event-year">182</span><span>姐姐露西拉谋反未遂</span></div>
+        <div class="event-item"><span class="event-year">190</span><span>自比赫拉克勒斯，荒淫暴虐</span></div>
+        <div class="event-item"><span class="event-year">192</span><span>被摔跤手勒死，帝国盛世终结</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">180</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">14</div>
+        <div class="emperor-name">康茂德</div>
+        <div class="emperor-latin">Commodus</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">161-192年（31岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">180-192年（12年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:61.3%;width:38.7%"></div></div>
+        <div class="life-bar-labels"><span>161</span><span>180 在位</span><span>192</span></div>
+        <div class="relation-tag">马可·奥勒留亲生子 · 养子继承制终结</div>
+        <div class="dynasty-tag">安敦尼王朝末帝</div>
+      </div>
+    </div>
+  </div></div>
+</div>
+
+<!-- ===== 转折分界 ===== -->
+<div class="transition-divider">
+  <div class="divider-line"></div>
+  <div class="divider-text">五帝之年 · 193年 · 帝国危机开始</div>
+</div>
+
+<!-- ==================== 帝国衰亡 ==================== -->
+<div class="section-title late">帝 国 衰 亡</div>
+<div style="text-align:center;color:#999;font-size:13px;margin-bottom:20px;">193年 — 476年 · 塞维鲁王朝 · 三世纪危机 · 四帝共治 · 帝国分裂</div>
+
+<div class="timeline late">
+
+  <!-- 塞维鲁 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">15</div>
+        <div class="emperor-name">塞普提米乌斯·塞维鲁</div>
+        <div class="emperor-latin">Septimius Severus</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">145-211年（65岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">193-211年（18年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:72.7%;width:27.3%"></div></div>
+        <div class="life-bar-labels"><span>145</span><span>193 在位</span><span>211</span></div>
+        <div class="relation-tag">军事夺权 · 北非出身</div>
+        <div class="dynasty-tag">塞维鲁王朝</div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">193</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">193</span><span>五帝之年胜出，建塞维鲁王朝</span></div>
+        <div class="event-item"><span class="event-year">197</span><span>卢格杜努姆战役，击败对手</span></div>
+        <div class="event-item"><span class="event-year">208</span><span>远征不列颠</span></div>
+        <div class="event-item"><span class="event-year">211</span><span>病逝于约克（不列颠）</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 卡拉卡拉 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">211</span><span>杀弟盖塔，独揽大权</span></div>
+        <div class="event-item"><span class="event-year">212</span><span>《安敦尼敕令》：所有自由民获公民权</span></div>
+        <div class="event-item"><span class="event-year">216</span><span>卡拉卡拉浴场建成</span></div>
+        <div class="event-item"><span class="event-year">217</span><span>远征帕提亚途中被近卫刺杀</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">211</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">16</div>
+        <div class="emperor-name">卡拉卡拉</div>
+        <div class="emperor-latin">Caracalla</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">188-217年（29岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">211-217年（6年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:79.3%;width:20.7%"></div></div>
+        <div class="life-bar-labels"><span>188</span><span>211 在位</span><span>217</span></div>
+        <div class="relation-tag">塞维鲁长子 · 塞维鲁末帝</div>
+      </div>
+    </div>
+  </div></div>
+</div>
+
+<div class="mini-divider"><div class="mini-text">三世纪危机 · 235-284年 · 50年间更换26位皇帝</div></div>
+
+<div class="timeline late">
+  <!-- 奥勒良 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">17</div>
+        <div class="emperor-name">奥勒良</div>
+        <div class="emperor-latin">Aurelian · "世界的恢复者"</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">214-275年（61岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">270-275年（5年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:91.8%;width:8.2%"></div></div>
+        <div class="life-bar-labels"><span>214</span><span>270-275</span><span>275</span></div>
+        <div class="relation-tag">军事夺权 · 重新统一帝国</div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">270</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">271</span><span>修建奥勒良城墙（保卫罗马城）</span></div>
+        <div class="event-item"><span class="event-year">272</span><span>击败帕尔米拉帝国（芝诺比亚女王）</span></div>
+        <div class="event-item"><span class="event-year">274</span><span>收复高卢帝国，帝国重新统一</span></div>
+        <div class="event-item"><span class="event-year">275</span><span>远征波斯途中被部下刺杀</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 戴克里先 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">286</span><span>建立四帝共治制（Tetrarchy）</span></div>
+        <div class="event-item"><span class="event-year">293</span><span>完善四帝共治，帝国分四区治理</span></div>
+        <div class="event-item"><span class="event-year">301</span><span>颁布《最高价格敕令》</span></div>
+        <div class="event-item"><span class="event-year">303</span><span>大迫害基督徒（最后一次）</span></div>
+        <div class="event-item"><span class="event-year">305</span><span>自愿退位（唯一自愿退位的皇帝）</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">284</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">18</div>
+        <div class="emperor-name">戴克里先</div>
+        <div class="emperor-latin">Diocletian</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">244-311年（67岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">284-305年（21年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:59.7%;width:31.3%"></div></div>
+        <div class="life-bar-labels"><span>244</span><span>284 在位 305</span><span>†311</span></div>
+        <div class="relation-tag">军事夺权 · 结束三世纪危机 · 四帝共治</div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 君士坦丁 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">19</div>
+        <div class="emperor-name">君士坦丁大帝</div>
+        <div class="emperor-latin">Constantine I · "大帝" (the Great)</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">272-337年（65岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">306-337年（31年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:52.3%;width:47.7%"></div></div>
+        <div class="life-bar-labels"><span>272</span><span>306 在位</span><span>337</span></div>
+        <div class="relation-tag">君士坦提乌斯一世之子 · 基督教化</div>
+        <div class="dynasty-tag">君士坦丁王朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">尤西比乌斯</span><span class="minister-tag">海伦娜（母后）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">306</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">312</span><span>米尔维安桥战役，击败马克森提乌斯</span></div>
+        <div class="event-item"><span class="event-year">313</span><span>《米兰敕令》：基督教合法化</span></div>
+        <div class="event-item"><span class="event-year">324</span><span>统一全帝国</span></div>
+        <div class="event-item"><span class="event-year">325</span><span>尼西亚公会议（确立基督教教义）</span></div>
+        <div class="event-item"><span class="event-year">330</span><span>迁都君士坦丁堡（新罗马）</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 尤利安 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">361</span><span>即位后企图恢复罗马传统宗教</span></div>
+        <div class="event-item"><span class="event-year">362</span><span>颁布宗教宽容令，被称"叛教者"</span></div>
+        <div class="event-item"><span class="event-year">363</span><span>远征波斯萨珊王朝，战死</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">361</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">20</div>
+        <div class="emperor-name">尤利安（"叛教者"）</div>
+        <div class="emperor-latin">Julian "the Apostate"</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">331-363年（32岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">361-363年（2年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:93.8%;width:6.2%"></div></div>
+        <div class="life-bar-labels"><span>331</span><span>361-363</span><span>363</span></div>
+        <div class="relation-tag">君士坦丁侄子 · 最后的异教皇帝</div>
+        <div class="dynasty-tag">君士坦丁王朝末帝</div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 狄奥多西 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">21</div>
+        <div class="emperor-name">狄奥多西一世</div>
+        <div class="emperor-latin">Theodosius I · "大帝"</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">347-395年（48岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">379-395年（16年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:66.7%;width:33.3%"></div></div>
+        <div class="life-bar-labels"><span>347</span><span>379 在位</span><span>395</span></div>
+        <div class="relation-tag">最后统治统一帝国的皇帝</div>
+        <div class="dynasty-tag">狄奥多西王朝</div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">379</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">380</span><span>《帖撒罗尼迦敕令》：基督教为国教</span></div>
+        <div class="event-item"><span class="event-year">382</span><span>与西哥特人签订和约</span></div>
+        <div class="event-item"><span class="event-year">391</span><span>禁止一切异教活动</span></div>
+        <div class="event-item"><span class="event-year">394</span><span>最后一次统一东西帝国</span></div>
+        <div class="event-item"><span class="event-year">395</span><span>去世，帝国永久分裂为东西两部分</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 霍诺里乌斯 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">402</span><span>西罗马首都从米兰迁至拉文纳</span></div>
+        <div class="event-item"><span class="event-year">406</span><span>蛮族大规模涌入帝国</span></div>
+        <div class="event-item"><span class="event-year">410</span><span>阿拉里克率西哥特人洗劫罗马</span></div>
+        <div class="event-item"><span class="event-year">418</span><span>西哥特王国建于高卢</span></div>
+      </div>
+      <div class="ministers-panel" style="margin-top:8px;">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">斯提里科（蛮族将军）</span>
+          <span class="minister-tag negative">阿拉里克（西哥特王）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">395</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">22</div>
+        <div class="emperor-name">霍诺里乌斯</div>
+        <div class="emperor-latin">Honorius · 西罗马皇帝</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">384-423年（38岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">395-423年（28年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:28.2%;width:71.8%"></div></div>
+        <div class="life-bar-labels"><span>384</span><span>395 在位</span><span>423</span></div>
+        <div class="relation-tag">狄奥多西之子 · 西罗马首任皇帝</div>
+        <div class="dynasty-tag">狄奥多西王朝（西）</div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 罗慕路斯·奥古斯都路斯 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">23</div>
+        <div class="emperor-name">罗慕路斯·奥古斯都路斯</div>
+        <div class="emperor-latin">Romulus Augustulus · 西罗马末帝</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">~461-~507年后</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">475-476年（不足1年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:30.4%;width:2.2%"></div></div>
+        <div class="life-bar-labels"><span>~461</span><span>475-476</span><span>~507?</span></div>
+        <div class="relation-tag">父亲篡位拥立 · 西罗马最后一位皇帝</div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">475</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">475</span><span>父亲奥瑞斯特斯拥立其为帝</span></div>
+        <div class="event-item"><span class="event-year">476</span><span>日耳曼雇佣兵首领奥多亚克废黜末帝</span></div>
+        <div class="event-item"><span class="event-year">476</span><span>西罗马帝国灭亡</span></div>
+        <div class="event-item"><span class="event-year">476</span><span>被流放至坎帕尼亚，安度余生</span></div>
+      </div>
+    </div>
+  </div></div>
+
+</div>
+
+<!-- ==================== 世系关系图 ==================== -->
+<div class="family-tree-section">
+  <h2>罗马帝国皇帝世系关系图</h2>
+  <div class="tree-container">
+    <svg class="tree-svg" viewBox="0 0 1300 900" width="1300" height="900" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="eGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#6d28d9"/><stop offset="100%" style="stop-color:#8b5cf6"/></linearGradient>
+        <linearGradient id="lGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#57534e"/><stop offset="100%" style="stop-color:#78716c"/></linearGradient>
+        <linearGradient id="gGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#b8860b"/><stop offset="100%" style="stop-color:#daa520"/></linearGradient>
+        <filter id="sh"><feDropShadow dx="1" dy="2" stdDeviation="3" flood-opacity="0.15"/></filter>
+        <marker id="aE" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#6d28d9"/></marker>
+        <marker id="aL" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#57534e"/></marker>
+        <marker id="aR" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#dc2626"/></marker>
+      </defs>
+
+      <!-- 背景 -->
+      <rect x="0" y="0" width="1300" height="400" fill="#faf5ff" rx="12"/>
+      <rect x="0" y="410" width="1300" height="490" fill="#fafaf9" rx="12"/>
+
+      <!-- 标签 -->
+      <text x="20" y="30" font-size="16" fill="#6d28d9" font-weight="bold" font-family="PingFang SC,serif">帝国盛世 (前27-192)</text>
+      <text x="20" y="440" font-size="16" fill="#57534e" font-weight="bold" font-family="PingFang SC,serif">帝国衰亡 (193-476)</text>
+
+      <!-- ===== 朱里亚-克劳狄王朝 ===== -->
+      <rect x="35" y="48" width="580" height="18" rx="4" fill="#fef3c7" stroke="#fcd34d"/>
+      <text x="325" y="61" text-anchor="middle" font-size="11" fill="#92400e" font-family="PingFang SC,serif">朱里亚-克劳狄王朝 (前27-68)</text>
+
+      <rect x="40" y="75" width="125" height="50" rx="8" fill="url(#eGrad)" filter="url(#sh)"/>
+      <text x="102" y="96" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">①奥古斯都</text>
+      <text x="102" y="114" text-anchor="middle" fill="#ddd" font-size="9" font-family="PingFang SC,serif">前27-14</text>
+
+      <rect x="210" y="75" width="125" height="50" rx="8" fill="url(#eGrad)" filter="url(#sh)"/>
+      <text x="272" y="96" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">②提比略</text>
+      <text x="272" y="114" text-anchor="middle" fill="#ddd" font-size="9" font-family="PingFang SC,serif">14-37</text>
+      <line x1="165" y1="100" x2="208" y2="100" stroke="#6d28d9" stroke-width="2" marker-end="url(#aE)"/>
+      <text x="186" y="93" text-anchor="middle" fill="#6d28d9" font-size="8" font-family="PingFang SC,serif">继子</text>
+
+      <rect x="380" y="75" width="125" height="50" rx="8" fill="url(#eGrad)" filter="url(#sh)"/>
+      <text x="442" y="96" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">③卡利古拉</text>
+      <text x="442" y="114" text-anchor="middle" fill="#ddd" font-size="9" font-family="PingFang SC,serif">37-41</text>
+      <line x1="335" y1="100" x2="378" y2="100" stroke="#6d28d9" stroke-width="2" marker-end="url(#aE)"/>
+      <text x="356" y="93" text-anchor="middle" fill="#6d28d9" font-size="8" font-family="PingFang SC,serif">养孙</text>
+
+      <rect x="295" y="145" width="125" height="50" rx="8" fill="url(#eGrad)" filter="url(#sh)"/>
+      <text x="357" y="166" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold" font-family="PingFang SC,serif">④克劳狄乌斯</text>
+      <text x="357" y="184" text-anchor="middle" fill="#ddd" font-size="9" font-family="PingFang SC,serif">41-54</text>
+      <path d="M442 125 Q420 140 400 145" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4,3" fill="none" marker-end="url(#aR)"/>
+      <text x="430" y="138" fill="#dc2626" font-size="8" font-family="PingFang SC,serif">叔父</text>
+
+      <rect x="475" y="145" width="125" height="50" rx="8" fill="url(#eGrad)" filter="url(#sh)"/>
+      <text x="537" y="166" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">⑤尼禄</text>
+      <text x="537" y="184" text-anchor="middle" fill="#ddd" font-size="9" font-family="PingFang SC,serif">54-68</text>
+      <line x1="420" y1="170" x2="473" y2="170" stroke="#6d28d9" stroke-width="2" marker-end="url(#aE)"/>
+      <text x="446" y="163" text-anchor="middle" fill="#6d28d9" font-size="8" font-family="PingFang SC,serif">养子</text>
+
+      <!-- ===== 弗拉维王朝 ===== -->
+      <rect x="650" y="48" width="370" height="18" rx="4" fill="#fef3c7" stroke="#fcd34d"/>
+      <text x="835" y="61" text-anchor="middle" font-size="11" fill="#92400e" font-family="PingFang SC,serif">弗拉维王朝 (69-96)</text>
+
+      <rect x="655" y="75" width="125" height="50" rx="8" fill="url(#eGrad)" filter="url(#sh)"/>
+      <text x="717" y="96" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">⑥韦斯巴芗</text>
+      <text x="717" y="114" text-anchor="middle" fill="#ddd" font-size="9" font-family="PingFang SC,serif">69-79</text>
+
+      <rect x="820" y="75" width="95" height="50" rx="8" fill="url(#eGrad)" filter="url(#sh)"/>
+      <text x="867" y="96" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold" font-family="PingFang SC,serif">⑦提图斯</text>
+      <text x="867" y="114" text-anchor="middle" fill="#ddd" font-size="9" font-family="PingFang SC,serif">79-81</text>
+      <line x1="780" y1="95" x2="818" y2="95" stroke="#6d28d9" stroke-width="2" marker-end="url(#aE)"/>
+      <text x="799" y="88" fill="#6d28d9" font-size="8" font-family="PingFang SC,serif">长子</text>
+
+      <rect x="935" y="75" width="95" height="50" rx="8" fill="url(#eGrad)" filter="url(#sh)"/>
+      <text x="982" y="96" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold" font-family="PingFang SC,serif">⑧图密善</text>
+      <text x="982" y="114" text-anchor="middle" fill="#ddd" font-size="9" font-family="PingFang SC,serif">81-96</text>
+      <line x1="915" y1="100" x2="933" y2="100" stroke="#999" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <text x="924" y="93" fill="#c41e3a" font-size="8" font-family="PingFang SC,serif">弟</text>
+
+      <!-- ===== 安敦尼王朝 ===== -->
+      <rect x="35" y="215" width="1000" height="18" rx="4" fill="#dcfce7" stroke="#86efac"/>
+      <text x="535" y="228" text-anchor="middle" font-size="11" fill="#166534" font-family="PingFang SC,serif">安敦尼王朝 / 五贤帝 (96-192) — 养子继承制，罗马和平黄金时代</text>
+
+      <rect x="40" y="245" width="110" height="50" rx="8" fill="url(#gGrad)" filter="url(#sh)"/>
+      <text x="95" y="266" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold" font-family="PingFang SC,serif">⑨涅尔瓦</text>
+      <text x="95" y="284" text-anchor="middle" fill="#fef3e2" font-size="9" font-family="PingFang SC,serif">96-98</text>
+
+      <rect x="195" y="245" width="120" height="50" rx="8" fill="url(#gGrad)" filter="url(#sh)"/>
+      <text x="255" y="266" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold" font-family="PingFang SC,serif">⑩图拉真</text>
+      <text x="255" y="284" text-anchor="middle" fill="#fef3e2" font-size="9" font-family="PingFang SC,serif">98-117</text>
+      <line x1="150" y1="270" x2="193" y2="270" stroke="#b8860b" stroke-width="2" marker-end="url(#aE)"/>
+      <text x="171" y="263" fill="#b8860b" font-size="8" font-family="PingFang SC,serif">养子</text>
+
+      <rect x="360" y="245" width="120" height="50" rx="8" fill="url(#gGrad)" filter="url(#sh)"/>
+      <text x="420" y="266" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold" font-family="PingFang SC,serif">⑪哈德良</text>
+      <text x="420" y="284" text-anchor="middle" fill="#fef3e2" font-size="9" font-family="PingFang SC,serif">117-138</text>
+      <line x1="315" y1="270" x2="358" y2="270" stroke="#b8860b" stroke-width="2" marker-end="url(#aE)"/>
+      <text x="336" y="263" fill="#b8860b" font-size="8" font-family="PingFang SC,serif">养子</text>
+
+      <rect x="525" y="245" width="140" height="50" rx="8" fill="url(#gGrad)" filter="url(#sh)"/>
+      <text x="595" y="266" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold" font-family="PingFang SC,serif">⑫安敦尼·庇护</text>
+      <text x="595" y="284" text-anchor="middle" fill="#fef3e2" font-size="9" font-family="PingFang SC,serif">138-161</text>
+      <line x1="480" y1="270" x2="523" y2="270" stroke="#b8860b" stroke-width="2" marker-end="url(#aE)"/>
+      <text x="501" y="263" fill="#b8860b" font-size="8" font-family="PingFang SC,serif">养子</text>
+
+      <rect x="710" y="245" width="145" height="50" rx="8" fill="url(#gGrad)" filter="url(#sh)"/>
+      <text x="782" y="266" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold" font-family="PingFang SC,serif">⑬马可·奥勒留</text>
+      <text x="782" y="284" text-anchor="middle" fill="#fef3e2" font-size="9" font-family="PingFang SC,serif">161-180</text>
+      <line x1="665" y1="270" x2="708" y2="270" stroke="#b8860b" stroke-width="2" marker-end="url(#aE)"/>
+      <text x="686" y="263" fill="#b8860b" font-size="8" font-family="PingFang SC,serif">养子</text>
+
+      <rect x="900" y="245" width="120" height="50" rx="8" fill="url(#eGrad)" filter="url(#sh)"/>
+      <text x="960" y="266" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold" font-family="PingFang SC,serif">⑭康茂德</text>
+      <text x="960" y="284" text-anchor="middle" fill="#ddd" font-size="9" font-family="PingFang SC,serif">180-192</text>
+      <line x1="855" y1="270" x2="898" y2="270" stroke="#dc2626" stroke-width="2" marker-end="url(#aR)"/>
+      <text x="876" y="263" fill="#dc2626" font-size="8" font-family="PingFang SC,serif">亲子</text>
+
+      <!-- 分隔线 -->
+      <line x1="20" y1="405" x2="1280" y2="405" stroke="#dc2626" stroke-width="2" stroke-dasharray="10,5"/>
+      <text x="650" y="402" text-anchor="middle" fill="#dc2626" font-size="11" font-weight="bold" font-family="PingFang SC,serif">── 帝国危机 192 ──</text>
+
+      <!-- ===== 晚期帝国 ===== -->
+      <rect x="40" y="460" width="165" height="50" rx="8" fill="url(#lGrad)" filter="url(#sh)"/>
+      <text x="122" y="481" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold" font-family="PingFang SC,serif">⑮塞维鲁</text>
+      <text x="122" y="499" text-anchor="middle" fill="#ddd" font-size="9" font-family="PingFang SC,serif">193-211</text>
+
+      <rect x="255" y="460" width="130" height="50" rx="8" fill="url(#lGrad)" filter="url(#sh)"/>
+      <text x="320" y="481" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold" font-family="PingFang SC,serif">⑯卡拉卡拉</text>
+      <text x="320" y="499" text-anchor="middle" fill="#ddd" font-size="9" font-family="PingFang SC,serif">211-217</text>
+      <line x1="205" y1="485" x2="253" y2="485" stroke="#57534e" stroke-width="2" marker-end="url(#aL)"/>
+      <text x="229" y="478" fill="#57534e" font-size="8" font-family="PingFang SC,serif">长子</text>
+
+      <!-- 三世纪危机箭头 -->
+      <text x="475" y="488" fill="#dc2626" font-size="10" font-style="italic" font-family="PingFang SC,serif">← 三世纪危机(235-284) →</text>
+
+      <rect x="620" y="460" width="130" height="50" rx="8" fill="url(#lGrad)" filter="url(#sh)"/>
+      <text x="685" y="481" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold" font-family="PingFang SC,serif">⑰奥勒良</text>
+      <text x="685" y="499" text-anchor="middle" fill="#ddd" font-size="9" font-family="PingFang SC,serif">270-275</text>
+
+      <rect x="800" y="460" width="140" height="50" rx="8" fill="url(#lGrad)" filter="url(#sh)"/>
+      <text x="870" y="481" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold" font-family="PingFang SC,serif">⑱戴克里先</text>
+      <text x="870" y="499" text-anchor="middle" fill="#ddd" font-size="9" font-family="PingFang SC,serif">284-305</text>
+
+      <!-- 君士坦丁系列 -->
+      <rect x="40" y="560" width="175" height="50" rx="8" fill="url(#lGrad)" filter="url(#sh)"/>
+      <text x="127" y="581" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">⑲君士坦丁大帝</text>
+      <text x="127" y="599" text-anchor="middle" fill="#ddd" font-size="9" font-family="PingFang SC,serif">306-337</text>
+
+      <rect x="280" y="560" width="130" height="50" rx="8" fill="url(#lGrad)" filter="url(#sh)"/>
+      <text x="345" y="581" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold" font-family="PingFang SC,serif">⑳尤利安</text>
+      <text x="345" y="599" text-anchor="middle" fill="#ddd" font-size="9" font-family="PingFang SC,serif">361-363</text>
+      <line x1="215" y1="585" x2="278" y2="585" stroke="#57534e" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#aL)"/>
+      <text x="246" y="578" fill="#57534e" font-size="8" font-family="PingFang SC,serif">侄子</text>
+
+      <rect x="480" y="560" width="165" height="50" rx="8" fill="url(#lGrad)" filter="url(#sh)"/>
+      <text x="562" y="581" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold" font-family="PingFang SC,serif">㉑狄奥多西一世</text>
+      <text x="562" y="599" text-anchor="middle" fill="#ddd" font-size="9" font-family="PingFang SC,serif">379-395</text>
+
+      <!-- 东西分裂 -->
+      <text x="562" y="640" text-anchor="middle" fill="#dc2626" font-size="11" font-weight="bold" font-family="PingFang SC,serif">395年 帝国永久分裂</text>
+      <line x1="562" y1="610" x2="562" y2="645" stroke="#dc2626" stroke-width="2"/>
+
+      <rect x="350" y="660" width="150" height="50" rx="8" fill="url(#lGrad)" filter="url(#sh)"/>
+      <text x="425" y="681" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold" font-family="PingFang SC,serif">㉒霍诺里乌斯</text>
+      <text x="425" y="699" text-anchor="middle" fill="#ddd" font-size="9" font-family="PingFang SC,serif">西罗马 395-423</text>
+      <path d="M530 645 Q480 655 440 658" stroke="#57534e" stroke-width="2" fill="none" marker-end="url(#aL)"/>
+      <text x="470" y="648" fill="#57534e" font-size="8" font-family="PingFang SC,serif">幼子（西）</text>
+
+      <rect x="570" y="660" width="150" height="50" rx="8" fill="#e0e7ff" filter="url(#sh)" stroke="#818cf8"/>
+      <text x="645" y="681" text-anchor="middle" fill="#3730a3" font-size="12" font-weight="bold" font-family="PingFang SC,serif">阿卡狄乌斯</text>
+      <text x="645" y="699" text-anchor="middle" fill="#6366f1" font-size="9" font-family="PingFang SC,serif">东罗马 395-408</text>
+      <path d="M594 645 Q620 655 640 658" stroke="#4f46e5" stroke-width="2" fill="none"/>
+      <text x="625" y="648" fill="#4f46e5" font-size="8" font-family="PingFang SC,serif">长子（东）</text>
+
+      <text x="425" y="740" text-anchor="middle" fill="#57534e" font-size="10" font-style="italic" font-family="PingFang SC,serif">↓ 西罗马继续衰落 (423-476) ↓</text>
+
+      <rect x="350" y="760" width="200" height="50" rx="8" fill="url(#lGrad)" filter="url(#sh)"/>
+      <text x="450" y="780" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold" font-family="PingFang SC,serif">㉓罗慕路斯·奥古斯都路斯</text>
+      <text x="450" y="800" text-anchor="middle" fill="#fca5a5" font-size="10" font-family="PingFang SC,serif">475-476 · 西罗马末帝</text>
+      <line x1="425" y1="710" x2="425" y2="758" stroke="#57534e" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#aL)"/>
+
+      <!-- 东罗马续存 -->
+      <rect x="570" y="760" width="200" height="50" rx="8" fill="#e0e7ff" filter="url(#sh)" stroke="#818cf8"/>
+      <text x="670" y="780" text-anchor="middle" fill="#3730a3" font-size="12" font-weight="bold" font-family="PingFang SC,serif">东罗马帝国（拜占庭）</text>
+      <text x="670" y="800" text-anchor="middle" fill="#6366f1" font-size="10" font-family="PingFang SC,serif">续存至 1453年</text>
+      <line x1="645" y1="710" x2="645" y2="758" stroke="#4f46e5" stroke-width="2" stroke-dasharray="6,3"/>
+
+      <!-- 图例 -->
+      <rect x="1050" y="460" width="220" height="130" rx="8" fill="#fff" stroke="#ccc"/>
+      <text x="1070" y="482" font-size="12" font-weight="bold" fill="#333" font-family="PingFang SC,serif">图例</text>
+      <line x1="1070" y1="498" x2="1110" y2="498" stroke="#6d28d9" stroke-width="2" marker-end="url(#aE)"/>
+      <text x="1120" y="502" font-size="10" fill="#333" font-family="PingFang SC,serif">传承（养子/血亲）</text>
+      <line x1="1070" y1="518" x2="1110" y2="518" stroke="#dc2626" stroke-width="2" marker-end="url(#aR)"/>
+      <text x="1120" y="522" font-size="10" fill="#333" font-family="PingFang SC,serif">非常规继承</text>
+      <line x1="1070" y1="538" x2="1110" y2="538" stroke="#57534e" stroke-width="2" stroke-dasharray="6,3"/>
+      <text x="1120" y="542" font-size="10" fill="#333" font-family="PingFang SC,serif">远亲/军事继承</text>
+      <rect x="1070" y="550" width="15" height="15" rx="3" fill="url(#gGrad)"/>
+      <text x="1095" y="562" font-size="10" fill="#333" font-family="PingFang SC,serif">五贤帝（黄金时代）</text>
+      <rect x="1070" y="572" width="15" height="15" rx="3" fill="#e0e7ff" stroke="#818cf8"/>
+      <text x="1095" y="584" font-size="10" fill="#333" font-family="PingFang SC,serif">东罗马帝国</text>
+    </svg>
+  </div>
+</div>
+
+</div>
+
+<div class="footer">
+  <p>罗马帝国（前27年-476年），西方历史上最伟大的帝国之一，横跨欧亚非三大洲。</p>
+  <p style="margin-top:8px;">本表收录23位最重要的皇帝，实际罗马帝国共有80余位皇帝（含共治帝、僭越者等）。</p>
+  <p style="margin-top:8px;">西罗马帝国于476年灭亡，东罗马帝国（拜占庭帝国）延续至1453年。</p>
+  <p style="margin-top:8px;">数据来源：《罗马帝国衰亡史》（吉本）、《罗马史》等 · 仅供学习参考</p>
+</div>
+
+<script>
+(function(){
+  const emperors=[
+    {name:'奥古斯都',birth:-63,death:14,reigns:[{s:-27,e:14}],type:'early'},
+    {name:'提比略',birth:-42,death:37,reigns:[{s:14,e:37}],type:'early'},
+    {name:'卡利古拉',birth:12,death:41,reigns:[{s:37,e:41}],type:'early'},
+    {name:'克劳狄乌斯',birth:-10,death:54,reigns:[{s:41,e:54}],type:'early'},
+    {name:'尼禄',birth:37,death:68,reigns:[{s:54,e:68}],type:'early'},
+    {name:'韦斯巴芗',birth:9,death:79,reigns:[{s:69,e:79}],type:'early'},
+    {name:'提图斯',birth:39,death:81,reigns:[{s:79,e:81}],type:'early'},
+    {name:'图密善',birth:51,death:96,reigns:[{s:81,e:96}],type:'early'},
+    {name:'涅尔瓦',birth:30,death:98,reigns:[{s:96,e:98}],type:'early'},
+    {name:'图拉真',birth:53,death:117,reigns:[{s:98,e:117}],type:'early'},
+    {name:'哈德良',birth:76,death:138,reigns:[{s:117,e:138}],type:'early'},
+    {name:'安敦尼',birth:86,death:161,reigns:[{s:138,e:161}],type:'early'},
+    {name:'奥勒留',birth:121,death:180,reigns:[{s:161,e:180}],type:'early'},
+    {name:'康茂德',birth:161,death:192,reigns:[{s:180,e:192}],type:'early'},
+    {name:'塞维鲁',birth:145,death:211,reigns:[{s:193,e:211}],type:'late'},
+    {name:'卡拉卡拉',birth:188,death:217,reigns:[{s:211,e:217}],type:'late'},
+    {name:'奥勒良',birth:214,death:275,reigns:[{s:270,e:275}],type:'late'},
+    {name:'戴克里先',birth:244,death:311,reigns:[{s:284,e:305}],type:'late'},
+    {name:'君士坦丁',birth:272,death:337,reigns:[{s:306,e:337}],type:'late'},
+    {name:'尤利安',birth:331,death:363,reigns:[{s:361,e:363}],type:'late'},
+    {name:'狄奥多西',birth:347,death:395,reigns:[{s:379,e:395}],type:'late'},
+    {name:'霍诺里乌斯',birth:384,death:423,reigns:[{s:395,e:423}],type:'late'},
+    {name:'末帝',birth:461,death:507,reigns:[{s:475,e:476}],type:'late'},
+  ];
+  const minYear=-70,maxYear=520,totalYears=maxYear-minYear;
+  const colors={early:'#6d28d9',late:'#57534e'};
+  function fmtY(y){return y<0?'前'+Math.abs(y):y==0?'元年':y+''}
+  const container=document.getElementById('ganttChart');
+  let hdr='<div class="gantt-header"><div class="gantt-label" style="width:110px">年份</div><div class="gantt-bar-area" style="position:relative;height:30px">';
+  [-50,0,50,100,150,200,250,300,350,400,450,500].forEach(y=>{
+    hdr+=`<span class="gantt-year-tick" style="left:${((y-minYear)/totalYears)*100}%">${fmtY(y)}</span>`;
+  });
+  hdr+='</div></div>';
+  container.innerHTML=hdr;
+  let body='<div class="gantt-body">';
+  emperors.forEach(emp=>{
+    const c=colors[emp.type];
+    const ll=((emp.birth-minYear)/totalYears)*100;
+    const lw=((emp.death-emp.birth)/totalYears)*100;
+    let rb='';
+    emp.reigns.forEach(r=>{
+      const rl=((r.s-minYear)/totalYears)*100;
+      const rw=Math.max(((r.e-r.s)/totalYears)*100,0.3);
+      rb+=`<div class="gantt-bar reign-bar" style="left:${rl}%;width:${rw}%;background:${c}"><div class="tooltip">在位：${fmtY(r.s)}-${fmtY(r.e)}（${r.e-r.s}年）</div></div>`;
+    });
+    body+=`<div class="gantt-row"><div class="gantt-label" style="color:${c};width:110px">${emp.name}</div><div class="gantt-bar-area"><div class="gantt-bar" style="left:${ll}%;width:${lw}%;background:${c}"><div class="tooltip">生卒：${fmtY(emp.birth)}-${fmtY(emp.death)}（${emp.death-emp.birth}岁）</div></div>${rb}</div></div>`;
+  });
+  body+='</div>';
+  container.innerHTML+=body;
+})();
+</script>
+
+</body>
+</html>

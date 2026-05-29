@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>世界历史王朝世系简表</title>
+<style>
+  :root {
+    --bg: #0f0f0f;
+    --card-bg: #1a1a1a;
+    --text: #e5e5e5;
+    --text-light: #a3a3a3;
+    --border: #2a2a2a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: "PingFang SC", "Microsoft YaHei", "Noto Serif SC", serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* Animated background */
+  .bg-pattern {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(circle at 20% 50%, rgba(120, 58, 237, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(185, 28, 28, 0.06) 0%, transparent 50%),
+      radial-gradient(circle at 50% 80%, rgba(30, 58, 138, 0.06) 0%, transparent 50%);
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 24px 80px;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+  .header h1 {
+    font-size: 48px;
+    font-weight: 900;
+    letter-spacing: 8px;
+    background: linear-gradient(135deg, #fbbf24, #f59e0b, #d97706);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 16px;
+  }
+  .header .subtitle {
+    font-size: 16px;
+    color: var(--text-light);
+    letter-spacing: 4px;
+    margin-bottom: 8px;
+  }
+  .header .desc {
+    font-size: 14px;
+    color: #737373;
+    letter-spacing: 2px;
+    max-width: 600px;
+    margin: 16px auto 0;
+    line-height: 1.8;
+  }
+
+  /* Timeline bar */
+  .timeline-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin: 40px auto;
+    max-width: 900px;
+    height: 36px;
+    border-radius: 18px;
+    overflow: hidden;
+    position: relative;
+    background: #222;
+  }
+  .timeline-bar .segment {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: bold;
+    color: rgba(255,255,255,0.9);
+    letter-spacing: 1px;
+    transition: flex .3s;
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .timeline-bar .segment:hover {
+    filter: brightness(1.2);
+  }
+  .timeline-labels {
+    display: flex;
+    justify-content: space-between;
+    max-width: 900px;
+    margin: 6px auto 0;
+    font-size: 11px;
+    color: #666;
+  }
+
+  /* Cards grid */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-top: 50px;
+  }
+
+  @media (max-width: 768px) {
+    .cards-grid { grid-template-columns: 1fr; }
+    .header h1 { font-size: 32px; letter-spacing: 4px; }
+  }
+
+  /* Card */
+  .card {
+    background: var(--card-bg);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  .card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    z-index: 1;
+  }
+
+  .card-banner {
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .card-banner::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(transparent, var(--card-bg));
+  }
+  .card-banner .banner-icon {
+    font-size: 72px;
+    position: relative;
+    z-index: 1;
+    opacity: 0.15;
+  }
+  .card-banner .banner-title {
+    position: absolute;
+    z-index: 2;
+    font-size: 36px;
+    font-weight: 900;
+    letter-spacing: 8px;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.5);
+  }
+  .card-banner .banner-latin {
+    position: absolute;
+    z-index: 2;
+    bottom: 20px;
+    font-size: 12px;
+    letter-spacing: 3px;
+    opacity: 0.6;
+    font-style: italic;
+  }
+
+  .card-body {
+    padding: 24px 28px 28px;
+  }
+  .card-body h2 {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    letter-spacing: 2px;
+  }
+  .card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 12px 0 16px;
+  }
+  .card-meta .meta-chip {
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .card-desc {
+    font-size: 13px;
+    color: var(--text-light);
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .card-tags span {
+    font-size: 11px;
+    padding: 3px 10px;
+    background: #262626;
+    border-radius: 12px;
+    color: #a3a3a3;
+  }
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 28px;
+    border-top: 1px solid var(--border);
+  }
+  .card-footer .enter-text {
+    font-size: 13px;
+    color: var(--text-light);
+    letter-spacing: 2px;
+    transition: color 0.3s;
+  }
+  .card:hover .enter-text {
+    color: #fbbf24;
+  }
+  .card-footer .arrow {
+    font-size: 18px;
+    transition: transform 0.3s;
+    color: var(--text-light);
+  }
+  .card:hover .arrow {
+    transform: translateX(6px);
+    color: #fbbf24;
+  }
+
+  /* Card-specific themes */
+  .card.song::before { background: linear-gradient(90deg, #b8860b, #daa520); }
+  .card.song .card-banner { background: linear-gradient(135deg, #1a0a00, #3d1f00, #6b3a1f); }
+  .card.song .banner-title { color: #f5e6c8; }
+  .card.song .banner-latin { color: #daa520; }
+  .card.song .meta-chip { border-color: #b8860b40; color: #daa520; }
+
+  .card.tang::before { background: linear-gradient(90deg, #9b1b30, #c0392b); }
+  .card.tang .card-banner { background: linear-gradient(135deg, #2d0a0a, #5c1a1a, #8b2020); }
+  .card.tang .banner-title { color: #f5e0c8; }
+  .card.tang .banner-latin { color: #fbbf24; }
+  .card.tang .meta-chip { border-color: #9b1b3040; color: #f87171; }
+
+  .card.rome::before { background: linear-gradient(90deg, #6d28d9, #8b5cf6); }
+  .card.rome .card-banner { background: linear-gradient(135deg, #1a0a2e, #2d1065, #4c1d95); }
+  .card.rome .banner-title { color: #e8d5ff; }
+  .card.rome .banner-latin { color: #fbbf24; }
+  .card.rome .meta-chip { border-color: #6d28d940; color: #a78bfa; }
+
+  .card.france::before { background: linear-gradient(90deg, #1e3a8a, #b8860b); }
+  .card.france .card-banner { background: linear-gradient(135deg, #0c1445, #1e3a8a, #b8860b); }
+  .card.france .banner-title { color: #e0e7ff; }
+  .card.france .banner-latin { color: #fbbf24; }
+  .card.france .meta-chip { border-color: #1e3a8a40; color: #60a5fa; }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    margin-top: 60px;
+    padding: 30px;
+    border-top: 1px solid var(--border);
+    color: #525252;
+    font-size: 13px;
+    letter-spacing: 1px;
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-pattern"></div>
+
+<div class="container">
+
+  <div class="header">
+    <h1>世界历史王朝世系简表</h1>
+    <div class="subtitle">Historical Dynasty Charts Collection</div>
+    <div class="desc">
+      涵盖中国与世界主要王朝帝国，以时间轴、世系图、生卒在位甘特图等多维度呈现历史脉络。
+      每份简表包含皇帝/君主完整信息、重大历史事件、重要大臣与人物。
+    </div>
+  </div>
+
+  <!-- 时间轴总览 -->
+  <div class="timeline-bar">
+    <div class="segment" style="flex:5.03;background:linear-gradient(90deg,#9b1b30,#c0392b)" title="唐朝 618-907">唐 618-907</div>
+    <div class="segment" style="flex:3.19;background:linear-gradient(90deg,#b8860b,#daa520)" title="宋朝 960-1279">宋 960-1279</div>
+    <div class="segment" style="flex:5.03;background:linear-gradient(90deg,#6d28d9,#8b5cf6)" title="罗马帝国 前27-476">罗马 前27-476</div>
+    <div class="segment" style="flex:8.83;background:linear-gradient(90deg,#1e3a8a,#3b82f6)" title="法兰西 987-1870">法兰西 987-1870</div>
+  </div>
+  <div class="timeline-labels">
+    <span>前27年</span>
+    <span>500</span>
+    <span>1000</span>
+    <span>1500</span>
+    <span>1870</span>
+  </div>
+
+  <!-- 卡片 -->
+  <div class="cards-grid">
+
+    <!-- 唐朝 -->
+    <a href="tang-dynasty.html" class="card tang">
+      <div class="card-banner">
+        <div class="banner-icon">龍</div>
+        <div class="banner-title">大 唐</div>
+        <div class="banner-latin">Tang Dynasty</div>
+      </div>
+      <div class="card-body">
+        <h2>唐朝皇帝世系简表</h2>
+        <div class="card-meta">
+          <div class="meta-chip">618 - 907</div>
+          <div class="meta-chip">289年</div>
+          <div class="meta-chip">21位皇帝</div>
+        </div>
+        <div class="card-desc">
+          中国历史上最辉煌的朝代之一。从高祖李渊开国，经贞观之治、开元盛世达到巅峰，
+          安史之乱后由盛转衰。含武则天武周政权，完整呈现初唐盛唐到中晚唐的历史脉络。
+        </div>
+        <div class="card-tags">
+          <span>贞观之治</span><span>武则天</span><span>开元盛世</span><span>安史之乱</span><span>黄巢起义</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <span class="enter-text">查看详情</span>
+        <span class="arrow">→</span>
+      </div>
+    </a>
+
+    <!-- 宋朝 -->
+    <a href="song-dynasty.html" class="card song">
+      <div class="card-banner">
+        <div class="banner-icon">宋</div>
+        <div class="banner-title">大 宋</div>
+        <div class="banner-latin">Song Dynasty</div>
+      </div>
+      <div class="card-body">
+        <h2>宋朝皇帝世系简表</h2>
+        <div class="card-meta">
+          <div class="meta-chip">960 - 1279</div>
+          <div class="meta-chip">319年</div>
+          <div class="meta-chip">18位皇帝</div>
+        </div>
+        <div class="card-desc">
+          承五代十国下启元朝的朝代，分北宋和南宋两阶段。经济文化高度繁荣，但军事积弱。
+          从太祖陈桥兵变建国，到崖山海战十万军民蹈海，呈现大宋三百一十九年的兴衰历程。
+        </div>
+        <div class="card-tags">
+          <span>陈桥兵变</span><span>王安石变法</span><span>靖康之变</span><span>岳飞北伐</span><span>崖山海战</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <span class="enter-text">查看详情</span>
+        <span class="arrow">→</span>
+      </div>
+    </a>
+
+    <!-- 罗马帝国 -->
+    <a href="roman-empire.html" class="card rome">
+      <div class="card-banner">
+        <div class="banner-icon">SPQR</div>
+        <div class="banner-title">罗 马</div>
+        <div class="banner-latin">Imperium Romanum</div>
+      </div>
+      <div class="card-body">
+        <h2>罗马帝国皇帝世系简表</h2>
+        <div class="card-meta">
+          <div class="meta-chip">前27 - 476</div>
+          <div class="meta-chip">503年</div>
+          <div class="meta-chip">23位皇帝</div>
+        </div>
+        <div class="card-desc">
+          西方历史上最伟大的帝国，横跨欧亚非三大洲。从奥古斯都开创帝制，经五贤帝黄金时代，
+          到三世纪危机、帝国分裂，直至476年西罗马灭亡。收录23位最重要的皇帝。
+        </div>
+        <div class="card-tags">
+          <span>奥古斯都</span><span>五贤帝</span><span>君士坦丁</span><span>基督教</span><span>帝国分裂</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <span class="enter-text">查看详情</span>
+        <span class="arrow">→</span>
+      </div>
+    </a>
+
+    <!-- 法兰西 -->
+    <a href="france-monarchy.html" class="card france">
+      <div class="card-banner">
+        <div class="banner-icon">⚜</div>
+        <div class="banner-title">法兰西</div>
+        <div class="banner-latin">Royaume de France</div>
+      </div>
+      <div class="card-body">
+        <h2>法兰西君主世系简表</h2>
+        <div class="card-meta">
+          <div class="meta-chip">987 - 1870</div>
+          <div class="meta-chip">883年</div>
+          <div class="meta-chip">22位君主</div>
+        </div>
+        <div class="card-desc">
+          从卡佩王朝到第二帝国，横跨近九个世纪。经历百年战争、文艺复兴、绝对君主制巅峰、
+          法国大革命、拿破仑帝国到帝制终结，五个王朝/政权的兴衰更替。
+        </div>
+        <div class="card-tags">
+          <span>百年战争</span><span>太阳王</span><span>凡尔赛宫</span><span>大革命</span><span>拿破仑</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <span class="enter-text">查看详情</span>
+        <span class="arrow">→</span>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="footer">
+    <p>数据来源：各朝代正史及权威历史著作 · 仅供学习参考</p>
+    <p style="margin-top:6px;color:#404040;">共 4 份王朝简表 · 持续更新中</p>
+  </div>
+
+</div>
+
+</body>
+</html>
