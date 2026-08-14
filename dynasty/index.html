@@ -72,31 +72,43 @@
   }
 
   /* Timeline overview */
-  .timeline-overview { margin: 40px auto 0; max-width: 900px; }
-  .timeline-head { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
-  .timeline-head h3 { font-size: 16px; letter-spacing: 2px; color: var(--text); }
-  .timeline-head p { font-size: 12px; color: #737373; letter-spacing: 1px; }
+  .timeline-overview { margin: 44px auto 0; max-width: 1120px; }
+  .timeline-head { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+  .timeline-head h3 { font-size: 18px; letter-spacing: 3px; color: var(--text); }
+  .timeline-head p { font-size: 13px; color: #737373; letter-spacing: 1px; }
 
-  .timeline-group { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-  .timeline-group-label { width: 44px; flex-shrink: 0; font-size: 11px; letter-spacing: 3px; color: #a3a3a3; text-align: center; }
+  .timeline-group { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+  .timeline-group-label {
+    width: 62px; flex-shrink: 0; font-size: 12px; font-weight: bold;
+    letter-spacing: 4px; text-align: center; color: #fbbf24;
+    background: linear-gradient(135deg, #1c1c1c, #242424);
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 12px 0;
+    text-shadow: 0 1px 2px rgba(0,0,0,.5);
+  }
   .timeline-track {
-    position: relative; flex: 1; height: 40px; border-radius: 20px;
-    background: #1b1b1b;
+    position: relative; flex: 1; height: 64px; border-radius: 32px;
+    background:
+      repeating-linear-gradient(90deg, rgba(255,255,255,.028) 0 1px, transparent 1px 5%),
+      #1b1b1b;
     border: 1px solid #2a2a2a;
     overflow: hidden;
+    box-shadow: inset 0 2px 6px rgba(0,0,0,.35);
   }
   .timeline-seg {
     position: absolute; top: 0; bottom: 0;
-    display: flex; align-items: center; justify-content: center; gap: 6px;
-    color: #fff; font-size: 12px; font-weight: bold; letter-spacing: 1px;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    color: #fff; font-size: 14px; font-weight: bold; letter-spacing: 1px;
     text-decoration: none; cursor: pointer;
     white-space: nowrap; overflow: hidden;
     transition: filter .15s, box-shadow .15s;
   }
-  .timeline-seg:hover { filter: brightness(1.18); box-shadow: inset 0 0 0 1px rgba(255,255,255,.55); z-index: 3; }
-  .timeline-seg .seg-years { font-size: 10px; font-weight: normal; opacity: .92; }
+  .timeline-seg:hover { filter: brightness(1.22); box-shadow: inset 0 0 0 1px rgba(255,255,255,.6), 0 0 16px rgba(251,191,36,.28); z-index: 3; }
+  .timeline-seg .seg-years { font-size: 11px; font-weight: normal; opacity: .95; }
+  .timeline-seg.seg-narrow .seg-name { font-size: 11px; letter-spacing: 0; }
   .timeline-seg.gap {
-    cursor: default; color: #666; font-weight: normal; font-size: 9px; letter-spacing: 2px;
+    cursor: default; color: #888; font-weight: normal; font-size: 11px; letter-spacing: 2px;
     background: repeating-linear-gradient(45deg, rgba(255,255,255,.03) 0 6px, transparent 6px 12px), #161616;
   }
   .timeline-seg.gap:hover { filter: none; box-shadow: none; }
@@ -106,27 +118,30 @@
   .seg-tip {
     position: fixed; z-index: 1000; pointer-events: none;
     background: #0d0d0d; border: 1px solid #3a3a3a; color: #e5e5e5;
-    padding: 8px 12px; border-radius: 8px; font-size: 11px; line-height: 1.7;
+    padding: 10px 14px; border-radius: 10px; font-size: 12px; line-height: 1.8;
     white-space: nowrap; text-align: center;
     opacity: 0; transition: opacity .12s;
-    box-shadow: 0 8px 24px rgba(0,0,0,.55);
+    box-shadow: 0 10px 30px rgba(0,0,0,.6);
   }
   .seg-tip b { color: #fbbf24; }
+  .seg-tip .tip-go { color: #4ade80; font-weight: bold; }
 
-  .timeline-scale { position: relative; height: 26px; margin: 8px 0 0 56px; border-top: 1px solid #2a2a2a; }
-  .timeline-scale .tick { position: absolute; top: -1px; font-size: 10px; color: #737373; transform: translateX(-50%); }
-  .timeline-scale .tick i { display: block; width: 1px; height: 5px; background: #3a3a3a; margin: 0 auto 2px; }
+  .timeline-scale { position: relative; height: 30px; margin: 12px 0 0 76px; border-top: 1px solid #2a2a2a; }
+  .timeline-scale .tick { position: absolute; top: -1px; font-size: 11px; color: #737373; transform: translateX(-50%); }
+  .timeline-scale .tick i { display: block; width: 1px; height: 6px; background: #3a3a3a; margin: 0 auto 3px; }
   .timeline-scale .tick.start { left: 0; transform: none; }
-  .timeline-scale .tick.start i { margin: 0 auto 2px 0; }
+  .timeline-scale .tick.start i { margin: 0 auto 3px 0; }
   .timeline-scale .tick.end { right: 0; transform: none; }
-  .timeline-scale .tick.end i { margin: 0 0 2px auto; }
+  .timeline-scale .tick.end i { margin: 0 0 3px auto; }
+  .timeline-scale .scale-note { position: absolute; right: 0; bottom: 0; font-size: 10px; color: #525252; letter-spacing: 1px; }
 
   @media (max-width: 640px) {
     .timeline-group { gap: 8px; }
-    .timeline-group-label { width: 34px; font-size: 10px; }
-    .timeline-track { height: 36px; }
+    .timeline-group-label { width: 46px; font-size: 10px; padding: 8px 0; border-radius: 8px; }
+    .timeline-track { height: 48px; }
+    .timeline-seg { font-size: 12px; }
     .timeline-seg .seg-years { display: none; }
-    .timeline-scale { margin-left: 46px; }
+    .timeline-scale { margin-left: 58px; }
   }
 
   /* Cards toolbar */
@@ -500,7 +515,7 @@
       <div class="timeline-group-label">印 度</div>
       <div class="timeline-track" id="trackIndia"></div>
     </div>
-    <div class="timeline-scale" id="timelineScale"></div>
+    <div class="timeline-scale" id="timelineScale"><span class="scale-note">公元纪年 · 前27 — 2022</span></div>
   </div>
 
   <!-- 卡片 -->
@@ -1064,7 +1079,7 @@
     russia: [
       { name:'基辅-莫斯科', full:'基辅罗斯与莫斯科', years:'862 - 1547', dur:'685年', start:862, end:1547, href:'russia-history.html', grad:'linear-gradient(90deg,#8b1a1a,#dc2626)', note:'留里克王朝 · 罗斯受洗 · 蒙古统治 · 莫斯科统一' },
       { name:'沙皇-帝国', full:'沙皇俄国与帝国', years:'1547 - 1917', dur:'370年', start:1547, end:1917, href:'russia-history.html', grad:'linear-gradient(90deg,#b45309,#f59e0b)', note:'伊凡雷帝 · 罗曼诺夫王朝 · 彼得大帝 · 叶卡捷琳娜二世' },
-      { name:'苏联-联邦', full:'苏联与俄罗斯联邦', years:'1917 - 2022', dur:'105年', start:1917, end:2022, href:'russia-history.html', grad:'linear-gradient(90deg,#1e3a8a,#3b82f6)', note:'十月革命 · 卫国战争 · 苏联解体 · 普京时代' }
+      { name:'苏联', full:'苏联与俄罗斯联邦', years:'1917 - 2022', dur:'105年', start:1917, end:2022, href:'russia-history.html', grad:'linear-gradient(90deg,#1e3a8a,#3b82f6)', note:'十月革命 · 卫国战争 · 苏联解体 · 普京时代' }
     ],
     india: [
       { name:'古代印度', full:'古代印度（前2500-647）', years:'前2500 - 647', dur:'3100+年', start:-2500, end:647, href:'india-history.html', grad:'linear-gradient(90deg,#c2410c,#f97316)', note:'印度河文明 · 孔雀 · 笈多 · 戒日（自前2500年，早于刻度起点）' },
@@ -1084,10 +1099,12 @@
       seg.style.left = left + '%';
       seg.style.width = width + '%';
       seg.title = it.full + ' ' + it.years + ' · ' + it.note;
-      var tip = '<b>' + it.full + '</b> ' + it.years + (it.dur ? '（' + it.dur + '）' : '') + '<br>' + it.note + (it.gap ? '' : '<br>点击查看详情 →');
+      var tip = '<b>' + it.full + '</b> ' + it.years + (it.dur ? '（' + it.dur + '）' : '') + '<br>' + it.note + (it.gap ? '' : '<br><span class="tip-go">点击查看详情 →</span>');
       seg.setAttribute('data-tip', tip);
       if (!it.gap) { seg.href = it.href; seg.style.background = it.grad; }
-      seg.innerHTML = '<span class="seg-name">' + it.name + '</span>' + (it.gap ? '' : '<span class="seg-years">' + it.years + '</span>');
+      var showYears = !it.gap && width >= 9;
+      if (width < 9) seg.classList.add('seg-narrow');
+      seg.innerHTML = '<span class="seg-name">' + it.name + '</span>' + (showYears ? '<span class="seg-years">' + it.years + '</span>' : '');
       el.appendChild(seg);
     });
   });
