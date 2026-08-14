@@ -399,6 +399,12 @@
   .card.russia .banner-latin { color: #fbbf24; }
   .card.russia .meta-chip { border-color: #8b1a1a40; color: #f87171; }
 
+  .card.india::before { background: linear-gradient(90deg, #c2410c, #166534); }
+  .card.india .card-banner { background: linear-gradient(135deg, #7c2d12, #c2410c, #166534); }
+  .card.india .banner-title { color: #fef3c7; }
+  .card.india .banner-latin { color: #fbbf24; }
+  .card.india .meta-chip { border-color: #c2410c40; color: #fb923c; }
+
   /* Footer */
   .footer {
     text-align: center;
@@ -448,18 +454,22 @@
       <div class="timeline-group-label">俄 国</div>
       <div class="timeline-track" id="trackRussia"></div>
     </div>
+    <div class="timeline-group">
+      <div class="timeline-group-label">印 度</div>
+      <div class="timeline-track" id="trackIndia"></div>
+    </div>
     <div class="timeline-scale" id="timelineScale"></div>
   </div>
 
   <!-- 卡片 -->
   <div class="cards-toolbar">
     <div class="cards-filter" id="cardsFilter">
-      <button class="filter-btn active" data-group="all">🗂 全部 <span class="cnt">10</span></button>
+      <button class="filter-btn active" data-group="all">🗂 全部 <span class="cnt">11</span></button>
       <button class="filter-btn" data-group="china">🇨🇳 中国 <span class="cnt">5</span></button>
       <button class="filter-btn" data-group="europe">🇪🇺 欧洲 <span class="cnt">4</span></button>
-      <button class="filter-btn" data-group="asia">🇯🇵 亚洲 <span class="cnt">1</span></button>
+      <button class="filter-btn" data-group="asia">🇯🇵 亚洲 <span class="cnt">2</span></button>
     </div>
-    <div class="cards-count" id="cardsCount">显示 10 / 10 份简表</div>
+    <div class="cards-count" id="cardsCount">显示 11 / 11 份简表</div>
   </div>
   <div class="cards-grid">
 
@@ -512,6 +522,35 @@
         </div>
         <div class="card-tags">
           <span>大化改新</span><span>平安时代</span><span>源平合战</span><span>明治维新</span><span>平成令和</span>
+        </div>
+      </div>
+      <div class="card-timescale"></div>
+      <div class="card-footer">
+        <span class="enter-text">查看详情</span>
+        <span class="arrow">→</span>
+      </div>
+    </a>
+
+    <!-- 印度 -->
+    <a href="india-history.html" class="card india" data-group="asia" data-tsmin="-2500" data-tsmax="2024">
+      <div class="card-banner">
+        <div class="banner-icon">🪔</div>
+        <div class="banner-title">印 度</div>
+        <div class="banner-latin">भारत · India</div>
+      </div>
+      <div class="card-body">
+        <h2>印度历史时代与王朝世系简表</h2>
+        <div class="card-meta">
+          <div class="meta-chip">前2500 - 今</div>
+          <div class="meta-chip">4500+年</div>
+          <div class="meta-chip">30+位统治者</div>
+        </div>
+        <div class="card-desc">
+          印度河文明开启五千年历史：吠陀与列国、孔雀帝国阿育王、笈多黄金时代，
+          中世德里苏丹与莫卧儿帝国（泰姬陵），近代英国殖民，1947年独立、1950年成为共和国。
+        </div>
+        <div class="card-tags">
+          <span>印度河文明</span><span>阿育王</span><span>笈多王朝</span><span>莫卧儿帝国</span><span>1947独立</span>
         </div>
       </div>
       <div class="card-timescale"></div>
@@ -757,7 +796,7 @@
 
   <div class="footer">
     <p>数据来源：各朝代正史及权威历史著作 · 仅供学习参考</p>
-    <p style="margin-top:6px;color:#404040;">共 10 份王朝简表 · 持续更新中</p>
+    <p style="margin-top:6px;color:#404040;">共 11 份王朝简表 · 持续更新中</p>
   </div>
 
 </div>
@@ -791,14 +830,19 @@
       { name:'基辅-莫斯科', full:'基辅罗斯与莫斯科', years:'862 - 1547', dur:'685年', start:862, end:1547, href:'russia-history.html', grad:'linear-gradient(90deg,#8b1a1a,#dc2626)', note:'留里克王朝 · 罗斯受洗 · 蒙古统治 · 莫斯科统一' },
       { name:'沙皇-帝国', full:'沙皇俄国与帝国', years:'1547 - 1917', dur:'370年', start:1547, end:1917, href:'russia-history.html', grad:'linear-gradient(90deg,#b45309,#f59e0b)', note:'伊凡雷帝 · 罗曼诺夫王朝 · 彼得大帝 · 叶卡捷琳娜二世' },
       { name:'苏联-联邦', full:'苏联与俄罗斯联邦', years:'1917 - 2022', dur:'105年', start:1917, end:2022, href:'russia-history.html', grad:'linear-gradient(90deg,#1e3a8a,#3b82f6)', note:'十月革命 · 卫国战争 · 苏联解体 · 普京时代' }
+    ],
+    india: [
+      { name:'古代印度', full:'古代印度（前2500-647）', years:'前2500 - 647', dur:'3100+年', start:-2500, end:647, href:'india-history.html', grad:'linear-gradient(90deg,#c2410c,#f97316)', note:'印度河文明 · 孔雀 · 笈多 · 戒日（自前2500年，早于刻度起点）' },
+      { name:'中世诸国', full:'中世印度', years:'647 - 1526', dur:'879年', start:647, end:1526, href:'india-history.html', grad:'linear-gradient(90deg,#b45309,#f59e0b)', note:'拉其普特诸国 · 德里苏丹国' },
+      { name:'莫卧儿-共和', full:'莫卧儿至今', years:'1526 - 2022', dur:'496年', start:1526, end:2022, href:'india-history.html', grad:'linear-gradient(90deg,#166534,#22c55e)', note:'莫卧儿帝国 · 英属印度 · 印度共和国' }
     ]
   };
 
   Object.keys(tracks).forEach(function(key){
     var el = document.getElementById('track' + key.charAt(0).toUpperCase() + key.slice(1));
     tracks[key].forEach(function(it){
-      var left = ((it.start - MIN) / TOTAL) * 100;
-      var width = ((it.end - it.start) / TOTAL) * 100;
+      var left = Math.max(((it.start - MIN) / TOTAL) * 100, 0);
+      var width = Math.min(((it.end - MIN) / TOTAL) * 100, 100) - left;
       var seg = document.createElement(it.gap ? 'div' : 'a');
       seg.className = 'timeline-seg' + (it.gap ? ' gap' : '') + (it.lane !== undefined ? ' lane lane-' + it.lane : '');
       seg.style.left = left + '%';
