@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>汉朝皇帝世系简表 (前202-220)</title>
+<style>
+  :root{--bg:#f7f5f2;--card-bg:#fff;--early-color:#b91c1c;--late-color:#7c2d12;--text:#1c1917;--text-light:#6b7280;--border:#d1d5db;--event-bg:#fef2f2;--minister-bg:#fff7ed;--highlight:#b91c1c;--gold:#b8860b;--rev-color:#7f1d1d}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:"PingFang SC","Microsoft YaHei","Noto Serif SC",serif;background:var(--bg);color:var(--text);line-height:1.6}
+  .header{text-align:center;padding:50px 20px 30px;background:linear-gradient(135deg,#450a0a 0%,#b91c1c 55%,#7c2d12 100%);color:#fef2f2;position:relative;overflow:hidden}
+  .header::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffd700' fill-opacity='0.05'%3E%3Cpath d='M20 5l3 10h10l-8 6 3 10-8-6-8 6 3-10-8-6h10z'/%3E%3C/g%3E%3C/svg%3E");opacity:.6}
+  .header h1{font-size:40px;font-weight:900;letter-spacing:10px;position:relative;z-index:1;text-shadow:2px 2px 4px rgba(0,0,0,.5)}
+  .header .subtitle{font-size:18px;margin-top:12px;color:#fbbf24;letter-spacing:6px;position:relative;z-index:1}
+  .header .period{font-size:14px;margin-top:8px;color:#fcd34d;letter-spacing:3px;position:relative;z-index:1}
+  .legend{display:flex;justify-content:center;gap:28px;padding:18px;background:#fff;border-bottom:2px solid var(--border);flex-wrap:wrap}
+  .legend-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-light)}
+  .legend-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0}
+  .container{max-width:1400px;margin:0 auto;padding:20px}
+  .section-title{text-align:center;padding:30px 20px 20px;font-size:28px;font-weight:bold;letter-spacing:6px;position:relative}
+  .section-title.early{color:var(--early-color)}.section-title.late{color:var(--late-color)}
+  .section-title::after{content:'';display:block;width:80px;height:3px;margin:12px auto 0}
+  .section-title.early::after{background:var(--early-color)}.section-title.late::after{background:var(--late-color)}
+  .timeline{position:relative;padding:20px 0}
+  .timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:4px;transform:translateX(-50%);z-index:0}
+  .timeline.early::before{background:var(--early-color)}.timeline.late::before{background:var(--late-color)}
+  .timeline-entry{display:flex;align-items:flex-start;position:relative;margin-bottom:20px}
+  .entry-content{display:flex;width:100%;align-items:flex-start}.entry-left,.entry-right{width:48%;padding:0 15px}
+  .entry-center{width:4%;display:flex;justify-content:center;position:relative;z-index:1}
+  .year-marker{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold;color:#fff;flex-shrink:0;z-index:2}
+  .early .year-marker{background:var(--early-color)}.late .year-marker{background:var(--late-color)}
+  .emperor-card{background:var(--card-bg);border-radius:12px;padding:20px;box-shadow:0 4px 20px rgba(0,0,0,.08);border-left:5px solid;position:relative;transition:transform .3s,box-shadow .3s}
+  .emperor-card:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,.15)}
+  .early .emperor-card{border-left-color:var(--early-color)}.late .emperor-card{border-left-color:var(--late-color)}
+  .emperor-card .order{position:absolute;top:-10px;right:15px;background:var(--highlight);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold}
+  .emperor-name{font-size:20px;font-weight:bold;margin-bottom:2px}
+  .emperor-latin{font-size:12px;color:var(--text-light);font-style:italic;margin-bottom:8px}
+  .emperor-meta{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;margin:10px 0;font-size:12px}
+  .meta-item{display:flex;align-items:center;gap:4px}.meta-label{color:var(--text-light);white-space:nowrap}.meta-value{font-weight:600}
+  .life-bar{height:8px;background:#eee;border-radius:4px;margin:10px 0 5px;position:relative;overflow:visible}
+  .life-bar .reign{position:absolute;height:100%;border-radius:4px;opacity:.8}
+  .early .life-bar .reign{background:var(--early-color)}.late .life-bar .reign{background:var(--late-color)}
+  .life-bar-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--text-light)}
+  .relation-tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;margin-top:6px;border:1px solid}
+  .early .relation-tag{background:#fef2f2;color:#b91c1c;border-color:#fca5a5}
+  .late .relation-tag{background:#fff7ed;color:#7c2d12;border-color:#fdba74}
+  .dynasty-tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:10px;margin-top:4px;margin-left:4px;background:#fef3c7;color:#92400e;border:1px solid #fcd34d}
+  .events-panel{background:var(--event-bg);border-radius:10px;padding:14px;margin-top:5px;border:1px solid #bfdbfe}
+  .events-panel h4{font-size:13px;color:var(--highlight);margin-bottom:8px;display:flex;align-items:center;gap:5px}
+  .event-item{font-size:12px;padding:4px 0;border-bottom:1px dashed #bfdbfe;display:flex;gap:6px}
+  .event-item:last-child{border-bottom:none}
+  .event-year{color:var(--highlight);font-weight:bold;white-space:nowrap;min-width:52px}
+  .ministers-panel{background:var(--minister-bg);border-radius:10px;padding:14px;margin-top:8px;border:1px solid #fca5a5}
+  .ministers-panel h4{font-size:13px;color:#b91c1c;margin-bottom:8px;display:flex;align-items:center;gap:5px}
+  .minister-list{display:flex;flex-wrap:wrap;gap:5px}
+  .minister-tag{font-size:11px;padding:3px 8px;background:#fef2f2;color:#b91c1c;border-radius:12px;border:1px solid #fca5a5}
+  .minister-tag.negative{background:#fde8e8;color:#b91c1c;border-color:#f0b8b8}
+  .mini-divider{text-align:center;padding:18px}
+  .mini-divider .mini-text{display:inline-block;background:#fef2f2;padding:5px 18px;font-size:12px;color:#b91c1c;font-weight:bold;letter-spacing:2px;border:1px solid #fca5a5;border-radius:14px}
+  .family-tree-section,.lifecycle-section{margin:40px 0;padding:30px;background:#fff;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.06)}
+  .family-tree-section h2,.lifecycle-section h2{text-align:center;font-size:24px;color:var(--text);margin-bottom:10px;letter-spacing:4px}
+  .lifecycle-section .note{text-align:center;font-size:12px;color:var(--text-light);margin-bottom:20px}
+  .tree-container{overflow-x:auto;padding:20px 0}
+  .gantt-container{overflow-x:auto;padding:10px 0}.gantt-chart{min-width:800px}
+  .gantt-row{display:flex;align-items:center;height:32px;margin:2px 0}
+  .gantt-label{width:130px;font-size:12px;font-weight:600;text-align:right;padding-right:12px;flex-shrink:0;white-space:nowrap}
+  .gantt-bar-area{flex:1;position:relative;height:100%}
+  .gantt-bar{position:absolute;height:12px;top:50%;transform:translateY(-50%);border-radius:6px;opacity:.85;cursor:pointer}
+  .gantt-bar:hover{opacity:1;filter:brightness(1.1)}
+  .gantt-bar .tooltip{display:none;position:absolute;bottom:calc(100% + 5px);left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:4px 8px;border-radius:4px;font-size:11px;white-space:nowrap;z-index:10}
+  .gantt-bar:hover .tooltip{display:block}
+  .gantt-header{display:flex;align-items:center;height:30px;border-bottom:2px solid var(--border);margin-bottom:10px}
+  .gantt-header .gantt-label{font-size:12px;color:var(--text-light)}
+  .gantt-year-tick{position:absolute;font-size:10px;color:var(--text-light);transform:translateX(-50%);top:0}
+  .overview-stats{display:flex;justify-content:center;gap:28px;padding:20px;flex-wrap:wrap}
+  .stat-box{text-align:center;padding:15px 22px;background:#fff;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.06);min-width:110px}
+  .stat-number{font-size:26px;font-weight:bold;color:var(--highlight)}
+  .stat-desc{font-size:12px;color:var(--text-light);margin-top:4px}
+  .footer{text-align:center;padding:30px;color:var(--text-light);font-size:13px;border-top:2px solid var(--border);margin-top:40px}
+  @media(max-width:900px){.entry-content{flex-direction:column!important;align-items:center}.entry-left,.entry-right{width:100%;padding:10px 0}.entry-center{width:100%;justify-content:center;margin:10px 0}.timeline::before{display:none}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>汉朝皇帝世系简表</h1>
+  <div class="subtitle">西 汉 · 新 莽 · 东 汉</div>
+  <div class="period">前202年 — 220年 · 中国历史上最长的统一王朝之一 · "汉族"之名的由来</div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:var(--early-color)"></div><span>西汉（前202-9，长安）</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div><span>新莽（9-23，长安）</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--late-color)"></div><span>东汉（25-220，洛阳）</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--rev-color)"></div><span>重大事件</span></div>
+</div>
+
+<div class="overview-stats">
+  <div class="stat-box"><div class="stat-number">405</div><div class="stat-desc">国祚（年，含新莽）</div></div>
+  <div class="stat-box"><div class="stat-number">28</div><div class="stat-desc">皇帝（西汉14 新莽1 东汉13）</div></div>
+  <div class="stat-box"><div class="stat-number">前202</div><div class="stat-desc">刘邦建汉</div></div>
+  <div class="stat-box"><div class="stat-number">220</div><div class="stat-desc">曹丕代汉</div></div>
+  <div class="stat-box"><div class="stat-number">长安·洛阳</div><div class="stat-desc">两都</div></div>
+</div>
+
+<div class="container">
+
+<div class="lifecycle-section">
+  <h2>皇帝生卒与在位时间对照图</h2>
+  <div class="note">浅色条为生卒跨度，深色条为在位时间（红=西汉，赭=东汉），鼠标悬停查看详情</div>
+  <div class="gantt-container"><div class="gantt-chart" id="ganttChart"></div></div>
+</div>
+
+<!-- ==================== 西汉 ==================== -->
+<div class="section-title early">西 汉（含新莽）</div>
+<div style="text-align:center;color:#999;font-size:13px;margin-bottom:20px;">前202年 — 23年 · 都城：长安 · 汉承秦制</div>
+
+<div class="timeline early">
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card"><div class="order">1</div><div class="emperor-name">汉高祖</div><div class="emperor-latin">Liu Bang · Emperor Gaozu</div><div class="emperor-meta"><div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">前256-前195</span></div><div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">前202-前195</span></div></div><div class="life-bar"><div class="reign" style="left:88.5%;width:11.5%"></div></div><div class="life-bar-labels"><span>前256</span><span>前202 在位</span><span>前195</span></div><div class="relation-tag">布衣天子 · 楚汉相争 · 建汉</div><div class="dynasty-tag">西汉</div></div><div class="ministers-panel"><h4>👤 重要人物</h4><div class="minister-list"><span class="minister-tag">萧何（相国）</span><span class="minister-tag">张良（谋臣）</span><span class="minister-tag">韩信（大将）</span><span class="minister-tag negative">项羽（对手）</span></div></div>
+    </div>
+    <div class="entry-center"><div class="year-marker">前202</div></div>
+    <div class="entry-right">
+      <div class="events-panel"><h4>📜 重大事件</h4><div class="event-item"><span class="event-year">前206</span><span>秦亡后封汉王，楚汉之争</span></div><div class="event-item"><span class="event-year">前202</span><span>垓下之战灭项羽，即皇帝位</span></div><div class="event-item"><span class="event-year">前202</span><span>定都长安，与民休息</span></div></div>
+    </div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel"><h4>📜 重大事件</h4><div class="event-item"><span class="event-year">前195</span><span>17岁即位，仁弱无为</span></div><div class="event-item"><span class="event-year">前188</span><span>在吕后阴影下病逝</span></div></div>
+    </div>
+    <div class="entry-center"><div class="year-marker">前195</div></div>
+    <div class="entry-right">
+      <div class="emperor-card"><div class="order">2</div><div class="emperor-name">汉惠帝</div><div class="emperor-latin">Liu Ying · Emperor Hui</div><div class="emperor-meta"><div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">前210-前188</span></div><div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">前195-前188</span></div></div><div class="life-bar"><div class="reign" style="left:68.2%;width:31.8%"></div></div><div class="life-bar-labels"><span>前210</span><span>前195 在位</span><span>前188</span></div><div class="relation-tag">高祖之子 · 吕后专权</div><div class="dynasty-tag">西汉</div></div><div class="ministers-panel"><h4>👤 重要人物</h4><div class="minister-list"><span class="minister-tag negative">吕后（母后临朝）</span><span class="minister-tag">曹参（萧规曹随）</span></div></div>
+    </div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card"><div class="order">3</div><div class="emperor-name">前少帝</div><div class="emperor-latin">Liu Gong · Deposed</div><div class="emperor-meta"><div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">前200-前184</span></div><div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">前188-前184</span></div></div><div class="life-bar"><div class="reign" style="left:80%;width:20%"></div></div><div class="life-bar-labels"><span>前200</span><span>前188 在位</span><span>前184</span></div><div class="relation-tag">吕后所立傀儡 · 被废杀</div><div class="dynasty-tag">西汉</div></div><div class="ministers-panel"><h4>👤 重要人物</h4><div class="minister-list"><span class="minister-tag negative">吕后</span></div></div>
+    </div>
+    <div class="entry-center"><div class="year-marker">前188</div></div>
+    <div class="entry-right">
+      <div class="events-panel"><h4>📜 重大事件</h4><div class="event-item"><span class="event-year">前188</span><span>吕后立其为帝（名分上的少帝）</span></div><div class="event-item"><span class="event-year">前184</span><span>吕后废黜并杀害</span></div></div>
+    </div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel"><h4>📜 重大事件</h4><div class="event-item"><span class="event-year">前184</span><span>吕后更立其为帝</span></div><div class="event-item"><span class="event-year">前180</span><span>诸吕之乱后，大臣以非惠帝子为由废杀</span></div></div>
+    </div>
+    <div class="entry-center"><div class="year-marker">前184</div></div>
+    <div class="entry-right">
+      <div class="emperor-card"><div class="order">4</div><div class="emperor-name">后少帝</div><div class="emperor-latin">Liu Hong · Deposed</div><div class="emperor-meta"><div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">前196-前180</span></div><div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">前184-前180</span></div></div><div class="life-bar"><div class="reign" style="left:80%;width:20%"></div></div><div class="life-bar-labels"><span>前196</span><span>前184 在位</span><span>前180</span></div><div class="relation-tag">吕后所立 · 文帝即位前被废杀</div><div class="dynasty-tag">西汉</div></div><div class="ministers-panel"><h4>👤 重要人物</h4><div class="minister-list"><span class="minister-tag negative">吕后</span><span class="minister-tag">周勃（诛诸吕）</span></div></div>
+    </div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card"><div class="order">5</div><div class="emperor-name">汉文帝</div><div class="emperor-latin">Liu Heng · Emperor Wen</div><div class="emperor-meta"><div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">前202-前157</span></div><div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">前180-前157</span></div></div><div class="life-bar"><div class="reign" style="left:48.9%;width:51.1%"></div></div><div class="life-bar-labels"><span>前202</span><span>前180 在位</span><span>前157</span></div><div class="relation-tag">高祖第四子 · 文景之治之始</div><div class="dynasty-tag">西汉</div></div><div class="ministers-panel"><h4>👤 重要人物</h4><div class="minister-list"><span class="minister-tag">周勃（功臣）</span><span class="minister-tag">贾谊（政论家）</span><span class="minister-tag">张释之（廷尉）</span></div></div>
+    </div>
+    <div class="entry-center"><div class="year-marker">前180</div></div>
+    <div class="entry-right">
+      <div class="events-panel"><h4>📜 重大事件</h4><div class="event-item"><span class="event-year">前180</span><span>诸吕之乱后被迎立</span></div><div class="event-item"><span class="event-year">前168</span><span>减赋税、废肉刑</span></div><div class="event-item"><span class="event-year">前157</span><span>勤俭治国，开创文景之治</span></div></div>
+    </div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel"><h4>📜 重大事件</h4><div class="event-item"><span class="event-year">前154</span><span>平七国之乱，削弱诸侯</span></div><div class="event-item"><span class="event-year">前141</span><span>与文帝并称"文景之治"</span></div></div>
+    </div>
+    <div class="entry-center"><div class="year-marker">前157</div></div>
+    <div class="entry-right">
+      <div class="emperor-card"><div class="order">6</div><div class="emperor-name">汉景帝</div><div class="emperor-latin">Liu Qi · Emperor Jing</div><div class="emperor-meta"><div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">前188-前141</span></div><div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">前157-前141</span></div></div><div class="life-bar"><div class="reign" style="left:66.0%;width:34.0%"></div></div><div class="life-bar-labels"><span>前188</span><span>前157 在位</span><span>前141</span></div><div class="relation-tag">文帝之子 · 文景之治 · 七国之乱</div><div class="dynasty-tag">西汉</div></div><div class="ministers-panel"><h4>👤 重要人物</h4><div class="minister-list"><span class="minister-tag">晁错（削藩策）</span><span class="minister-tag">周亚夫（平叛）</span></div></div>
+    </div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card"><div class="order">7</div><div class="emperor-name">汉武帝</div><div class="emperor-latin">Liu Che · Emperor Wu</div><div class="emperor-meta"><div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">前156-前87</span></div><div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">前141-前87</span></div></div><div class="life-bar"><div class="reign" style="left:21.7%;width:78.3%"></div></div><div class="life-bar-labels"><span>前156</span><span>前141 在位</span><span>前87</span></div><div class="relation-tag">景帝之子 · 北击匈奴 · 开拓疆土</div><div class="dynasty-tag">西汉</div></div><div class="ministers-panel"><h4>👤 重要人物</h4><div class="minister-list"><span class="minister-tag">卫青（大将军）</span><span class="minister-tag">霍去病（冠军侯）</span><span class="minister-tag">董仲舒（独尊儒术）</span><span class="minister-tag">张骞（通西域）</span></div></div>
+    </div>
+    <div class="entry-center"><div class="year-marker">前141</div></div>
+    <div class="entry-right">
+      <div class="events-panel"><h4>📜 重大事件</h4><div class="event-item"><span class="event-year">前138</span><span>张骞出使西域，开丝绸之路</span></div><div class="event-item"><span class="event-year">前127</span><span>卫青、霍去病大破匈奴</span></div><div class="event-item"><span class="event-year">前118</span><span>盐铁官营、推恩令</span></div><div class="event-item"><span class="event-year">前87</span><span>晚年颁布轮台诏，与民休息</span></div></div>
+    </div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel"><h4>📜 重大事件</h4><div class="event-item"><span class="event-year">前87</span><span>8岁即位，霍光辅政</span></div><div class="event-item"><span class="event-year">前74</span><span>病逝，无子</span></div></div>
+    </div>
+    <div class="entry-center"><div class="year-marker">前87</div></div>
+    <div class="entry-right">
+      <div class="emperor-card"><div class="order">8</div><div class="emperor-name">汉昭帝</div><div class="emperor-latin">Liu Fuling · Emperor Zhao</div><div class="emperor-meta"><div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">前94-前74</span></div><div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">前87-前74</span></div></div><div class="life-bar"><div class="reign" style="left:35.0%;width:65.0%"></div></div><div class="life-bar-labels"><span>前94</span><span>前87 在位</span><span>前74</span></div><div class="relation-tag">武帝少子 · 霍光辅政</div><div class="dynasty-tag">西汉</div></div><div class="ministers-panel"><h4>👤 重要人物</h4><div class="minister-list"><span class="minister-tag">霍光（辅政大臣）</span></div></div>
+    </div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card"><div class="order">9</div><div class="emperor-name">废帝（昌邑王）</div><div class="emperor-latin">Liu He · Deposed</div><div class="emperor-meta"><div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">前92-前59</span></div><div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">前74-前74</span></div></div><div class="life-bar"><div class="reign" style="left:96%;width:1.5%"></div></div><div class="life-bar-labels"><span>前92</span><span>前74 在位</span><span>前59</span></div><div class="relation-tag">昭帝后即位 · 在位27天被废</div><div class="dynasty-tag">西汉</div></div><div class="ministers-panel"><h4>👤 重要人物</h4><div class="minister-list"><span class="minister-tag negative">霍光（废帝）</span></div></div>
+    </div>
+    <div class="entry-center"><div class="year-marker">前74</div></div>
+    <div class="entry-right">
+      <div class="events-panel"><h4>📜 重大事件</h4><div class="event-item"><span class="event-year">前74</span><span>即位仅27天，因行淫乱被霍光废黜</span></div></div>
+    </div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel"><h4>📜 重大事件</h4><div class="event-item"><span class="event-year">前74</span><span>霍光迎立</span></div><div class="event-item"><span class="event-year">前66</span><span>诛霍氏，亲政</span></div><div class="event-item"><span class="event-year">前60</span><span>设西域都护，统辖西域</span></div></div>
+    </div>
+    <div class="entry-center"><div class="year-marker">前74</div></div>
+    <div class="entry-right">
+      <div class="emperor-card"><div class="order">10</div><div class="emperor-name">汉宣帝</div><div class="emperor-latin">Liu Xun · Emperor Xuan</div><div class="emperor-meta"><div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">前91-前49</span></div><div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">前74-前49</span></div></div><div class="life-bar"><div class="reign" style="left:40.5%;width:59.5%"></div></div><div class="life-bar-labels"><span>前91</span><span>前74 在位</span><span>前49</span></div><div class="relation-tag">武帝曾孙 · 宣帝中兴</div><div class="dynasty-tag">西汉</div></div><div class="ministers-panel"><h4>👤 重要人物</h4><div class="minister-list"><span class="minister-tag">霍光</span><span class="minister-tag">丙吉（丞相）</span><span class="minister-tag">赵充国（平定西羌）</span></div></div>
+    </div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card"><div class="order">11</div><div class="emperor-name">汉元帝</div><div class="emperor-latin">Liu Shi · Emperor Yuan</div><div class="emperor-meta"><div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">前75-前33</span></div><div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">前49-前33</span></div></div><div class="life-bar"><div class="reign" style="left:61.9%;width:38.1%"></div></div><div class="life-bar-labels"><span>前75</span><span>前49 在位</span><span>前33</span></div><div class="relation-tag">宣帝之子 · 重用宦官 · 由盛转衰</div><div class="dynasty-tag">西汉</div></div><div class="ministers-panel"><h4>👤 重要人物</h4><div class="minister-list"><span class="minister-tag">王昭君（和亲）</span><span class="minister-tag negative">石显（宦官）</span></div></div>
+    </div>
+    <div class="entry-center"><div class="year-marker">前49</div></div>
+    <div class="entry-right">
+      <div class="events-panel"><h4>📜 重大事件</h4><div class="event-item"><span class="event-year">前33</span><span>昭君出塞，与匈奴和亲</span></div></div>
+    </div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel"><h4>📜 重大事件</h4><div class="event-item"><span class="event-year">前16</span><span>王莽叔父王凤等把持朝政</span></div></div>
+    </div>
+    <div class="entry-center"><div class="year-marker">前33</div></div>
+    <div class="entry-right">
+      <div class="emperor-card"><div class="order">12</div><div class="emperor-name">汉成帝</div><div class="emperor-latin">Liu Ao · Emperor Cheng</div><div class="emperor-meta"><div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">前51-前7</span></div><div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">前33-前7</span></div></div><div class="life-bar"><div class="reign" style="left:40.9%;width:59.1%"></div></div><div class="life-bar-labels"><span>前51</span><span>前33 在位</span><span>前7</span></div><div class="relation-tag">元帝之子 · 王氏外戚专权</div><div class="dynasty-tag">西汉</div></div><div class="ministers-panel"><h4>👤 重要人物</h4><div class="minister-list"><span class="minister-tag negative">赵飞燕（皇后）</span><span class="minister-tag negative">王政君（太后）</span><span class="minister-tag negative">王莽（外戚）</span></div></div>
+    </div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card"><div class="order">13</div><div class="emperor-name">汉哀帝</div><div class="emperor-latin">Liu Xin · Emperor Ai</div><div class="emperor-meta"><div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">前25-前1</span></div><div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">前7-前1</span></div></div><div class="life-bar"><div class="reign" style="left:75.0%;width:25.0%"></div></div><div class="life-bar-labels"><span>前25</span><span>前7 在位</span><span>前1</span></div><div class="relation-tag">元帝之孙 · 断袖之癖</div><div class="dynasty-tag">西汉</div></div><div class="ministers-panel"><h4>👤 重要人物</h4><div class="minister-list"><span class="minister-tag negative">董贤（宠臣）</span><span class="minister-tag negative">王莽</span></div></div>
+    </div>
+    <div class="entry-center"><div class="year-marker">前7</div></div>
+    <div class="entry-right">
+      <div class="events-panel"><h4>📜 重大事件</h4><div class="event-item"><span class="event-year">前7</span><span>即位，试图限田限奴未果</span></div><div class="event-item"><span class="event-year">前1</span><span>病逝，无子</span></div></div>
+    </div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel"><h4>📜 重大事件</h4><div class="event-item"><span class="event-year">前1</span><span>9岁即位，王莽掌权</span></div><div class="event-item"><span class="event-year">6</span><span>被王莽毒杀（一说病逝）</span></div></div>
+    </div>
+    <div class="entry-center"><div class="year-marker">前1</div></div>
+    <div class="entry-right">
+      <div class="emperor-card"><div class="order">14</div><div class="emperor-name">汉平帝</div><div class="emperor-latin">Liu Kan · Emperor Ping</div><div class="emperor-meta"><div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">前9-6</span></div><div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">前1-6</span></div></div><div class="life-bar"><div class="reign" style="left:53.3%;width:46.7%"></div></div><div class="life-bar-labels"><span>前9</span><span>前1 在位</span><span>6</span></div><div class="relation-tag">元帝之孙 · 王莽专权 · 被毒杀</div><div class="dynasty-tag">西汉</div></div><div class="ministers-panel"><h4>👤 重要人物</h4><div class="minister-list"><span class="minister-tag negative">王莽（安汉公）</span></div></div>
+    </div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card"><div class="order">15</div><div class="emperor-name">新朝皇帝 王莽</div><div class="emperor-latin">Wang Mang · Xin Dynasty</div><div class="emperor-meta"><div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">前45-23</span></div><div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">9-23</span></div></div><div class="life-bar"><div class="reign" style="left:79.4%;width:20.6%"></div></div><div class="life-bar-labels"><span>前45</span><span>9 在位</span><span>23</span></div><div class="relation-tag">篡汉建新 · 托古改制</div><div class="dynasty-tag">新莽</div></div><div class="ministers-panel"><h4>👤 重要人物</h4><div class="minister-list"><span class="minister-tag negative">刘秀（汉室宗亲）</span><span class="minister-tag negative">刘縯（绿林军）</span></div></div>
+    </div>
+    <div class="entry-center"><div class="year-marker">9</div></div>
+    <div class="entry-right">
+      <div class="events-panel"><h4>📜 重大事件</h4><div class="event-item"><span class="event-year">9</span><span>代汉建"新"朝</span></div><div class="event-item"><span class="event-year">10</span><span>推行王田、五均六筦等改制失败</span></div><div class="event-item"><span class="event-year">17</span><span>绿林、赤眉起义爆发</span></div><div class="event-item"><span class="event-year">23</span><span>绿林军攻入长安，被杀</span></div></div>
+    </div>
+  </div></div>
+</div>
+
+<!-- ==================== 东汉 ==================== -->
+<div class="mini-divider"><div class="mini-text">王莽改制失败 · 绿林赤眉之乱 · 刘秀光武中兴</div></div>
+<div class="section-title late">东 汉</div>
+<div style="text-align:center;color:#999;font-size:13px;margin-bottom:20px;">25年 — 220年 · 都城：洛阳 · 宦官外戚交替专权</div>
+
+<div class="timeline late">
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel"><h4>📜 重大事件</h4><div class="event-item"><span class="event-year">23</span><span>昆阳之战大败王莽军</span></div><div class="event-item"><span class="event-year">25</span><span>称帝于鄗，定都洛阳，东汉建立</span></div><div class="event-item"><span class="event-year">36</span><span>平定天下，实现统一</span></div><div class="event-item"><span class="event-year">57</span><span>驾崩，光武中兴结束</span></div></div>
+    </div>
+    <div class="entry-center"><div class="year-marker">25</div></div>
+    <div class="entry-right">
+      <div class="emperor-card"><div class="order">16</div><div class="emperor-name">光武帝</div><div class="emperor-latin">Liu Xiu · Emperor Guangwu</div><div class="emperor-meta"><div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">前5-57</span></div><div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">25-57</span></div></div><div class="life-bar"><div class="reign" style="left:48.4%;width:51.6%"></div></div><div class="life-bar-labels"><span>前5</span><span>25 在位</span><span>57</span></div><div class="relation-tag">汉室宗亲 · 光武中兴 · 建东汉</div><div class="dynasty-tag">东汉</div></div><div class="ministers-panel"><h4>👤 重要人物</h4><div class="minister-list"><span class="minister-tag">云台二十八将（邓禹等）</span><span class="minister-tag">马援（伏波将军）</span></div></div>
+    </div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card"><div class="order">17</div><div class="emperor-name">汉明帝</div><div class="emperor-latin">Liu Zhuang · Emperor Ming</div><div class="emperor-meta"><div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">28-75</span></div><div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">57-75</span></div></div><div class="life-bar"><div class="reign" style="left:61.7%;width:38.3%"></div></div><div class="life-bar-labels"><span>28</span><span>57 在位</span><span>75</span></div><div class="relation-tag">光武帝之子 · 永平求法</div><div class="dynasty-tag">东汉</div></div><div class="ministers-panel"><h4>👤 重要人物</h4><div class="minister-list"><span class="minister-tag">窦固（击北匈奴）</span><span class="minister-tag">班超（通西域）</span></div></div>
+    </div>
+    <div class="entry-center"><div class="year-marker">57</div></div>
+    <div class="entry-right">
+      <div class="events-panel"><h4>📜 重大事件</h4><div class="event-item"><span class="event-year">64</span><span>派蔡愔等西行求佛</span></div><div class="event-item"><span class="event-year">67</span><span>白马寺建成，佛教正式传入</span></div></div>
+    </div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel"><h4>📜 重大事件</h4><div class="event-item"><span class="event-year">79</span><span>白虎观会议，统一经学</span></div><div class="event-item"><span class="event-year">88</span><span>与明帝并称"明章之治"</span></div></div>
+    </div>
+    <div class="entry-center"><div class="year-marker">75</div></div>
+    <div class="entry-right">
+      <div class="emperor-card"><div class="order">18</div><div class="emperor-name">汉章帝</div><div class="emperor-latin">Liu Da · Emperor Zhang</div><div class="emperor-meta"><div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">57-88</span></div><div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">75-88</span></div></div><div class="life-bar"><div class="reign" style="left:58.1%;width:41.9%"></div></div><div class="life-bar-labels"><span>57</span><span>75 在位</span><span>88</span></div><div class="relation-tag">明帝之子 · 明章之治</div><div class="dynasty-tag">东汉</div></div><div class="ministers-panel"><h4>👤 重要人物</h4><div class="minister-list"><span class="minister-tag">班固（汉书）</span><span class="minister-tag negative">窦太后（临朝）</span></div></div>
+    </div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card"><div class="order">19</div><div class="emperor-name">汉和帝</div><div class="emperor-latin">Liu Zhao · Emperor He</div><div class="emperor-meta"><div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">79-105</span></div><div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">88-105</span></div></div><div class="life-bar"><div class="reign" style="left:34.6%;width:65.4%"></div></div><div class="life-bar-labels"><span>79</span><span>88 在位</span><span>105</span></div><div class="relation-tag">章帝之子 · 年幼即位 · 宦官掌权之始</div><div class="dynasty-tag">东汉</div></div><div class="ministers-panel"><h4>👤 重要人物</h4><div class="minister-list"><span class="minister-tag negative">窦宪（破北匈奴）</span><span class="minister-tag">蔡伦（造纸）</span></div></div>
+    </div>
+    <div class="entry-center"><div class="year-marker">88</div></div>
+    <div class="entry-right">
+      <div class="events-panel"><h4>📜 重大事件</h4><div class="event-item"><span class="event-year">92</span><span>诛窦宪，亲政</span></div><div class="event-item"><span class="event-year">105</span><span>蔡伦改进造纸术</span></div></div>
+    </div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel"><h4>📜 重大事件</h4><div class="event-item"><span class="event-year">106</span><span>出生百余日即位，同年夭折</span></div></div>
+    </div>
+    <div class="entry-center"><div class="year-marker">106</div></div>
+    <div class="entry-right">
+      <div class="emperor-card"><div class="order">20</div><div class="emperor-name">汉殇帝</div><div class="emperor-latin">Liu Long · Emperor Shang</div><div class="emperor-meta"><div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">105-106</span></div><div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">106-106</span></div></div><div class="life-bar"><div class="reign" style="left:90%;width:10%"></div></div><div class="life-bar-labels"><span>105</span><span>106 在位</span><span>106</span></div><div class="relation-tag">和帝之子 · 即位百余日而夭</div><div class="dynasty-tag">东汉</div></div><div class="ministers-panel"><h4>👤 重要人物</h4><div class="minister-list"><span class="minister-tag negative">邓太后（临朝）</span></div></div>
+    </div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card"><div class="order">21</div><div class="emperor-name">汉安帝</div><div class="emperor-latin">Liu Hu · Emperor An</div><div class="emperor-meta"><div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">94-125</span></div><div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">106-125</span></div></div><div class="life-bar"><div class="reign" style="left:38.7%;width:61.3%"></div></div><div class="life-bar-labels"><span>94</span><span>106 在位</span><span>125</span></div><div class="relation-tag">章帝之孙 · 邓太后临朝</div><div class="dynasty-tag">东汉</div></div><div class="ministers-panel"><h4>👤 重要人物</h4><div class="minister-list"><span class="minister-tag negative">邓太后</span><span class="minister-tag negative">耿宝（外戚）</span></div></div>
+    </div>
+    <div class="entry-center"><div class="year-marker">106</div></div>
+    <div class="entry-right">
+      <div class="events-panel"><h4>📜 重大事件</h4><div class="event-item"><span class="event-year">121</span><span>邓太后去世，亲政</span></div><div class="event-item"><span class="event-year">125</span><span>病逝于南巡途中</span></div></div>
+    </div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel"><h4>📜 重大事件</h4><div class="event-item"><span class="event-year">131</span><span>立梁氏为后，梁冀专权之始</span></div><div class="event-item"><span class="event-year">144</span><span>病逝</span></div></div>
+    </div>
+    <div class="entry-center"><div class="year-marker">125</div></div>
+    <div class="entry-right">
+      <div class="emperor-card"><div class="order">22</div><div class="emperor-name">汉顺帝</div><div class="emperor-latin">Liu Bao · Emperor Shun</div><div class="emperor-meta"><div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">115-144</span></div><div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">125-144</span></div></div><div class="life-bar"><div class="reign" style="left:34.5%;width:65.5%"></div></div><div class="life-bar-labels"><span>115</span><span>125 在位</span><span>144</span></div><div class="relation-tag">安帝之子 · 宦官与外戚交替专权</div><div class="dynasty-tag">东汉</div></div><div class="ministers-panel"><h4>👤 重要人物</h4><div class="minister-list"><span class="minister-tag negative">梁冀（大将军）</span></div></div>
+    </div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card"><div class="order">23</div><div class="emperor-name">汉冲帝</div><div class="emperor-latin">Liu Bing · Emperor Chong</div><div class="emperor-meta"><div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">143-145</span></div><div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">144-145</span></div></div><div class="life-bar"><div class="reign" style="left:88%;width:10%"></div></div><div class="life-bar-labels"><span>143</span><span>144 在位</span><span>145</span></div><div class="relation-tag">顺帝之子 · 在位数月而夭</div><div class="dynasty-tag">东汉</div></div><div class="ministers-panel"><h4>👤 重要人物</h4><div class="minister-list"><span class="minister-tag negative">梁冀</span></div></div>
+    </div>
+    <div class="entry-center"><div class="year-marker">144</div></div>
+    <div class="entry-right">
+      <div class="events-panel"><h4>📜 重大事件</h4><div class="event-item"><span class="event-year">144</span><span>1岁即位</span></div><div class="event-item"><span class="event-year">145</span><span>数月后夭折</span></div></div>
+    </div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel"><h4>📜 重大事件</h4><div class="event-item"><span class="event-year">145</span><span>8岁即位</span></div><div class="event-item"><span class="event-year">146</span><span>称梁冀"跋扈将军"，被毒杀</span></div></div>
+    </div>
+    <div class="entry-center"><div class="year-marker">145</div></div>
+    <div class="entry-right">
+      <div class="emperor-card"><div class="order">24</div><div class="emperor-name">汉质帝</div><div class="emperor-latin">Liu Zuan · Emperor Zhi</div><div class="emperor-meta"><div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">138-146</span></div><div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">145-146</span></div></div><div class="life-bar"><div class="reign" style="left:87.5%;width:12.5%"></div></div><div class="life-bar-labels"><span>138</span><span>145 在位</span><span>146</span></div><div class="relation-tag">章帝玄孙 · 被梁冀毒杀</div><div class="dynasty-tag">东汉</div></div><div class="ministers-panel"><h4>👤 重要人物</h4><div class="minister-list"><span class="minister-tag negative">梁冀（毒杀）</span></div></div>
+    </div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card"><div class="order">25</div><div class="emperor-name">汉桓帝</div><div class="emperor-latin">Liu Zhi · Emperor Huan</div><div class="emperor-meta"><div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">132-167</span></div><div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">146-167</span></div></div><div class="life-bar"><div class="reign" style="left:40.0%;width:60.0%"></div></div><div class="life-bar-labels"><span>132</span><span>146 在位</span><span>167</span></div><div class="relation-tag">章帝曾孙 · 宦官专权 · 党锢之祸</div><div class="dynasty-tag">东汉</div></div><div class="ministers-panel"><h4>👤 重要人物</h4><div class="minister-list"><span class="minister-tag negative">梁冀</span><span class="minister-tag">陈蕃（太尉）</span><span class="minister-tag">李膺（党人）</span></div></div>
+    </div>
+    <div class="entry-center"><div class="year-marker">146</div></div>
+    <div class="entry-right">
+      <div class="events-panel"><h4>📜 重大事件</h4><div class="event-item"><span class="event-year">159</span><span>借宦官诛梁冀</span></div><div class="event-item"><span class="event-year">166</span><span>第一次党锢之祸</span></div></div>
+    </div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel"><h4>📜 重大事件</h4><div class="event-item"><span class="event-year">168</span><span>宦官曹节等专权</span></div><div class="event-item"><span class="event-year">169</span><span>第二次党锢之祸</span></div><div class="event-item"><span class="event-year">184</span><span>黄巾起义，张角</span></div><div class="event-item"><span class="event-year">189</span><span>病逝</span></div></div>
+    </div>
+    <div class="entry-center"><div class="year-marker">168</div></div>
+    <div class="entry-right">
+      <div class="emperor-card"><div class="order">26</div><div class="emperor-name">汉灵帝</div><div class="emperor-latin">Liu Hong · Emperor Ling</div><div class="emperor-meta"><div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">156-189</span></div><div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">168-189</span></div></div><div class="life-bar"><div class="reign" style="left:36.4%;width:63.6%"></div></div><div class="life-bar-labels"><span>156</span><span>168 在位</span><span>189</span></div><div class="relation-tag">章帝玄孙 · 宦官弄权 · 黄巾起义</div><div class="dynasty-tag">东汉</div></div><div class="ministers-panel"><h4>👤 重要人物</h4><div class="minister-list"><span class="minister-tag negative">张让（十常侍）</span><span class="minister-tag negative">张角（黄巾）</span><span class="minister-tag">何进（大将军）</span></div></div>
+    </div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card"><div class="order">27</div><div class="emperor-name">汉少帝</div><div class="emperor-latin">Liu Bian · Prince of Hongnong</div><div class="emperor-meta"><div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">176-190</span></div><div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">189-189</span></div></div><div class="life-bar"><div class="reign" style="left:92.9%;width:0.5%"></div></div><div class="life-bar-labels"><span>176</span><span>189 在位</span><span>190</span></div><div class="relation-tag">灵帝之子 · 董卓废立</div><div class="dynasty-tag">东汉</div></div><div class="ministers-panel"><h4>👤 重要人物</h4><div class="minister-list"><span class="minister-tag negative">董卓（废帝）</span><span class="minister-tag negative">何太后</span></div></div>
+    </div>
+    <div class="entry-center"><div class="year-marker">189</div></div>
+    <div class="entry-right">
+      <div class="events-panel"><h4>📜 重大事件</h4><div class="event-item"><span class="event-year">189</span><span>即位数月，董卓入京后废为弘农王</span></div><div class="event-item"><span class="event-year">190</span><span>被董卓派人毒杀</span></div></div>
+    </div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel"><h4>📜 重大事件</h4><div class="event-item"><span class="event-year">189</span><span>9岁即位，历经董卓、李傕之乱</span></div><div class="event-item"><span class="event-year">196</span><span>曹操迎帝迁都许昌，"挟天子以令诸侯"</span></div><div class="event-item"><span class="event-year">220</span><span>禅位于曹丕，东汉灭亡</span></div><div class="event-item"><span class="event-year">234</span><span>病逝</span></div></div>
+    </div>
+    <div class="entry-center"><div class="year-marker">189</div></div>
+    <div class="entry-right">
+      <div class="emperor-card"><div class="order">28</div><div class="emperor-name">汉献帝</div><div class="emperor-latin">Liu Xie · Last Emperor of Han</div><div class="emperor-meta"><div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">181-234</span></div><div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">189-220</span></div></div><div class="life-bar"><div class="reign" style="left:15.1%;width:58.5%"></div></div><div class="life-bar-labels"><span>181</span><span>189 在位</span><span>234</span></div><div class="relation-tag">灵帝之子 · 傀儡天子 · 汉亡</div><div class="dynasty-tag">东汉</div></div><div class="ministers-panel"><h4>👤 重要人物</h4><div class="minister-list"><span class="minister-tag negative">董卓</span><span class="minister-tag negative">曹操（丞相）</span><span class="minister-tag negative">曹丕（代汉）</span></div></div>
+    </div>
+  </div></div>
+</div>
+
+<!-- ==================== 世系关系图 ==================== -->
+<div class="family-tree-section">
+  <h2>汉朝世系关系图</h2>
+  <div class="tree-container">
+    <svg class="tree-svg" viewBox="0 0 1300 320" width="1300" height="320" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="xhG" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#b91c1c;stop-opacity:1"/><stop offset="100%" style="stop-color:#ef4444;stop-opacity:1"/>
+        </linearGradient>
+        <linearGradient id="dhG" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#7c2d12;stop-opacity:1"/><stop offset="100%" style="stop-color:#d97706;stop-opacity:1"/>
+        </linearGradient>
+        <marker id="aX" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#b91c1c"/></marker>
+        <marker id="aD" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#7c2d12"/></marker>
+        <filter id="sh"><feDropShadow dx="1" dy="2" stdDeviation="3" flood-opacity="0.15"/></filter>
+      </defs>
+      <rect x="0" y="0" width="1300" height="320" fill="#f3f4f6" rx="12"/>
+      <text x="20" y="30" font-size="16" fill="#b91c1c" font-weight="bold" font-family="PingFang SC,serif">汉朝世系 · 西汉 → 新莽 → 东汉（刘秀中兴）</text>
+
+      <g font-family="PingFang SC,serif">
+        <rect x="40" y="70" width="150" height="55" rx="8" fill="url(#xhG)" filter="url(#sh)"/>
+        <text x="115" y="93" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">①高祖 刘邦</text>
+        <text x="115" y="112" text-anchor="middle" fill="#fecaca" font-size="9">前202-前195</text>
+        <rect x="230" y="70" width="150" height="55" rx="8" fill="url(#xhG)" filter="url(#sh)"/>
+        <text x="305" y="93" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">②-⑥ 惠帝→景帝</text>
+        <text x="305" y="112" text-anchor="middle" fill="#fecaca" font-size="9">文景之治</text>
+        <rect x="420" y="70" width="150" height="55" rx="8" fill="url(#xhG)" filter="url(#sh)"/>
+        <text x="495" y="93" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">⑦武帝 刘彻</text>
+        <text x="495" y="112" text-anchor="middle" fill="#fecaca" font-size="9">前141-前87 极盛</text>
+        <rect x="610" y="70" width="150" height="55" rx="8" fill="url(#xhG)" filter="url(#sh)"/>
+        <text x="685" y="93" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">⑧-⑭ 昭帝→平帝</text>
+        <text x="685" y="112" text-anchor="middle" fill="#fecaca" font-size="9">霍光辅政 · 宣帝中兴</text>
+        <rect x="800" y="70" width="150" height="55" rx="8" fill="#166534" filter="url(#sh)"/>
+        <text x="875" y="93" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">⑮王莽（新）</text>
+        <text x="875" y="112" text-anchor="middle" fill="#bbf7d0" font-size="9">9-23 篡汉</text>
+        <rect x="990" y="70" width="150" height="55" rx="8" fill="url(#dhG)" filter="url(#sh)"/>
+        <text x="1065" y="93" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">⑯光武帝 刘秀</text>
+        <text x="1065" y="112" text-anchor="middle" fill="#fde68a" font-size="9">25-57 中兴</text>
+        <rect x="1180" y="70" width="100" height="55" rx="8" fill="url(#dhG)" filter="url(#sh)"/>
+        <text x="1230" y="93" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">⑰-㉘</text>
+        <text x="1230" y="112" text-anchor="middle" fill="#fde68a" font-size="9">明章→献帝</text>
+
+        <line x1="190" y1="97" x2="228" y2="97" stroke="#b91c1c" stroke-width="2" marker-end="url(#aX)"/>
+        <line x1="380" y1="97" x2="418" y2="97" stroke="#b91c1c" stroke-width="2" marker-end="url(#aX)"/>
+        <line x1="570" y1="97" x2="608" y2="97" stroke="#b91c1c" stroke-width="2" marker-end="url(#aX)"/>
+        <line x1="760" y1="97" x2="798" y2="97" stroke="#166534" stroke-width="2" stroke-dasharray="6,3"/>
+        <line x1="950" y1="97" x2="988" y2="97" stroke="#7c2d12" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#aD)"/>
+        <line x1="1140" y1="97" x2="1178" y2="97" stroke="#7c2d12" stroke-width="2" marker-end="url(#aD)"/>
+      </g>
+      <text x="650" y="152" text-anchor="middle" fill="#6b7280" font-size="10" font-family="PingFang SC,serif">汉承秦制，确立郡国并行与察举制；汉武帝时"罢黜百家，独尊儒术"，开拓西域，"汉"成为民族之名。</text>
+      <line x1="20" y1="190" x2="1280" y2="190" stroke="#7f1d1d" stroke-width="1.5" stroke-dasharray="10,5"/>
+      <text x="650" y="185" text-anchor="middle" fill="#7f1d1d" font-size="11" font-weight="bold" font-family="PingFang SC,serif">── 220 曹丕代汉 · 汉朝终结 · 三国时代开始 ──</text>
+      <text x="650" y="225" text-anchor="middle" fill="#6b7280" font-size="11" font-family="PingFang SC,serif">西汉十四帝（含吕后所立前、后少帝及昌邑王），新莽一帝，东汉十三帝（含殇、冲、质诸幼帝），合计二十八位在位皇帝。</text>
+      <text x="650" y="250" text-anchor="middle" fill="#6b7280" font-size="11" font-family="PingFang SC,serif">东汉后期宦官外戚交替专权，黄巾起义后群雄并起，曹操"挟天子以令诸侯"，终为曹魏所代。</text>
+    </svg>
+  </div>
+</div>
+
+</div><!-- end container -->
+
+<div class="footer">
+  <p>汉朝（前202-220），西汉、新莽、东汉三阶段合计四百余年，是中华文明定型时期：汉承秦制、独尊儒术、开拓西域、丝绸之路贯通。</p>
+  <p style="margin-top:8px;">文景之治、汉武盛世、光武中兴、明章之治皆为治世；东汉末年宦官外戚专权与军阀割据，最终走向三国分裂。</p>
+  <p style="margin-top:8px;">数据来源：《史记》《汉书》《后汉书》《资治通鉴》等 · 前少帝、后少帝系年依《史记》 · 仅供学习参考</p>
+</div>
+
+<script>
+(function(){
+  const emperors = [
+    { name:'汉高祖', birth:-256, death:-195, reigns:[{s:-202,e:-195}], type:'early' },
+    { name:'汉惠帝', birth:-210, death:-188, reigns:[{s:-195,e:-188}], type:'early' },
+    { name:'前少帝', birth:-200, death:-184, reigns:[{s:-188,e:-184}], type:'early' },
+    { name:'后少帝', birth:-196, death:-180, reigns:[{s:-184,e:-180}], type:'early' },
+    { name:'汉文帝', birth:-202, death:-157, reigns:[{s:-180,e:-157}], type:'early' },
+    { name:'汉景帝', birth:-188, death:-141, reigns:[{s:-157,e:-141}], type:'early' },
+    { name:'汉武帝', birth:-156, death:-87, reigns:[{s:-141,e:-87}], type:'early' },
+    { name:'汉昭帝', birth:-94, death:-74, reigns:[{s:-87,e:-74}], type:'early' },
+    { name:'废帝（昌邑王）', birth:-92, death:-59, reigns:[{s:-74,e:-74}], type:'early' },
+    { name:'汉宣帝', birth:-91, death:-49, reigns:[{s:-74,e:-49}], type:'early' },
+    { name:'汉元帝', birth:-75, death:-33, reigns:[{s:-49,e:-33}], type:'early' },
+    { name:'汉成帝', birth:-51, death:-7, reigns:[{s:-33,e:-7}], type:'early' },
+    { name:'汉哀帝', birth:-25, death:-1, reigns:[{s:-7,e:-1}], type:'early' },
+    { name:'汉平帝', birth:-9, death:6, reigns:[{s:-1,e:6}], type:'early' },
+    { name:'新朝皇帝 王莽', birth:-45, death:23, reigns:[{s:9,e:23}], type:'early' },
+    { name:'光武帝', birth:-5, death:57, reigns:[{s:25,e:57}], type:'late' },
+    { name:'汉明帝', birth:28, death:75, reigns:[{s:57,e:75}], type:'late' },
+    { name:'汉章帝', birth:57, death:88, reigns:[{s:75,e:88}], type:'late' },
+    { name:'汉和帝', birth:79, death:105, reigns:[{s:88,e:105}], type:'late' },
+    { name:'汉殇帝', birth:105, death:106, reigns:[{s:106,e:106}], type:'late' },
+    { name:'汉安帝', birth:94, death:125, reigns:[{s:106,e:125}], type:'late' },
+    { name:'汉顺帝', birth:115, death:144, reigns:[{s:125,e:144}], type:'late' },
+    { name:'汉冲帝', birth:143, death:145, reigns:[{s:144,e:145}], type:'late' },
+    { name:'汉质帝', birth:138, death:146, reigns:[{s:145,e:146}], type:'late' },
+    { name:'汉桓帝', birth:132, death:167, reigns:[{s:146,e:167}], type:'late' },
+    { name:'汉灵帝', birth:156, death:189, reigns:[{s:168,e:189}], type:'late' },
+    { name:'汉少帝', birth:176, death:190, reigns:[{s:189,e:189}], type:'late' },
+    { name:'汉献帝', birth:181, death:234, reigns:[{s:189,e:220}], type:'late' },
+  ];
+  const fmtR = y => y<0 ? '前'+(-y) : y;
+  const minYear=-260, maxYear=240, totalYears=maxYear-minYear;
+  const colors = { early:'#b91c1c', late:'#7c2d12' };
+  const container = document.getElementById('ganttChart');
+  let headerHTML = '<div class="gantt-header"><div class="gantt-label" style="width:150px">年份</div><div class="gantt-bar-area" style="position:relative;height:30px;">';
+  for(let y=-200;y<=200;y+=50){
+    headerHTML += `<span class="gantt-year-tick" style="left:${((y-minYear)/totalYears)*100}%">${y>0?y:'前'+(-y)}</span>`;
+  }
+  headerHTML += '</div></div>';
+  container.innerHTML = headerHTML;
+  let bodyHTML = '<div class="gantt-body">';
+  emperors.forEach(emp => {
+    const c = colors[emp.type];
+    const ll = ((emp.birth-minYear)/totalYears)*100;
+    const lw = ((emp.death-emp.birth)/totalYears)*100;
+    let rb = '';
+    emp.reigns.forEach(r => {
+      const rl = ((r.s-minYear)/totalYears)*100;
+      const rw = Math.max(((r.e-r.s)/totalYears)*100, 0.5);
+      rb += `<div class="gantt-bar reign-bar" style="left:${rl}%;width:${rw}%;background:${c};"><div class="tooltip">在位：${fmtR(r.s)}-${fmtR(r.e)}</div></div>`;
+    });
+    bodyHTML += `<div class="gantt-row"><div class="gantt-label" style="color:${c};width:150px">${emp.name}</div><div class="gantt-bar-area"><div class="gantt-bar" style="left:${ll}%;width:${lw}%;background:${c};"><div class="tooltip">生卒：${fmtR(emp.birth)}-${fmtR(emp.death)}</div></div>${rb}</div></div>`;
+  });
+  bodyHTML += '</div>';
+  container.innerHTML += bodyHTML;
+})();
+</script>
+
+</body>
+</html>

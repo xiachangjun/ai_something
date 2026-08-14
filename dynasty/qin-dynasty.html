@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>秦朝皇帝世系简表 (前221-前207)</title>
+<style>
+  :root{--bg:#f7f5f2;--card-bg:#fff;--early-color:#374151;--late-color:#b8860b;--text:#1c1917;--text-light:#6b7280;--border:#d1d5db;--event-bg:#f5f5f4;--minister-bg:#fef9ee;--highlight:#7c2d12;--gold:#b8860b;--rev-color:#7f1d1d}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:"PingFang SC","Microsoft YaHei","Noto Serif SC",serif;background:var(--bg);color:var(--text);line-height:1.6}
+  .header{text-align:center;padding:50px 20px 30px;background:linear-gradient(135deg,#111827 0%,#374151 50%,#b8860b 100%);color:#f5f5f4;position:relative;overflow:hidden}
+  .header::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffd700' fill-opacity='0.05'%3E%3Cpath d='M20 5l3 10h10l-8 6 3 10-8-6-8 6 3-10-8-6h10z'/%3E%3C/g%3E%3C/svg%3E");opacity:.6}
+  .header h1{font-size:40px;font-weight:900;letter-spacing:10px;position:relative;z-index:1;text-shadow:2px 2px 4px rgba(0,0,0,.5)}
+  .header .subtitle{font-size:18px;margin-top:12px;color:#fbbf24;letter-spacing:6px;position:relative;z-index:1}
+  .header .period{font-size:14px;margin-top:8px;color:#d6d3d1;letter-spacing:3px;position:relative;z-index:1}
+  .legend{display:flex;justify-content:center;gap:28px;padding:18px;background:#fff;border-bottom:2px solid var(--border);flex-wrap:wrap}
+  .legend-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-light)}
+  .legend-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0}
+  .container{max-width:1400px;margin:0 auto;padding:20px}
+  .section-title{text-align:center;padding:30px 20px 20px;font-size:28px;font-weight:bold;letter-spacing:6px;position:relative}
+  .section-title.early{color:var(--early-color)}.section-title.late{color:var(--late-color)}
+  .section-title::after{content:'';display:block;width:80px;height:3px;margin:12px auto 0}
+  .section-title.early::after{background:var(--early-color)}.section-title.late::after{background:var(--late-color)}
+  .timeline{position:relative;padding:20px 0}
+  .timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:4px;transform:translateX(-50%);z-index:0}
+  .timeline.early::before{background:var(--early-color)}.timeline.late::before{background:var(--late-color)}
+  .timeline-entry{display:flex;align-items:flex-start;position:relative;margin-bottom:20px}
+  .entry-content{display:flex;width:100%;align-items:flex-start}.entry-left,.entry-right{width:48%;padding:0 15px}
+  .entry-center{width:4%;display:flex;justify-content:center;position:relative;z-index:1}
+  .year-marker{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold;color:#fff;flex-shrink:0;z-index:2}
+  .early .year-marker{background:var(--early-color)}.late .year-marker{background:var(--late-color)}
+  .emperor-card{background:var(--card-bg);border-radius:12px;padding:20px;box-shadow:0 4px 20px rgba(0,0,0,.08);border-left:5px solid;position:relative;transition:transform .3s,box-shadow .3s}
+  .emperor-card:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,.15)}
+  .early .emperor-card{border-left-color:var(--early-color)}.late .emperor-card{border-left-color:var(--late-color)}
+  .emperor-card .order{position:absolute;top:-10px;right:15px;background:var(--highlight);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold}
+  .emperor-name{font-size:20px;font-weight:bold;margin-bottom:2px}
+  .emperor-latin{font-size:12px;color:var(--text-light);font-style:italic;margin-bottom:8px}
+  .emperor-meta{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;margin:10px 0;font-size:12px}
+  .meta-item{display:flex;align-items:center;gap:4px}.meta-label{color:var(--text-light);white-space:nowrap}.meta-value{font-weight:600}
+  .life-bar{height:8px;background:#eee;border-radius:4px;margin:10px 0 5px;position:relative;overflow:visible}
+  .life-bar .reign{position:absolute;height:100%;border-radius:4px;opacity:.8}
+  .early .life-bar .reign{background:var(--early-color)}.late .life-bar .reign{background:var(--late-color)}
+  .life-bar-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--text-light)}
+  .relation-tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;margin-top:6px;border:1px solid}
+  .early .relation-tag{background:#f5f5f4;color:#374151;border-color:#d6d3d1}
+  .late .relation-tag{background:#fef9ee;color:#92400e;border-color:#fcd34d}
+  .events-panel{background:var(--event-bg);border-radius:10px;padding:14px;margin-top:5px;border:1px solid #d6d3d1}
+  .events-panel h4{font-size:13px;color:var(--highlight);margin-bottom:8px;display:flex;align-items:center;gap:5px}
+  .event-item{font-size:12px;padding:4px 0;border-bottom:1px dashed #d6d3d1;display:flex;gap:6px}
+  .event-item:last-child{border-bottom:none}
+  .event-year{color:var(--highlight);font-weight:bold;white-space:nowrap;min-width:42px}
+  .ministers-panel{background:var(--minister-bg);border-radius:10px;padding:14px;margin-top:8px;border:1px solid #fcd34d}
+  .ministers-panel h4{font-size:13px;color:#92400e;margin-bottom:8px;display:flex;align-items:center;gap:5px}
+  .minister-list{display:flex;flex-wrap:wrap;gap:5px}
+  .minister-tag{font-size:11px;padding:3px 8px;background:#fef9ee;color:#92400e;border-radius:12px;border:1px solid #fcd34d}
+  .minister-tag.negative{background:#fde8e8;color:#b91c1c;border-color:#f0b8b8}
+  .family-tree-section,.lifecycle-section{margin:40px 0;padding:30px;background:#fff;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.06)}
+  .family-tree-section h2,.lifecycle-section h2{text-align:center;font-size:24px;color:var(--text);margin-bottom:10px;letter-spacing:4px}
+  .lifecycle-section .note{text-align:center;font-size:12px;color:var(--text-light);margin-bottom:20px}
+  .tree-container{overflow-x:auto;padding:20px 0}
+  .gantt-container{overflow-x:auto;padding:10px 0}.gantt-chart{min-width:700px}
+  .gantt-row{display:flex;align-items:center;height:32px;margin:2px 0}
+  .gantt-label{width:130px;font-size:12px;font-weight:600;text-align:right;padding-right:12px;flex-shrink:0;white-space:nowrap}
+  .gantt-bar-area{flex:1;position:relative;height:100%}
+  .gantt-bar{position:absolute;height:12px;top:50%;transform:translateY(-50%);border-radius:6px;opacity:.85;cursor:pointer}
+  .gantt-bar:hover{opacity:1;filter:brightness(1.1)}
+  .gantt-bar .tooltip{display:none;position:absolute;bottom:calc(100% + 5px);left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:4px 8px;border-radius:4px;font-size:11px;white-space:nowrap;z-index:10}
+  .gantt-bar:hover .tooltip{display:block}
+  .gantt-header{display:flex;align-items:center;height:30px;border-bottom:2px solid var(--border);margin-bottom:10px}
+  .gantt-header .gantt-label{font-size:12px;color:var(--text-light)}
+  .gantt-year-tick{position:absolute;font-size:10px;color:var(--text-light);transform:translateX(-50%);top:0}
+  .overview-stats{display:flex;justify-content:center;gap:28px;padding:20px;flex-wrap:wrap}
+  .stat-box{text-align:center;padding:15px 22px;background:#fff;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.06);min-width:110px}
+  .stat-number{font-size:26px;font-weight:bold;color:var(--highlight)}
+  .stat-desc{font-size:12px;color:var(--text-light);margin-top:4px}
+  .footer{text-align:center;padding:30px;color:var(--text-light);font-size:13px;border-top:2px solid var(--border);margin-top:40px}
+  @media(max-width:900px){.entry-content{flex-direction:column!important;align-items:center}.entry-left,.entry-right{width:100%;padding:10px 0}.entry-center{width:100%;justify-content:center;margin:10px 0}.timeline::before{display:none}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>秦朝皇帝世系简表</h1>
+  <div class="subtitle">秦 统 天 下</div>
+  <div class="period">前221年 — 前207年 · 中国历史上第一个大一统王朝</div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:var(--early-color)"></div><span>秦朝皇帝</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div><span>重要人物</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--rev-color)"></div><span>重大事件</span></div>
+</div>
+
+<div class="overview-stats">
+  <div class="stat-box"><div class="stat-number">15</div><div class="stat-desc">国祚（年）</div></div>
+  <div class="stat-box"><div class="stat-number">3</div><div class="stat-desc">在位君主（2帝+子婴）</div></div>
+  <div class="stat-box"><div class="stat-number">前221</div><div class="stat-desc">统一六国称帝</div></div>
+  <div class="stat-box"><div class="stat-number">前207</div><div class="stat-desc">子婴出降，秦亡</div></div>
+  <div class="stat-box"><div class="stat-number">咸阳</div><div class="stat-desc">都城</div></div>
+</div>
+
+<div class="container">
+
+<div class="lifecycle-section">
+  <h2>皇帝生卒与在位时间对照图</h2>
+  <div class="note">浅色条为生卒跨度，深色条为在位时间（秦始皇含秦王时期前246-前221），鼠标悬停查看详情</div>
+  <div class="gantt-container"><div class="gantt-chart" id="ganttChart"></div></div>
+</div>
+
+<div class="section-title early">秦 朝</div>
+<div style="text-align:center;color:#999;font-size:13px;margin-bottom:20px;">前221年 — 前207年 · 都城：咸阳</div>
+
+<div class="timeline early">
+
+  <!-- 秦始皇 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">1</div>
+        <div class="emperor-name">秦始皇</div>
+        <div class="emperor-latin">Ying Zheng · First Emperor</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">前259-前210（49岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">前221-前210（称帝11年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:75.5%;width:24.5%"></div></div>
+        <div class="life-bar-labels"><span>前259</span><span>前246秦王/前221帝</span><span>前210</span></div>
+        <div class="relation-tag">千古一帝 · 六合一统 · 书同文车同轨</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">李斯（丞相）</span>
+          <span class="minister-tag">蒙恬（北击匈奴）</span>
+          <span class="minister-tag">王翦（灭六国）</span>
+          <span class="minister-tag negative">赵高</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">前221</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">前246</span><span>13岁继秦王位，前238亲政</span></div>
+        <div class="event-item"><span class="event-year">前230-前221</span><span>十年统一六国，建立中国首个大一统王朝</span></div>
+        <div class="event-item"><span class="event-year">前221</span><span>称"始皇帝"，废分封行郡县</span></div>
+        <div class="event-item"><span class="event-year">前215-前210</span><span>修长城、直道；统一文字货币度量衡</span></div>
+        <div class="event-item"><span class="event-year">前213-前212</span><span>焚书坑儒</span></div>
+        <div class="event-item"><span class="event-year">前210</span><span>东巡途中病逝于沙丘</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 秦二世 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">前210</span><span>赵高矫诏，逼杀公子扶苏，胡亥即位</span></div>
+        <div class="event-item"><span class="event-year">前209</span><span>陈胜、吴广大泽乡起义，天下响应</span></div>
+        <div class="event-item"><span class="event-year">前207</span><span>赵高逼其自杀，旋被诛</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">前210</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">2</div>
+        <div class="emperor-name">秦二世</div>
+        <div class="emperor-latin">Hu Hai · Second Emperor</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">前230-前207（23岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">前210-前207（3年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:92.3%;width:7.7%"></div></div>
+        <div class="life-bar-labels"><span>前230</span><span>前210 在位</span><span>前207</span></div>
+        <div class="relation-tag">秦始皇第十八子 · 沙丘篡位 · 二世而亡</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag negative">赵高（指鹿为马）</span>
+          <span class="minister-tag">李斯（被杀）</span>
+          <span class="minister-tag negative">陈胜·吴广（起义）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 子婴 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">3</div>
+        <div class="emperor-name">子婴（秦王）</div>
+        <div class="emperor-latin">Zi Ying · Last Ruler of Qin</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">？-前206</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">前207-前206（46天，降称秦王）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:95%;width:5%"></div></div>
+        <div class="life-bar-labels"><span>？</span><span>前207 在位</span><span>前206</span></div>
+        <div class="relation-tag">秦始皇之侄（一说孙）· 诛赵高 · 出降刘邦</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">赵高（被其诛杀）</span>
+          <span class="minister-tag negative">刘邦（入咸阳）</span>
+          <span class="minister-tag negative">项羽（灭秦后杀之）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">前207</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">前207</span><span>赵高逼杀秦二世后立其为秦王，旋设计诛杀赵高</span></div>
+        <div class="event-item"><span class="event-year">前207</span><span>巨鹿之战项羽破秦军主力</span></div>
+        <div class="event-item"><span class="event-year">前206</span><span>刘邦先入咸阳，子婴出降，秦朝灭亡</span></div>
+      </div>
+    </div>
+  </div></div>
+
+</div><!-- end timeline -->
+
+<!-- ==================== 世系关系图 ==================== -->
+<div class="family-tree-section">
+  <h2>秦朝世系关系图</h2>
+  <div class="tree-container">
+    <svg class="tree-svg" viewBox="0 0 900 300" width="900" height="300" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="qG" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#374151;stop-opacity:1"/><stop offset="100%" style="stop-color:#6b7280;stop-opacity:1"/>
+        </linearGradient>
+        <marker id="aQ" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#374151"/></marker>
+        <marker id="aR" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#b91c1c"/></marker>
+        <filter id="sh"><feDropShadow dx="1" dy="2" stdDeviation="3" flood-opacity="0.15"/></filter>
+      </defs>
+      <rect x="0" y="0" width="900" height="300" fill="#f5f5f4" rx="12"/>
+      <text x="20" y="30" font-size="16" fill="#374151" font-weight="bold" font-family="PingFang SC,serif">秦朝世系 · 始皇一统 → 二世暴政 → 子婴出降</text>
+
+      <rect x="40" y="90" width="180" height="60" rx="8" fill="url(#qG)" filter="url(#sh)"/>
+      <text x="130" y="114" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold" font-family="PingFang SC,serif">①秦始皇 嬴政</text>
+      <text x="130" y="134" text-anchor="middle" fill="#d1d5db" font-size="10" font-family="PingFang SC,serif">前221-前210 · 一统天下</text>
+
+      <rect x="360" y="90" width="180" height="60" rx="8" fill="url(#qG)" filter="url(#sh)"/>
+      <text x="450" y="114" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold" font-family="PingFang SC,serif">②秦二世 胡亥</text>
+      <text x="450" y="134" text-anchor="middle" fill="#d1d5db" font-size="10" font-family="PingFang SC,serif">前210-前207 · 沙丘篡位</text>
+      <line x1="220" y1="120" x2="358" y2="120" stroke="#374151" stroke-width="2" marker-end="url(#aQ)"/>
+      <text x="289" y="113" text-anchor="middle" fill="#374151" font-size="9" font-family="PingFang SC,serif">第十八子（矫诏即位）</text>
+
+      <rect x="680" y="90" width="180" height="60" rx="8" fill="url(#qG)" filter="url(#sh)"/>
+      <text x="770" y="114" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold" font-family="PingFang SC,serif">③子婴（秦王）</text>
+      <text x="770" y="134" text-anchor="middle" fill="#d1d5db" font-size="10" font-family="PingFang SC,serif">前207-前206 · 出降</text>
+      <line x1="540" y1="120" x2="678" y2="120" stroke="#374151" stroke-width="2" marker-end="url(#aQ)"/>
+      <text x="609" y="113" text-anchor="middle" fill="#374151" font-size="9" font-family="PingFang SC,serif">侄子（一说孙）</text>
+
+      <line x1="20" y1="200" x2="880" y2="200" stroke="#b91c1c" stroke-width="1.5" stroke-dasharray="10,5"/>
+      <text x="450" y="195" text-anchor="middle" fill="#b91c1c" font-size="11" font-weight="bold" font-family="PingFang SC,serif">── 前206 刘邦入咸阳 · 秦亡 ──</text>
+      <text x="450" y="240" text-anchor="middle" fill="#6b7280" font-size="11" font-family="PingFang SC,serif">秦始皇统一六国、废分封行郡县，奠定此后两千余年中央集权制度的基础；</text>
+      <text x="450" y="262" text-anchor="middle" fill="#6b7280" font-size="11" font-family="PingFang SC,serif">然严刑峻法、赋役繁重，二世而亡，"族秦者秦也，非天下也"。</text>
+    </svg>
+  </div>
+</div>
+
+</div><!-- end container -->
+
+<div class="footer">
+  <p>秦朝（前221-前207），中国历史上第一个大一统中央集权王朝，由秦始皇嬴政建立，共历二世，享国十五年（含子婴降称秦王）。</p>
+  <p style="margin-top:8px;">秦朝确立的郡县制、皇帝制度、统一文字货币度量衡，深刻影响此后两千年的中国历史。</p>
+  <p style="margin-top:8px;">数据来源：《史记·秦始皇本纪》等 · 仅供学习参考</p>
+</div>
+
+<script>
+(function(){
+  const emperors = [
+    { name:'秦始皇 嬴政', birth:-259, death:-210, reigns:[{s:-221,e:-210}], type:'early' },
+    { name:'秦二世 胡亥', birth:-230, death:-207, reigns:[{s:-210,e:-207}], type:'early' },
+    { name:'子婴（秦王）', birth:-210, death:-206, reigns:[{s:-207,e:-206}], type:'early' },
+  ];
+  const minYear=-265, maxYear=-200, totalYears=maxYear-minYear;
+  const colors = { early:'#374151' };
+  const container = document.getElementById('ganttChart');
+  let headerHTML = '<div class="gantt-header"><div class="gantt-label" style="width:130px">年份</div><div class="gantt-bar-area" style="position:relative;height:30px;">';
+  for(let y=-260;y>=-210;y+=10){
+    headerHTML += `<span class="gantt-year-tick" style="left:${((y-minYear)/totalYears)*100}%">前${-y}</span>`;
+  }
+  headerHTML += '</div></div>';
+  container.innerHTML = headerHTML;
+  let bodyHTML = '<div class="gantt-body">';
+  emperors.forEach(emp => {
+    const c = colors[emp.type];
+    const ll = ((emp.birth-minYear)/totalYears)*100;
+    const lw = ((emp.death-emp.birth)/totalYears)*100;
+    let rb = '';
+    emp.reigns.forEach(r => {
+      const rl = ((r.s-minYear)/totalYears)*100;
+      const rw = Math.max(((r.e-r.s)/totalYears)*100, 0.5);
+      rb += `<div class="gantt-bar reign-bar" style="left:${rl}%;width:${rw}%;background:${c};"><div class="tooltip">在位：${r.s}-${r.e}</div></div>`;
+    });
+    bodyHTML += `<div class="gantt-row"><div class="gantt-label" style="color:${c};width:130px">${emp.name}</div><div class="gantt-bar-area"><div class="gantt-bar" style="left:${ll}%;width:${lw}%;background:${c};"><div class="tooltip">生卒：${emp.birth}-${emp.death}</div></div>${rb}</div></div>`;
+  });
+  bodyHTML += '</div>';
+  container.innerHTML += bodyHTML;
+})();
+</script>
+
+</body>
+</html>

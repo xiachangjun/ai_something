@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>三国帝王世系简表 (220-280)</title>
+<style>
+  :root{--bg:#f7f5f2;--card-bg:#fff;--early-color:#1e3a8a;--late-color:#b91c1c;--text:#1c1917;--text-light:#6b7280;--border:#d1d5db;--event-bg:#eff6ff;--minister-bg:#fef2f2;--highlight:#2563eb;--gold:#b8860b;--rev-color:#7f1d1d}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:"PingFang SC","Microsoft YaHei","Noto Serif SC",serif;background:var(--bg);color:var(--text);line-height:1.6}
+  .header{text-align:center;padding:50px 20px 30px;background:linear-gradient(135deg,#1e1b4b 0%,#1e3a8a 45%,#b91c1c 100%);color:#e0e7ff;position:relative;overflow:hidden}
+  .header::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffd700' fill-opacity='0.05'%3E%3Cpath d='M20 5l3 10h10l-8 6 3 10-8-6-8 6 3-10-8-6h10z'/%3E%3C/g%3E%3C/svg%3E");opacity:.6}
+  .header h1{font-size:40px;font-weight:900;letter-spacing:10px;position:relative;z-index:1;text-shadow:2px 2px 4px rgba(0,0,0,.5)}
+  .header .subtitle{font-size:18px;margin-top:12px;color:#fbbf24;letter-spacing:6px;position:relative;z-index:1}
+  .header .period{font-size:14px;margin-top:8px;color:#93c5fd;letter-spacing:3px;position:relative;z-index:1}
+  .legend{display:flex;justify-content:center;gap:28px;padding:18px;background:#fff;border-bottom:2px solid var(--border);flex-wrap:wrap}
+  .legend-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-light)}
+  .legend-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0}
+  .container{max-width:1400px;margin:0 auto;padding:20px}
+  .section-title{text-align:center;padding:30px 20px 20px;font-size:28px;font-weight:bold;letter-spacing:6px;position:relative}
+  .section-title.early{color:var(--early-color)}.section-title.late{color:var(--late-color)}
+  .section-title::after{content:'';display:block;width:80px;height:3px;margin:12px auto 0}
+  .section-title.early::after{background:var(--early-color)}.section-title.late::after{background:var(--late-color)}
+  .timeline{position:relative;padding:20px 0}
+  .timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:4px;transform:translateX(-50%);z-index:0}
+  .timeline.early::before{background:var(--early-color)}.timeline.late::before{background:var(--late-color)}
+  .timeline-entry{display:flex;align-items:flex-start;position:relative;margin-bottom:20px}
+  .entry-content{display:flex;width:100%;align-items:flex-start}.entry-left,.entry-right{width:48%;padding:0 15px}
+  .entry-center{width:4%;display:flex;justify-content:center;position:relative;z-index:1}
+  .year-marker{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold;color:#fff;flex-shrink:0;z-index:2}
+  .early .year-marker{background:var(--early-color)}.late .year-marker{background:var(--late-color)}
+  .emperor-card{background:var(--card-bg);border-radius:12px;padding:20px;box-shadow:0 4px 20px rgba(0,0,0,.08);border-left:5px solid;position:relative;transition:transform .3s,box-shadow .3s}
+  .emperor-card:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,.15)}
+  .early .emperor-card{border-left-color:var(--early-color)}.late .emperor-card{border-left-color:var(--late-color)}
+  .emperor-card .order{position:absolute;top:-10px;right:15px;background:var(--highlight);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold}
+  .emperor-name{font-size:20px;font-weight:bold;margin-bottom:2px}
+  .emperor-latin{font-size:12px;color:var(--text-light);font-style:italic;margin-bottom:8px}
+  .emperor-meta{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;margin:10px 0;font-size:12px}
+  .meta-item{display:flex;align-items:center;gap:4px}.meta-label{color:var(--text-light);white-space:nowrap}.meta-value{font-weight:600}
+  .life-bar{height:8px;background:#eee;border-radius:4px;margin:10px 0 5px;position:relative;overflow:visible}
+  .life-bar .reign{position:absolute;height:100%;border-radius:4px;opacity:.8}
+  .early .life-bar .reign{background:var(--early-color)}.late .life-bar .reign{background:var(--late-color)}
+  .life-bar-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--text-light)}
+  .relation-tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;margin-top:6px;border:1px solid}
+  .early .relation-tag{background:#eff6ff;color:#1e3a8a;border-color:#93c5fd}
+  .late .relation-tag{background:#fef2f2;color:#b91c1c;border-color:#fca5a5}
+  .dynasty-tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:10px;margin-top:4px;margin-left:4px;background:#fef3c7;color:#92400e;border:1px solid #fcd34d}
+  .events-panel{background:var(--event-bg);border-radius:10px;padding:14px;margin-top:5px;border:1px solid #bfdbfe}
+  .events-panel h4{font-size:13px;color:var(--highlight);margin-bottom:8px;display:flex;align-items:center;gap:5px}
+  .event-item{font-size:12px;padding:4px 0;border-bottom:1px dashed #bfdbfe;display:flex;gap:6px}
+  .event-item:last-child{border-bottom:none}
+  .event-year{color:var(--highlight);font-weight:bold;white-space:nowrap;min-width:42px}
+  .ministers-panel{background:var(--minister-bg);border-radius:10px;padding:14px;margin-top:8px;border:1px solid #fca5a5}
+  .ministers-panel h4{font-size:13px;color:#b91c1c;margin-bottom:8px;display:flex;align-items:center;gap:5px}
+  .minister-list{display:flex;flex-wrap:wrap;gap:5px}
+  .minister-tag{font-size:11px;padding:3px 8px;background:#fef2f2;color:#b91c1c;border-radius:12px;border:1px solid #fca5a5}
+  .minister-tag.negative{background:#fde8e8;color:#b91c1c;border-color:#f0b8b8}
+  .family-tree-section,.lifecycle-section{margin:40px 0;padding:30px;background:#fff;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.06)}
+  .family-tree-section h2,.lifecycle-section h2{text-align:center;font-size:24px;color:var(--text);margin-bottom:10px;letter-spacing:4px}
+  .lifecycle-section .note{text-align:center;font-size:12px;color:var(--text-light);margin-bottom:20px}
+  .tree-container{overflow-x:auto;padding:20px 0}
+  .gantt-container{overflow-x:auto;padding:10px 0}.gantt-chart{min-width:800px}
+  .gantt-row{display:flex;align-items:center;height:32px;margin:2px 0}
+  .gantt-label{width:130px;font-size:12px;font-weight:600;text-align:right;padding-right:12px;flex-shrink:0;white-space:nowrap}
+  .gantt-bar-area{flex:1;position:relative;height:100%}
+  .gantt-bar{position:absolute;height:12px;top:50%;transform:translateY(-50%);border-radius:6px;opacity:.85;cursor:pointer}
+  .gantt-bar:hover{opacity:1;filter:brightness(1.1)}
+  .gantt-bar .tooltip{display:none;position:absolute;bottom:calc(100% + 5px);left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:4px 8px;border-radius:4px;font-size:11px;white-space:nowrap;z-index:10}
+  .gantt-bar:hover .tooltip{display:block}
+  .gantt-header{display:flex;align-items:center;height:30px;border-bottom:2px solid var(--border);margin-bottom:10px}
+  .gantt-header .gantt-label{font-size:12px;color:var(--text-light)}
+  .gantt-year-tick{position:absolute;font-size:10px;color:var(--text-light);transform:translateX(-50%);top:0}
+  .overview-stats{display:flex;justify-content:center;gap:28px;padding:20px;flex-wrap:wrap}
+  .stat-box{text-align:center;padding:15px 22px;background:#fff;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.06);min-width:110px}
+  .stat-number{font-size:26px;font-weight:bold;color:var(--highlight)}
+  .stat-desc{font-size:12px;color:var(--text-light);margin-top:4px}
+  .footer{text-align:center;padding:30px;color:var(--text-light);font-size:13px;border-top:2px solid var(--border);margin-top:40px}
+  @media(max-width:900px){.entry-content{flex-direction:column!important;align-items:center}.entry-left,.entry-right{width:100%;padding:10px 0}.entry-center{width:100%;justify-content:center;margin:10px 0}.timeline::before{display:none}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>三国帝王世系简表</h1>
+  <div class="subtitle">魏 蜀 吴 · 三 足 鼎 立</div>
+  <div class="period">220年 — 280年 · 东汉末年群雄逐鹿后的三国鼎立</div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:var(--early-color)"></div><span>曹魏（220-265）</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--late-color)"></div><span>蜀汉（221-263）与孙吴（229-280）</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div><span>重要人物</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--rev-color)"></div><span>重大事件</span></div>
+</div>
+
+<div class="overview-stats">
+  <div class="stat-box"><div class="stat-number">60</div><div class="stat-desc">三国时期（年）</div></div>
+  <div class="stat-box"><div class="stat-number">11</div><div class="stat-desc">帝王（魏5 蜀2 吴4）</div></div>
+  <div class="stat-box"><div class="stat-number">220</div><div class="stat-desc">曹丕代汉建魏</div></div>
+  <div class="stat-box"><div class="stat-number">280</div><div class="stat-desc">西晋灭吴 · 统一</div></div>
+  <div class="stat-box"><div class="stat-number">洛阳·成都·建业</div><div class="stat-desc">三都</div></div>
+</div>
+
+<div class="container">
+
+<div class="lifecycle-section">
+  <h2>帝王生卒与在位时间对照图</h2>
+  <div class="note">浅色条为生卒跨度，深色条为在位时间（蓝=魏，红=蜀吴），鼠标悬停查看详情</div>
+  <div class="gantt-container"><div class="gantt-chart" id="ganttChart"></div></div>
+</div>
+
+<!-- ==================== 曹魏 ==================== -->
+<div class="section-title early">曹 魏</div>
+<div style="text-align:center;color:#999;font-size:13px;margin-bottom:20px;">220年 — 265年 · 都城：洛阳 · 曹氏代汉</div>
+
+<div class="timeline early">
+
+  <!-- 曹丕 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">1</div>
+        <div class="emperor-name">魏文帝</div>
+        <div class="emperor-latin">Cao Pi · Emperor Wen of Wei</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">187-226（39岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">220-226（6年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:84.6%;width:15.4%"></div></div>
+        <div class="life-bar-labels"><span>187</span><span>220 在位</span><span>226</span></div>
+        <div class="relation-tag">曹操次子 · 代汉建魏 · 推行九品中正制</div>
+        <div class="dynasty-tag">曹魏</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">陈群（九品中正制）</span>
+          <span class="minister-tag">曹植（弟）</span>
+          <span class="minister-tag">司马懿（托孤大臣）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">220</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">220</span><span>曹丕代汉称帝，国号魏</span></div>
+        <div class="event-item"><span class="event-year">220</span><span>推行九品中正制</span></div>
+        <div class="event-item"><span class="event-year">222</span><span>三路伐吴，夷陵战后吴蜀交好，三国鼎立定型</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 曹叡 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">226</span><span>即位，托孤于曹真、司马懿</span></div>
+        <div class="event-item"><span class="event-year">228-234</span><span>诸葛亮五次北伐，司马懿相持渭南</span></div>
+        <div class="event-item"><span class="event-year">239</span><span>病逝，幼子曹芳继位，司马懿与曹爽辅政</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">226</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">2</div>
+        <div class="emperor-name">魏明帝</div>
+        <div class="emperor-latin">Cao Rui · Emperor Ming of Wei</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">204-239（35岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">226-239（13年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:62.9%;width:37.1%"></div></div>
+        <div class="life-bar-labels"><span>204</span><span>226 在位</span><span>239</span></div>
+        <div class="relation-tag">曹丕长子 · 抵御蜀汉北伐 · 营造洛阳宫室</div>
+        <div class="dynasty-tag">曹魏</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">司马懿</span>
+          <span class="minister-tag">曹真</span>
+          <span class="minister-tag">满宠（东线御吴）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 曹芳 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">3</div>
+        <div class="emperor-name">齐王（邵陵厉公）</div>
+        <div class="emperor-latin">Cao Fang · Deposed Emperor</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">232-274（42岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">239-254（15年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:16.7%;width:35.7%"></div></div>
+        <div class="life-bar-labels"><span>232</span><span>239 在位</span><span>274</span></div>
+        <div class="relation-tag">明帝养子 · 高平陵之变后曹氏失权</div>
+        <div class="dynasty-tag">曹魏</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag negative">曹爽（被诛）</span>
+          <span class="minister-tag negative">司马懿（高平陵之变）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">239</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">239</span><span>8岁即位，曹爽、司马懿辅政</span></div>
+        <div class="event-item"><span class="event-year">249</span><span>高平陵之变，司马懿诛曹爽，曹魏大权旁落</span></div>
+        <div class="event-item"><span class="event-year">254</span><span>司马师废其为齐王</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 曹髦 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">254</span><span>司马师废齐王后立其为帝</span></div>
+        <div class="event-item"><span class="event-year">260</span><span>率数百僮仆讨伐司马昭，被成济所杀（"司马昭之心"）</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">254</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">4</div>
+        <div class="emperor-name">高贵乡公</div>
+        <div class="emperor-latin">Cao Mao · Marquis of Gaogui</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">241-260（19岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">254-260（6年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:68.4%;width:31.6%"></div></div>
+        <div class="life-bar-labels"><span>241</span><span>254 在位</span><span>260</span></div>
+        <div class="relation-tag">曹丕之孙 · 不甘傀儡 · 讨司马昭被弑</div>
+        <div class="dynasty-tag">曹魏</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag negative">司马昭</span>
+          <span class="minister-tag negative">成济（弑君者）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 曹奂 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">5</div>
+        <div class="emperor-name">魏元帝</div>
+        <div class="emperor-latin">Cao Huan · Last Emperor of Wei</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">246-302（56岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">260-265（5年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:25%;width:8.9%"></div></div>
+        <div class="life-bar-labels"><span>246</span><span>260 在位</span><span>302</span></div>
+        <div class="relation-tag">曹操之孙 · 禅位司马炎 · 曹魏亡</div>
+        <div class="dynasty-tag">曹魏</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag negative">司马昭（平蜀）</span>
+          <span class="minister-tag negative">司马炎（代魏）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">260</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">263</span><span>钟会、邓艾灭蜀汉</span></div>
+        <div class="event-item"><span class="event-year">265</span><span>禅位于司马炎，曹魏灭亡，西晋建立</span></div>
+      </div>
+    </div>
+  </div></div>
+
+</div><!-- end early timeline -->
+
+<!-- ===== 蜀吴分界 ===== -->
+<div class="section-title late">蜀 汉 与 孙 吴</div>
+<div style="text-align:center;color:#999;font-size:13px;margin-bottom:20px;">蜀汉 221-263（成都）· 孙吴 229-280（建业）</div>
+
+<div class="timeline late">
+
+  <!-- 刘备 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">221</span><span>曹丕代汉后于成都称帝，国号"汉"（蜀汉）</span></div>
+        <div class="event-item"><span class="event-year">221-222</span><span>为关羽复仇伐吴，夷陵之战大败</span></div>
+        <div class="event-item"><span class="event-year">223</span><span>白帝城托孤诸葛亮，病逝</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">221</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">6</div>
+        <div class="emperor-name">昭烈帝</div>
+        <div class="emperor-latin">Liu Bei · Emperor Zhaolie</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">161-223（62岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">221-223（2年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:96.8%;width:3.2%"></div></div>
+        <div class="life-bar-labels"><span>161</span><span>221 在位</span><span>223</span></div>
+        <div class="relation-tag">汉室宗亲 · 三顾茅庐 · 托孤诸葛亮</div>
+        <div class="dynasty-tag">蜀汉</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">诸葛亮（丞相）</span>
+          <span class="minister-tag">关羽·张飞（义弟）</span>
+          <span class="minister-tag">赵云</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 刘禅 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">7</div>
+        <div class="emperor-name">后主</div>
+        <div class="emperor-latin">Liu Shan · Last Emperor of Shu</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">207-271（64岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">223-263（40年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:25%;width:62.5%"></div></div>
+        <div class="life-bar-labels"><span>207</span><span>223 在位</span><span>271</span></div>
+        <div class="relation-tag">刘备之子 · 诸葛亮辅政 · 乐不思蜀</div>
+        <div class="dynasty-tag">蜀汉</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">诸葛亮（北伐）</span>
+          <span class="minister-tag">姜维（后期大将）</span>
+          <span class="minister-tag negative">黄皓（宦官）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">223</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">223</span><span>即位，诸葛亮辅政，修好孙吴</span></div>
+        <div class="event-item"><span class="event-year">228-234</span><span>诸葛亮五次北伐，病逝五丈原</span></div>
+        <div class="event-item"><span class="event-year">263</span><span>邓艾偷渡阴平，兵临成都，刘禅出降，蜀汉亡</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 孙权 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">208</span><span>赤壁之战，孙刘联军大破曹操</span></div>
+        <div class="event-item"><span class="event-year">229</span><span>称帝，国号吴，都建业</span></div>
+        <div class="event-item"><span class="event-year">230</span><span>遣卫温、诸葛直远航夷洲（台湾）</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">229</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">8</div>
+        <div class="emperor-name">吴大帝</div>
+        <div class="emperor-latin">Sun Quan · Emperor Da of Wu</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">182-252（70岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">229-252（称帝23年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:67.1%;width:32.9%"></div></div>
+        <div class="life-bar-labels"><span>182</span><span>229 在位</span><span>252</span></div>
+        <div class="relation-tag">孙坚次子 · 坐断东南 · 开发江南</div>
+        <div class="dynasty-tag">孙吴</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">周瑜·鲁肃·吕蒙·陆逊（四都督）</span>
+          <span class="minister-tag">张昭（老臣）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 孙亮 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">9</div>
+        <div class="emperor-name">会稽王</div>
+        <div class="emperor-latin">Sun Liang · Deposed Emperor</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">243-260（17岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">252-258（6年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:52.9%;width:35.3%"></div></div>
+        <div class="life-bar-labels"><span>243</span><span>252 在位</span><span>260</span></div>
+        <div class="relation-tag">孙权少子 · 诸葛恪辅政 · 被权臣废黜</div>
+        <div class="dynasty-tag">孙吴</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">诸葛恪（被诛）</span>
+          <span class="minister-tag negative">孙綝（废帝）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">252</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">252</span><span>10岁即位，诸葛恪辅政</span></div>
+        <div class="event-item"><span class="event-year">253</span><span>诸葛恪北伐失败被诛</span></div>
+        <div class="event-item"><span class="event-year">258</span><span>孙綝废其为会稽王</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 孙休 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">258</span><span>孙綝废孙亮后立其为帝，旋诛孙綝</span></div>
+        <div class="event-item"><span class="event-year">263</span><span>蜀汉灭亡，吴失屏障</span></div>
+        <div class="event-item"><span class="event-year">264</span><span>病逝</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">258</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">10</div>
+        <div class="emperor-name">吴景帝</div>
+        <div class="emperor-latin">Sun Xiu · Emperor Jing of Wu</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">235-264（29岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">258-264（6年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:79.3%;width:20.7%"></div></div>
+        <div class="life-bar-labels"><span>235</span><span>258 在位</span><span>264</span></div>
+        <div class="relation-tag">孙权第六子 · 诛权臣孙綝 · 好学有治</div>
+        <div class="dynasty-tag">孙吴</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">孙綝（被诛）</span>
+          <span class="minister-tag">濮阳兴（丞相）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 孙皓 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">11</div>
+        <div class="emperor-name">吴末帝</div>
+        <div class="emperor-latin">Sun Hao · Last Emperor of Wu</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">242-284（42岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">264-280（16年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:52.4%;width:38.1%"></div></div>
+        <div class="life-bar-labels"><span>242</span><span>264 在位</span><span>284</span></div>
+        <div class="relation-tag">孙权之孙 · 暴虐无道 · 降晋亡国</div>
+        <div class="dynasty-tag">孙吴</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">陆抗（名将，卒于274）</span>
+          <span class="minister-tag negative">王濬（晋水军）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">264</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">264</span><span>即位，宠信佞臣，刑罚苛暴</span></div>
+        <div class="event-item"><span class="event-year">280</span><span>晋军六路伐吴，王濬楼船下益州，孙皓出降，孙吴亡</span></div>
+      </div>
+    </div>
+  </div></div>
+
+</div><!-- end late timeline -->
+
+<!-- ==================== 世系关系图 ==================== -->
+<div class="family-tree-section">
+  <h2>三国世系关系图</h2>
+  <div class="tree-container">
+    <svg class="tree-svg" viewBox="0 0 1300 360" width="1300" height="360" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="wG" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#1e3a8a;stop-opacity:1"/><stop offset="100%" style="stop-color:#3b82f6;stop-opacity:1"/>
+        </linearGradient>
+        <linearGradient id="sG" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#b91c1c;stop-opacity:1"/><stop offset="100%" style="stop-color:#ef4444;stop-opacity:1"/>
+        </linearGradient>
+        <marker id="aW" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#1e3a8a"/></marker>
+        <marker id="aS" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#b91c1c"/></marker>
+        <filter id="sh"><feDropShadow dx="1" dy="2" stdDeviation="3" flood-opacity="0.15"/></filter>
+      </defs>
+      <rect x="0" y="0" width="1300" height="360" fill="#f3f4f6" rx="12"/>
+      <text x="20" y="30" font-size="16" fill="#1e3a8a" font-weight="bold" font-family="PingFang SC,serif">三国世系 · 魏（蓝）蜀（红）吴（红）三足鼎立</text>
+
+      <!-- 魏 -->
+      <rect x="40" y="70" width="150" height="55" rx="8" fill="url(#wG)" filter="url(#sh)"/>
+      <text x="115" y="93" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">①文帝 曹丕</text>
+      <text x="115" y="112" text-anchor="middle" fill="#bfdbfe" font-size="9" font-family="PingFang SC,serif">220-226 代汉</text>
+      <rect x="230" y="70" width="150" height="55" rx="8" fill="url(#wG)" filter="url(#sh)"/>
+      <text x="305" y="93" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">②明帝 曹叡</text>
+      <text x="305" y="112" text-anchor="middle" fill="#bfdbfe" font-size="9" font-family="PingFang SC,serif">226-239</text>
+      <line x1="190" y1="97" x2="228" y2="97" stroke="#1e3a8a" stroke-width="2" marker-end="url(#aW)"/>
+      <rect x="420" y="70" width="150" height="55" rx="8" fill="url(#wG)" filter="url(#sh)"/>
+      <text x="495" y="93" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">③齐王 曹芳</text>
+      <text x="495" y="112" text-anchor="middle" fill="#bfdbfe" font-size="9" font-family="PingFang SC,serif">239-254 废</text>
+      <line x1="380" y1="97" x2="418" y2="97" stroke="#1e3a8a" stroke-width="2" marker-end="url(#aW)"/>
+      <rect x="610" y="70" width="150" height="55" rx="8" fill="url(#wG)" filter="url(#sh)"/>
+      <text x="685" y="93" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">④高贵乡公</text>
+      <text x="685" y="112" text-anchor="middle" fill="#bfdbfe" font-size="9" font-family="PingFang SC,serif">254-260 被弑</text>
+      <line x1="570" y1="97" x2="608" y2="97" stroke="#1e3a8a" stroke-width="2" marker-end="url(#aW)"/>
+      <rect x="800" y="70" width="150" height="55" rx="8" fill="url(#wG)" filter="url(#sh)"/>
+      <text x="875" y="93" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">⑤元帝 曹奂</text>
+      <text x="875" y="112" text-anchor="middle" fill="#bfdbfe" font-size="9" font-family="PingFang SC,serif">260-265 禅让</text>
+      <line x1="760" y1="97" x2="798" y2="97" stroke="#1e3a8a" stroke-width="2" marker-end="url(#aW)"/>
+      <text x="1050" y="98" fill="#7f1d1d" font-size="10" font-weight="bold" font-family="PingFang SC,serif">249 高平陵之变 → 司马氏掌权</text>
+
+      <!-- 蜀 -->
+      <rect x="40" y="190" width="150" height="55" rx="8" fill="url(#sG)" filter="url(#sh)"/>
+      <text x="115" y="213" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">⑥昭烈帝 刘备</text>
+      <text x="115" y="232" text-anchor="middle" fill="#fecaca" font-size="9" font-family="PingFang SC,serif">221-223 成都</text>
+      <rect x="230" y="190" width="150" height="55" rx="8" fill="url(#sG)" filter="url(#sh)"/>
+      <text x="305" y="213" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">⑦后主 刘禅</text>
+      <text x="305" y="232" text-anchor="middle" fill="#fecaca" font-size="9" font-family="PingFang SC,serif">223-263 降魏</text>
+      <line x1="190" y1="217" x2="228" y2="217" stroke="#b91c1c" stroke-width="2" marker-end="url(#aS)"/>
+
+      <!-- 吴 -->
+      <rect x="420" y="190" width="150" height="55" rx="8" fill="url(#sG)" filter="url(#sh)"/>
+      <text x="495" y="213" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">⑧大帝 孙权</text>
+      <text x="495" y="232" text-anchor="middle" fill="#fecaca" font-size="9" font-family="PingFang SC,serif">229-252 建业</text>
+      <rect x="610" y="190" width="150" height="55" rx="8" fill="url(#sG)" filter="url(#sh)"/>
+      <text x="685" y="213" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">⑨会稽王 孙亮</text>
+      <text x="685" y="232" text-anchor="middle" fill="#fecaca" font-size="9" font-family="PingFang SC,serif">252-258 废</text>
+      <line x1="570" y1="217" x2="608" y2="217" stroke="#b91c1c" stroke-width="2" marker-end="url(#aS)"/>
+      <rect x="800" y="190" width="150" height="55" rx="8" fill="url(#sG)" filter="url(#sh)"/>
+      <text x="875" y="213" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">⑩景帝 孙休</text>
+      <text x="875" y="232" text-anchor="middle" fill="#fecaca" font-size="9" font-family="PingFang SC,serif">258-264</text>
+      <line x1="760" y1="217" x2="798" y2="217" stroke="#b91c1c" stroke-width="2" marker-end="url(#aS)"/>
+      <rect x="990" y="190" width="150" height="55" rx="8" fill="url(#sG)" filter="url(#sh)"/>
+      <text x="1065" y="213" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">⑪末帝 孙皓</text>
+      <text x="1065" y="232" text-anchor="middle" fill="#fecaca" font-size="9" font-family="PingFang SC,serif">264-280 降晋</text>
+      <line x1="950" y1="217" x2="988" y2="217" stroke="#b91c1c" stroke-width="2" marker-end="url(#aS)"/>
+
+      <line x1="20" y1="290" x2="1280" y2="290" stroke="#7f1d1d" stroke-width="1.5" stroke-dasharray="10,5"/>
+      <text x="650" y="285" text-anchor="middle" fill="#7f1d1d" font-size="11" font-weight="bold" font-family="PingFang SC,serif">── 263 蜀亡 → 265 魏亡 → 280 吴亡 · 西晋一统 ──</text>
+      <text x="650" y="325" text-anchor="middle" fill="#6b7280" font-size="11" font-family="PingFang SC,serif">追尊帝（魏武帝曹操、蜀先主谥号等）未列入本表；三国为《三国演义》所演绎，史实以《三国志》为准。</text>
+    </svg>
+  </div>
+</div>
+
+</div><!-- end container -->
+
+<div class="footer">
+  <p>三国（220-280），上承东汉下启西晋的鼎立时期：曹魏、蜀汉、孙吴三分天下六十年。</p>
+  <p style="margin-top:8px;">期间诸葛亮北伐、司马氏崛起、九品中正制确立，人才辈出，为后世文学与史书提供了丰富素材。</p>
+  <p style="margin-top:8px;">数据来源：《三国志》《资治通鉴》等 · 仅供学习参考</p>
+</div>
+
+<script>
+(function(){
+  const emperors = [
+    { name:'魏文帝 曹丕', birth:187, death:226, reigns:[{s:220,e:226}], type:'early' },
+    { name:'魏明帝 曹叡', birth:204, death:239, reigns:[{s:226,e:239}], type:'early' },
+    { name:'魏齐王 曹芳', birth:232, death:274, reigns:[{s:239,e:254}], type:'early' },
+    { name:'高贵乡公 曹髦', birth:241, death:260, reigns:[{s:254,e:260}], type:'early' },
+    { name:'魏元帝 曹奂', birth:246, death:302, reigns:[{s:260,e:265}], type:'early' },
+    { name:'蜀昭烈帝 刘备', birth:161, death:223, reigns:[{s:221,e:223}], type:'late' },
+    { name:'蜀后主 刘禅', birth:207, death:271, reigns:[{s:223,e:263}], type:'late' },
+    { name:'吴大帝 孙权', birth:182, death:252, reigns:[{s:229,e:252}], type:'late' },
+    { name:'吴会稽王 孙亮', birth:243, death:260, reigns:[{s:252,e:258}], type:'late' },
+    { name:'吴景帝 孙休', birth:235, death:264, reigns:[{s:258,e:264}], type:'late' },
+    { name:'吴末帝 孙皓', birth:242, death:284, reigns:[{s:264,e:280}], type:'late' },
+  ];
+  const minYear=150, maxYear=300, totalYears=maxYear-minYear;
+  const colors = { early:'#1e3a8a', late:'#b91c1c' };
+  const container = document.getElementById('ganttChart');
+  let headerHTML = '<div class="gantt-header"><div class="gantt-label" style="width:130px">年份</div><div class="gantt-bar-area" style="position:relative;height:30px;">';
+  for(let y=180;y<=280;y+=20){
+    headerHTML += `<span class="gantt-year-tick" style="left:${((y-minYear)/totalYears)*100}%">${y}</span>`;
+  }
+  headerHTML += '</div></div>';
+  container.innerHTML = headerHTML;
+  let bodyHTML = '<div class="gantt-body">';
+  emperors.forEach(emp => {
+    const c = colors[emp.type];
+    const ll = ((emp.birth-minYear)/totalYears)*100;
+    const lw = ((emp.death-emp.birth)/totalYears)*100;
+    let rb = '';
+    emp.reigns.forEach(r => {
+      const rl = ((r.s-minYear)/totalYears)*100;
+      const rw = Math.max(((r.e-r.s)/totalYears)*100, 0.5);
+      rb += `<div class="gantt-bar reign-bar" style="left:${rl}%;width:${rw}%;background:${c};"><div class="tooltip">在位：${r.s}-${r.e}</div></div>`;
+    });
+    bodyHTML += `<div class="gantt-row"><div class="gantt-label" style="color:${c};width:130px">${emp.name}</div><div class="gantt-bar-area"><div class="gantt-bar" style="left:${ll}%;width:${lw}%;background:${c};"><div class="tooltip">生卒：${emp.birth}-${emp.death}</div></div>${rb}</div></div>`;
+  });
+  bodyHTML += '</div>';
+  container.innerHTML += bodyHTML;
+})();
+</script>
+
+</body>
+</html>
