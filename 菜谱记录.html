@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>🍳 菜谱记录</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --px-bg:        #1a1a2e;
+  --px-surface:   #16213e;
+  --px-card:      #0f3460;
+  --px-accent:    #e94560;
+  --px-pink:      #ff6b9d;
+  --px-gold:      #ffd700;
+  --px-green:     #4ade80;
+  --px-cyan:      #22d3ee;
+  --px-text:      #e8e8e8;
+  --px-dim:       #8892a0;
+  --px-border:    #2a2a4a;
+  --px-font:      'Press Start 2P', monospace;
+}
+
+body {
+  background: var(--px-bg);
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(233,69,96,0.06) 0%, transparent 60%),
+    radial-gradient(circle at 80% 70%, rgba(34,211,238,0.06) 0%, transparent 60%),
+    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.01) 2px, rgba(255,255,255,0.01) 4px);
+  color: var(--px-text);
+  font-family: var(--px-font);
+  font-size: 14px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 14px 50px;
+}
+
+body::after {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none;
+  background: repeating-linear-gradient(0deg,
+    transparent, transparent 2px,
+    rgba(0,0,0,0.08) 2px, rgba(0,0,0,0.08) 4px);
+  z-index: 9999;
+}
+
+.header { text-align: center; margin-bottom: 20px; width: 100%; max-width: 1000px; }
+.header h1 { font-size: 22px; color: var(--px-accent); text-shadow: 2px 2px 0 rgba(0,0,0,0.5); letter-spacing: 2px; margin-bottom: 6px; }
+.header p { font-size: 11px; color: var(--px-dim); letter-spacing: 1px; }
+.header a { font-size: 11px; color: var(--px-cyan); text-decoration: none; letter-spacing: 1px; }
+.header a:hover { color: var(--px-accent); }
+
+.toolbar {
+  width: 100%; max-width: 1000px;
+  display: flex; gap: 10px; margin-bottom: 18px; align-items: center; flex-wrap: wrap;
+}
+.px-btn {
+  font-family: var(--px-font); font-size: 11px; padding: 10px 16px;
+  border: 2px solid var(--px-border); background: var(--px-card);
+  color: var(--px-text); cursor: pointer;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.4);
+  transition: all 0.1s step-start; letter-spacing: 1px; white-space: nowrap;
+  text-decoration: none;
+}
+.px-btn:hover { transform: translate(-1px, -1px); box-shadow: 3px 3px 0 rgba(0,0,0,0.4); border-color: var(--px-cyan); }
+.px-btn:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0 rgba(0,0,0,0.4); }
+.px-btn.accent { border-color: var(--px-accent); color: var(--px-accent); }
+.px-btn.green { border-color: var(--px-green); color: var(--px-green); }
+.px-btn.gold { border-color: var(--px-gold); color: var(--px-gold); }
+.px-btn.danger { border-color: var(--px-accent); color: var(--px-accent); }
+.px-btn.small { font-size: 9px; padding: 6px 10px; }
+
+.search-box {
+  flex: 1; min-width: 200px;
+  background: var(--px-surface); border: 2px solid var(--px-border);
+  color: var(--px-text); font-family: var(--px-font); font-size: 12px;
+  padding: 10px 14px; outline: none; letter-spacing: 1px;
+}
+.search-box::placeholder { color: #3a4a5a; }
+.search-box:focus { border-color: var(--px-cyan); }
+
+.count-badge { font-size: 11px; color: var(--px-dim); margin-left: auto; }
+
+.main { width: 100%; max-width: 1000px; flex: 1; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+.recipe-card {
+  background: var(--px-card); border: 2px solid var(--px-border);
+  padding: 20px; cursor: pointer;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+  transition: all 0.1s step-start;
+  display: flex; flex-direction: column; gap: 10px;
+  position: relative;
+  text-decoration: none; color: inherit;
+}
+.recipe-card:hover { transform: translate(-2px, -2px); box-shadow: 4px 4px 0 rgba(0,0,0,0.4); border-color: var(--px-cyan); }
+.recipe-card:active { transform: translate(1px,1px); box-shadow: 1px 1px 0 rgba(0,0,0,0.4); }
+.recipe-card .r-name { font-size: 16px; color: var(--px-gold); letter-spacing: 1px; }
+.recipe-card .r-meta { font-size: 10px; color: var(--px-dim); display: flex; gap: 12px; flex-wrap: wrap; }
+.recipe-card .r-preview { font-size: 10px; color: var(--px-dim); line-height: 1.8; opacity: 0.85; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.recipe-card .r-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-top: auto; }
+.recipe-card .r-tag { font-size: 8px; padding: 3px 8px; background: rgba(233,69,96,0.12); border: 1px solid var(--px-border); color: var(--px-accent); }
+.recipe-card .r-actions { position: absolute; top: 10px; right: 10px; display: flex; gap: 5px; opacity: 0; transition: opacity 0.15s; z-index: 2; }
+.recipe-card:hover .r-actions { opacity: 1; }
+.r-actions button {
+  font-family: var(--px-font); font-size: 10px; padding: 3px 8px;
+  background: rgba(0,0,0,0.5); border: 1px solid var(--px-border);
+  color: var(--px-dim); cursor: pointer;
+}
+.r-actions button:hover { color: var(--px-accent); border-color: var(--px-accent); }
+
+.empty-state {
+  text-align: center; padding: 80px 20px; color: var(--px-dim);
+  font-size: 13px; letter-spacing: 1px; line-height: 2.5;
+}
+.empty-state .big { font-size: 48px; display: block; margin-bottom: 10px; }
+
+.form-wrap { display: none; }
+.form-wrap.active { display: block; }
+
+.form-section {
+  background: var(--px-surface); border: 2px solid var(--px-border);
+  padding: 20px; margin-bottom: 14px;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+}
+.form-section h3 {
+  font-size: 13px; color: var(--px-cyan); letter-spacing: 1px;
+  margin-bottom: 14px; padding-bottom: 8px;
+  border-bottom: 1px solid var(--px-border);
+}
+.form-row { display: flex; gap: 10px; margin-bottom: 10px; align-items: center; }
+.form-row label {
+  font-size: 11px; color: var(--px-dim); min-width: 70px; flex-shrink: 0; letter-spacing: 1px;
+}
+.form-row input, .form-row textarea {
+  flex: 1; background: var(--px-bg); border: 1px solid var(--px-border);
+  color: var(--px-text); font-family: var(--px-font); font-size: 11px;
+  padding: 8px 10px; outline: none; letter-spacing: 1px;
+}
+.form-row input:focus, .form-row textarea:focus { border-color: var(--px-cyan); }
+.form-row textarea { min-height: 70px; resize: vertical; }
+
+.ingredient-group { margin-bottom: 12px; }
+.ing-group-title { font-size: 11px; color: var(--px-gold); margin-bottom: 6px; letter-spacing: 1px; }
+.ing-item { display: flex; gap: 8px; margin-bottom: 6px; align-items: center; }
+.ing-item input { font-size: 10px !important; padding: 6px 8px !important; }
+.ing-item .ing-name { flex: 2; }
+.ing-item .ing-amount { flex: 1; }
+.ing-item .ing-del {
+  font-family: var(--px-font); font-size: 10px; padding: 5px 8px;
+  background: none; border: 1px solid var(--px-border); color: var(--px-dim); cursor: pointer;
+}
+.ing-item .ing-del:hover { color: var(--px-accent); border-color: var(--px-accent); }
+
+.step-item { display: flex; gap: 8px; margin-bottom: 8px; align-items: flex-start; }
+.step-item .step-num { font-size: 11px; color: var(--px-accent); min-width: 24px; padding-top: 7px; }
+.step-item textarea { flex: 1; min-height: 60px; }
+.step-item .step-del {
+  font-family: var(--px-font); font-size: 10px; padding: 5px 8px;
+  background: none; border: 1px solid var(--px-border); color: var(--px-dim);
+  cursor: pointer; align-self: center;
+}
+.step-item .step-del:hover { color: var(--px-accent); border-color: var(--px-accent); }
+
+.form-actions { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+
+.detail-wrap { display: none; }
+.detail-wrap.active { display: block; }
+
+.detail-card {
+  background: var(--px-surface); border: 2px solid var(--px-border);
+  padding: 24px; box-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+}
+.detail-card h2 { font-size: 20px; color: var(--px-gold); letter-spacing: 1px; margin-bottom: 6px; }
+.detail-card .d-meta { font-size: 11px; color: var(--px-dim); margin-bottom: 18px; }
+.detail-card .d-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 18px; }
+.detail-card .d-tag { font-size: 9px; padding: 4px 10px; background: rgba(233,69,96,0.12); border: 1px solid var(--px-border); color: var(--px-accent); }
+
+.detail-card h3 {
+  font-size: 13px; color: var(--px-cyan); letter-spacing: 1px;
+  margin: 20px 0 10px; padding-bottom: 6px;
+  border-bottom: 1px solid var(--px-border);
+}
+.detail-card h3:first-of-type { margin-top: 0; }
+
+.detail-card .ing-list { font-size: 11px; line-height: 2.2; padding-left: 16px; }
+.detail-card .ing-list li { color: var(--px-text); list-style: square; }
+.detail-card .ing-list li .amt { color: var(--px-dim); }
+
+.detail-card .step-list { font-size: 11px; line-height: 2.2; counter-reset: step; padding-left: 0; }
+.detail-card .step-list li {
+  list-style: none; counter-increment: step; margin-bottom: 14px;
+  color: var(--px-text); padding-left: 36px; position: relative;
+}
+.detail-card .step-list li::before {
+  content: counter(step);
+  position: absolute; left: 0; top: 0;
+  width: 26px; height: 26px;
+  background: var(--px-card); border: 1px solid var(--px-accent);
+  color: var(--px-accent); font-size: 12px;
+  text-align: center; line-height: 26px;
+}
+
+.detail-card .detail-notes {
+  font-size: 11px; color: var(--px-dim); line-height: 2.2; font-style: italic;
+  padding: 10px 14px; background: rgba(0,0,0,0.2); border-left: 2px solid var(--px-gold);
+}
+
+.detail-actions { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+
+/* ── share link ── */
+.share-link-row {
+  display: flex; gap: 10px; margin-top: 18px; align-items: center; flex-wrap: wrap;
+}
+.share-link-row .share-url {
+  flex: 1; min-width: 200px;
+  font-family: var(--px-font); font-size: 9px;
+  padding: 8px 10px; border: 1px solid var(--px-border);
+  background: var(--px-bg); color: var(--px-cyan);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  cursor: pointer;
+}
+
+.toast {
+  position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+  background: var(--px-card); border: 2px solid var(--px-green);
+  color: var(--px-green); font-family: var(--px-font); font-size: 12px;
+  padding: 14px 28px; box-shadow: 2px 2px 0 rgba(0,0,0,0.4);
+  z-index: 10000; opacity: 0; pointer-events: none;
+  transition: opacity 0.15s step-start; letter-spacing: 1px;
+}
+.toast.show { opacity: 1; }
+
+.confirm-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.7); z-index: 10001;
+  justify-content: center; align-items: center;
+}
+.confirm-overlay.active { display: flex; }
+.confirm-box {
+  background: var(--px-surface); border: 2px solid var(--px-accent);
+  padding: 24px; text-align: center; max-width: 380px;
+  box-shadow: 3px 3px 0 rgba(0,0,0,0.5);
+}
+.confirm-box p { font-size: 12px; line-height: 1.8; margin-bottom: 18px; }
+.confirm-box .confirm-actions { display: flex; gap: 10px; justify-content: center; }
+
+@media (max-width: 480px) {
+  .grid { grid-template-columns: 1fr; }
+  .toolbar { flex-direction: column; align-items: stretch; }
+  .search-box { min-width: 0; }
+  .count-badge { margin-left: 0; text-align: center; }
+  .form-row { flex-direction: column; align-items: stretch; }
+  .form-row label { min-width: 0; }
+  body { font-size: 12px; padding: 16px 10px 36px; }
+  .header h1 { font-size: 17px; }
+  .px-btn { font-size: 10px; padding: 8px 12px; }
+  .recipe-card .r-name { font-size: 14px; }
+  .detail-card h2 { font-size: 17px; }
+  .detail-card .ing-list, .detail-card .step-list { font-size: 10px; }
+}
+
+footer { margin-top: 28px; font-size: 8px; color: #3a3a5a; letter-spacing: 1px; text-align: center; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🍳 菜谱记录</h1>
+  <p>记录 · 查看 · 分享你的拿手菜</p>
+  <a href="index.html">⬅ 返回工具集</a>
+</div>
+
+<!-- ═══════════ 列表视图 ═══════════ -->
+<div class="toolbar" id="listToolbar">
+  <button class="px-btn accent" onclick="navigateToForm()">＋ 新菜谱</button>
+  <input class="search-box" id="searchInput" placeholder="🔍 搜索菜谱..." oninput="renderList()">
+  <span class="count-badge" id="countBadge">共 0 道</span>
+</div>
+
+<div class="main" id="listView">
+  <div class="grid" id="recipeGrid"></div>
+</div>
+
+<!-- ═══════════ 表单视图 ═══════════ -->
+<div class="main form-wrap" id="formView">
+  <form id="recipeForm" onsubmit="saveRecipe(event)">
+
+    <div class="form-section">
+      <h3>📝 基本信息</h3>
+      <div class="form-row">
+        <label>菜名 *</label>
+        <input type="text" id="fName" placeholder="例如：锅包肉" required>
+      </div>
+      <div class="form-row">
+        <label>标签</label>
+        <input type="text" id="fTags" placeholder="逗号分隔，如：东北菜,家常菜,宴客">
+      </div>
+      <div class="form-row">
+        <label>备注</label>
+        <textarea id="fNotes" placeholder="小贴士、注意事项..."></textarea>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3>🥩 材料</h3>
+
+      <div class="ingredient-group">
+        <div class="ing-group-title">主料</div>
+        <div id="mainIngs"></div>
+        <button type="button" class="px-btn small" onclick="addIng('mainIngs')">＋ 添加主料</button>
+      </div>
+
+      <div class="ingredient-group">
+        <div class="ing-group-title">调料 / 酱汁</div>
+        <div id="sauceIngs"></div>
+        <button type="button" class="px-btn small" onclick="addIng('sauceIngs')">＋ 添加调料</button>
+      </div>
+
+      <div class="ingredient-group">
+        <div class="ing-group-title">配菜</div>
+        <div id="sideIngs"></div>
+        <button type="button" class="px-btn small" onclick="addIng('sideIngs')">＋ 添加配菜</button>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3>📋 制作步骤</h3>
+      <div id="stepsList"></div>
+      <button type="button" class="px-btn small" onclick="addStep()">＋ 添加步骤</button>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="px-btn green">💾 保存</button>
+      <button type="button" class="px-btn" onclick="showList()">✕ 取消</button>
+    </div>
+  </form>
+</div>
+
+<!-- ═══════════ 详情视图 ═══════════ -->
+<div class="main detail-wrap" id="detailView">
+  <div class="detail-card" id="detailContent"></div>
+  <div class="share-link-row" id="shareRow"></div>
+  <div class="detail-actions" id="detailActions"></div>
+</div>
+
+<!-- ═══════════ 确认框 ═══════════ -->
+<div class="confirm-overlay" id="confirmOverlay">
+  <div class="confirm-box">
+    <p id="confirmMsg"></p>
+    <div class="confirm-actions">
+      <button class="px-btn accent" id="confirmYes">确认</button>
+      <button class="px-btn" id="confirmNo">取消</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<footer>✦ 2026 · 像素工坊 ✦</footer>
+
+<script>
+const STORAGE_KEY = 'hermes_recipes';
+
+// ── 预置菜谱：锅包肉 ──
+const SEED_RECIPES = [{
+  id: 'seed-guobaorou',
+  name: '锅包肉',
+  tags: ['东北菜', '家常菜', '宴客'],
+  ingredients: {
+    main: [
+      { name: '通脊肉（外脊）', amount: '400g' },
+      { name: '土豆淀粉', amount: '250g' }
+    ],
+    sauce: [
+      { name: '白糖', amount: '90g' },
+      { name: '九度米醋', amount: '75g' },
+      { name: '生抽', amount: '5g（1/3勺）' },
+      { name: '盐', amount: '2g（半勺）' },
+      { name: '淀粉水（玉米淀粉+清水）', amount: '2g + 7g' }
+    ],
+    sides: [
+      { name: '香菜', amount: '' },
+      { name: '蒜', amount: '' },
+      { name: '姜', amount: '' },
+      { name: '胡萝卜', amount: '' },
+      { name: '葱', amount: '' }
+    ]
+  },
+  steps: [
+    '肉的预处理：切筷子头厚度，刀背拍几下，清水洗两遍，攥干水分，半勺盐抓至黏稠',
+    '配菜处理：香菜、蒜、姜、胡萝卜、葱切好备用',
+    '糖醋汁制作：放入白糖90g、九度米醋75g、生抽5g、盐2g，最后放淀粉水搅匀',
+    '土豆淀粉处理：提前一小时浸泡土豆淀粉。倒掉水，放三勺水，放入肉，加两勺油抓匀',
+    '炸制：面糊测油温（马上翻花即可）。第一遍大火炸，肉下锅3秒上浮，定型后翻动，炸至肉微红。20秒后第一次复炸30秒。1分钟后微微冒烟，第二次复炸至外壳金黄、露肉处呈枣红色',
+    '回锅：大火烧热锅，料汁搅拌后淋入，不停搅动熬至粘稠（约20秒，刮铲有感觉）。加一点炸油烹汁，盛出一勺汁。锅包肉和配菜倒入，淋上盛出的汁翻匀出锅'
+  ],
+  notes: '土豆淀粉需提前一小时浸泡，炸制时油温要够热，复炸两次才能外酥里嫩。汁要熬到刮铲有黏稠感再下肉。',
+  createdAt: Date.now(),
+  updatedAt: Date.now()
+}];
+
+// ── 数据管理 ──
+function loadRecipes() {
+  try {
+    var d = localStorage.getItem(STORAGE_KEY);
+    if (d) return JSON.parse(d);
+  } catch(e) {}
+  saveRecipes(SEED_RECIPES);
+  return SEED_RECIPES;
+}
+
+function saveRecipes(recipes) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(recipes));
+}
+
+var recipes = loadRecipes();
+var editingId = null;
+
+// ── Toast ──
+var toastTimer;
+function toast(msg, color) {
+  var el = document.getElementById('toast');
+  el.textContent = msg;
+  el.style.color = color || 'var(--px-green)';
+  el.style.borderColor = color || 'var(--px-green)';
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function() { el.classList.remove('show'); }, 2500);
+}
+
+// ── 列表渲染 ──
+function renderList() {
+  var q = (document.getElementById('searchInput').value || '').toLowerCase();
+  var filtered = recipes;
+  if (q) {
+    filtered = recipes.filter(function(r) {
+      return r.name.toLowerCase().indexOf(q) > -1 ||
+        (r.tags || []).some(function(t) { return t.toLowerCase().indexOf(q) > -1; }) ||
+        (r.notes || '').toLowerCase().indexOf(q) > -1;
+    });
+  }
+
+  var grid = document.getElementById('recipeGrid');
+  document.getElementById('countBadge').textContent = '共 ' + recipes.length + ' 道' + (q ? '（匹配 ' + filtered.length + '）' : '');
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '<div class="empty-state"><span class="big">🍽️</span>' +
+      (recipes.length === 0 ? '还没有菜谱<br>点击「＋ 新菜谱」开始记录' : '没有匹配的菜谱') + '</div>';
+    return;
+  }
+
+  grid.innerHTML = filtered.map(function(r) {
+    var tagsHtml = (r.tags || []).map(function(t) { return '<span class="r-tag">' + escapeHtml(t) + '</span>'; }).join('');
+    var preview = (r.steps || []).slice(0, 2).join(' | ');
+    var ingCount = 0;
+    ['main','sauce','sides'].forEach(function(k) {
+      ingCount += (r.ingredients && r.ingredients[k]) ? r.ingredients[k].length : 0;
+    });
+    return '<a class="recipe-card" href="#r_' + r.id + '" onclick="navigateToRecipe(event,\'' + r.id + '\')" title="点击查看详情 · 右键可复制链接">' +
+      '<div class="r-actions">' +
+        '<button onclick="editRecipeBtn(event,\'' + r.id + '\')" title="编辑">✎</button>' +
+        '<button onclick="confirmDeleteBtn(event,\'' + r.id + '\')" title="删除">✕</button>' +
+      '</div>' +
+      '<div class="r-name">' + escapeHtml(r.name) + '</div>' +
+      '<div class="r-meta">' + (r.steps||[]).length + ' 步 · ' + ingCount + ' 种材料</div>' +
+      '<div class="r-preview">' + escapeHtml(preview) + '</div>' +
+      (tagsHtml ? '<div class="r-tags">' + tagsHtml + '</div>' : '') +
+    '</a>';
+  }).join('');
+}
+
+function escapeHtml(s) {
+  var d = document.createElement('div');
+  d.textContent = s;
+  return d.innerHTML;
+}
+
+// ── Hash 导航 ──
+function getRecipeIdFromHash() {
+  var h = location.hash;
+  if (h && h.indexOf('#r_') === 0) return h.substring(3);
+  return null;
+}
+
+function navigateToRecipe(e, id) {
+  e.preventDefault();
+  location.hash = '#r_' + id;
+}
+
+function handleHashChange() {
+  var id = getRecipeIdFromHash();
+  if (id) {
+    var r = findRecipe(id);
+    if (r) {
+      document.getElementById('listView').style.display = 'none';
+      document.getElementById('listToolbar').style.display = 'none';
+      document.getElementById('formView').classList.remove('active');
+      document.getElementById('detailView').classList.add('active');
+      renderDetail(r);
+    } else {
+      // recipe not found, go to list
+      showList();
+    }
+  } else {
+    showList();
+  }
+}
+
+window.addEventListener('hashchange', handleHashChange);
+
+// ── 视图切换 ──
+function showList() {
+  editingId = null;
+  if (location.hash) history.replaceState(null, '', location.pathname);
+  document.getElementById('listView').style.display = 'block';
+  document.getElementById('listToolbar').style.display = 'flex';
+  document.getElementById('formView').classList.remove('active');
+  document.getElementById('detailView').classList.remove('active');
+  renderList();
+}
+
+function navigateToForm() {
+  editingId = null;
+  if (location.hash) history.replaceState(null, '', location.pathname);
+  document.getElementById('listView').style.display = 'none';
+  document.getElementById('listToolbar').style.display = 'none';
+  document.getElementById('detailView').classList.remove('active');
+  document.getElementById('formView').classList.add('active');
+  resetForm();
+  for (var i = 0; i < 3; i++) addStep();
+}
+
+// ── 表单操作 ──
+function resetForm() {
+  document.getElementById('fName').value = '';
+  document.getElementById('fTags').value = '';
+  document.getElementById('fNotes').value = '';
+  document.getElementById('mainIngs').innerHTML = '';
+  document.getElementById('sauceIngs').innerHTML = '';
+  document.getElementById('sideIngs').innerHTML = '';
+  document.getElementById('stepsList').innerHTML = '';
+}
+
+function addIng(containerId) {
+  var div = document.createElement('div');
+  div.className = 'ing-item';
+  div.innerHTML = '<input class="ing-name" placeholder="材料名">' +
+    '<input class="ing-amount" placeholder="用量">' +
+    '<button type="button" class="ing-del" onclick="this.parentElement.remove()">✕</button>';
+  document.getElementById(containerId).appendChild(div);
+}
+
+function addStep(text) {
+  var container = document.getElementById('stepsList');
+  var idx = container.children.length + 1;
+  var div = document.createElement('div');
+  div.className = 'step-item';
+  div.innerHTML = '<span class="step-num">' + idx + '.</span>' +
+    '<textarea placeholder="步骤描述...">' + (text ? escapeHtml(text) : '') + '</textarea>' +
+    '<button type="button" class="step-del" onclick="removeStep(this)">✕</button>';
+  container.appendChild(div);
+}
+
+function removeStep(btn) {
+  btn.parentElement.remove();
+  renumberSteps();
+}
+
+function renumberSteps() {
+  var items = document.getElementById('stepsList').children;
+  for (var i = 0; i < items.length; i++) {
+    items[i].querySelector('.step-num').textContent = (i + 1) + '.';
+  }
+}
+
+function collectIngredients() {
+  function getItems(id) {
+    var items = document.getElementById(id).querySelectorAll('.ing-item');
+    return Array.prototype.map.call(items, function(item) {
+      var inputs = item.querySelectorAll('input');
+      return { name: (inputs[0].value || '').trim(), amount: (inputs[1] && inputs[1].value || '').trim() };
+    }).filter(function(ing) { return ing.name || ing.amount; });
+  }
+  return { main: getItems('mainIngs'), sauce: getItems('sauceIngs'), sides: getItems('sideIngs') };
+}
+
+function collectSteps() {
+  var items = document.getElementById('stepsList').querySelectorAll('textarea');
+  return Array.prototype.map.call(items, function(ta) { return ta.value.trim(); }).filter(function(s) { return s; });
+}
+
+function collectTags() {
+  var raw = document.getElementById('fTags').value;
+  return raw.split(/[,，、\s]+/).map(function(t) { return t.trim(); }).filter(function(t) { return t; });
+}
+
+function saveRecipe(e) {
+  e.preventDefault();
+  var name = document.getElementById('fName').value.trim();
+  if (!name) { toast('请输入菜名', 'var(--px-accent)'); return; }
+
+  var recipe = {
+    id: editingId || 'r_' + Date.now(),
+    name: name,
+    tags: collectTags(),
+    ingredients: collectIngredients(),
+    steps: collectSteps(),
+    notes: document.getElementById('fNotes').value.trim(),
+    createdAt: editingId ? (findRecipe(editingId) || {}).createdAt || Date.now() : Date.now(),
+    updatedAt: Date.now()
+  };
+
+  if (editingId) {
+    var idx = findIndex(editingId);
+    if (idx >= 0) recipes[idx] = recipe;
+  } else {
+    recipes.unshift(recipe);
+  }
+
+  saveRecipes(recipes);
+  toast('💾 「' + name + '」已保存', 'var(--px-green)');
+  // 回到详情页
+  location.hash = '#r_' + recipe.id;
+}
+
+// ── 卡片按钮事件（阻止链接默认跳转） ──
+function editRecipeBtn(e, id) {
+  e.preventDefault(); e.stopPropagation();
+  var r = findRecipe(id);
+  if (!r) return;
+  editingId = id;
+  if (location.hash) history.replaceState(null, '', location.pathname);
+  document.getElementById('listView').style.display = 'none';
+  document.getElementById('listToolbar').style.display = 'none';
+  document.getElementById('detailView').classList.remove('active');
+  document.getElementById('formView').classList.add('active');
+
+  document.getElementById('fName').value = r.name;
+  document.getElementById('fTags').value = (r.tags || []).join(', ');
+  document.getElementById('fNotes').value = r.notes || '';
+
+  function fillIngs(containerId, arr) {
+    var container = document.getElementById(containerId);
+    container.innerHTML = '';
+    (arr || []).forEach(function(ing) {
+      var div = document.createElement('div');
+      div.className = 'ing-item';
+      div.innerHTML = '<input class="ing-name" value="' + escapeAttr(ing.name) + '">' +
+        '<input class="ing-amount" value="' + escapeAttr(ing.amount) + '">' +
+        '<button type="button" class="ing-del" onclick="this.parentElement.remove()">✕</button>';
+      container.appendChild(div);
+    });
+  }
+  fillIngs('mainIngs', r.ingredients && r.ingredients.main);
+  fillIngs('sauceIngs', r.ingredients && r.ingredients.sauce);
+  fillIngs('sideIngs', r.ingredients && r.ingredients.sides);
+
+  var stepsContainer = document.getElementById('stepsList');
+  stepsContainer.innerHTML = '';
+  (r.steps || []).forEach(function(s) { addStep(s); });
+}
+
+function confirmDeleteBtn(e, id) {
+  e.preventDefault(); e.stopPropagation();
+  confirmDelete(id);
+}
+
+function escapeAttr(s) { return (s || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// ── 详情渲染 ──
+function renderDetail(r) {
+  var shareUrl = location.origin + location.pathname + '#r_' + r.id;
+
+  var html = '<h2>' + escapeHtml(r.name) + '</h2>';
+  html += '<div class="d-meta">' + (r.steps||[]).length + ' 步 · 最后更新：' + formatDate(r.updatedAt) + '</div>';
+
+  if ((r.tags || []).length) {
+    html += '<div class="d-tags">' + r.tags.map(function(t) { return '<span class="d-tag">' + escapeHtml(t) + '</span>'; }).join('') + '</div>';
+  }
+
+  var hasIngs = false;
+  html += '<h3>🥩 材料</h3>';
+  var ingSections = [
+    { key: 'main', label: '主料' },
+    { key: 'sauce', label: '调料 / 酱汁' },
+    { key: 'sides', label: '配菜' }
+  ];
+  ingSections.forEach(function(sec) {
+    var items = r.ingredients && r.ingredients[sec.key];
+    if (items && items.length) {
+      hasIngs = true;
+      html += '<p style="font-size:11px;color:var(--px-gold);margin-top:8px;letter-spacing:1px;">' + sec.label + '</p>';
+      html += '<ul class="ing-list">' + items.map(function(ing) {
+        return '<li>' + escapeHtml(ing.name) + (ing.amount ? ' <span class="amt">' + escapeHtml(ing.amount) + '</span>' : '') + '</li>';
+      }).join('') + '</ul>';
+    }
+  });
+  if (!hasIngs) html += '<p style="font-size:11px;color:var(--px-dim);">暂无材料记录</p>';
+
+  html += '<h3>📋 制作步骤</h3>';
+  if ((r.steps || []).length) {
+    html += '<ol class="step-list">' + r.steps.map(function(s) {
+      return '<li>' + escapeHtml(s) + '</li>';
+    }).join('') + '</ol>';
+  } else {
+    html += '<p style="font-size:11px;color:var(--px-dim);">暂无步骤记录</p>';
+  }
+
+  if (r.notes) {
+    html += '<h3>💡 备注</h3>';
+    html += '<p class="detail-notes">' + escapeHtml(r.notes) + '</p>';
+  }
+
+  document.getElementById('detailContent').innerHTML = html;
+
+  // 分享链接
+  document.getElementById('shareRow').innerHTML =
+    '<span style="font-size:11px;color:var(--px-dim);">🔗 分享链接：</span>' +
+    '<input class="share-url" value="' + escapeAttr(shareUrl) + '" readonly onclick="this.select();document.execCommand(\'copy\');toast(\'📋 链接已复制\',\'var(--px-gold)\')">';
+
+  document.getElementById('detailActions').innerHTML =
+    '<button class="px-btn" onclick="showList()">⬅ 返回列表</button>' +
+    '<button class="px-btn gold" onclick="location.hash=\'\';editRecipeBtn(new MouseEvent(\'click\'),\'' + r.id + '\')">✎ 编辑</button>' +
+    '<button class="px-btn danger" onclick="confirmDelete(\'' + r.id + '\')">🗑 删除</button>';
+}
+
+// ── 编辑按钮（详情页） ──
+function editFromDetail(id) {
+  var r = findRecipe(id);
+  if (!r) return;
+  // simulate the edit flow
+  var fakeEvent = { preventDefault: function(){}, stopPropagation: function(){} };
+  location.hash = '';
+  editRecipeBtn(fakeEvent, id);
+}
+
+function formatDate(ts) {
+  var d = new Date(ts);
+  return d.getFullYear() + '-' + pad(d.getMonth()+1) + '-' + pad(d.getDate()) +
+    ' ' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+}
+function pad(n) { return n < 10 ? '0' + n : n; }
+
+// ── 查找 ──
+function findRecipe(id) {
+  for (var i = 0; i < recipes.length; i++) {
+    if (recipes[i].id === id) return recipes[i];
+  }
+  return null;
+}
+function findIndex(id) {
+  for (var i = 0; i < recipes.length; i++) {
+    if (recipes[i].id === id) return i;
+  }
+  return -1;
+}
+
+// ── 确认删除 ──
+var pendingDeleteId = null;
+function confirmDelete(id) {
+  pendingDeleteId = id;
+  var r = findRecipe(id);
+  document.getElementById('confirmMsg').textContent = '确定删除「' + (r ? r.name : '') + '」？此操作不可撤销。';
+  document.getElementById('confirmOverlay').classList.add('active');
+}
+document.getElementById('confirmYes').onclick = function() {
+  if (pendingDeleteId) {
+    var r = findRecipe(pendingDeleteId);
+    recipes = recipes.filter(function(r) { return r.id !== pendingDeleteId; });
+    saveRecipes(recipes);
+    toast('已删除「' + (r ? r.name : '') + '」', 'var(--px-accent)');
+    pendingDeleteId = null;
+    showList();
+  }
+  document.getElementById('confirmOverlay').classList.remove('active');
+};
+document.getElementById('confirmNo').onclick = function() {
+  pendingDeleteId = null;
+  document.getElementById('confirmOverlay').classList.remove('active');
+};
+
+// ── 启动：检查 hash 决定初始视图 ──
+(function init() {
+  var id = getRecipeIdFromHash();
+  if (id && findRecipe(id)) {
+    handleHashChange();
+  } else {
+    showList();
+  }
+})();
+</script>
+
+</body>
+</html>

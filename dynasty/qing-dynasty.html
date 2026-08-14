@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>清朝皇帝世系简表 (1616-1912)</title>
+<style>
+  :root {
+    --bg: #f0f4f8;
+    --card-bg: #fff;
+    --early-color: #1a3a5c;
+    --late-color: #c9941e;
+    --timeline-color: #2563eb;
+    --text: #2c2c2c;
+    --text-light: #666;
+    --border: #b8c8d8;
+    --event-bg: #f0f5fc;
+    --minister-bg: #fef9f0;
+    --highlight: #c9941e;
+    --gold: #c9941e;
+    --azure: #2563eb;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: "PingFang SC","Microsoft YaHei","Noto Serif SC",serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  .header {
+    text-align:center; padding:50px 20px 30px;
+    background: linear-gradient(135deg, #0a1628 0%, #1a3a5c 30%, #1e4d8c 60%, #c9941e 100%);
+    color: #f0e6d0; position:relative; overflow:hidden;
+  }
+  .header::before {
+    content:''; position:absolute; top:0;left:0;right:0;bottom:0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9941e' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity:.5;
+  }
+  .header h1 { font-size:42px; font-weight:900; letter-spacing:12px; position:relative; z-index:1; text-shadow:2px 2px 4px rgba(0,0,0,.5); }
+  .header .subtitle { font-size:18px; margin-top:12px; color:#c9941e; letter-spacing:6px; position:relative; z-index:1; }
+  .header .period { font-size:14px; margin-top:8px; color:#8ab4e0; letter-spacing:3px; position:relative; z-index:1; }
+
+  .legend { display:flex; justify-content:center; gap:30px; padding:20px; background:#fff; border-bottom:2px solid var(--border); flex-wrap:wrap; }
+  .legend-item { display:flex; align-items:center; gap:8px; font-size:13px; color:var(--text-light); }
+  .legend-dot { width:14px; height:14px; border-radius:50%; flex-shrink:0; }
+  .legend-line { width:30px; height:3px; flex-shrink:0; }
+
+  .container { max-width:1400px; margin:0 auto; padding:20px; }
+
+  .section-title { text-align:center; padding:30px 20px 20px; font-size:28px; font-weight:bold; letter-spacing:6px; position:relative; }
+  .section-title.early { color:var(--early-color); }
+  .section-title.late { color:var(--late-color); }
+  .section-title::after { content:''; display:block; width:80px; height:3px; margin:12px auto 0; }
+  .section-title.early::after { background:var(--early-color); }
+  .section-title.late::after { background:var(--late-color); }
+
+  .timeline { position:relative; padding:20px 0; }
+  .timeline::before { content:''; position:absolute; left:50%; top:0; bottom:0; width:4px; transform:translateX(-50%); z-index:0; }
+  .timeline.early::before { background:var(--early-color); }
+  .timeline.late::before { background:var(--late-color); }
+
+  .timeline-entry { display:flex; align-items:flex-start; position:relative; margin-bottom:20px; }
+  .entry-content { display:flex; width:100%; align-items:flex-start; gap:0; }
+  .entry-left, .entry-right { width:48%; padding:0 15px; }
+  .entry-center { width:4%; display:flex; justify-content:center; position:relative; z-index:1; }
+
+  .year-marker {
+    width:50px; height:50px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-size:12px; font-weight:bold; color:#fff; flex-shrink:0; z-index:2; position:relative;
+  }
+  .early .year-marker { background:var(--early-color); }
+  .late .year-marker { background:var(--late-color); }
+
+  .emperor-card {
+    background:var(--card-bg); border-radius:12px; padding:20px; box-shadow:0 4px 20px rgba(0,0,0,.08);
+    border-left:5px solid; position:relative; transition:transform .3s,box-shadow .3s;
+  }
+  .emperor-card:hover { transform:translateY(-3px); box-shadow:0 8px 30px rgba(0,0,0,.15); }
+  .early .emperor-card { border-left-color:var(--early-color); }
+  .late .emperor-card { border-left-color:var(--late-color); }
+
+  .emperor-card .order {
+    position:absolute; top:-10px; right:15px; background:var(--highlight); color:#fff;
+    width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-size:12px; font-weight:bold;
+  }
+
+  .emperor-name { font-size:22px; font-weight:bold; margin-bottom:2px; }
+  .emperor-realname { font-size:13px; color:var(--text-light); margin-bottom:8px; }
+
+  .emperor-meta { display:grid; grid-template-columns:1fr 1fr; gap:6px 12px; margin:10px 0; font-size:12px; }
+  .meta-item { display:flex; align-items:center; gap:4px; }
+  .meta-label { color:var(--text-light); white-space:nowrap; }
+  .meta-value { font-weight:600; }
+
+  .life-bar { height:8px; background:#eee; border-radius:4px; margin:10px 0 5px; position:relative; overflow:visible; }
+  .life-bar .reign { position:absolute; height:100%; border-radius:4px; opacity:.8; }
+  .early .life-bar .reign { background:var(--early-color); }
+  .late .life-bar .reign { background:var(--late-color); }
+  .life-bar-labels { display:flex; justify-content:space-between; font-size:10px; color:var(--text-light); }
+
+  .relation-tag {
+    display:inline-block; font-size:11px; padding:2px 8px; border-radius:10px; margin-top:6px; border:1px solid;
+  }
+  .early .relation-tag { background:#e8eff5; color:#1a3a5c; border-color:#a0b8d0; }
+  .late .relation-tag { background:#fdf5e6; color:#8b6914; border-color:#e0c890; }
+
+  .events-panel { background:var(--event-bg); border-radius:10px; padding:14px; margin-top:5px; border:1px solid #c0d4e8; }
+  .events-panel h4 { font-size:13px; color:var(--azure); margin-bottom:8px; display:flex; align-items:center; gap:5px; }
+  .event-item { font-size:12px; padding:4px 0; border-bottom:1px dashed #c0d4e8; display:flex; gap:6px; }
+  .event-item:last-child { border-bottom:none; }
+  .event-year { color:var(--azure); font-weight:bold; white-space:nowrap; min-width:42px; }
+
+  .ministers-panel { background:var(--minister-bg); border-radius:10px; padding:14px; margin-top:8px; border:1px solid #e0d0b0; }
+  .ministers-panel h4 { font-size:13px; color:#8b6914; margin-bottom:8px; display:flex; align-items:center; gap:5px; }
+  .minister-list { display:flex; flex-wrap:wrap; gap:5px; }
+  .minister-tag { font-size:11px; padding:3px 8px; background:#fdf1d8; color:#8b6914; border-radius:12px; border:1px solid #e0c890; }
+  .minister-tag.negative { background:#fde8e8; color:#b91c1c; border-color:#f0b8b8; }
+
+  .family-tree-section { margin:40px 0; padding:30px; background:#fff; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,.06); }
+  .family-tree-section h2 { text-align:center; font-size:24px; color:var(--text); margin-bottom:30px; letter-spacing:4px; }
+  .tree-container { overflow-x:auto; padding:20px 0; }
+  .tree-svg { display:block; margin:0 auto; }
+
+  .lifecycle-section { margin:40px 0; padding:30px; background:#fff; border-radius:16px; box-shadow:0 4px 20px rgba(0,0,0,.06); }
+  .lifecycle-section h2 { text-align:center; font-size:24px; color:var(--text); margin-bottom:10px; letter-spacing:4px; }
+  .lifecycle-section .note { text-align:center; font-size:12px; color:var(--text-light); margin-bottom:20px; }
+
+  .gantt-container { overflow-x:auto; padding:10px 0; }
+  .gantt-chart { min-width:900px; }
+  .gantt-row { display:flex; align-items:center; height:32px; margin:2px 0; }
+  .gantt-label { width:130px; font-size:12px; font-weight:600; text-align:right; padding-right:12px; flex-shrink:0; white-space:nowrap; }
+  .gantt-bar-area { flex:1; position:relative; height:100%; }
+  .gantt-bar { position:absolute; height:10px; top:50%; transform:translateY(-50%); border-radius:5px; opacity:.3; cursor:pointer; }
+  .gantt-bar.reign-bar { height:20px; opacity:.85; z-index:1; }
+  .gantt-bar:hover { opacity:1; }
+  .gantt-bar .tooltip { display:none; position:absolute; bottom:calc(100% + 5px); left:50%; transform:translateX(-50%); background:#333; color:#fff; padding:4px 8px; border-radius:4px; font-size:11px; white-space:nowrap; z-index:10; }
+  .gantt-bar:hover .tooltip { display:block; }
+  .gantt-header { display:flex; align-items:center; height:30px; border-bottom:2px solid var(--border); margin-bottom:10px; }
+  .gantt-header .gantt-label { font-size:12px; color:var(--text-light); }
+  .gantt-header .gantt-bar-area { display:flex; }
+  .gantt-year-tick { position:absolute; font-size:10px; color:var(--text-light); transform:translateX(-50%); top:0; }
+  .gantt-body { position:relative; }
+
+  .transition-divider { text-align:center; padding:40px 20px; position:relative; }
+  .transition-divider .divider-line { height:2px; background:linear-gradient(to right,transparent,var(--highlight),transparent); margin:0 auto; max-width:600px; }
+  .transition-divider .divider-text { display:inline-block; background:var(--bg); padding:8px 25px; position:relative; top:-14px; font-size:16px; color:var(--highlight); font-weight:bold; letter-spacing:4px; border:2px solid var(--highlight); border-radius:20px; }
+
+  .overview-stats { display:flex; justify-content:center; gap:30px; padding:20px; flex-wrap:wrap; }
+  .stat-box { text-align:center; padding:15px 25px; background:#fff; border-radius:12px; box-shadow:0 2px 10px rgba(0,0,0,.06); min-width:110px; }
+  .stat-number { font-size:28px; font-weight:bold; color:var(--highlight); }
+  .stat-desc { font-size:12px; color:var(--text-light); margin-top:4px; }
+
+  .footer { text-align:center; padding:30px; color:var(--text-light); font-size:13px; border-top:2px solid var(--border); margin-top:40px; }
+
+  @media (max-width:900px) {
+    .entry-content { flex-direction:column !important; align-items:center; }
+    .entry-left,.entry-right { width:100%; padding:10px 0; }
+    .entry-center { width:100%; justify-content:center; margin:10px 0; }
+    .timeline::before { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>清朝皇帝世系简表</h1>
+  <div class="subtitle">大清二百九十六年国祚</div>
+  <div class="period">后金时期 (1616-1643) ─ 入关后 (1644-1912)</div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:var(--early-color)"></div><span>后金时期皇帝</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--late-color)"></div><span>入关后皇帝</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--azure)"></div><span>重大历史事件</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:#8b6914"></div><span>重要大臣</span></div>
+</div>
+
+<div class="overview-stats">
+  <div class="stat-box"><div class="stat-number">296</div><div class="stat-desc">国祚（年，含后金）</div></div>
+  <div class="stat-box"><div class="stat-number">12</div><div class="stat-desc">皇帝总数</div></div>
+  <div class="stat-box"><div class="stat-number">1616</div><div class="stat-desc">开国年份（后金）</div></div>
+  <div class="stat-box"><div class="stat-number">1912</div><div class="stat-desc">灭亡年份</div></div>
+  <div class="stat-box"><div class="stat-number">北京</div><div class="stat-desc">都城</div></div>
+</div>
+
+<div class="container">
+
+  <!-- ===== 甘特图 ===== -->
+  <div class="lifecycle-section">
+    <h2>皇帝生卒与在位时间对照图</h2>
+    <div class="note">浅色条为生卒跨度，深色条为在位时间，鼠标悬停查看详情</div>
+    <div class="gantt-container"><div class="gantt-chart" id="ganttChart"></div></div>
+  </div>
+
+  <!-- ==================== 后金时期 ==================== -->
+  <div class="section-title early">后 金 时 期</div>
+  <div style="text-align:center;color:#999;font-size:13px;margin-bottom:20px;">公元1616年 — 1643年 · 都城：赫图阿拉→沈阳（盛京）</div>
+
+  <div class="timeline early">
+
+    <!-- 努尔哈赤 -->
+    <div class="timeline-entry"><div class="entry-content">
+      <div class="entry-left">
+        <div class="emperor-card">
+          <div class="order">1</div>
+          <div class="emperor-name">清太祖</div>
+          <div class="emperor-realname">爱新觉罗·努尔哈赤 · 年号：天命</div>
+          <div class="emperor-meta">
+            <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1559-1626（67岁）</span></div>
+            <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1616-1626（10年）</span></div>
+          </div>
+          <div class="life-bar"><div class="reign" style="left:85.1%;width:14.9%"></div></div>
+          <div class="life-bar-labels"><span>1559</span><span>1616 在位 1626</span><span>1626</span></div>
+          <div class="relation-tag">后金开国大汗 · 建州女真首领</div>
+        </div>
+        <div class="ministers-panel">
+          <h4>👤 重要大臣</h4>
+          <div class="minister-list">
+            <span class="minister-tag">额亦都</span><span class="minister-tag">费英东</span>
+            <span class="minister-tag">何和礼</span><span class="minister-tag">扈尔汉</span>
+            <span class="minister-tag">安费扬古</span>
+          </div>
+        </div>
+      </div>
+      <div class="entry-center"><div class="year-marker">1616</div></div>
+      <div class="entry-right">
+        <div class="events-panel">
+          <h4>📜 重大事件</h4>
+          <div class="event-item"><span class="event-year">1583</span><span>以十三副遗甲起兵，开始统一女真各部</span></div>
+          <div class="event-item"><span class="event-year">1601</span><span>始建四旗（黄、白、红、蓝）</span></div>
+          <div class="event-item"><span class="event-year">1615</span><span>创建八旗制度</span></div>
+          <div class="event-item"><span class="event-year">1616</span><span>赫图阿拉称汗，建立后金，年号天命</span></div>
+          <div class="event-item"><span class="event-year">1618</span><span>发布"七大恨"告天，誓师伐明</span></div>
+          <div class="event-item"><span class="event-year">1619</span><span>萨尔浒之战大破明军</span></div>
+          <div class="event-item"><span class="event-year">1621</span><span>攻克辽阳、沈阳，迁都辽阳</span></div>
+          <div class="event-item"><span class="event-year">1626</span><span>宁远之战，被袁崇焕炮击受伤，同年病逝</span></div>
+        </div>
+      </div>
+    </div></div>
+
+    <!-- 皇太极 -->
+    <div class="timeline-entry"><div class="entry-content">
+      <div class="entry-left">
+        <div class="events-panel">
+          <h4>📜 重大事件</h4>
+          <div class="event-item"><span class="event-year">1627</span><span>继位为后金大汗</span></div>
+          <div class="event-item"><span class="event-year">1627</span><span>出兵朝鲜，迫其签订城下之盟</span></div>
+          <div class="event-item"><span class="event-year">1629</span><span>己巳之变，突袭北京城下</span></div>
+          <div class="event-item"><span class="event-year">1635</span><span>收服漠南蒙古，获元传国玉玺</span></div>
+          <div class="event-item"><span class="event-year">1636</span><span>改国号为大清，改元崇德，称皇帝</span></div>
+          <div class="event-item"><span class="event-year">1637</span><span>再次征朝鲜，迫其称臣纳贡</span></div>
+          <div class="event-item"><span class="event-year">1642</span><span>松锦之战大捷，明朝精锐尽丧</span></div>
+          <div class="event-item"><span class="event-year">1643</span><span>皇太极病逝，未及入关</span></div>
+        </div>
+      </div>
+      <div class="entry-center"><div class="year-marker">1627</div></div>
+      <div class="entry-right">
+        <div class="emperor-card">
+          <div class="order">2</div>
+          <div class="emperor-name">清太宗</div>
+          <div class="emperor-realname">爱新觉罗·皇太极 · 年号：天聪、崇德</div>
+          <div class="emperor-meta">
+            <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1592-1643（51岁）</span></div>
+            <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1627-1643（17年）</span></div>
+          </div>
+          <div class="life-bar"><div class="reign" style="left:68.6%;width:31.4%"></div></div>
+          <div class="life-bar-labels"><span>1592</span><span>1627 在位</span><span>1643</span></div>
+          <div class="relation-tag">努尔哈赤第八子 · 改国号为大清</div>
+        </div>
+        <div class="ministers-panel">
+          <h4>👤 重要大臣</h4>
+          <div class="minister-list">
+            <span class="minister-tag">多尔衮</span><span class="minister-tag">范文程</span>
+            <span class="minister-tag">代善</span><span class="minister-tag">阿敏</span>
+            <span class="minister-tag">莽古尔泰</span><span class="minister-tag">济尔哈朗</span>
+          </div>
+        </div>
+      </div>
+    </div></div>
+
+  </div><!-- end early timeline -->
+
+  <!-- ===== 清兵入关分界 ===== -->
+  <div class="transition-divider">
+    <div class="divider-line"></div>
+    <div class="divider-text">清兵入关 · 1644年 · 定都北京</div>
+  </div>
+
+  <!-- ==================== 入关后 ==================== -->
+  <div class="section-title late">入 关 后</div>
+  <div style="text-align:center;color:#999;font-size:13px;margin-bottom:20px;">公元1644年 — 1912年 · 都城：北京（顺天府）</div>
+
+  <div class="timeline late">
+
+    <!-- 顺治 -->
+    <div class="timeline-entry"><div class="entry-content">
+      <div class="entry-left">
+        <div class="emperor-card">
+          <div class="order">3</div>
+          <div class="emperor-name">清世祖</div>
+          <div class="emperor-realname">爱新觉罗·福临 · 年号：顺治</div>
+          <div class="emperor-meta">
+            <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1638-1661（23岁）</span></div>
+            <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1644-1661（18年）</span></div>
+          </div>
+          <div class="life-bar"><div class="reign" style="left:26.1%;width:73.9%"></div></div>
+          <div class="life-bar-labels"><span>1638</span><span>1644 在位</span><span>1661</span></div>
+          <div class="relation-tag">皇太极第九子 · 6岁即位 · 入关第一帝</div>
+        </div>
+        <div class="ministers-panel">
+          <h4>👤 重要大臣</h4>
+          <div class="minister-list">
+            <span class="minister-tag">多尔衮</span><span class="minister-tag">范文程</span>
+            <span class="minister-tag">洪承畴</span><span class="minister-tag">吴三桂</span>
+            <span class="minister-tag negative">鳌拜</span>
+          </div>
+        </div>
+      </div>
+      <div class="entry-center"><div class="year-marker">1644</div></div>
+      <div class="entry-right">
+        <div class="events-panel">
+          <h4>📜 重大事件</h4>
+          <div class="event-item"><span class="event-year">1644</span><span>清兵入关，定都北京</span></div>
+          <div class="event-item"><span class="event-year">1645</span><span>颁布剃发令，激起江南抵抗</span></div>
+          <div class="event-item"><span class="event-year">1650</span><span>多尔衮去世，顺治亲政</span></div>
+          <div class="event-item"><span class="event-year">1659</span><span>郑成功北伐至南京城下</span></div>
+          <div class="event-item"><span class="event-year">1661</span><span>顺治驾崩（传说出家五台山）</span></div>
+        </div>
+      </div>
+    </div></div>
+
+    <!-- 康熙 -->
+    <div class="timeline-entry"><div class="entry-content">
+      <div class="entry-left">
+        <div class="events-panel">
+          <h4>📜 重大事件</h4>
+          <div class="event-item"><span class="event-year">1669</span><span>智擒鳌拜，开始真正亲政</span></div>
+          <div class="event-item"><span class="event-year">1673</span><span>三藩之乱爆发（吴三桂起兵）</span></div>
+          <div class="event-item"><span class="event-year">1681</span><span>平定三藩之乱</span></div>
+          <div class="event-item"><span class="event-year">1683</span><span>施琅收复台湾，郑克塽降清</span></div>
+          <div class="event-item"><span class="event-year">1685</span><span>雅克萨之战，抗击沙俄入侵</span></div>
+          <div class="event-item"><span class="event-year">1689</span><span>签订《尼布楚条约》</span></div>
+          <div class="event-item"><span class="event-year">1690</span><span>乌兰布通之战，亲征噶尔丹</span></div>
+          <div class="event-item"><span class="event-year">1696</span><span>昭莫多之战，彻底击败噶尔丹</span></div>
+          <div class="event-item"><span class="event-year">1720</span><span>驱逐准噶尔，平定西藏</span></div>
+        </div>
+      </div>
+      <div class="entry-center"><div class="year-marker">1662</div></div>
+      <div class="entry-right">
+        <div class="emperor-card">
+          <div class="order">4</div>
+          <div class="emperor-name">清圣祖</div>
+          <div class="emperor-realname">爱新觉罗·玄烨 · 年号：康熙</div>
+          <div class="emperor-meta">
+            <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1654-1722（68岁）</span></div>
+            <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1662-1722（61年）</span></div>
+          </div>
+          <div class="life-bar"><div class="reign" style="left:11.8%;width:88.2%"></div></div>
+          <div class="life-bar-labels"><span>1654</span><span>1662 在位</span><span>1722</span></div>
+          <div class="relation-tag">顺治第三子 · 千古一帝 · 在位最长</div>
+        </div>
+        <div class="ministers-panel">
+          <h4>👤 重要大臣</h4>
+          <div class="minister-list">
+            <span class="minister-tag">纳兰明珠</span><span class="minister-tag">索额图</span>
+            <span class="minister-tag">施琅</span><span class="minister-tag">姚启圣</span>
+            <span class="minister-tag">于成龙</span><span class="minister-tag">陈廷敬</span>
+            <span class="minister-tag negative">鳌拜</span>
+          </div>
+        </div>
+      </div>
+    </div></div>
+
+    <!-- 雍正 -->
+    <div class="timeline-entry"><div class="entry-content">
+      <div class="entry-left">
+        <div class="emperor-card">
+          <div class="order">5</div>
+          <div class="emperor-name">清世宗</div>
+          <div class="emperor-realname">爱新觉罗·胤禛 · 年号：雍正</div>
+          <div class="emperor-meta">
+            <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1678-1735（57岁）</span></div>
+            <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1723-1735（13年）</span></div>
+          </div>
+          <div class="life-bar"><div class="reign" style="left:78.9%;width:21.1%"></div></div>
+          <div class="life-bar-labels"><span>1678</span><span>1723 在位</span><span>1735</span></div>
+          <div class="relation-tag">康熙第四子 · 勤政铁腕 · 设立军机处</div>
+        </div>
+        <div class="ministers-panel">
+          <h4>👤 重要大臣</h4>
+          <div class="minister-list">
+            <span class="minister-tag">张廷玉</span><span class="minister-tag">鄂尔泰</span>
+            <span class="minister-tag">李卫</span><span class="minister-tag">田文镜</span>
+            <span class="minister-tag negative">年羹尧</span><span class="minister-tag negative">隆科多</span>
+          </div>
+        </div>
+      </div>
+      <div class="entry-center"><div class="year-marker">1723</div></div>
+      <div class="entry-right">
+        <div class="events-panel">
+          <h4>📜 重大事件</h4>
+          <div class="event-item"><span class="event-year">1723</span><span>即位，开始整顿吏治</span></div>
+          <div class="event-item"><span class="event-year">1724</span><span>设立军机处，强化中央集权</span></div>
+          <div class="event-item"><span class="event-year">1726</span><span>年羹尧被赐死</span></div>
+          <div class="event-item"><span class="event-year">1727</span><span>与俄国签订《恰克图条约》</span></div>
+          <div class="event-item"><span class="event-year">1729</span><span>大兴文字狱（吕留良案）</span></div>
+          <div class="event-item"><span class="event-year">1735</span><span>雍正暴卒于圆明园</span></div>
+        </div>
+      </div>
+    </div></div>
+
+    <!-- 乾隆 -->
+    <div class="timeline-entry"><div class="entry-content">
+      <div class="entry-left">
+        <div class="events-panel">
+          <h4>📜 重大事件</h4>
+          <div class="event-item"><span class="event-year">1736</span><span>即位，康乾盛世达到顶峰</span></div>
+          <div class="event-item"><span class="event-year">1755</span><span>平定准噶尔汗国</span></div>
+          <div class="event-item"><span class="event-year">1759</span><span>平定大小和卓之乱，统一新疆</span></div>
+          <div class="event-item"><span class="event-year">1771</span><span>土尔扈特部东归祖国</span></div>
+          <div class="event-item"><span class="event-year">1773</span><span>编纂《四库全书》</span></div>
+          <div class="event-item"><span class="event-year">1793</span><span>马嘎尔尼使团访华</span></div>
+          <div class="event-item"><span class="event-year">1795</span><span>退位，传位于嘉庆，自为太上皇</span></div>
+          <div class="event-item"><span class="event-year">1799</span><span>乾隆驾崩，和珅随即被抄家</span></div>
+        </div>
+      </div>
+      <div class="entry-center"><div class="year-marker">1736</div></div>
+      <div class="entry-right">
+        <div class="emperor-card">
+          <div class="order">6</div>
+          <div class="emperor-name">清高宗</div>
+          <div class="emperor-realname">爱新觉罗·弘历 · 年号：乾隆</div>
+          <div class="emperor-meta">
+            <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1711-1799（88岁）</span></div>
+            <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1736-1795（60年，退位）</span></div>
+          </div>
+          <div class="life-bar"><div class="reign" style="left:28.4%;width:67.0%"></div></div>
+          <div class="life-bar-labels"><span>1711</span><span>1736 在位 1795</span><span>1799</span></div>
+          <div class="relation-tag">雍正第四子 · 最长寿皇帝 · 十全武功</div>
+        </div>
+        <div class="ministers-panel">
+          <h4>👤 重要大臣</h4>
+          <div class="minister-list">
+            <span class="minister-tag">刘墉</span><span class="minister-tag">纪晓岚</span>
+            <span class="minister-tag">傅恒</span><span class="minister-tag">阿桂</span>
+            <span class="minister-tag negative">和珅</span><span class="minister-tag">福康安</span>
+          </div>
+        </div>
+      </div>
+    </div></div>
+
+    <!-- 嘉庆 -->
+    <div class="timeline-entry"><div class="entry-content">
+      <div class="entry-left">
+        <div class="emperor-card">
+          <div class="order">7</div>
+          <div class="emperor-name">清仁宗</div>
+          <div class="emperor-realname">爱新觉罗·颙琰 · 年号：嘉庆</div>
+          <div class="emperor-meta">
+            <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1760-1820（60岁）</span></div>
+            <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1796-1820（25年）</span></div>
+          </div>
+          <div class="life-bar"><div class="reign" style="left:60.0%;width:40.0%"></div></div>
+          <div class="life-bar-labels"><span>1760</span><span>1796 在位</span><span>1820</span></div>
+          <div class="relation-tag">乾隆第十五子 · 诛杀和珅 · 清朝由盛转衰</div>
+        </div>
+        <div class="ministers-panel">
+          <h4>👤 重要大臣</h4>
+          <div class="minister-list">
+            <span class="minister-tag">王杰</span><span class="minister-tag">董诰</span>
+            <span class="minister-tag">刘墉</span>
+            <span class="minister-tag negative">和珅</span>
+          </div>
+        </div>
+      </div>
+      <div class="entry-center"><div class="year-marker">1796</div></div>
+      <div class="entry-right">
+        <div class="events-panel">
+          <h4>📜 重大事件</h4>
+          <div class="event-item"><span class="event-year">1799</span><span>乾隆驾崩，嘉庆亲政，诛杀和珅</span></div>
+          <div class="event-item"><span class="event-year">1804</span><span>白莲教起义被镇压（历时九年）</span></div>
+          <div class="event-item"><span class="event-year">1813</span><span>天理教起义，攻入紫禁城（癸酉之变）</span></div>
+          <div class="event-item"><span class="event-year">1820</span><span>嘉庆病逝于避暑山庄</span></div>
+        </div>
+      </div>
+    </div></div>
+
+    <!-- 道光 -->
+    <div class="timeline-entry"><div class="entry-content">
+      <div class="entry-left">
+        <div class="events-panel">
+          <h4>📜 重大事件</h4>
+          <div class="event-item"><span class="event-year">1821</span><span>即位，厉行节俭</span></div>
+          <div class="event-item"><span class="event-year">1838</span><span>林则徐受命禁烟</span></div>
+          <div class="event-item"><span class="event-year">1839</span><span>林则徐虎门销烟</span></div>
+          <div class="event-item"><span class="event-year">1840</span><span>第一次鸦片战争爆发</span></div>
+          <div class="event-item"><span class="event-year">1842</span><span>签订《南京条约》，割让香港岛</span></div>
+          <div class="event-item"><span class="event-year">1844</span><span>中美《望厦条约》、中法《黄埔条约》</span></div>
+        </div>
+      </div>
+      <div class="entry-center"><div class="year-marker">1821</div></div>
+      <div class="entry-right">
+        <div class="emperor-card">
+          <div class="order">8</div>
+          <div class="emperor-name">清宣宗</div>
+          <div class="emperor-realname">爱新觉罗·旻宁 · 年号：道光</div>
+          <div class="emperor-meta">
+            <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1782-1850（68岁）</span></div>
+            <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1821-1850（30年）</span></div>
+          </div>
+          <div class="life-bar"><div class="reign" style="left:57.4%;width:42.6%"></div></div>
+          <div class="life-bar-labels"><span>1782</span><span>1821 在位</span><span>1850</span></div>
+          <div class="relation-tag">嘉庆次子 · 鸦片战争 · 割地赔款之始</div>
+        </div>
+        <div class="ministers-panel">
+          <h4>👤 重要大臣</h4>
+          <div class="minister-list">
+            <span class="minister-tag">林则徐</span><span class="minister-tag">邓廷桢</span>
+            <span class="minister-tag negative">琦善</span><span class="minister-tag negative">穆彰阿</span>
+          </div>
+        </div>
+      </div>
+    </div></div>
+
+    <!-- 咸丰 -->
+    <div class="timeline-entry"><div class="entry-content">
+      <div class="entry-left">
+        <div class="emperor-card">
+          <div class="order">9</div>
+          <div class="emperor-name">清文宗</div>
+          <div class="emperor-realname">爱新觉罗·奕詝 · 年号：咸丰</div>
+          <div class="emperor-meta">
+            <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1831-1861（30岁）</span></div>
+            <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1851-1861（11年）</span></div>
+          </div>
+          <div class="life-bar"><div class="reign" style="left:66.7%;width:33.3%"></div></div>
+          <div class="life-bar-labels"><span>1831</span><span>1851 在位</span><span>1861</span></div>
+          <div class="relation-tag">道光第四子 · 内忧外患 · 出逃热河</div>
+        </div>
+        <div class="ministers-panel">
+          <h4>👤 重要大臣</h4>
+          <div class="minister-list">
+            <span class="minister-tag">曾国藩</span><span class="minister-tag">李鸿章</span>
+            <span class="minister-tag">左宗棠</span><span class="minister-tag">肃顺</span>
+            <span class="minister-tag negative">慈禧太后</span>
+          </div>
+        </div>
+      </div>
+      <div class="entry-center"><div class="year-marker">1851</div></div>
+      <div class="entry-right">
+        <div class="events-panel">
+          <h4>📜 重大事件</h4>
+          <div class="event-item"><span class="event-year">1851</span><span>太平天国起义爆发（洪秀全金田起义）</span></div>
+          <div class="event-item"><span class="event-year">1853</span><span>太平军攻占南京，改名天京</span></div>
+          <div class="event-item"><span class="event-year">1856</span><span>第二次鸦片战争爆发</span></div>
+          <div class="event-item"><span class="event-year">1860</span><span>英法联军火烧圆明园</span></div>
+          <div class="event-item"><span class="event-year">1860</span><span>签订《北京条约》，割让九龙</span></div>
+          <div class="event-item"><span class="event-year">1861</span><span>咸丰病逝于热河避暑山庄</span></div>
+        </div>
+      </div>
+    </div></div>
+
+    <!-- 同治 -->
+    <div class="timeline-entry"><div class="entry-content">
+      <div class="entry-left">
+        <div class="events-panel">
+          <h4>📜 重大事件</h4>
+          <div class="event-item"><span class="event-year">1861</span><span>辛酉政变，慈禧太后垂帘听政</span></div>
+          <div class="event-item"><span class="event-year">1862</span><span>同治中兴，洋务运动全面展开</span></div>
+          <div class="event-item"><span class="event-year">1864</span><span>曾国藩湘军攻克天京，太平天国覆灭</span></div>
+          <div class="event-item"><span class="event-year">1865</span><span>李鸿章创办江南制造总局</span></div>
+          <div class="event-item"><span class="event-year">1872</span><span>第一批幼童赴美留学</span></div>
+          <div class="event-item"><span class="event-year">1874</span><span>同治驾崩，年仅18岁</span></div>
+        </div>
+      </div>
+      <div class="entry-center"><div class="year-marker">1862</div></div>
+      <div class="entry-right">
+        <div class="emperor-card">
+          <div class="order">10</div>
+          <div class="emperor-name">清穆宗</div>
+          <div class="emperor-realname">爱新觉罗·载淳 · 年号：同治</div>
+          <div class="emperor-meta">
+            <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1856-1874（18岁）</span></div>
+            <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1862-1874（13年）</span></div>
+          </div>
+          <div class="life-bar"><div class="reign" style="left:33.3%;width:66.7%"></div></div>
+          <div class="life-bar-labels"><span>1856</span><span>1862 在位</span><span>1874</span></div>
+          <div class="relation-tag">咸丰长子 · 慈禧太后之子 · 同治中兴</div>
+        </div>
+        <div class="ministers-panel">
+          <h4>👤 重要大臣</h4>
+          <div class="minister-list">
+            <span class="minister-tag">曾国藩</span><span class="minister-tag">李鸿章</span>
+            <span class="minister-tag">左宗棠</span><span class="minister-tag">恭亲王奕訢</span>
+            <span class="minister-tag negative">慈禧太后</span>
+          </div>
+        </div>
+      </div>
+    </div></div>
+
+    <!-- 光绪 -->
+    <div class="timeline-entry"><div class="entry-content">
+      <div class="entry-left">
+        <div class="emperor-card">
+          <div class="order">11</div>
+          <div class="emperor-name">清德宗</div>
+          <div class="emperor-realname">爱新觉罗·载湉 · 年号：光绪</div>
+          <div class="emperor-meta">
+            <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1871-1908（37岁）</span></div>
+            <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1875-1908（34年）</span></div>
+          </div>
+          <div class="life-bar"><div class="reign" style="left:10.8%;width:89.2%"></div></div>
+          <div class="life-bar-labels"><span>1871</span><span>1875 在位</span><span>1908</span></div>
+          <div class="relation-tag">醇亲王之子 · 同治堂弟 · 戊戌变法</div>
+        </div>
+        <div class="ministers-panel">
+          <h4>👤 重要大臣</h4>
+          <div class="minister-list">
+            <span class="minister-tag">李鸿章</span><span class="minister-tag">康有为</span>
+            <span class="minister-tag">梁启超</span><span class="minister-tag">张之洞</span>
+            <span class="minister-tag negative">慈禧太后</span><span class="minister-tag negative">袁世凯</span>
+          </div>
+        </div>
+      </div>
+      <div class="entry-center"><div class="year-marker">1875</div></div>
+      <div class="entry-right">
+        <div class="events-panel">
+          <h4>📜 重大事件</h4>
+          <div class="event-item"><span class="event-year">1875</span><span>光绪即位，慈禧太后再度垂帘听政</span></div>
+          <div class="event-item"><span class="event-year">1883</span><span>中法战争爆发</span></div>
+          <div class="event-item"><span class="event-year">1894</span><span>甲午中日战争爆发</span></div>
+          <div class="event-item"><span class="event-year">1895</span><span>签订《马关条约》，割让台湾</span></div>
+          <div class="event-item"><span class="event-year">1898</span><span>戊戌变法（百日维新），慈禧发动政变</span></div>
+          <div class="event-item"><span class="event-year">1900</span><span>义和团运动，八国联军侵华</span></div>
+          <div class="event-item"><span class="event-year">1901</span><span>签订《辛丑条约》</span></div>
+          <div class="event-item"><span class="event-year">1908</span><span>光绪驾崩，次日慈禧亦去世</span></div>
+        </div>
+      </div>
+    </div></div>
+
+    <!-- 宣统 -->
+    <div class="timeline-entry"><div class="entry-content">
+      <div class="entry-left">
+        <div class="events-panel">
+          <h4>📜 重大事件</h4>
+          <div class="event-item"><span class="event-year">1909</span><span>溥仪即位，改元宣统，载沣摄政</span></div>
+          <div class="event-item"><span class="event-year">1911</span><span>辛亥革命爆发，武昌起义成功</span></div>
+          <div class="event-item"><span class="event-year">1912</span><span>清帝颁布退位诏书，清朝灭亡</span></div>
+          <div class="event-item"><span class="event-year">1917</span><span>张勋复辟，溥仪短暂复位12天</span></div>
+          <div class="event-item"><span class="event-year">1932</span><span>伪满洲国执政（后称皇帝）</span></div>
+          <div class="event-item"><span class="event-year">1967</span><span>溥仪病逝于北京</span></div>
+        </div>
+      </div>
+      <div class="entry-center"><div class="year-marker">1909</div></div>
+      <div class="entry-right">
+        <div class="emperor-card">
+          <div class="order">12</div>
+          <div class="emperor-name">清逊帝（宣统帝）</div>
+          <div class="emperor-realname">爱新觉罗·溥仪 · 年号：宣统</div>
+          <div class="emperor-meta">
+            <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1906-1967（61岁）</span></div>
+            <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1909-1912（3年）</span></div>
+          </div>
+          <div class="life-bar"><div class="reign" style="left:4.9%;width:4.9%"></div></div>
+          <div class="life-bar-labels"><span>1906</span><span>1909-1912</span><span>1967</span></div>
+          <div class="relation-tag">光绪之侄 · 清朝末帝 · 三岁即位</div>
+        </div>
+        <div class="ministers-panel">
+          <h4>👤 重要大臣</h4>
+          <div class="minister-list">
+            <span class="minister-tag">载沣（摄政王）</span>
+            <span class="minister-tag negative">袁世凯</span>
+            <span class="minister-tag">张之洞</span>
+          </div>
+        </div>
+      </div>
+    </div></div>
+
+  </div><!-- end late timeline -->
+
+  <!-- ==================== 世系关系图 ==================== -->
+  <div class="family-tree-section">
+    <h2>清朝皇帝世系关系图</h2>
+    <div class="tree-container">
+      <svg class="tree-svg" viewBox="0 0 1300 900" width="1300" height="900" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="earlyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#1a3a5c;stop-opacity:1"/><stop offset="100%" style="stop-color:#2563eb;stop-opacity:1"/>
+          </linearGradient>
+          <linearGradient id="lateGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#8b6914;stop-opacity:1"/><stop offset="100%" style="stop-color:#c9941e;stop-opacity:1"/>
+          </linearGradient>
+          <filter id="shadow"><feDropShadow dx="1" dy="2" stdDeviation="3" flood-opacity="0.15"/></filter>
+          <marker id="arwE" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#1a3a5c"/></marker>
+          <marker id="arwL" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#8b6914"/></marker>
+        </defs>
+
+        <!-- 背景 -->
+        <rect x="0" y="0" width="1300" height="200" fill="#e8eff5" rx="12"/>
+        <rect x="0" y="210" width="1300" height="690" fill="#fdf8ee" rx="12"/>
+        <text x="25" y="35" font-size="18" fill="#1a3a5c" font-weight="bold" font-family="PingFang SC,serif">后金时期世系</text>
+        <text x="25" y="245" font-size="18" fill="#8b6914" font-weight="bold" font-family="PingFang SC,serif">入关后世系</text>
+
+        <!-- ===== 后金时期 ===== -->
+        <!-- 太祖 -->
+        <rect x="80" y="55" width="160" height="60" rx="8" fill="url(#earlyGrad)" filter="url(#shadow)"/>
+        <text x="160" y="80" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold" font-family="PingFang SC,serif">①太祖 努尔哈赤</text>
+        <text x="160" y="102" text-anchor="middle" fill="#d0e0f0" font-size="10" font-family="PingFang SC,serif">1616-1626 在位</text>
+
+        <!-- 太宗 -->
+        <rect x="340" y="55" width="160" height="60" rx="8" fill="url(#earlyGrad)" filter="url(#shadow)"/>
+        <text x="420" y="80" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold" font-family="PingFang SC,serif">②太宗 皇太极</text>
+        <text x="420" y="102" text-anchor="middle" fill="#d0e0f0" font-size="10" font-family="PingFang SC,serif">1627-1643 在位</text>
+
+        <!-- 太祖→太宗 -->
+        <line x1="240" y1="85" x2="338" y2="85" stroke="#1a3a5c" stroke-width="2" marker-end="url(#arwE)"/>
+        <text x="290" y="78" text-anchor="middle" fill="#1a3a5c" font-size="10" font-family="PingFang SC,serif">第八子</text>
+
+        <!-- ===== 分隔线 ===== -->
+        <line x1="20" y1="205" x2="1280" y2="205" stroke="#c9941e" stroke-width="2" stroke-dasharray="10,5"/>
+        <text x="650" y="202" text-anchor="middle" fill="#c9941e" font-size="12" font-weight="bold" font-family="PingFang SC,serif">── 清兵入关 1644 ──</text>
+
+        <!-- ===== 入关后 ===== -->
+        <!-- 世祖 -->
+        <rect x="80" y="280" width="160" height="60" rx="8" fill="url(#lateGrad)" filter="url(#shadow)"/>
+        <text x="160" y="305" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold" font-family="PingFang SC,serif">③世祖 福临</text>
+        <text x="160" y="327" text-anchor="middle" fill="#fef3e2" font-size="10" font-family="PingFang SC,serif">1644-1661 在位</text>
+
+        <!-- 太宗→世祖 -->
+        <path d="M380 115 Q250 180 160 278" stroke="#8b6914" stroke-width="2" fill="none" marker-end="url(#arwL)"/>
+        <text x="240" y="195" fill="#8b6914" font-size="10" font-family="PingFang SC,serif">第九子</text>
+
+        <!-- 圣祖 -->
+        <rect x="80" y="390" width="160" height="60" rx="8" fill="url(#lateGrad)" filter="url(#shadow)"/>
+        <text x="160" y="415" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold" font-family="PingFang SC,serif">④圣祖 玄烨</text>
+        <text x="160" y="437" text-anchor="middle" fill="#fef3e2" font-size="10" font-family="PingFang SC,serif">1662-1722 在位</text>
+
+        <line x1="160" y1="340" x2="160" y2="388" stroke="#8b6914" stroke-width="2" marker-end="url(#arwL)"/>
+        <text x="178" y="368" fill="#8b6914" font-size="10" font-family="PingFang SC,serif">第三子</text>
+
+        <!-- 世宗 -->
+        <rect x="80" y="500" width="160" height="60" rx="8" fill="url(#lateGrad)" filter="url(#shadow)"/>
+        <text x="160" y="525" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold" font-family="PingFang SC,serif">⑤世宗 胤禛</text>
+        <text x="160" y="547" text-anchor="middle" fill="#fef3e2" font-size="10" font-family="PingFang SC,serif">1723-1735 在位</text>
+
+        <line x1="160" y1="450" x2="160" y2="498" stroke="#8b6914" stroke-width="2" marker-end="url(#arwL)"/>
+        <text x="178" y="478" fill="#8b6914" font-size="10" font-family="PingFang SC,serif">第四子</text>
+
+        <!-- 高宗 -->
+        <rect x="80" y="610" width="160" height="60" rx="8" fill="url(#lateGrad)" filter="url(#shadow)"/>
+        <text x="160" y="635" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold" font-family="PingFang SC,serif">⑥高宗 弘历</text>
+        <text x="160" y="657" text-anchor="middle" fill="#fef3e2" font-size="10" font-family="PingFang SC,serif">1736-1795 在位</text>
+
+        <line x1="160" y1="560" x2="160" y2="608" stroke="#8b6914" stroke-width="2" marker-end="url(#arwL)"/>
+        <text x="178" y="588" fill="#8b6914" font-size="10" font-family="PingFang SC,serif">第四子</text>
+
+        <!-- 仁宗 -->
+        <rect x="80" y="720" width="160" height="60" rx="8" fill="url(#lateGrad)" filter="url(#shadow)"/>
+        <text x="160" y="745" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold" font-family="PingFang SC,serif">⑦仁宗 颙琰</text>
+        <text x="160" y="767" text-anchor="middle" fill="#fef3e2" font-size="10" font-family="PingFang SC,serif">1796-1820 在位</text>
+
+        <line x1="160" y1="670" x2="160" y2="718" stroke="#8b6914" stroke-width="2" marker-end="url(#arwL)"/>
+        <text x="178" y="698" fill="#8b6914" font-size="10" font-family="PingFang SC,serif">第十五子</text>
+
+        <!-- ===== 右列：道咸同光宣 ===== -->
+        <!-- 宣宗 -->
+        <rect x="400" y="280" width="160" height="60" rx="8" fill="url(#lateGrad)" filter="url(#shadow)"/>
+        <text x="480" y="305" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold" font-family="PingFang SC,serif">⑧宣宗 旻宁</text>
+        <text x="480" y="327" text-anchor="middle" fill="#fef3e2" font-size="10" font-family="PingFang SC,serif">1821-1850 在位</text>
+
+        <path d="M160 750 Q320 720 460 338" stroke="#8b6914" stroke-width="2" fill="none" marker-end="url(#arwL)"/>
+        <text x="300" y="530" fill="#8b6914" font-size="10" font-family="PingFang SC,serif">次子</text>
+
+        <!-- 文宗 -->
+        <rect x="400" y="390" width="160" height="60" rx="8" fill="url(#lateGrad)" filter="url(#shadow)"/>
+        <text x="480" y="415" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold" font-family="PingFang SC,serif">⑨文宗 奕詝</text>
+        <text x="480" y="437" text-anchor="middle" fill="#fef3e2" font-size="10" font-family="PingFang SC,serif">1851-1861 在位</text>
+
+        <line x1="480" y1="340" x2="480" y2="388" stroke="#8b6914" stroke-width="2" marker-end="url(#arwL)"/>
+        <text x="498" y="368" fill="#8b6914" font-size="10" font-family="PingFang SC,serif">第四子</text>
+
+        <!-- 醇亲王分支标注 -->
+        <rect x="640" y="390" width="140" height="40" rx="6" fill="#e0d0b0" stroke="#8b6914" stroke-width="1"/>
+        <text x="710" y="415" text-anchor="middle" fill="#8b6914" font-size="11" font-family="PingFang SC,serif">醇亲王 奕譞</text>
+
+        <line x1="560" y1="420" x2="638" y2="410" stroke="#999" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <text x="600" y="408" text-anchor="middle" fill="#999" font-size="9" font-family="PingFang SC,serif">兄弟（道光第七子）</text>
+
+        <!-- 穆宗 -->
+        <rect x="400" y="500" width="160" height="60" rx="8" fill="url(#lateGrad)" filter="url(#shadow)"/>
+        <text x="480" y="525" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold" font-family="PingFang SC,serif">⑩穆宗 载淳</text>
+        <text x="480" y="547" text-anchor="middle" fill="#fef3e2" font-size="10" font-family="PingFang SC,serif">1862-1874 在位</text>
+
+        <line x1="480" y1="450" x2="480" y2="498" stroke="#8b6914" stroke-width="2" marker-end="url(#arwL)"/>
+        <text x="498" y="478" fill="#8b6914" font-size="10" font-family="PingFang SC,serif">长子</text>
+
+        <!-- 德宗 -->
+        <rect x="640" y="500" width="160" height="60" rx="8" fill="url(#lateGrad)" filter="url(#shadow)"/>
+        <text x="720" y="525" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold" font-family="PingFang SC,serif">⑪德宗 载湉</text>
+        <text x="720" y="547" text-anchor="middle" fill="#fef3e2" font-size="10" font-family="PingFang SC,serif">1875-1908 在位</text>
+
+        <line x1="710" y1="430" x2="720" y2="498" stroke="#8b6914" stroke-width="2" marker-end="url(#arwL)"/>
+        <text x="730" y="468" fill="#8b6914" font-size="10" font-family="PingFang SC,serif">次子（过继）</text>
+
+        <!-- 同治→光绪过继虚线 -->
+        <line x1="560" y1="530" x2="638" y2="530" stroke="#999" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <text x="600" y="523" text-anchor="middle" fill="#c41e3a" font-size="9" font-family="PingFang SC,serif">堂兄弟（过继）</text>
+
+        <!-- 逊帝 -->
+        <rect x="640" y="610" width="160" height="60" rx="8" fill="url(#lateGrad)" filter="url(#shadow)"/>
+        <text x="720" y="635" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold" font-family="PingFang SC,serif">⑫逊帝 溥仪</text>
+        <text x="720" y="657" text-anchor="middle" fill="#fef3e2" font-size="10" font-family="PingFang SC,serif">1909-1912 在位</text>
+
+        <path d="M720 560 L720 608" stroke="#8b6914" stroke-width="2" marker-end="url(#arwL)"/>
+        <text x="738" y="588" fill="#8b6914" font-size="10" font-family="PingFang SC,serif">之侄（过继）</text>
+
+        <!-- 光绪→宣统过继虚线 -->
+        <line x1="640" y1="640" x2="560" y2="640" stroke="#999" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <text x="600" y="633" text-anchor="middle" fill="#c41e3a" font-size="9" font-family="PingFang SC,serif">兼祧（过继）</text>
+
+        <!-- 慈禧标注 -->
+        <rect x="880" y="470" width="180" height="80" rx="8" fill="#fde8e8" stroke="#b91c1c" stroke-width="1" stroke-dasharray="4,3"/>
+        <text x="970" y="493" text-anchor="middle" fill="#b91c1c" font-size="13" font-weight="bold" font-family="PingFang SC,serif">慈禧太后</text>
+        <text x="970" y="512" text-anchor="middle" fill="#b91c1c" font-size="10" font-family="PingFang SC,serif">实际掌权 1861-1908</text>
+        <text x="970" y="531" text-anchor="middle" fill="#b91c1c" font-size="10" font-family="PingFang SC,serif">控制同治、光绪两朝</text>
+
+        <path d="M480 530 Q680 490 878 490" stroke="#b91c1c" stroke-width="1.5" stroke-dasharray="4,3" fill="none"/>
+        <path d="M720 530 Q800 510 878 510" stroke="#b91c1c" stroke-width="1.5" stroke-dasharray="4,3" fill="none"/>
+
+        <!-- 图例 -->
+        <rect x="1050" y="280" width="220" height="120" rx="8" fill="#fff" stroke="#ccc"/>
+        <text x="1070" y="302" font-size="12" font-weight="bold" fill="#333" font-family="PingFang SC,serif">图例</text>
+        <line x1="1070" y1="318" x2="1110" y2="318" stroke="#1a3a5c" stroke-width="2" marker-end="url(#arwE)"/>
+        <text x="1120" y="322" font-size="11" fill="#333" font-family="PingFang SC,serif">后金父子传承</text>
+        <line x1="1070" y1="340" x2="1110" y2="340" stroke="#8b6914" stroke-width="2" marker-end="url(#arwL)"/>
+        <text x="1120" y="344" font-size="11" fill="#333" font-family="PingFang SC,serif">入关后父子传承</text>
+        <line x1="1070" y1="362" x2="1110" y2="362" stroke="#999" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <text x="1120" y="366" font-size="11" fill="#333" font-family="PingFang SC,serif">过继/兄弟关系</text>
+        <line x1="1070" y1="384" x2="1110" y2="384" stroke="#b91c1c" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <text x="1120" y="388" font-size="11" fill="#333" font-family="PingFang SC,serif">慈禧太后掌控</text>
+      </svg>
+    </div>
+  </div>
+
+</div><!-- end container -->
+
+<div class="footer">
+  <p>清朝（1616-1912），中国历史上最后一个封建王朝，由建州女真首领努尔哈赤建立后金，皇太极改国号为大清，共历十二帝，享国二百九十六年。</p>
+  <p style="margin-top:8px;">清朝前期康乾盛世国力鼎盛，疆域辽阔；后期闭关锁国，列强入侵，历经鸦片战争、甲午战争等，最终在辛亥革命中灭亡。</p>
+  <p style="margin-top:8px;">数据来源：《清史稿》《清实录》《清史》等 · 仅供学习参考</p>
+</div>
+
+<script>
+(function(){
+  const emperors = [
+    { name:'太祖 努尔哈赤', birth:1559, death:1626, reigns:[{s:1616,e:1626}], type:'early' },
+    { name:'太宗 皇太极', birth:1592, death:1643, reigns:[{s:1627,e:1643}], type:'early' },
+    { name:'世祖 福临', birth:1638, death:1661, reigns:[{s:1644,e:1661}], type:'late' },
+    { name:'圣祖 玄烨', birth:1654, death:1722, reigns:[{s:1662,e:1722}], type:'late' },
+    { name:'世宗 胤禛', birth:1678, death:1735, reigns:[{s:1723,e:1735}], type:'late' },
+    { name:'高宗 弘历', birth:1711, death:1799, reigns:[{s:1736,e:1795}], type:'late' },
+    { name:'仁宗 颙琰', birth:1760, death:1820, reigns:[{s:1796,e:1820}], type:'late' },
+    { name:'宣宗 旻宁', birth:1782, death:1850, reigns:[{s:1821,e:1850}], type:'late' },
+    { name:'文宗 奕詝', birth:1831, death:1861, reigns:[{s:1851,e:1861}], type:'late' },
+    { name:'穆宗 载淳', birth:1856, death:1874, reigns:[{s:1862,e:1874}], type:'late' },
+    { name:'德宗 载湉', birth:1871, death:1908, reigns:[{s:1875,e:1908}], type:'late' },
+    { name:'逊帝 溥仪', birth:1906, death:1967, reigns:[{s:1909,e:1912}], type:'late' },
+  ];
+
+  const minYear=1550, maxYear=1970, totalYears=maxYear-minYear;
+  const colors = { early:'#1a3a5c', late:'#c9941e' };
+
+  const container = document.getElementById('ganttChart');
+  let headerHTML = '<div class="gantt-header"><div class="gantt-label">年份</div><div class="gantt-bar-area" style="position:relative;height:30px;">';
+  for(let y=1600;y<=1950;y+=50){
+    headerHTML += `<span class="gantt-year-tick" style="left:${((y-minYear)/totalYears)*100}%">${y}</span>`;
+  }
+  headerHTML += '</div></div>';
+  container.innerHTML = headerHTML;
+
+  let bodyHTML = '<div class="gantt-body">';
+  emperors.forEach(emp => {
+    const color = colors[emp.type];
+    const lifeLeft = ((emp.birth-minYear)/totalYears)*100;
+    const lifeWidth = ((emp.death-emp.birth)/totalYears)*100;
+    let reignBars = '';
+    emp.reigns.forEach(r => {
+      const rLeft = ((r.s-minYear)/totalYears)*100;
+      const rWidth = ((r.e-r.s)/totalYears)*100;
+      const totalReign = emp.reigns.reduce((a,b)=>a+(b.e-b.s),0);
+      reignBars += `<div class="gantt-bar reign-bar" style="left:${rLeft}%;width:${Math.max(rWidth,0.4)}%;background:${color};"><div class="tooltip">在位：${r.s}-${r.e}（共${totalReign}年）</div></div>`;
+    });
+    bodyHTML += `<div class="gantt-row"><div class="gantt-label" style="color:${color}">${emp.name}</div><div class="gantt-bar-area"><div class="gantt-bar" style="left:${lifeLeft}%;width:${lifeWidth}%;background:${color};"><div class="tooltip">生卒：${emp.birth}-${emp.death}（${emp.death-emp.birth}岁）</div></div>${reignBars}</div></div>`;
+  });
+  bodyHTML += '</div>';
+  container.innerHTML += bodyHTML;
+})();
+</script>
+
+</body>
+</html>

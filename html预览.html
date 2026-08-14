@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>🔧 HTML 预览 & 压缩</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --px-bg:        #1a1a2e;
+  --px-surface:   #16213e;
+  --px-card:      #0f3460;
+  --px-accent:    #e94560;
+  --px-pink:      #ff6b9d;
+  --px-gold:      #ffd700;
+  --px-green:     #4ade80;
+  --px-cyan:      #22d3ee;
+  --px-text:      #e8e8e8;
+  --px-dim:       #8892a0;
+  --px-border:    #2a2a4a;
+  --px-font:      'Press Start 2P', monospace;
+}
+
+body {
+  background: var(--px-bg);
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(233,69,96,0.06) 0%, transparent 60%),
+    radial-gradient(circle at 80% 70%, rgba(34,211,238,0.06) 0%, transparent 60%),
+    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.01) 2px, rgba(255,255,255,0.01) 4px);
+  color: var(--px-text);
+  font-family: var(--px-font);
+  font-size: 14px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 14px 50px;
+}
+
+body::after {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none;
+  background: repeating-linear-gradient(0deg,
+    transparent, transparent 2px,
+    rgba(0,0,0,0.08) 2px, rgba(0,0,0,0.08) 4px);
+  z-index: 9999;
+}
+
+/* ── header ── */
+.header { text-align: center; margin-bottom: 20px; width: 100%; max-width: 1200px; }
+.header h1 { font-size: 22px; color: var(--px-accent); text-shadow: 2px 2px 0 rgba(0,0,0,0.5); letter-spacing: 2px; margin-bottom: 6px; }
+.header p { font-size: 11px; color: var(--px-dim); letter-spacing: 1px; }
+.header a { font-size: 11px; color: var(--px-cyan); text-decoration: none; letter-spacing: 1px; }
+.header a:hover { color: var(--px-accent); }
+
+/* ── toolbar ── */
+.toolbar { width: 100%; max-width: 1200px; display: flex; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; align-items: center; }
+.px-btn {
+  font-family: var(--px-font); font-size: 12px; padding: 10px 16px;
+  border: 2px solid var(--px-border); background: var(--px-card);
+  color: var(--px-text); cursor: pointer;
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.4);
+  transition: all 0.1s step-start; letter-spacing: 1px; white-space: nowrap;
+}
+.px-btn:hover { transform: translate(-1px, -1px); box-shadow: 3px 3px 0 rgba(0,0,0,0.4); border-color: var(--px-cyan); }
+.px-btn:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0 rgba(0,0,0,0.4); }
+.px-btn.accent { border-color: var(--px-accent); color: var(--px-accent); }
+.px-btn.accent:hover { border-color: var(--px-pink); color: var(--px-pink); }
+.px-btn.gold { border-color: var(--px-gold); color: var(--px-gold); }
+.px-btn.green { border-color: var(--px-green); color: var(--px-green); }
+
+.size-info { font-size: 11px; color: var(--px-dim); align-self: center; margin-left: auto; }
+
+/* ── main layout ── */
+.main { width: 100%; max-width: 1200px; flex: 1; display: flex; gap: 14px; min-height: 0; }
+.panel {
+  flex: 1; background: var(--px-surface); border: 2px solid var(--px-border);
+  box-shadow: inset 0 0 0 1px rgba(233,69,96,0.06), 3px 3px 0 rgba(0,0,0,0.3);
+  display: flex; flex-direction: column; min-width: 0; position: relative; overflow: hidden;
+}
+.panel-label {
+  font-size: 11px; color: var(--px-dim); padding: 10px 14px;
+  border-bottom: 1px solid var(--px-border); letter-spacing: 1px;
+  flex-shrink: 0; display: flex; justify-content: space-between; align-items: center;
+  background: rgba(0,0,0,0.15);
+}
+.panel-label .filename { color: var(--px-cyan); }
+
+/* ── editor ── */
+#editor {
+  flex: 1; width: 100%; border: none; padding: 14px;
+  font-family: 'Courier New', 'Source Code Pro', monospace;
+  font-size: 14px; line-height: 1.6;
+  color: var(--px-text); background: #0d1b2a;
+  resize: none; outline: none; tab-size: 2;
+}
+#editor::placeholder { color: #3a4a5a; }
+
+/* ── preview iframe ── */
+.preview-wrap { flex: 1; background: #fff; overflow: auto; display: flex; }
+#preview { width: 100%; height: 100%; border: none; background: #fff; }
+
+/* ── toast ── */
+.toast {
+  position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+  background: var(--px-card); border: 2px solid var(--px-green);
+  color: var(--px-green); font-family: var(--px-font); font-size: 12px;
+  padding: 14px 28px; box-shadow: 2px 2px 0 rgba(0,0,0,0.4);
+  z-index: 10000; opacity: 0; pointer-events: none;
+  transition: opacity 0.15s step-start; letter-spacing: 1px;
+}
+.toast.show { opacity: 1; }
+
+/* ── responsive ── */
+@media (max-width: 768px) {
+  .main { flex-direction: column; }
+  .panel { min-height: 300px; }
+  .toolbar { justify-content: center; }
+  .size-info { margin-left: 0; width: 100%; text-align: center; }
+  .header h1 { font-size: 17px; }
+  body { font-size: 12px; }
+  .px-btn { font-size: 10px; padding: 8px 12px; }
+}
+
+/* ── footer ── */
+footer { margin-top: 28px; font-size: 9px; color: #3a3a5a; letter-spacing: 1px; text-align: center; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🔧 HTML 预览 &amp; 压缩</h1>
+  <p>编辑 · 实时预览 · 一键压缩</p>
+  <a href="index.html">⬅ 返回工具集</a>
+</div>
+
+<div class="toolbar">
+  <button class="px-btn accent" onclick="runPreview()" title="Ctrl+Enter">▶ 运行预览</button>
+  <button class="px-btn green" onclick="compressHTML()">🗜 压缩 HTML</button>
+  <button class="px-btn gold" onclick="copyCompressed()">📋 复制结果</button>
+  <button class="px-btn" onclick="clearAll()">✕ 清空</button>
+  <button class="px-btn" onclick="loadSample()">📄 加载示例</button>
+  <span class="size-info" id="sizeInfo">0 B</span>
+</div>
+
+<div class="main">
+  <div class="panel">
+    <div class="panel-label">
+      <span>HTML 代码</span>
+      <span class="filename" id="fname">未命名</span>
+    </div>
+    <textarea id="editor" placeholder="在此粘贴或编写 HTML 代码..." spellcheck="false"></textarea>
+  </div>
+  <div class="panel">
+    <div class="panel-label">预览</div>
+    <div class="preview-wrap">
+      <iframe id="preview" sandbox="allow-scripts allow-same-origin" title="预览"></iframe>
+    </div>
+  </div>
+</div>
+
+<footer>✦ 2026 · 像素工坊 ✦</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const editor = document.getElementById('editor');
+const preview = document.getElementById('preview');
+const sizeInfo = document.getElementById('sizeInfo');
+const toastEl = document.getElementById('toast');
+
+const SAMPLE = `<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>示例页面</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 600px; margin: 2rem auto; padding: 1rem; background: #f8f9fa; }
+    h1 { color: #2c3e50; }
+    .card { background: white; border-radius: 8px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .btn { display: inline-block; padding: .5rem 1.2rem; background: #3498db; color: white; border: none; border-radius: 4px; cursor: pointer; }
+    .btn:hover { background: #2980b9; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>🖐 欢迎</h1>
+    <p>这是一个 HTML 预览示例。<br>你可以在左侧编辑代码，这里会实时显示结果。</p>
+    <ul>
+      <li>支持 CSS 样式</li>
+      <li>支持 JavaScript</li>
+      <li>点击「压缩 HTML」可以减少文件体积</li>
+    </ul>
+    <button class="btn" onclick="alert('你好！')">点我试试</button>
+  </div>
+</body>
+</html>`;
+
+function formatSize(bytes) {
+  if (bytes < 1024) return bytes + ' B';
+  if (bytes < 1024*1024) return (bytes/1024).toFixed(1) + ' KB';
+  return (bytes/(1024*1024)).toFixed(2) + ' MB';
+}
+
+function updateSize() {
+  sizeInfo.textContent = formatSize(new Blob([editor.value]).size);
+}
+
+function runPreview() {
+  const code = editor.value.trim();
+  preview.srcdoc = code || '<div style="color:#999;text-align:center;padding-top:60px;font-family:sans-serif;">在左侧输入 HTML 代码后点击运行</div>';
+}
+
+let debounceTimer;
+editor.addEventListener('input', function() {
+  updateSize();
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(runPreview, 600);
+});
+
+editor.addEventListener('keydown', function(e) {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+    e.preventDefault(); clearTimeout(debounceTimer); runPreview();
+  }
+  if (e.key === 'Tab') {
+    e.preventDefault();
+    const start = this.selectionStart, end = this.selectionEnd;
+    this.value = this.value.substring(0, start) + '  ' + this.value.substring(end);
+    this.selectionStart = this.selectionEnd = start + 2;
+  }
+});
+
+function compressHTML() {
+  let html = editor.value;
+  if (!html.trim()) { showToast('⚠ 没有内容可压缩', 'var(--px-accent)'); return; }
+  const originalSize = new Blob([html]).size;
+  html = html.replace(/<!--(?!\[if\s)[\s\S]*?-->/g, '');
+  html = html.replace(/\/\*[\s\S]*?\*\//g, '');
+  html = html.replace(/(<script[^>]*>)([\s\S]*?)(<\/script>)/gi, function(m, open, js, close) {
+    js = js.replace(/\/\/.*$/gm, '');
+    js = js.replace(/\/\*[\s\S]*?\*\//g, '');
+    return open + js + close;
+  });
+  const preserveTags = [];
+  html = html.replace(/(<(pre|textarea|script|style)\b[^>]*>)[\s\S]*?(<\/\2>)/gi, function(m) {
+    preserveTags.push(m);
+    return '___PRESERVE_' + (preserveTags.length - 1) + '___';
+  });
+  html = html.replace(/\s+/g, ' ');
+  html = html.replace(/>\s+</g, '><');
+  html = html.replace(/\s*=\s*/g, '=');
+  html = html.replace(/\s+>/g, '>');
+  html = html.replace(/<\s+/g, '<');
+  html = html.trim();
+  html = html.replace(/___PRESERVE_(\d+)___/g, function(m, idx) {
+    return preserveTags[parseInt(idx)].replace(/\n\s*/g, '\n');
+  });
+  editor.value = html; updateSize(); runPreview();
+  const compressedSize = new Blob([html]).size;
+  const saved = originalSize - compressedSize;
+  const pct = originalSize > 0 ? ((saved / originalSize) * 100).toFixed(1) : 0;
+  showToast('🗜 ' + formatSize(originalSize) + ' → ' + formatSize(compressedSize) + ' (减小 ' + pct + '%)', 'var(--px-green)');
+}
+
+function copyCompressed() {
+  const code = editor.value;
+  if (!code.trim()) { showToast('⚠ 没有内容可复制', 'var(--px-accent)'); return; }
+  navigator.clipboard.writeText(code).then(function() {
+    showToast('📋 已复制 ' + formatSize(new Blob([code]).size) + ' 到剪贴板', 'var(--px-gold)');
+  }).catch(function() {
+    editor.select(); document.execCommand('copy');
+    showToast('📋 已复制到剪贴板', 'var(--px-gold)');
+  });
+}
+
+function clearAll() { editor.value = ''; updateSize(); preview.srcdoc = ''; showToast('已清空', 'var(--px-dim)'); }
+function loadSample() { editor.value = SAMPLE; updateSize(); runPreview(); }
+
+let toastTimer;
+function showToast(msg, color) {
+  toastEl.textContent = msg; toastEl.style.color = color; toastEl.style.borderColor = color;
+  toastEl.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function() { toastEl.classList.remove('show'); }, 2500);
+}
+
+(function() {
+  var saved = localStorage.getItem('html_preview_code');
+  if (saved) { editor.value = saved; updateSize(); runPreview(); }
+  editor.addEventListener('input', function() { localStorage.setItem('html_preview_code', editor.value); });
+})();
+</script>
+
+</body>
+</html>

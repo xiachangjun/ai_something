@@ -284,6 +284,18 @@
   .card.france .banner-latin { color: #fbbf24; }
   .card.france .meta-chip { border-color: #1e3a8a40; color: #60a5fa; }
 
+  .card.qing::before { background: linear-gradient(90deg, #1a3a5c, #c9941e); }
+  .card.qing .card-banner { background: linear-gradient(135deg, #0a1a2e, #1a3a5c, #c9941e); }
+  .card.qing .banner-title { color: #f5e0c8; }
+  .card.qing .banner-latin { color: #c9941e; }
+  .card.qing .meta-chip { border-color: #1a3a5c40; color: #c9941e; }
+
+  .card.ming::before { background: linear-gradient(90deg, #8b0000, #dc2626); }
+  .card.ming .card-banner { background: linear-gradient(135deg, #1a0000, #5c0000, #8b0000); }
+  .card.ming .banner-title { color: #f5e0c8; }
+  .card.ming .banner-latin { color: #dc2626; }
+  .card.ming .meta-chip { border-color: #8b000040; color: #f87171; }
+
   /* Footer */
   .footer {
     text-align: center;
@@ -315,8 +327,10 @@
   <div class="timeline-bar">
     <div class="segment" style="flex:5.03;background:linear-gradient(90deg,#9b1b30,#c0392b)" title="唐朝 618-907">唐 618-907</div>
     <div class="segment" style="flex:3.19;background:linear-gradient(90deg,#b8860b,#daa520)" title="宋朝 960-1279">宋 960-1279</div>
+    <div class="segment" style="flex:3.50;background:linear-gradient(90deg,#8b0000,#dc2626)" title="明朝 1368-1644">明 1368-1644</div>
     <div class="segment" style="flex:5.03;background:linear-gradient(90deg,#6d28d9,#8b5cf6)" title="罗马帝国 前27-476">罗马 前27-476</div>
     <div class="segment" style="flex:8.83;background:linear-gradient(90deg,#1e3a8a,#3b82f6)" title="法兰西 987-1870">法兰西 987-1870</div>
+    <div class="segment" style="flex:3.00;background:linear-gradient(90deg,#1a3a5c,#c9941e)" title="清朝 1644-1912">清 1644-1912</div>
   </div>
   <div class="timeline-labels">
     <span>前27年</span>
@@ -324,6 +338,7 @@
     <span>1000</span>
     <span>1500</span>
     <span>1870</span>
+    <span>1912</span>
   </div>
 
   <!-- 卡片 -->
@@ -377,6 +392,34 @@
         </div>
         <div class="card-tags">
           <span>陈桥兵变</span><span>王安石变法</span><span>靖康之变</span><span>岳飞北伐</span><span>崖山海战</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <span class="enter-text">查看详情</span>
+        <span class="arrow">→</span>
+      </div>
+    </a>
+
+    <!-- 明朝 -->
+    <a href="ming-dynasty.html" class="card ming">
+      <div class="card-banner">
+        <div class="banner-icon">明</div>
+        <div class="banner-title">大 明</div>
+        <div class="banner-latin">Ming Dynasty</div>
+      </div>
+      <div class="card-body">
+        <h2>明朝皇帝世系简表</h2>
+        <div class="card-meta">
+          <div class="meta-chip">1368 - 1644</div>
+          <div class="meta-chip">276年</div>
+          <div class="meta-chip">16位皇帝</div>
+        </div>
+        <div class="card-desc">
+          最后一个由汉人建立的大一统王朝。太祖朱元璋驱除蒙元开国，成祖朱棣迁都北京、
+          郑和七下西洋，张居正改革力挽狂澜，最终亡于李自成起义与满清入关。
+        </div>
+        <div class="card-tags">
+          <span>靖难之役</span><span>郑和下西洋</span><span>土木之变</span><span>张居正改革</span><span>崇祯殉国</span>
         </div>
       </div>
       <div class="card-footer">
@@ -441,11 +484,39 @@
       </div>
     </a>
 
+    <!-- 清朝 -->
+    <a href="qing-dynasty.html" class="card qing">
+      <div class="card-banner">
+        <div class="banner-icon">龍</div>
+        <div class="banner-title">大 清</div>
+        <div class="banner-latin">Qing Dynasty</div>
+      </div>
+      <div class="card-body">
+        <h2>清朝皇帝世系简表</h2>
+        <div class="card-meta">
+          <div class="meta-chip">1616 - 1912</div>
+          <div class="meta-chip">296年</div>
+          <div class="meta-chip">12位皇帝</div>
+        </div>
+        <div class="card-desc">
+          中国最后一个封建王朝，由满族建立。从努尔哈赤建后金，经康乾盛世达到鼎盛，
+          鸦片战争后内忧外患加剧，最终在辛亥革命中走向终结。
+        </div>
+        <div class="card-tags">
+          <span>康乾盛世</span><span>鸦片战争</span><span>洋务运动</span><span>甲午战争</span><span>辛亥革命</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <span class="enter-text">查看详情</span>
+        <span class="arrow">→</span>
+      </div>
+    </a>
+
   </div>
 
   <div class="footer">
     <p>数据来源：各朝代正史及权威历史著作 · 仅供学习参考</p>
-    <p style="margin-top:6px;color:#404040;">共 4 份王朝简表 · 持续更新中</p>
+    <p style="margin-top:6px;color:#404040;">共 6 份王朝简表 · 持续更新中</p>
   </div>
 
 </div>
