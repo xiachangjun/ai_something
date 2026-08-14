@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>英国君主世系简表 (1066-2022)</title>
+<style>
+  :root{--bg:#f3f4f6;--card-bg:#fff;--early-color:#1e3a8a;--late-color:#b91c1c;--text:#1c1917;--text-light:#6b7280;--border:#d1d5db;--event-bg:#eff6ff;--minister-bg:#fef9ee;--highlight:#2563eb;--gold:#b8860b;--rev-color:#dc2626}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:"PingFang SC","Microsoft YaHei","Noto Serif SC",serif;background:var(--bg);color:var(--text);line-height:1.6}
+  .header{text-align:center;padding:50px 20px 30px;background:linear-gradient(135deg,#012169 0%,#1e3a8a 40%,#1e40af 70%,#c8102e 100%);color:#e0e7ff;position:relative;overflow:hidden}
+  .header::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffd700' fill-opacity='0.06'%3E%3Cpath d='M20 5l3 10h10l-8 6 3 10-8-6-8 6 3-10-8-6h10z'/%3E%3C/g%3E%3C/svg%3E");opacity:.6}
+  .header h1{font-size:40px;font-weight:900;letter-spacing:10px;position:relative;z-index:1;text-shadow:2px 2px 4px rgba(0,0,0,.5)}
+  .header .subtitle{font-size:18px;margin-top:12px;color:#fbbf24;letter-spacing:6px;position:relative;z-index:1}
+  .header .period{font-size:14px;margin-top:8px;color:#93c5fd;letter-spacing:3px;position:relative;z-index:1}
+  .header .latin{font-size:13px;margin-top:4px;color:#a5b4fc;letter-spacing:2px;position:relative;z-index:1;font-style:italic}
+  .legend{display:flex;justify-content:center;gap:28px;padding:18px;background:#fff;border-bottom:2px solid var(--border);flex-wrap:wrap}
+  .legend-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-light)}
+  .legend-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0}
+  .container{max-width:1400px;margin:0 auto;padding:20px}
+  .section-title{text-align:center;padding:30px 20px 20px;font-size:28px;font-weight:bold;letter-spacing:6px;position:relative}
+  .section-title.early{color:var(--early-color)}.section-title.late{color:var(--late-color)}
+  .section-title::after{content:'';display:block;width:80px;height:3px;margin:12px auto 0}
+  .section-title.early::after{background:var(--early-color)}.section-title.late::after{background:var(--late-color)}
+  .timeline{position:relative;padding:20px 0}
+  .timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:4px;transform:translateX(-50%);z-index:0}
+  .timeline.early::before{background:var(--early-color)}.timeline.late::before{background:var(--late-color)}
+  .timeline-entry{display:flex;align-items:flex-start;position:relative;margin-bottom:20px}
+  .entry-content{display:flex;width:100%;align-items:flex-start}.entry-left,.entry-right{width:48%;padding:0 15px}
+  .entry-center{width:4%;display:flex;justify-content:center;position:relative;z-index:1}
+  .year-marker{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold;color:#fff;flex-shrink:0;z-index:2}
+  .early .year-marker{background:var(--early-color)}.late .year-marker{background:var(--late-color)}
+  .emperor-card{background:var(--card-bg);border-radius:12px;padding:20px;box-shadow:0 4px 20px rgba(0,0,0,.08);border-left:5px solid;position:relative;transition:transform .3s,box-shadow .3s}
+  .emperor-card:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,.15)}
+  .early .emperor-card{border-left-color:var(--early-color)}.late .emperor-card{border-left-color:var(--late-color)}
+  .emperor-card .order{position:absolute;top:-10px;right:15px;background:var(--highlight);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold}
+  .emperor-name{font-size:20px;font-weight:bold;margin-bottom:2px}
+  .emperor-latin{font-size:12px;color:var(--text-light);font-style:italic;margin-bottom:4px}
+  .emperor-meta{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;margin:10px 0;font-size:12px}
+  .meta-item{display:flex;align-items:center;gap:4px}.meta-label{color:var(--text-light);white-space:nowrap}.meta-value{font-weight:600}
+  .life-bar{height:8px;background:#eee;border-radius:4px;margin:10px 0 5px;position:relative;overflow:visible}
+  .life-bar .reign{position:absolute;height:100%;border-radius:4px;opacity:.8}
+  .early .life-bar .reign{background:var(--early-color)}.late .life-bar .reign{background:var(--late-color)}
+  .life-bar-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--text-light)}
+  .relation-tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;margin-top:6px;border:1px solid}
+  .early .relation-tag{background:#eff6ff;color:#1e3a8a;border-color:#93c5fd}
+  .late .relation-tag{background:#fef2f2;color:#b91c1c;border-color:#fca5a5}
+  .dynasty-tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:10px;margin-top:4px;margin-left:4px;background:#fef3c7;color:#92400e;border:1px solid #fcd34d}
+  .events-panel{background:var(--event-bg);border-radius:10px;padding:14px;margin-top:5px;border:1px solid #bfdbfe}
+  .events-panel h4{font-size:13px;color:var(--highlight);margin-bottom:8px;display:flex;align-items:center;gap:5px}
+  .event-item{font-size:12px;padding:4px 0;border-bottom:1px dashed #bfdbfe;display:flex;gap:6px}
+  .event-item:last-child{border-bottom:none}
+  .event-year{color:var(--highlight);font-weight:bold;white-space:nowrap;min-width:42px}
+  .ministers-panel{background:var(--minister-bg);border-radius:10px;padding:14px;margin-top:8px;border:1px solid #fcd34d}
+  .ministers-panel h4{font-size:13px;color:#92400e;margin-bottom:8px;display:flex;align-items:center;gap:5px}
+  .minister-list{display:flex;flex-wrap:wrap;gap:5px}
+  .minister-tag{font-size:11px;padding:3px 8px;background:#fef9ee;color:#92400e;border-radius:12px;border:1px solid #fcd34d}
+  .minister-tag.negative{background:#fde8e8;color:#b91c1c;border-color:#f0b8b8}
+  .family-tree-section{margin:40px 0;padding:30px;background:#fff;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.06)}
+  .family-tree-section h2{text-align:center;font-size:24px;color:var(--text);margin-bottom:30px;letter-spacing:4px}
+  .tree-container{overflow-x:auto;padding:20px 0}
+  .lifecycle-section{margin:40px 0;padding:30px;background:#fff;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.06)}
+  .lifecycle-section h2{text-align:center;font-size:24px;color:var(--text);margin-bottom:10px;letter-spacing:4px}
+  .lifecycle-section .note{text-align:center;font-size:12px;color:var(--text-light);margin-bottom:20px}
+  .gantt-container{overflow-x:auto;padding:10px 0}.gantt-chart{min-width:900px}
+  .gantt-row{display:flex;align-items:center;height:30px;margin:2px 0}
+  .gantt-label{width:120px;font-size:11px;font-weight:600;text-align:right;padding-right:12px;flex-shrink:0;white-space:nowrap}
+  .gantt-bar-area{flex:1;position:relative;height:100%}
+  .gantt-bar{position:absolute;height:10px;top:50%;transform:translateY(-50%);border-radius:5px;opacity:.3;cursor:pointer}
+  .gantt-bar.reign-bar{height:18px;opacity:.85;z-index:1}
+  .gantt-bar:hover{opacity:1}
+  .gantt-bar .tooltip{display:none;position:absolute;bottom:calc(100% + 5px);left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:4px 8px;border-radius:4px;font-size:11px;white-space:nowrap;z-index:10}
+  .gantt-bar:hover .tooltip{display:block}
+  .gantt-header{display:flex;align-items:center;height:30px;border-bottom:2px solid var(--border);margin-bottom:10px}
+  .gantt-header .gantt-label{font-size:12px;color:var(--text-light)}
+  .gantt-year-tick{position:absolute;font-size:10px;color:var(--text-light);transform:translateX(-50%);top:0}
+  .transition-divider{text-align:center;padding:40px 20px;position:relative}
+  .transition-divider .divider-line{height:2px;background:linear-gradient(to right,transparent,var(--rev-color),transparent);margin:0 auto;max-width:600px}
+  .transition-divider .divider-text{display:inline-block;background:var(--bg);padding:8px 25px;position:relative;top:-14px;font-size:16px;color:var(--rev-color);font-weight:bold;letter-spacing:4px;border:2px solid var(--rev-color);border-radius:20px}
+  .mini-divider{text-align:center;padding:18px}
+  .mini-divider .mini-text{display:inline-block;background:#eff6ff;padding:5px 18px;font-size:12px;color:#1e3a8a;font-weight:bold;letter-spacing:2px;border:1px solid #93c5fd;border-radius:14px}
+  .mini-divider .mini-text.red{background:#fef2f2;color:#b91c1c;border-color:#fca5a5}
+  .overview-stats{display:flex;justify-content:center;gap:28px;padding:20px;flex-wrap:wrap}
+  .stat-box{text-align:center;padding:15px 22px;background:#fff;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.06);min-width:110px}
+  .stat-number{font-size:26px;font-weight:bold;color:var(--highlight)}
+  .stat-desc{font-size:12px;color:var(--text-light);margin-top:4px}
+  .footer{text-align:center;padding:30px;color:var(--text-light);font-size:13px;border-top:2px solid var(--border);margin-top:40px}
+  @media(max-width:900px){.entry-content{flex-direction:column!important;align-items:center}.entry-left,.entry-right{width:100%;padding:10px 0}.entry-center{width:100%;justify-content:center;margin:10px 0}.timeline::before{display:none}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>英国君主世系简表</h1>
+  <div class="subtitle">Kingdom of Great Britain</div>
+  <div class="period">中世纪王朝 (1066-1485) ─ 都铎王朝与近代 (1485-2022)</div>
+  <div class="latin">👑 Dieu et mon droit · 上帝与我的权利 👑</div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:var(--early-color)"></div><span>中世纪王朝 (1066-1485)</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--late-color)"></div><span>都铎/近代 (1485-2022)</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div><span>重要人物</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--rev-color)"></div><span>重大事件</span></div>
+</div>
+
+<div class="overview-stats">
+  <div class="stat-box"><div class="stat-number">956</div><div class="stat-desc">君主制延续（年）</div></div>
+  <div class="stat-box"><div class="stat-number">27</div><div class="stat-desc">本表收录</div></div>
+  <div class="stat-box"><div class="stat-number">9</div><div class="stat-desc">王朝/家族</div></div>
+  <div class="stat-box"><div class="stat-number">1066</div><div class="stat-desc">诺曼征服</div></div>
+  <div class="stat-box"><div class="stat-number">2022</div><div class="stat-desc">伊丽莎白二世逝世</div></div>
+  <div class="stat-box"><div class="stat-number">伦敦</div><div class="stat-desc">首都</div></div>
+</div>
+
+<div class="container">
+
+<div class="lifecycle-section">
+  <h2>君主生卒与在位时间对照图</h2>
+  <div class="note">浅色条为生卒跨度，深色条为在位时间（亨利六世、爱德华四世各有两段在位期），鼠标悬停查看详情</div>
+  <div class="gantt-container"><div class="gantt-chart" id="ganttChart"></div></div>
+</div>
+
+<!-- ==================== 中世纪王朝 ==================== -->
+<div class="section-title early">中 世 纪 王 朝</div>
+<div style="text-align:center;color:#999;font-size:13px;margin-bottom:20px;">1066年 — 1485年 · 诺曼 → 金雀花 → 兰开斯特/约克 · 都城：伦敦</div>
+
+<div class="timeline early">
+
+  <!-- 威廉一世 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">1</div>
+        <div class="emperor-name">威廉一世（征服者）</div>
+        <div class="emperor-latin">William I the Conqueror</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1028-1087（59岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1066-1087（21年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:64.4%;width:35.6%"></div></div>
+        <div class="life-bar-labels"><span>1028</span><span>1066 在位</span><span>1087</span></div>
+        <div class="relation-tag">诺曼底公爵 · 黑斯廷斯征服英格兰</div>
+        <div class="dynasty-tag">诺曼王朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">兰弗朗克（坎特伯雷大主教）</span>
+          <span class="minister-tag">奥多（贝叶主教）</span>
+          <span class="minister-tag negative">哈罗德·葛温森（对手）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1066</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1066</span><span>黑斯廷斯战役击败哈罗德，诺曼征服开始</span></div>
+        <div class="event-item"><span class="event-year">1066</span><span>圣诞节加冕，诺曼王朝建立</span></div>
+        <div class="event-item"><span class="event-year">1086</span><span>编成《末日审判书》，全国土地清查</span></div>
+        <div class="event-item"><span class="event-year">1087</span><span>征讨法国时坠马负伤，不久去世</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 亨利二世 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1154</span><span>即位，开创金雀花王朝（安茹帝国）</span></div>
+        <div class="event-item"><span class="event-year">1164</span><span>《克拉伦登宪章》，试图限制教会法庭</span></div>
+        <div class="event-item"><span class="event-year">1170</span><span>贝克特大主教遇刺，被迫赎罪</span></div>
+        <div class="event-item"><span class="event-year">1171</span><span>征服爱尔兰</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1154</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">2</div>
+        <div class="emperor-name">亨利二世</div>
+        <div class="emperor-latin">Henry II</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1133-1189（56岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1154-1189（35年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:37.5%;width:62.5%"></div></div>
+        <div class="life-bar-labels"><span>1133</span><span>1154 在位</span><span>1189</span></div>
+        <div class="relation-tag">征服者威廉外孙 · 安茹帝国缔造者</div>
+        <div class="dynasty-tag">金雀花王朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">托马斯·贝克特</span>
+          <span class="minister-tag">埃莉诺（阿基坦王后）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 理查一世 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">3</div>
+        <div class="emperor-name">理查一世（狮心王）</div>
+        <div class="emperor-latin">Richard I the Lionheart</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1157-1199（42岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1189-1199（10年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:76.2%;width:23.8%"></div></div>
+        <div class="life-bar-labels"><span>1157</span><span>1189 在位</span><span>1199</span></div>
+        <div class="relation-tag">亨利二世第三子 · 十字军传奇英雄</div>
+        <div class="dynasty-tag">金雀花王朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">威廉·马歇尔（摄政）</span>
+          <span class="minister-tag">埃莉诺（母后摄政）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1189</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1189</span><span>即位后即发动第三次十字军东征</span></div>
+        <div class="event-item"><span class="event-year">1191</span><span>阿卡之战大捷，与萨拉丁对峙</span></div>
+        <div class="event-item"><span class="event-year">1192</span><span>归途被奥地利公爵囚禁</span></div>
+        <div class="event-item"><span class="event-year">1194</span><span>以巨额赎金赎回，重登王位</span></div>
+        <div class="event-item"><span class="event-year">1199</span><span>围攻城堡时中箭，伤重身亡</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 约翰 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1199</span><span>即位，与侄子亚瑟争夺王位</span></div>
+        <div class="event-item"><span class="event-year">1204</span><span>诺曼底被法王腓力二世夺取</span></div>
+        <div class="event-item"><span class="event-year">1209</span><span>与教皇冲突，被开除教籍</span></div>
+        <div class="event-item"><span class="event-year">1215</span><span>贵族逼签《大宪章》，王权受限</span></div>
+        <div class="event-item"><span class="event-year">1216</span><span>内战中病逝</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1199</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">4</div>
+        <div class="emperor-name">约翰（无地王）</div>
+        <div class="emperor-latin">John Lackland</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1166-1216（50岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1199-1216（17年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:66%;width:34%"></div></div>
+        <div class="life-bar-labels"><span>1166</span><span>1199 在位</span><span>1216</span></div>
+        <div class="relation-tag">理查一世之弟 · 被迫签署《大宪章》</div>
+        <div class="dynasty-tag">金雀花王朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">斯蒂芬·兰顿（大主教）</span>
+          <span class="minister-tag">威廉·马歇尔</span>
+          <span class="minister-tag negative">腓力二世（法王）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 亨利三世 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">5</div>
+        <div class="emperor-name">亨利三世</div>
+        <div class="emperor-latin">Henry III</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1207-1272（65岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1216-1272（56年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:13.8%;width:86.2%"></div></div>
+        <div class="life-bar-labels"><span>1207</span><span>1216 在位</span><span>1272</span></div>
+        <div class="relation-tag">约翰长子 · 9岁即位 · 在位56年</div>
+        <div class="dynasty-tag">金雀花王朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">西蒙·德·蒙福尔</span>
+          <span class="minister-tag">爱德华（长子）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1216</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1216</span><span>年幼即位，威廉·马歇尔摄政</span></div>
+        <div class="event-item"><span class="event-year">1258</span><span>贵族逼立《牛津条例》，设立十五人会议</span></div>
+        <div class="event-item"><span class="event-year">1264</span><span>西蒙·德·蒙福尔俘虏国王，召开首议会</span></div>
+        <div class="event-item"><span class="event-year">1265</span><span>伊夫舍姆战役，蒙福尔战死，王权恢复</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 爱德华一世 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1277</span><span>第一次征服威尔士</span></div>
+        <div class="event-item"><span class="event-year">1282</span><span>彻底征服威尔士，授子"威尔士亲王"</span></div>
+        <div class="event-item"><span class="event-year">1290</span><span>驱逐英格兰全体犹太人</span></div>
+        <div class="event-item"><span class="event-year">1295</span><span>召开"模范议会"</span></div>
+        <div class="event-item"><span class="event-year">1296</span><span>入侵苏格兰，与华莱士、布鲁斯作战</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1272</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">6</div>
+        <div class="emperor-name">爱德华一世（长腿）</div>
+        <div class="emperor-latin">Edward I Longshanks</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1239-1307（68岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1272-1307（35年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:48.5%;width:51.5%"></div></div>
+        <div class="life-bar-labels"><span>1239</span><span>1272 在位</span><span>1307</span></div>
+        <div class="relation-tag">亨利三世长子 · 英格兰议会之父</div>
+        <div class="dynasty-tag">金雀花王朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag negative">威廉·华莱士（苏格兰）</span>
+          <span class="minister-tag negative">罗伯特·布鲁斯（苏格兰）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 爱德华三世 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">7</div>
+        <div class="emperor-name">爱德华三世</div>
+        <div class="emperor-latin">Edward III</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1312-1377（65岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1327-1377（50年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:23.1%;width:76.9%"></div></div>
+        <div class="life-bar-labels"><span>1312</span><span>1327 在位</span><span>1377</span></div>
+        <div class="relation-tag">爱德华二世长子 · 开启百年战争</div>
+        <div class="dynasty-tag">金雀花王朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">黑太子爱德华（长子）</span>
+          <span class="minister-tag">冈特的约翰（三子）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1327</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1327</span><span>16岁即位（其父被废）</span></div>
+        <div class="event-item"><span class="event-year">1337</span><span>百年战争爆发，自称法国国王</span></div>
+        <div class="event-item"><span class="event-year">1346</span><span>克雷西战役，长弓大破法军</span></div>
+        <div class="event-item"><span class="event-year">1348</span><span>黑死病席卷英格兰，人口锐减</span></div>
+        <div class="event-item"><span class="event-year">1356</span><span>普瓦捷战役，俘获法王约翰二世</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 理查二世 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1377</span><span>10岁即位，叔父摄政</span></div>
+        <div class="event-item"><span class="event-year">1381</span><span>农民起义（瓦特·泰勒），镇压后承诺落空</span></div>
+        <div class="event-item"><span class="event-year">1389</span><span>亲政，推行专制统治</span></div>
+        <div class="event-item"><span class="event-year">1399</span><span>被堂弟亨利·博林布鲁克废黜</span></div>
+        <div class="event-item"><span class="event-year">1400</span><span>死于庞蒂弗拉克特城堡</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1377</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">8</div>
+        <div class="emperor-name">理查二世</div>
+        <div class="emperor-latin">Richard II</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1367-1400（33岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1377-1399（22年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:30.3%;width:66.7%"></div></div>
+        <div class="life-bar-labels"><span>1367</span><span>1377 在位</span><span>1400</span></div>
+        <div class="relation-tag">黑太子之子 · 金雀花直系末代国王</div>
+        <div class="dynasty-tag">金雀花王朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">瓦特·泰勒（起义领袖）</span>
+          <span class="minister-tag negative">亨利·博林布鲁克</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 亨利五世 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">9</div>
+        <div class="emperor-name">亨利五世</div>
+        <div class="emperor-latin">Henry V</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1386-1422（36岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1413-1422（9年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:75%;width:25%"></div></div>
+        <div class="life-bar-labels"><span>1386</span><span>1413 在位</span><span>1422</span></div>
+        <div class="relation-tag">亨利四世长子 · 阿金库尔大捷</div>
+        <div class="dynasty-tag">兰开斯特王朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">贝德福德公爵（弟）</span>
+          <span class="minister-tag">托马斯·博福特</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1413</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1413</span><span>即位，重燃百年战争</span></div>
+        <div class="event-item"><span class="event-year">1415</span><span>阿金库尔战役，以少胜多大破法军</span></div>
+        <div class="event-item"><span class="event-year">1417</span><span>再征法国，势如破竹</span></div>
+        <div class="event-item"><span class="event-year">1420</span><span>《特鲁瓦条约》，成为法国王位继承人</span></div>
+        <div class="event-item"><span class="event-year">1422</span><span>病逝于法国，一代雄主早逝</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 亨利六世 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1422</span><span>出生九个月即位，婴儿国王</span></div>
+        <div class="event-item"><span class="event-year">1429</span><span>圣女贞德扭转战局，英军溃败</span></div>
+        <div class="event-item"><span class="event-year">1453</span><span>百年战争终结，丧失全部法国领地</span></div>
+        <div class="event-item"><span class="event-year">1455</span><span>玫瑰战争爆发</span></div>
+        <div class="event-item"><span class="event-year">1461</span><span>被爱德华四世废黜</span></div>
+        <div class="event-item"><span class="event-year">1470-1471</span><span>短暂复辟后被囚杀害</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1422</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">10</div>
+        <div class="emperor-name">亨利六世</div>
+        <div class="emperor-latin">Henry VI</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1421-1471（50岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1422-1461, 1470-1471</span></div>
+        </div>
+        <div class="life-bar" data-birth="1421" data-death="1471" data-multi="1422,1461,1470,1471"><div class="reign"></div><div class="reign" style="position:absolute"></div></div>
+        <div class="life-bar-labels"><span>1421</span><span>两次在位</span><span>1471</span></div>
+        <div class="relation-tag">亨利五世之子 · 玫瑰战争 · 精神失常</div>
+        <div class="dynasty-tag">兰开斯特王朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">约克的理查（政敌）</span>
+          <span class="minister-tag negative">玛格丽特王后</span>
+          <span class="minister-tag negative">圣女贞德（法方）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 爱德华四世 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">11</div>
+        <div class="emperor-name">爱德华四世</div>
+        <div class="emperor-latin">Edward IV</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1442-1483（41岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1461-1470, 1471-1483</span></div>
+        </div>
+        <div class="life-bar" data-birth="1442" data-death="1483" data-multi="1461,1470,1471,1483"><div class="reign"></div><div class="reign" style="position:absolute"></div></div>
+        <div class="life-bar-labels"><span>1442</span><span>两次在位</span><span>1483</span></div>
+        <div class="relation-tag">约克公爵之子 · 玫瑰战争胜利者</div>
+        <div class="dynasty-tag">约克王朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">沃里克伯爵（造王者）</span>
+          <span class="minister-tag">黑斯廷斯勋爵</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1461</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1461</span><span>陶顿战役大胜，加冕为约克王朝首位国王</span></div>
+        <div class="event-item"><span class="event-year">1470</span><span>被沃里克与兰开斯特派推翻，流亡勃艮第</span></div>
+        <div class="event-item"><span class="event-year">1471</span><span>巴尼特、蒂克斯伯里战役复辟，兰开斯特覆灭</span></div>
+        <div class="event-item"><span class="event-year">1483</span><span>病逝，幼子即位后失踪</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 理查三世 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1483</span><span>摄政期间囚禁"塔中王子"，自立为王</span></div>
+        <div class="event-item"><span class="event-year">1483</span><span>白金汉叛乱被镇压</span></div>
+        <div class="event-item"><span class="event-year">1485</span><span>博斯沃思战役战败身亡，金雀花王朝终结</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1483</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">12</div>
+        <div class="emperor-name">理查三世</div>
+        <div class="emperor-latin">Richard III</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1452-1485（33岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1483-1485（2年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:93.9%;width:6.1%"></div></div>
+        <div class="life-bar-labels"><span>1452</span><span>1483 在位</span><span>1485</span></div>
+        <div class="relation-tag">爱德华四世之弟 · 末代金雀花国王</div>
+        <div class="dynasty-tag">约克王朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag negative">亨利·都铎（对手）</span>
+          <span class="minister-tag">白金汉公爵</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+</div><!-- end early timeline -->
+
+<!-- ===== 王朝更替 ===== -->
+<div class="transition-divider">
+  <div class="divider-line"></div>
+  <div class="divider-text">玫瑰战争 · 1485年 · 都铎王朝建立</div>
+</div>
+
+<!-- ==================== 都铎王朝与近代 ==================== -->
+<div class="section-title late">都 铎 王 朝 与 近 代</div>
+<div style="text-align:center;color:#999;font-size:13px;margin-bottom:20px;">1485年 — 2022年 · 都铎 → 斯图亚特 → 汉诺威 → 温莎 · 君主立宪</div>
+
+<div class="timeline late">
+
+  <!-- 亨利七世 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">13</div>
+        <div class="emperor-name">亨利七世</div>
+        <div class="emperor-latin">Henry VII</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1457-1509（52岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1485-1509（24年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:53.8%;width:46.2%"></div></div>
+        <div class="life-bar-labels"><span>1457</span><span>1485 在位</span><span>1509</span></div>
+        <div class="relation-tag">兰开斯特后裔 · 玫瑰战争终结者</div>
+        <div class="dynasty-tag">都铎王朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">约翰·莫顿（大法官）</span>
+          <span class="minister-tag">约克的伊丽莎白（王后）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1485</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1485</span><span>博斯沃思战役击败理查三世，都铎王朝建立</span></div>
+        <div class="event-item"><span class="event-year">1486</span><span>娶约克伊丽莎白，红白玫瑰合一</span></div>
+        <div class="event-item"><span class="event-year">1497</span><span>镇压珀金·沃贝克叛乱</span></div>
+        <div class="event-item"><span class="event-year">1509</span><span>病逝，国库充盈留给继承人</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 亨利八世 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1509</span><span>即位，娶阿拉贡的凯瑟琳</span></div>
+        <div class="event-item"><span class="event-year">1529</span><span>与罗马教廷决裂，离婚风波</span></div>
+        <div class="event-item"><span class="event-year">1534</span><span>《至尊法案》，建立英国国教会</span></div>
+        <div class="event-item"><span class="event-year">1536</span><span>解散修道院，没收教会财产</span></div>
+        <div class="event-item"><span class="event-year">1547</span><span>病逝（先后六位王后）</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1509</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">14</div>
+        <div class="emperor-name">亨利八世</div>
+        <div class="emperor-latin">Henry VIII</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1491-1547（56岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1509-1547（38年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:32.1%;width:67.9%"></div></div>
+        <div class="life-bar-labels"><span>1491</span><span>1509 在位</span><span>1547</span></div>
+        <div class="relation-tag">亨利七世次子 · 英格兰宗教改革</div>
+        <div class="dynasty-tag">都铎王朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">托马斯·沃尔西（红衣主教）</span>
+          <span class="minister-tag">托马斯·克伦威尔</span>
+          <span class="minister-tag negative">托马斯·莫尔</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 伊丽莎白一世 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">15</div>
+        <div class="emperor-name">伊丽莎白一世</div>
+        <div class="emperor-latin">Elizabeth I</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1533-1603（70岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1558-1603（45年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:35.7%;width:64.3%"></div></div>
+        <div class="life-bar-labels"><span>1533</span><span>1558 在位</span><span>1603</span></div>
+        <div class="relation-tag">亨利八世之女 · 都铎王朝末代君主</div>
+        <div class="dynasty-tag">都铎王朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">威廉·塞西尔（首席大臣）</span>
+          <span class="minister-tag">弗朗西斯·德雷克</span>
+          <span class="minister-tag">沃尔特·雷利</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1558</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1558</span><span>即位，开启伊丽莎白时代</span></div>
+        <div class="event-item"><span class="event-year">1559</span><span>宗教和解法案，确立国教</span></div>
+        <div class="event-item"><span class="event-year">1587</span><span>处决苏格兰玛丽女王</span></div>
+        <div class="event-item"><span class="event-year">1588</span><span>击败西班牙无敌舰队</span></div>
+        <div class="event-item"><span class="event-year">1600</span><span>东印度公司成立</span></div>
+        <div class="event-item"><span class="event-year">1603</span><span>逝世，都铎王朝终结</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 詹姆斯一世 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1567</span><span>苏格兰王位（詹姆斯六世）</span></div>
+        <div class="event-item"><span class="event-year">1603</span><span>继承英格兰王位，斯图亚特王朝开始</span></div>
+        <div class="event-item"><span class="event-year">1605</span><span>火药阴谋（盖伊·福克斯）被粉碎</span></div>
+        <div class="event-item"><span class="event-year">1611</span><span>钦定版《圣经》出版</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1603</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">16</div>
+        <div class="emperor-name">詹姆斯一世</div>
+        <div class="emperor-latin">James I · James VI of Scotland</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1566-1625（59岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1603-1625（22年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:62.7%;width:37.3%"></div></div>
+        <div class="life-bar-labels"><span>1566</span><span>1603 在位</span><span>1625</span></div>
+        <div class="relation-tag">苏格兰玛丽之子 · 苏格兰英格兰共主</div>
+        <div class="dynasty-tag">斯图亚特王朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">罗伯特·塞西尔</span>
+          <span class="minister-tag">弗朗西斯·培根</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 查理一世 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">17</div>
+        <div class="emperor-name">查理一世</div>
+        <div class="emperor-latin">Charles I</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1600-1649（49岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1625-1649（24年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:51%;width:49%"></div></div>
+        <div class="life-bar-labels"><span>1600</span><span>1625 在位</span><span>1649</span></div>
+        <div class="relation-tag">詹姆斯一世次子 · 被处决的国王</div>
+        <div class="dynasty-tag">斯图亚特王朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">斯特拉福德伯爵</span>
+          <span class="minister-tag">劳德大主教</span>
+          <span class="minister-tag negative">奥利弗·克伦威尔</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1625</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1628</span><span>被迫签署《权利请愿书》</span></div>
+        <div class="event-item"><span class="event-year">1642</span><span>英国内战爆发（王党 vs 议会）</span></div>
+        <div class="event-item"><span class="event-year">1645</span><span>纳西比战役战败，大势已去</span></div>
+        <div class="event-item"><span class="event-year">1649</span><span>被议会审判并处决，英格兰成为共和国</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 共和时期分隔 -->
+  <div class="mini-divider"><div class="mini-text red">英国内战 · 1642-1651 · 共和时期 1649-1660（克伦威尔护国公）</div></div>
+
+  <!-- 查理二世 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1651</span><span>伍斯特战役败后流亡欧洲大陆</span></div>
+        <div class="event-item"><span class="event-year">1660</span><span>王政复辟，光荣归国</span></div>
+        <div class="event-item"><span class="event-year">1665</span><span>伦敦大瘟疫（死亡约10万人）</span></div>
+        <div class="event-item"><span class="event-year">1666</span><span>伦敦大火，城市重建</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1660</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">18</div>
+        <div class="emperor-name">查理二世</div>
+        <div class="emperor-latin">Charles II</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1630-1685（55岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1660-1685（25年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:54.5%;width:45.5%"></div></div>
+        <div class="life-bar-labels"><span>1630</span><span>1660 在位</span><span>1685</span></div>
+        <div class="relation-tag">查理一世长子 · 王政复辟 · "快活王"</div>
+        <div class="dynasty-tag">斯图亚特王朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">克拉伦登伯爵</span>
+          <span class="minister-tag">塞缪尔·佩皮斯</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 詹姆斯二世 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">19</div>
+        <div class="emperor-name">詹姆斯二世</div>
+        <div class="emperor-latin">James II</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1633-1701（68岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1685-1688（3年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:76.5%;width:4.4%"></div></div>
+        <div class="life-bar-labels"><span>1633</span><span>1685 在位</span><span>1701</span></div>
+        <div class="relation-tag">查理二世之弟 · 光荣革命中被推翻</div>
+        <div class="dynasty-tag">斯图亚特王朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">约翰·丘吉尔（后为马尔博罗公爵）</span>
+          <span class="minister-tag negative">威廉三世（女婿）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1685</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1685</span><span>即位，恢复天主教，与议会冲突</span></div>
+        <div class="event-item"><span class="event-year">1687</span><span>颁布《宽容宣言》</span></div>
+        <div class="event-item"><span class="event-year">1688</span><span>光荣革命，女婿威廉登陆，詹姆斯逃亡法国</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 光荣革命分隔 -->
+  <div class="mini-divider"><div class="mini-text red">光荣革命 · 1688年 · 《权利法案》 · 君主立宪制确立</div></div>
+
+  <!-- 威廉三世 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1688</span><span>应议会邀请登陆英格兰，光荣革命</span></div>
+        <div class="event-item"><span class="event-year">1689</span><span>与玛丽二世共同即位，签署《权利法案》</span></div>
+        <div class="event-item"><span class="event-year">1690</span><span>博因河战役，镇压詹姆斯党</span></div>
+        <div class="event-item"><span class="event-year">1694</span><span>玛丽二世去世</span></div>
+        <div class="event-item"><span class="event-year">1702</span><span>坠马伤重去世，无嗣</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1689</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">20</div>
+        <div class="emperor-name">威廉三世（与玛丽二世共治）</div>
+        <div class="emperor-latin">William III &amp; Mary II</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1650-1702 · 玛丽1662-1694</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1689-1702（威廉）· 1689-1694（玛丽）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:75%;width:25%"></div></div>
+        <div class="life-bar-labels"><span>1650</span><span>1689 在位</span><span>1702</span></div>
+        <div class="relation-tag">荷兰执政 · 光荣革命后共治 · 君主立宪</div>
+        <div class="dynasty-tag">奥兰治·拿骚</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">约翰·丘吉尔（马尔博罗）</span>
+          <span class="minister-tag">悉尼·戈多尔芬</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 安妮 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">21</div>
+        <div class="emperor-name">安妮女王</div>
+        <div class="emperor-latin">Queen Anne</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1665-1714（49岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1702-1714（12年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:75.5%;width:24.5%"></div></div>
+        <div class="life-bar-labels"><span>1665</span><span>1702 在位</span><span>1714</span></div>
+        <div class="relation-tag">詹姆斯二世之女 · 斯图亚特王朝末代君主</div>
+        <div class="dynasty-tag">斯图亚特王朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">马尔博罗公爵（约翰·丘吉尔）</span>
+          <span class="minister-tag">罗伯特·哈利</span>
+          <span class="minister-tag">博林布鲁克子爵</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1702</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1704</span><span>布伦海姆战役，马尔博罗大胜</span></div>
+        <div class="event-item"><span class="event-year">1707</span><span>《联合法案》，英格兰与苏格兰合并为大不列颠</span></div>
+        <div class="event-item"><span class="event-year">1713</span><span>《乌得勒支条约》，西班牙王位战争结束</span></div>
+        <div class="event-item"><span class="event-year">1714</span><span>病逝，斯图亚特王朝终结</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 乔治一世 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1714</span><span>依《1701年王位继承法》即位，汉诺威王朝开始</span></div>
+        <div class="event-item"><span class="event-year">1715</span><span>詹姆斯党叛乱（老僭王），被镇压</span></div>
+        <div class="event-item"><span class="event-year">1721</span><span>沃波尔成为实际上的首任首相</span></div>
+        <div class="event-item"><span class="event-year">1727</span><span>病逝，传位乔治二世</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1714</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">22</div>
+        <div class="emperor-name">乔治一世</div>
+        <div class="emperor-latin">George I</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1660-1727（67岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1714-1727（13年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:80.6%;width:19.4%"></div></div>
+        <div class="life-bar-labels"><span>1660</span><span>1714 在位</span><span>1727</span></div>
+        <div class="relation-tag">詹姆斯一世外曾孙 · 汉诺威选帝侯</div>
+        <div class="dynasty-tag">汉诺威王朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">罗伯特·沃波尔（首任首相）</span>
+          <span class="minister-tag">汤森子爵</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 乔治三世 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">23</div>
+        <div class="emperor-name">乔治三世</div>
+        <div class="emperor-latin">George III</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1738-1820（82岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1760-1820（60年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:26.8%;width:73.2%"></div></div>
+        <div class="life-bar-labels"><span>1738</span><span>1760 在位</span><span>1820</span></div>
+        <div class="relation-tag">乔治二世之孙 · 美国独立战争 · 晚年精神失常</div>
+        <div class="dynasty-tag">汉诺威王朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">小威廉·皮特（首相）</span>
+          <span class="minister-tag">纳尔逊（海军上将）</span>
+          <span class="minister-tag">威灵顿公爵</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1760</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1763</span><span>七年战争结束，英国成海上霸主</span></div>
+        <div class="event-item"><span class="event-year">1776</span><span>美国《独立宣言》</span></div>
+        <div class="event-item"><span class="event-year">1783</span><span>承认美国独立</span></div>
+        <div class="event-item"><span class="event-year">1801</span><span>爱尔兰合并，联合王国成立</span></div>
+        <div class="event-item"><span class="event-year">1805</span><span>特拉法加海战，纳尔逊殉国</span></div>
+        <div class="event-item"><span class="event-year">1815</span><span>滑铁卢战役，拿破仑终结</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 维多利亚 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1837</span><span>18岁即位，维多利亚时代开始</span></div>
+        <div class="event-item"><span class="event-year">1857</span><span>印度民族起义，次年成立印度帝国</span></div>
+        <div class="event-item"><span class="event-year">1876</span><span>加冕为印度女皇</span></div>
+        <div class="event-item"><span class="event-year">1901</span><span>逝世，维多利亚时代终结</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1837</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">24</div>
+        <div class="emperor-name">维多利亚女王</div>
+        <div class="emperor-latin">Queen Victoria</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1819-1901（82岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1837-1901（64年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:22%;width:78%"></div></div>
+        <div class="life-bar-labels"><span>1819</span><span>1837 在位</span><span>1901</span></div>
+        <div class="relation-tag">乔治三世孙女 · "日不落帝国"女王</div>
+        <div class="dynasty-tag">汉诺威王朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">阿尔伯特亲王（丈夫）</span>
+          <span class="minister-tag">帕默斯顿</span>
+          <span class="minister-tag">迪斯雷利</span>
+          <span class="minister-tag">格莱斯顿</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 乔治五世 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">25</div>
+        <div class="emperor-name">乔治五世</div>
+        <div class="emperor-latin">George V</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1865-1936（71岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1910-1936（26年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:63.4%;width:36.6%"></div></div>
+        <div class="life-bar-labels"><span>1865</span><span>1910 在位</span><span>1936</span></div>
+        <div class="relation-tag">爱德华七世次子 · 一战国王 · 温莎更名</div>
+        <div class="dynasty-tag">温莎王朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">劳合·乔治（首相）</span>
+          <span class="minister-tag">斯坦利·鲍德温</span>
+          <span class="minister-tag">拉姆齐·麦克唐纳</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1910</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1914-1918</span><span>第一次世界大战</span></div>
+        <div class="event-item"><span class="event-year">1917</span><span>因反德情绪，改姓"温莎"</span></div>
+        <div class="event-item"><span class="event-year">1926</span><span>帝国会议，《贝尔福宣言》</span></div>
+        <div class="event-item"><span class="event-year">1931</span><span>《威斯敏斯特法令》，自治领地位确立</span></div>
+        <div class="event-item"><span class="event-year">1936</span><span>病逝</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 乔治六世 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1936</span><span>兄爱德华八世退位，意外即位</span></div>
+        <div class="event-item"><span class="event-year">1939</span><span>第二次世界大战爆发</span></div>
+        <div class="event-item"><span class="event-year">1940</span><span>伦敦大轰炸，王室坚持留守</span></div>
+        <div class="event-item"><span class="event-year">1945</span><span>二战胜利</span></div>
+        <div class="event-item"><span class="event-year">1947</span><span>印度独立，帝国开始解体</span></div>
+        <div class="event-item"><span class="event-year">1952</span><span>病逝于桑德灵厄姆</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1936</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">26</div>
+        <div class="emperor-name">乔治六世</div>
+        <div class="emperor-latin">George VI</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1895-1952（57岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1936-1952（16年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:71.9%;width:28.1%"></div></div>
+        <div class="life-bar-labels"><span>1895</span><span>1936 在位</span><span>1952</span></div>
+        <div class="relation-tag">乔治五世次子 · 二战国王 · "国王的演讲"</div>
+        <div class="dynasty-tag">温莎王朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">温斯顿·丘吉尔（首相）</span>
+          <span class="minister-tag">克莱门特·艾德礼</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 伊丽莎白二世 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">27</div>
+        <div class="emperor-name">伊丽莎白二世</div>
+        <div class="emperor-latin">Elizabeth II</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1926-2022（96岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1952-2022（70年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:27.1%;width:72.9%"></div></div>
+        <div class="life-bar-labels"><span>1926</span><span>1952 在位</span><span>2022</span></div>
+        <div class="relation-tag">乔治六世长女 · 英国在位最久君主</div>
+        <div class="dynasty-tag">温莎王朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">温斯顿·丘吉尔</span>
+          <span class="minister-tag">撒切尔夫人</span>
+          <span class="minister-tag">托尼·布莱尔</span>
+          <span class="minister-tag">菲利普亲王（丈夫）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1952</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1952</span><span>即位（在肯尼亚获悉父王逝世）</span></div>
+        <div class="event-item"><span class="event-year">1953</span><span>威斯敏斯特加冕</span></div>
+        <div class="event-item"><span class="event-year">1997</span><span>戴安娜王妃逝世，王室危机</span></div>
+        <div class="event-item"><span class="event-year">2012</span><span>伦敦奥运会，钻石禧年</span></div>
+        <div class="event-item"><span class="event-year">2022</span><span>白金禧年（在位70周年），9月8日逝世</span></div>
+      </div>
+    </div>
+  </div></div>
+
+</div><!-- end late timeline -->
+
+<!-- ==================== 世系关系图 ==================== -->
+<div class="family-tree-section">
+  <h2>英国君主世系关系图</h2>
+  <div class="tree-container">
+    <svg class="tree-svg" viewBox="0 0 1300 1120" width="1300" height="1120" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="nrmG" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#b8860b;stop-opacity:1"/><stop offset="100%" style="stop-color:#d4a017;stop-opacity:1"/>
+        </linearGradient>
+        <linearGradient id="plaG" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#1e3a8a;stop-opacity:1"/><stop offset="100%" style="stop-color:#3b82f6;stop-opacity:1"/>
+        </linearGradient>
+        <linearGradient id="lanG" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#991b1b;stop-opacity:1"/><stop offset="100%" style="stop-color:#dc2626;stop-opacity:1"/>
+        </linearGradient>
+        <linearGradient id="yorG" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#166534;stop-opacity:1"/><stop offset="100%" style="stop-color:#22c55e;stop-opacity:1"/>
+        </linearGradient>
+        <linearGradient id="tudG" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#15803d;stop-opacity:1"/><stop offset="100%" style="stop-color:#65a30d;stop-opacity:1"/>
+        </linearGradient>
+        <linearGradient id="stuG" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#6d28d9;stop-opacity:1"/><stop offset="100%" style="stop-color:#a78bfa;stop-opacity:1"/>
+        </linearGradient>
+        <linearGradient id="oraG" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#c2410c;stop-opacity:1"/><stop offset="100%" style="stop-color:#fb923c;stop-opacity:1"/>
+        </linearGradient>
+        <linearGradient id="hanG" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#0f766e;stop-opacity:1"/><stop offset="100%" style="stop-color:#2dd4bf;stop-opacity:1"/>
+        </linearGradient>
+        <linearGradient id="winG" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#1d4ed8;stop-opacity:1"/><stop offset="100%" style="stop-color:#c8102e;stop-opacity:1"/>
+        </linearGradient>
+        <filter id="sh"><feDropShadow dx="1" dy="2" stdDeviation="3" flood-opacity="0.15"/></filter>
+        <marker id="aB" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#1e3a8a"/></marker>
+        <marker id="aR" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#b91c1c"/></marker>
+        <marker id="aG" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#166534"/></marker>
+        <marker id="aP" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#6d28d9"/></marker>
+        <marker id="aO" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#c2410c"/></marker>
+      </defs>
+
+      <!-- 背景 -->
+      <rect x="0" y="0" width="1300" height="470" fill="#eff6ff" rx="12"/>
+      <rect x="0" y="480" width="1300" height="620" fill="#fef2f2" rx="12"/>
+      <text x="20" y="30" font-size="16" fill="#1e3a8a" font-weight="bold" font-family="PingFang SC,serif">中世纪王朝 诺曼 / 金雀花 / 兰开斯特 / 约克 (1066-1485)</text>
+      <text x="20" y="510" font-size="16" fill="#b91c1c" font-weight="bold" font-family="PingFang SC,serif">都铎 / 斯图亚特 / 汉诺威 / 温莎 (1485-2022)</text>
+
+      <!-- ══════ 第一区：中世纪王朝 ══════ -->
+      <!-- 第一行 -->
+      <rect x="40" y="55" width="150" height="50" rx="8" fill="url(#nrmG)" filter="url(#sh)"/>
+      <text x="115" y="76" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">①威廉一世</text>
+      <text x="115" y="94" text-anchor="middle" fill="#fde68a" font-size="9" font-family="PingFang SC,serif">诺曼 1066-1087</text>
+
+      <rect x="330" y="55" width="150" height="50" rx="8" fill="url(#plaG)" filter="url(#sh)"/>
+      <text x="405" y="76" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">②亨利二世</text>
+      <text x="405" y="94" text-anchor="middle" fill="#bfdbfe" font-size="9" font-family="PingFang SC,serif">金雀花 1154-1189</text>
+      <path d="M190 80 Q260 80 328 80" stroke="#1e3a8a" stroke-width="2" fill="none" marker-end="url(#aB)"/>
+      <text x="259" y="73" text-anchor="middle" fill="#1e3a8a" font-size="9" font-family="PingFang SC,serif">外孙·安茹伯爵</text>
+
+      <rect x="620" y="55" width="150" height="50" rx="8" fill="url(#plaG)" filter="url(#sh)"/>
+      <text x="695" y="76" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">③理查一世</text>
+      <text x="695" y="94" text-anchor="middle" fill="#bfdbfe" font-size="9" font-family="PingFang SC,serif">1189-1199</text>
+      <line x1="480" y1="80" x2="618" y2="80" stroke="#1e3a8a" stroke-width="2" marker-end="url(#aB)"/>
+      <text x="549" y="73" text-anchor="middle" fill="#1e3a8a" font-size="9" font-family="PingFang SC,serif">三子</text>
+
+      <rect x="910" y="55" width="150" height="50" rx="8" fill="url(#plaG)" filter="url(#sh)"/>
+      <text x="985" y="76" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">④约翰</text>
+      <text x="985" y="94" text-anchor="middle" fill="#bfdbfe" font-size="9" font-family="PingFang SC,serif">1199-1216</text>
+      <line x1="770" y1="80" x2="908" y2="80" stroke="#1e3a8a" stroke-width="2" marker-end="url(#aB)"/>
+      <text x="839" y="73" text-anchor="middle" fill="#1e3a8a" font-size="9" font-family="PingFang SC,serif">弟</text>
+
+      <!-- 第二行 -->
+      <rect x="40" y="145" width="150" height="50" rx="8" fill="url(#plaG)" filter="url(#sh)"/>
+      <text x="115" y="166" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">⑤亨利三世</text>
+      <text x="115" y="184" text-anchor="middle" fill="#bfdbfe" font-size="9" font-family="PingFang SC,serif">1216-1272</text>
+      <path d="M985 105 C985 125, 115 125, 115 145" stroke="#1e3a8a" stroke-width="2" fill="none" marker-end="url(#aB)"/>
+      <text x="560" y="128" text-anchor="middle" fill="#1e3a8a" font-size="9" font-family="PingFang SC,serif">长子（9岁即位）</text>
+
+      <rect x="330" y="145" width="150" height="50" rx="8" fill="url(#plaG)" filter="url(#sh)"/>
+      <text x="405" y="166" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">⑥爱德华一世</text>
+      <text x="405" y="184" text-anchor="middle" fill="#bfdbfe" font-size="9" font-family="PingFang SC,serif">1272-1307</text>
+      <line x1="190" y1="170" x2="328" y2="170" stroke="#1e3a8a" stroke-width="2" marker-end="url(#aB)"/>
+      <text x="259" y="163" text-anchor="middle" fill="#1e3a8a" font-size="9" font-family="PingFang SC,serif">子</text>
+
+      <rect x="620" y="145" width="150" height="50" rx="8" fill="url(#plaG)" filter="url(#sh)"/>
+      <text x="695" y="166" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">⑦爱德华三世</text>
+      <text x="695" y="184" text-anchor="middle" fill="#bfdbfe" font-size="9" font-family="PingFang SC,serif">1327-1377</text>
+      <line x1="480" y1="170" x2="618" y2="170" stroke="#1e3a8a" stroke-width="2" marker-end="url(#aB)"/>
+      <text x="549" y="163" text-anchor="middle" fill="#1e3a8a" font-size="9" font-family="PingFang SC,serif">孙</text>
+
+      <rect x="910" y="145" width="150" height="50" rx="8" fill="url(#plaG)" filter="url(#sh)"/>
+      <text x="985" y="166" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">⑧理查二世</text>
+      <text x="985" y="184" text-anchor="middle" fill="#bfdbfe" font-size="9" font-family="PingFang SC,serif">1377-1399 ✝1400</text>
+      <line x1="770" y1="170" x2="908" y2="170" stroke="#1e3a8a" stroke-width="2" marker-end="url(#aB)"/>
+      <text x="839" y="163" text-anchor="middle" fill="#1e3a8a" font-size="9" font-family="PingFang SC,serif">孙（黑太子之子）</text>
+
+      <!-- 第三行：兰开斯特 / 约克 -->
+      <rect x="40" y="250" width="160" height="50" rx="8" fill="url(#lanG)" filter="url(#sh)"/>
+      <text x="120" y="271" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">⑨亨利五世</text>
+      <text x="120" y="289" text-anchor="middle" fill="#fecaca" font-size="9" font-family="PingFang SC,serif">兰开斯特 1413-1422</text>
+      <path d="M695 195 C695 225, 125 225, 125 250" stroke="#991b1b" stroke-width="2" fill="none" marker-end="url(#aR)"/>
+      <text x="415" y="242" text-anchor="middle" fill="#991b1b" font-size="9" font-family="PingFang SC,serif">兰开斯特支（冈特的约翰→亨利四世→）</text>
+
+      <rect x="330" y="250" width="160" height="50" rx="8" fill="url(#lanG)" filter="url(#sh)"/>
+      <text x="410" y="271" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">⑩亨利六世</text>
+      <text x="410" y="289" text-anchor="middle" fill="#fecaca" font-size="9" font-family="PingFang SC,serif">1422-1461/1470-71</text>
+      <line x1="200" y1="275" x2="328" y2="275" stroke="#b91c1c" stroke-width="2" marker-end="url(#aR)"/>
+      <text x="264" y="268" text-anchor="middle" fill="#b91c1c" font-size="9" font-family="PingFang SC,serif">子</text>
+
+      <rect x="620" y="250" width="160" height="50" rx="8" fill="url(#yorG)" filter="url(#sh)"/>
+      <text x="700" y="271" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">⑪爱德华四世</text>
+      <text x="700" y="289" text-anchor="middle" fill="#bbf7d0" font-size="9" font-family="PingFang SC,serif">约克 1461-1483</text>
+      <path d="M695 195 V250" stroke="#166534" stroke-width="2" fill="none" marker-end="url(#aG)"/>
+      <text x="712" y="228" fill="#166534" font-size="9" font-family="PingFang SC,serif">约克支（三子埃德蒙后裔）</text>
+
+      <rect x="910" y="250" width="160" height="50" rx="8" fill="url(#yorG)" filter="url(#sh)"/>
+      <text x="990" y="271" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">⑫理查三世</text>
+      <text x="990" y="289" text-anchor="middle" fill="#bbf7d0" font-size="9" font-family="PingFang SC,serif">1483-1485 ✝</text>
+      <line x1="780" y1="275" x2="908" y2="275" stroke="#166534" stroke-width="2" marker-end="url(#aG)"/>
+      <text x="844" y="268" text-anchor="middle" fill="#166534" font-size="9" font-family="PingFang SC,serif">弟</text>
+
+      <!-- 玫瑰战争冲突标注 -->
+      <line x1="490" y1="300" x2="618" y2="300" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="5,3"/>
+      <text x="554" y="318" text-anchor="middle" fill="#dc2626" font-size="10" font-weight="bold" font-family="PingFang SC,serif">玫瑰战争 1455-1485</text>
+
+      <!-- 分界线 -->
+      <line x1="20" y1="350" x2="1280" y2="350" stroke="#dc2626" stroke-width="2" stroke-dasharray="10,5"/>
+      <text x="650" y="345" text-anchor="middle" fill="#dc2626" font-size="11" font-weight="bold" font-family="PingFang SC,serif">── 玫瑰战争终结 · 1485 博斯沃思 · 都铎王朝建立 ──</text>
+      <text x="650" y="400" text-anchor="middle" fill="#1e3a8a" font-size="12" font-family="PingFang SC,serif">①-⑧ 金雀花直系（蓝） ─ ⑨⑩ 兰开斯特（红玫瑰） ─ ⑪⑫ 约克（白玫瑰）</text>
+      <text x="650" y="440" text-anchor="middle" fill="#6b7280" font-size="11" font-family="PingFang SC,serif">1399 金雀花直系终结（理查二世被废）· 兰开斯特支夺位 · 1461 约克支推翻兰开斯特</text>
+
+      <!-- ══════ 第二区：都铎至今 ══════ -->
+      <!-- 第一行 -->
+      <rect x="40" y="545" width="160" height="50" rx="8" fill="url(#tudG)" filter="url(#sh)"/>
+      <text x="120" y="566" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">⑬亨利七世</text>
+      <text x="120" y="584" text-anchor="middle" fill="#d9f99d" font-size="9" font-family="PingFang SC,serif">都铎 1485-1509</text>
+      <path d="M990 300 C990 420, 120 420, 120 543" stroke="#166534" stroke-width="2" stroke-dasharray="6,3" fill="none" marker-end="url(#aG)"/>
+      <text x="560" y="505" text-anchor="middle" fill="#166534" font-size="10" font-family="PingFang SC,serif">兰开斯特后裔（母系）· 娶约克伊丽莎白，玫瑰合一</text>
+
+      <rect x="330" y="545" width="160" height="50" rx="8" fill="url(#tudG)" filter="url(#sh)"/>
+      <text x="410" y="566" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">⑭亨利八世</text>
+      <text x="410" y="584" text-anchor="middle" fill="#d9f99d" font-size="9" font-family="PingFang SC,serif">1509-1547</text>
+      <line x1="200" y1="570" x2="328" y2="570" stroke="#166534" stroke-width="2" marker-end="url(#aG)"/>
+      <text x="264" y="563" text-anchor="middle" fill="#166534" font-size="9" font-family="PingFang SC,serif">次子（兄长早逝）</text>
+
+      <rect x="620" y="545" width="160" height="50" rx="8" fill="url(#tudG)" filter="url(#sh)"/>
+      <text x="700" y="566" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">⑮伊丽莎白一世</text>
+      <text x="700" y="584" text-anchor="middle" fill="#d9f99d" font-size="9" font-family="PingFang SC,serif">1558-1603 ✝绝嗣</text>
+      <line x1="490" y1="570" x2="618" y2="570" stroke="#166534" stroke-width="2" marker-end="url(#aG)"/>
+      <text x="554" y="563" text-anchor="middle" fill="#166534" font-size="9" font-family="PingFang SC,serif">次女</text>
+
+      <rect x="910" y="545" width="170" height="50" rx="8" fill="url(#stuG)" filter="url(#sh)"/>
+      <text x="995" y="566" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">⑯詹姆斯一世</text>
+      <text x="995" y="584" text-anchor="middle" fill="#ddd6fe" font-size="9" font-family="PingFang SC,serif">斯图亚特 1603-1625</text>
+      <line x1="780" y1="570" x2="908" y2="570" stroke="#6d28d9" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#aP)"/>
+      <text x="844" y="563" text-anchor="middle" fill="#6d28d9" font-size="9" font-family="PingFang SC,serif">苏格兰玛丽之子（1603 共主）</text>
+
+      <!-- 第二行 -->
+      <rect x="40" y="645" width="160" height="50" rx="8" fill="url(#stuG)" filter="url(#sh)"/>
+      <text x="120" y="666" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">⑰查理一世</text>
+      <text x="120" y="684" text-anchor="middle" fill="#ddd6fe" font-size="9" font-family="PingFang SC,serif">1625-1649 ✝被处决</text>
+      <path d="M995 595 C995 620, 120 620, 120 645" stroke="#6d28d9" stroke-width="2" fill="none" marker-end="url(#aP)"/>
+      <text x="560" y="612" text-anchor="middle" fill="#6d28d9" font-size="9" font-family="PingFang SC,serif">子（1649 英国内战被处决）</text>
+
+      <rect x="330" y="645" width="160" height="50" rx="8" fill="url(#stuG)" filter="url(#sh)"/>
+      <text x="410" y="666" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">⑱查理二世</text>
+      <text x="410" y="684" text-anchor="middle" fill="#ddd6fe" font-size="9" font-family="PingFang SC,serif">1660-1685 复辟</text>
+      <line x1="200" y1="670" x2="328" y2="670" stroke="#6d28d9" stroke-width="2" marker-end="url(#aP)"/>
+      <text x="264" y="663" text-anchor="middle" fill="#6d28d9" font-size="9" font-family="PingFang SC,serif">长子</text>
+
+      <rect x="620" y="645" width="160" height="50" rx="8" fill="url(#stuG)" filter="url(#sh)"/>
+      <text x="700" y="666" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">⑲詹姆斯二世</text>
+      <text x="700" y="684" text-anchor="middle" fill="#ddd6fe" font-size="9" font-family="PingFang SC,serif">1685-1688 被废</text>
+      <line x1="490" y1="670" x2="618" y2="670" stroke="#6d28d9" stroke-width="2" marker-end="url(#aP)"/>
+      <text x="554" y="663" text-anchor="middle" fill="#6d28d9" font-size="9" font-family="PingFang SC,serif">弟</text>
+
+      <rect x="910" y="645" width="170" height="50" rx="8" fill="url(#oraG)" filter="url(#sh)"/>
+      <text x="995" y="666" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">⑳威廉三世</text>
+      <text x="995" y="684" text-anchor="middle" fill="#fed7aa" font-size="9" font-family="PingFang SC,serif">奥兰治 1689-1702</text>
+      <line x1="780" y1="670" x2="908" y2="670" stroke="#c2410c" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#aO)"/>
+      <text x="844" y="663" text-anchor="middle" fill="#c2410c" font-size="9" font-family="PingFang SC,serif">女婿·光荣革命 1688</text>
+
+      <!-- 第三行 -->
+      <rect x="40" y="745" width="160" height="50" rx="8" fill="url(#stuG)" filter="url(#sh)"/>
+      <text x="120" y="766" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">㉑安妮女王</text>
+      <text x="120" y="784" text-anchor="middle" fill="#ddd6fe" font-size="9" font-family="PingFang SC,serif">1702-1714 ✝绝嗣</text>
+      <path d="M995 695 C995 720, 120 720, 120 745" stroke="#6d28d9" stroke-width="2" fill="none" marker-end="url(#aP)"/>
+      <text x="560" y="712" text-anchor="middle" fill="#6d28d9" font-size="9" font-family="PingFang SC,serif">詹姆斯二世之女（玛丽之妹）</text>
+
+      <rect x="330" y="745" width="160" height="50" rx="8" fill="url(#hanG)" filter="url(#sh)"/>
+      <text x="410" y="766" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">㉒乔治一世</text>
+      <text x="410" y="784" text-anchor="middle" fill="#99f6e4" font-size="9" font-family="PingFang SC,serif">汉诺威 1714-1727</text>
+      <line x1="200" y1="770" x2="328" y2="770" stroke="#0f766e" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#aO)"/>
+      <text x="264" y="763" text-anchor="middle" fill="#0f766e" font-size="9" font-family="PingFang SC,serif">远亲（詹姆斯一世外曾孙）</text>
+
+      <rect x="620" y="745" width="160" height="50" rx="8" fill="url(#hanG)" filter="url(#sh)"/>
+      <text x="700" y="766" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">㉓乔治三世</text>
+      <text x="700" y="784" text-anchor="middle" fill="#99f6e4" font-size="9" font-family="PingFang SC,serif">1760-1820</text>
+      <line x1="490" y1="770" x2="618" y2="770" stroke="#0f766e" stroke-width="2" marker-end="url(#aO)"/>
+      <text x="554" y="763" text-anchor="middle" fill="#0f766e" font-size="9" font-family="PingFang SC,serif">孙（经乔治二世）</text>
+
+      <rect x="910" y="745" width="170" height="50" rx="8" fill="url(#hanG)" filter="url(#sh)"/>
+      <text x="995" y="766" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">㉔维多利亚</text>
+      <text x="995" y="784" text-anchor="middle" fill="#99f6e4" font-size="9" font-family="PingFang SC,serif">1837-1901</text>
+      <line x1="780" y1="770" x2="908" y2="770" stroke="#0f766e" stroke-width="2" marker-end="url(#aO)"/>
+      <text x="844" y="763" text-anchor="middle" fill="#0f766e" font-size="9" font-family="PingFang SC,serif">孙女</text>
+
+      <!-- 第四行 -->
+      <rect x="40" y="845" width="160" height="50" rx="8" fill="url(#winG)" filter="url(#sh)"/>
+      <text x="120" y="866" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">㉕乔治五世</text>
+      <text x="120" y="884" text-anchor="middle" fill="#bfdbfe" font-size="9" font-family="PingFang SC,serif">温莎 1910-1936</text>
+      <path d="M995 795 C995 820, 120 820, 120 845" stroke="#1d4ed8" stroke-width="2" fill="none" marker-end="url(#aB)"/>
+      <text x="560" y="812" text-anchor="middle" fill="#1d4ed8" font-size="9" font-family="PingFang SC,serif">曾孙（经爱德华七世）· 1917 改姓温莎</text>
+
+      <rect x="330" y="845" width="160" height="50" rx="8" fill="url(#winG)" filter="url(#sh)"/>
+      <text x="410" y="866" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">㉖乔治六世</text>
+      <text x="410" y="884" text-anchor="middle" fill="#bfdbfe" font-size="9" font-family="PingFang SC,serif">1936-1952</text>
+      <line x1="200" y1="870" x2="328" y2="870" stroke="#1d4ed8" stroke-width="2" marker-end="url(#aB)"/>
+      <text x="264" y="863" text-anchor="middle" fill="#1d4ed8" font-size="9" font-family="PingFang SC,serif">次子（兄退位）</text>
+
+      <rect x="620" y="845" width="160" height="50" rx="8" fill="url(#winG)" filter="url(#sh)"/>
+      <text x="700" y="866" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">㉗伊丽莎白二世</text>
+      <text x="700" y="884" text-anchor="middle" fill="#bfdbfe" font-size="9" font-family="PingFang SC,serif">1952-2022 ✝</text>
+      <line x1="490" y1="870" x2="618" y2="870" stroke="#1d4ed8" stroke-width="2" marker-end="url(#aB)"/>
+      <text x="554" y="863" text-anchor="middle" fill="#1d4ed8" font-size="9" font-family="PingFang SC,serif">长女</text>
+
+      <!-- 图例 -->
+      <rect x="910" y="845" width="350" height="250" rx="8" fill="#fff" stroke="#ccc"/>
+      <text x="930" y="868" font-size="13" font-weight="bold" fill="#333" font-family="PingFang SC,serif">图例 — 王朝/家族</text>
+      <rect x="930" y="878" width="15" height="12" rx="3" fill="url(#nrmG)"/>
+      <text x="955" y="889" font-size="10" fill="#333" font-family="PingFang SC,serif">诺曼王朝 (1066-1154)</text>
+      <rect x="930" y="898" width="15" height="12" rx="3" fill="url(#plaG)"/>
+      <text x="955" y="909" font-size="10" fill="#333" font-family="PingFang SC,serif">金雀花王朝 (1154-1399)</text>
+      <rect x="930" y="918" width="15" height="12" rx="3" fill="url(#lanG)"/>
+      <text x="955" y="929" font-size="10" fill="#333" font-family="PingFang SC,serif">兰开斯特王朝 (1399-1461/1470-71)</text>
+      <rect x="930" y="938" width="15" height="12" rx="3" fill="url(#yorG)"/>
+      <text x="955" y="949" font-size="10" fill="#333" font-family="PingFang SC,serif">约克王朝 (1461-1485)</text>
+      <rect x="930" y="958" width="15" height="12" rx="3" fill="url(#tudG)"/>
+      <text x="955" y="969" font-size="10" fill="#333" font-family="PingFang SC,serif">都铎王朝 (1485-1603)</text>
+      <rect x="930" y="978" width="15" height="12" rx="3" fill="url(#stuG)"/>
+      <text x="955" y="989" font-size="10" fill="#333" font-family="PingFang SC,serif">斯图亚特王朝 (1603-1714)</text>
+      <rect x="930" y="998" width="15" height="12" rx="3" fill="url(#oraG)"/>
+      <text x="955" y="1009" font-size="10" fill="#333" font-family="PingFang SC,serif">奥兰治·共治 (1689-1702)</text>
+      <rect x="930" y="1018" width="15" height="12" rx="3" fill="url(#hanG)"/>
+      <text x="955" y="1029" font-size="10" fill="#333" font-family="PingFang SC,serif">汉诺威王朝 (1714-1901)</text>
+      <rect x="930" y="1038" width="15" height="12" rx="3" fill="url(#winG)"/>
+      <text x="955" y="1049" font-size="10" fill="#333" font-family="PingFang SC,serif">温莎王朝 (1917-至今)</text>
+      <line x1="930" y1="1063" x2="970" y2="1063" stroke="#1e3a8a" stroke-width="2" marker-end="url(#aB)"/>
+      <text x="980" y="1067" font-size="10" fill="#333" font-family="PingFang SC,serif">直系传承</text>
+      <line x1="930" y1="1081" x2="970" y2="1081" stroke="#999" stroke-width="1.5" stroke-dasharray="6,3"/>
+      <text x="980" y="1085" font-size="10" fill="#333" font-family="PingFang SC,serif">旁系 / 远亲继承</text>
+    </svg>
+  </div>
+</div>
+
+</div><!-- end container -->
+
+<div class="footer">
+  <p>英国君主制自1066年诺曼征服延续至今近千年，历经诺曼、金雀花、兰开斯特、约克、都铎、斯图亚特、汉诺威、温莎等王朝与家族。</p>
+  <p style="margin-top:8px;">1215年《大宪章》、1688年光荣革命与《权利法案》奠定了君主立宪制，此后王权逐步让位于议会，君主成为国家统一与传统的象征。</p>
+  <p style="margin-top:8px;">1707年英格兰与苏格兰合并为大不列颠王国，1801年爱尔兰并入，正式形成联合王国；维多利亚时代帝国版图达到顶峰，人称"日不落帝国"。</p>
+  <p style="margin-top:8px;">2022年9月8日伊丽莎白二世逝世，享年96岁，其子查尔斯三世即位，温莎王朝延续至今。</p>
+  <p style="margin-top:8px;">数据来源：《英国史》等权威著作 · 仅供学习参考</p>
+</div>
+
+<script>
+(function(){
+  const emperors = [
+    { name:'威廉一世', birth:1028, death:1087, reigns:[{s:1066,e:1087}], type:'early' },
+    { name:'亨利二世', birth:1133, death:1189, reigns:[{s:1154,e:1189}], type:'early' },
+    { name:'理查一世', birth:1157, death:1199, reigns:[{s:1189,e:1199}], type:'early' },
+    { name:'约翰', birth:1166, death:1216, reigns:[{s:1199,e:1216}], type:'early' },
+    { name:'亨利三世', birth:1207, death:1272, reigns:[{s:1216,e:1272}], type:'early' },
+    { name:'爱德华一世', birth:1239, death:1307, reigns:[{s:1272,e:1307}], type:'early' },
+    { name:'爱德华三世', birth:1312, death:1377, reigns:[{s:1327,e:1377}], type:'early' },
+    { name:'理查二世', birth:1367, death:1400, reigns:[{s:1377,e:1399}], type:'early' },
+    { name:'亨利五世', birth:1386, death:1422, reigns:[{s:1413,e:1422}], type:'early' },
+    { name:'亨利六世', birth:1421, death:1471, reigns:[{s:1422,e:1461},{s:1470,e:1471}], type:'early' },
+    { name:'爱德华四世', birth:1442, death:1483, reigns:[{s:1461,e:1470},{s:1471,e:1483}], type:'early' },
+    { name:'理查三世', birth:1452, death:1485, reigns:[{s:1483,e:1485}], type:'early' },
+    { name:'亨利七世', birth:1457, death:1509, reigns:[{s:1485,e:1509}], type:'late' },
+    { name:'亨利八世', birth:1491, death:1547, reigns:[{s:1509,e:1547}], type:'late' },
+    { name:'伊丽莎白一世', birth:1533, death:1603, reigns:[{s:1558,e:1603}], type:'late' },
+    { name:'詹姆斯一世', birth:1566, death:1625, reigns:[{s:1603,e:1625}], type:'late' },
+    { name:'查理一世', birth:1600, death:1649, reigns:[{s:1625,e:1649}], type:'late' },
+    { name:'查理二世', birth:1630, death:1685, reigns:[{s:1660,e:1685}], type:'late' },
+    { name:'詹姆斯二世', birth:1633, death:1701, reigns:[{s:1685,e:1688}], type:'late' },
+    { name:'威廉三世', birth:1650, death:1702, reigns:[{s:1689,e:1702}], type:'late' },
+    { name:'安妮', birth:1665, death:1714, reigns:[{s:1702,e:1714}], type:'late' },
+    { name:'乔治一世', birth:1660, death:1727, reigns:[{s:1714,e:1727}], type:'late' },
+    { name:'乔治三世', birth:1738, death:1820, reigns:[{s:1760,e:1820}], type:'late' },
+    { name:'维多利亚', birth:1819, death:1901, reigns:[{s:1837,e:1901}], type:'late' },
+    { name:'乔治五世', birth:1865, death:1936, reigns:[{s:1910,e:1936}], type:'late' },
+    { name:'乔治六世', birth:1895, death:1952, reigns:[{s:1936,e:1952}], type:'late' },
+    { name:'伊丽莎白二世', birth:1926, death:2022, reigns:[{s:1952,e:2022}], type:'late' },
+  ];
+
+  const minYear=1000, maxYear=2030, totalYears=maxYear-minYear;
+  const colors = { early:'#1e3a8a', late:'#b91c1c' };
+
+  const container = document.getElementById('ganttChart');
+  let headerHTML = '<div class="gantt-header"><div class="gantt-label" style="width:120px">年份</div><div class="gantt-bar-area" style="position:relative;height:30px;">';
+  for(let y=1100;y<=2000;y+=100){
+    headerHTML += `<span class="gantt-year-tick" style="left:${((y-minYear)/totalYears)*100}%">${y}</span>`;
+  }
+  headerHTML += '</div></div>';
+  container.innerHTML = headerHTML;
+
+  let bodyHTML = '<div class="gantt-body">';
+  emperors.forEach(emp => {
+    const color = colors[emp.type];
+    const lifeLeft = ((emp.birth-minYear)/totalYears)*100;
+    const lifeWidth = ((emp.death-emp.birth)/totalYears)*100;
+    let reignBars = '';
+    emp.reigns.forEach(r => {
+      const rLeft = ((r.s-minYear)/totalYears)*100;
+      const rWidth = Math.max(((r.e-r.s)/totalYears)*100, 0.4);
+      const totalReign = emp.reigns.reduce((a,b)=>a+(b.e-b.s),0);
+      reignBars += `<div class="gantt-bar reign-bar" style="left:${rLeft}%;width:${rWidth}%;background:${color};"><div class="tooltip">在位：${r.s}-${r.e}（共${totalReign}年）</div></div>`;
+    });
+    bodyHTML += `<div class="gantt-row"><div class="gantt-label" style="color:${color};width:120px">${emp.name}</div><div class="gantt-bar-area"><div class="gantt-bar" style="left:${lifeLeft}%;width:${lifeWidth}%;background:${color};"><div class="tooltip">生卒：${emp.birth}-${emp.death}（${emp.death-emp.birth}岁）</div></div>${reignBars}</div></div>`;
+  });
+  bodyHTML += '</div>';
+  container.innerHTML += bodyHTML;
+
+  // 多段在位期生命条
+  document.querySelectorAll('.life-bar[data-multi]').forEach(bar => {
+    const birth = parseInt(bar.dataset.birth);
+    const death = parseInt(bar.dataset.death);
+    const parts = bar.dataset.multi.split(',').map(Number);
+    const total = death - birth;
+    const reigns = bar.querySelectorAll('.reign');
+    if(reigns[0] && parts.length >= 2) {
+      reigns[0].style.left = ((parts[0]-birth)/total)*100 + '%';
+      reigns[0].style.width = ((parts[1]-parts[0])/total)*100 + '%';
+    }
+    if(reigns[1] && parts.length >= 4) {
+      reigns[1].style.left = ((parts[2]-birth)/total)*100 + '%';
+      reigns[1].style.width = ((parts[3]-parts[2])/total)*100 + '%';
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

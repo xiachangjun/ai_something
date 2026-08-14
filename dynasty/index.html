@@ -71,45 +71,62 @@
     line-height: 1.8;
   }
 
-  /* Timeline bar */
-  .timeline-bar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0;
-    margin: 40px auto;
-    max-width: 900px;
-    height: 36px;
-    border-radius: 18px;
+  /* Timeline overview */
+  .timeline-overview { margin: 40px auto 0; max-width: 900px; }
+  .timeline-head { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
+  .timeline-head h3 { font-size: 16px; letter-spacing: 2px; color: var(--text); }
+  .timeline-head p { font-size: 12px; color: #737373; letter-spacing: 1px; }
+
+  .timeline-group { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .timeline-group-label { width: 44px; flex-shrink: 0; font-size: 11px; letter-spacing: 3px; color: #a3a3a3; text-align: center; }
+  .timeline-track {
+    position: relative; flex: 1; height: 40px; border-radius: 20px;
+    background: #1b1b1b;
+    border: 1px solid #2a2a2a;
     overflow: hidden;
-    position: relative;
-    background: #222;
   }
-  .timeline-bar .segment {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-    font-weight: bold;
-    color: rgba(255,255,255,0.9);
-    letter-spacing: 1px;
-    transition: flex .3s;
-    cursor: default;
-    position: relative;
-    overflow: hidden;
-    white-space: nowrap;
+  .timeline-seg {
+    position: absolute; top: 0; bottom: 0;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    color: #fff; font-size: 12px; font-weight: bold; letter-spacing: 1px;
+    text-decoration: none; cursor: pointer;
+    white-space: nowrap; overflow: hidden;
+    transition: filter .15s, box-shadow .15s;
   }
-  .timeline-bar .segment:hover {
-    filter: brightness(1.2);
+  .timeline-seg:hover { filter: brightness(1.18); box-shadow: inset 0 0 0 1px rgba(255,255,255,.55); z-index: 3; }
+  .timeline-seg .seg-years { font-size: 10px; font-weight: normal; opacity: .92; }
+  .timeline-seg.gap {
+    cursor: default; color: #666; font-weight: normal; font-size: 9px; letter-spacing: 2px;
+    background: repeating-linear-gradient(45deg, rgba(255,255,255,.03) 0 6px, transparent 6px 12px), #161616;
   }
-  .timeline-labels {
-    display: flex;
-    justify-content: space-between;
-    max-width: 900px;
-    margin: 6px auto 0;
-    font-size: 11px;
-    color: #666;
+  .timeline-seg.gap:hover { filter: none; box-shadow: none; }
+  .timeline-seg.lane { height: 50%; }
+  .timeline-seg.lane-1 { top: 50%; }
+
+  .seg-tip {
+    position: fixed; z-index: 1000; pointer-events: none;
+    background: #0d0d0d; border: 1px solid #3a3a3a; color: #e5e5e5;
+    padding: 8px 12px; border-radius: 8px; font-size: 11px; line-height: 1.7;
+    white-space: nowrap; text-align: center;
+    opacity: 0; transition: opacity .12s;
+    box-shadow: 0 8px 24px rgba(0,0,0,.55);
+  }
+  .seg-tip b { color: #fbbf24; }
+
+  .timeline-scale { position: relative; height: 26px; margin: 8px 0 0 56px; border-top: 1px solid #2a2a2a; }
+  .timeline-scale .tick { position: absolute; top: -1px; font-size: 10px; color: #737373; transform: translateX(-50%); }
+  .timeline-scale .tick i { display: block; width: 1px; height: 5px; background: #3a3a3a; margin: 0 auto 2px; }
+  .timeline-scale .tick.start { left: 0; transform: none; }
+  .timeline-scale .tick.start i { margin: 0 auto 2px 0; }
+  .timeline-scale .tick.end { right: 0; transform: none; }
+  .timeline-scale .tick.end i { margin: 0 0 2px auto; }
+
+  @media (max-width: 640px) {
+    .timeline-group { gap: 8px; }
+    .timeline-group-label { width: 34px; font-size: 10px; }
+    .timeline-track { height: 36px; }
+    .timeline-seg .seg-years { display: none; }
+    .timeline-scale { margin-left: 46px; }
   }
 
   /* Cards grid */
@@ -296,6 +313,24 @@
   .card.ming .banner-latin { color: #dc2626; }
   .card.ming .meta-chip { border-color: #8b000040; color: #f87171; }
 
+  .card.britain::before { background: linear-gradient(90deg, #012169, #c8102e); }
+  .card.britain .card-banner { background: linear-gradient(135deg, #012169, #1e3a8a, #c8102e); }
+  .card.britain .banner-title { color: #f0f5ff; }
+  .card.britain .banner-latin { color: #fbbf24; }
+  .card.britain .meta-chip { border-color: #01216940; color: #60a5fa; }
+
+  .card.nanbei::before { background: linear-gradient(90deg, #0e7490, #b45309); }
+  .card.nanbei .card-banner { background: linear-gradient(135deg, #083344, #0e7490, #b45309); }
+  .card.nanbei .banner-title { color: #e0f2fe; }
+  .card.nanbei .banner-latin { color: #fbbf24; }
+  .card.nanbei .meta-chip { border-color: #0e749040; color: #22d3ee; }
+
+  .card.japan::before { background: linear-gradient(90deg, #b91c1c, #1e3a8a); }
+  .card.japan .card-banner { background: linear-gradient(135deg, #450a0a, #b91c1c, #1e3a8a); }
+  .card.japan .banner-title { color: #fef2f2; }
+  .card.japan .banner-latin { color: #fbbf24; }
+  .card.japan .meta-chip { border-color: #b91c1c40; color: #f87171; }
+
   /* Footer */
   .footer {
     text-align: center;
@@ -324,25 +359,84 @@
   </div>
 
   <!-- 时间轴总览 -->
-  <div class="timeline-bar">
-    <div class="segment" style="flex:5.03;background:linear-gradient(90deg,#9b1b30,#c0392b)" title="唐朝 618-907">唐 618-907</div>
-    <div class="segment" style="flex:3.19;background:linear-gradient(90deg,#b8860b,#daa520)" title="宋朝 960-1279">宋 960-1279</div>
-    <div class="segment" style="flex:3.50;background:linear-gradient(90deg,#8b0000,#dc2626)" title="明朝 1368-1644">明 1368-1644</div>
-    <div class="segment" style="flex:5.03;background:linear-gradient(90deg,#6d28d9,#8b5cf6)" title="罗马帝国 前27-476">罗马 前27-476</div>
-    <div class="segment" style="flex:8.83;background:linear-gradient(90deg,#1e3a8a,#3b82f6)" title="法兰西 987-1870">法兰西 987-1870</div>
-    <div class="segment" style="flex:3.00;background:linear-gradient(90deg,#1a3a5c,#c9941e)" title="清朝 1644-1912">清 1644-1912</div>
-  </div>
-  <div class="timeline-labels">
-    <span>前27年</span>
-    <span>500</span>
-    <span>1000</span>
-    <span>1500</span>
-    <span>1870</span>
-    <span>1912</span>
+  <div class="timeline-overview">
+    <div class="timeline-head">
+      <h3>📅 时间轴总览</h3>
+      <p>按真实年代比例排列 · 悬停查看详情 · 点击跳转</p>
+    </div>
+    <div class="timeline-group">
+      <div class="timeline-group-label">中 国</div>
+      <div class="timeline-track" id="trackChina"></div>
+    </div>
+    <div class="timeline-group">
+      <div class="timeline-group-label">欧 洲</div>
+      <div class="timeline-track" id="trackEurope"></div>
+    </div>
+    <div class="timeline-group">
+      <div class="timeline-group-label">日 本</div>
+      <div class="timeline-track" id="trackJapan"></div>
+    </div>
+    <div class="timeline-scale" id="timelineScale"></div>
   </div>
 
   <!-- 卡片 -->
   <div class="cards-grid">
+
+    <!-- 南北朝 -->
+    <a href="nanbeichao-dynasty.html" class="card nanbei">
+      <div class="card-banner">
+        <div class="banner-icon">🏮</div>
+        <div class="banner-title">南北朝</div>
+        <div class="banner-latin">Nan Bei Chao</div>
+      </div>
+      <div class="card-body">
+        <h2>南北朝帝王世系简表</h2>
+        <div class="card-meta">
+          <div class="meta-chip">420 - 589</div>
+          <div class="meta-chip">169年</div>
+          <div class="meta-chip">53位帝王</div>
+        </div>
+        <div class="card-desc">
+          东晋灭亡后南北分裂近两百年。南朝宋齐梁陈四代相继、偏安江南；北朝北魏统一北方，
+          分裂为东西魏后演变为北齐北周，最终隋文帝杨坚代周灭陈，天下重归一统。
+        </div>
+        <div class="card-tags">
+          <span>元嘉之治</span><span>孝文帝改革</span><span>侯景之乱</span><span>北周灭北齐</span><span>隋灭陈</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <span class="enter-text">查看详情</span>
+        <span class="arrow">→</span>
+      </div>
+    </a>
+
+    <!-- 日本 -->
+    <a href="japan-history.html" class="card japan">
+      <div class="card-banner">
+        <div class="banner-icon">🗾</div>
+        <div class="banner-title">日 本</div>
+        <div class="banner-latin">Nihon</div>
+      </div>
+      <div class="card-body">
+        <h2>日本历史时代与天皇世系简表</h2>
+        <div class="card-meta">
+          <div class="meta-chip">前660 - 今</div>
+          <div class="meta-chip">2600+年</div>
+          <div class="meta-chip">126代天皇</div>
+        </div>
+        <div class="card-desc">
+          "万世一系"的天皇制贯穿两千六百年：从神武传说与大和朝廷，经飞鸟大化改新、平安摄关院政，
+          到镰仓以降武家幕府，明治维新王政复古，战后象征天皇制直至令和时代。
+        </div>
+        <div class="card-tags">
+          <span>大化改新</span><span>平安时代</span><span>源平合战</span><span>明治维新</span><span>平成令和</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <span class="enter-text">查看详情</span>
+        <span class="arrow">→</span>
+      </div>
+    </a>
 
     <!-- 唐朝 -->
     <a href="tang-dynasty.html" class="card tang">
@@ -484,6 +578,34 @@
       </div>
     </a>
 
+    <!-- 英国 -->
+    <a href="british-monarchy.html" class="card britain">
+      <div class="card-banner">
+        <div class="banner-icon">👑</div>
+        <div class="banner-title">英 国</div>
+        <div class="banner-latin">United Kingdom</div>
+      </div>
+      <div class="card-body">
+        <h2>英国君主世系简表</h2>
+        <div class="card-meta">
+          <div class="meta-chip">1066 - 2022</div>
+          <div class="meta-chip">956年</div>
+          <div class="meta-chip">27位君主</div>
+        </div>
+        <div class="card-desc">
+          从诺曼征服到温莎王朝，近千年的君主制延续。历经大宪章、百年战争、玫瑰战争、都铎盛世、
+          英国内战、光荣革命与维多利亚时代，见证君主立宪制与"日不落帝国"的兴衰。
+        </div>
+        <div class="card-tags">
+          <span>大宪章</span><span>百年战争</span><span>都铎王朝</span><span>光荣革命</span><span>维多利亚时代</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <span class="enter-text">查看详情</span>
+        <span class="arrow">→</span>
+      </div>
+    </a>
+
     <!-- 清朝 -->
     <a href="qing-dynasty.html" class="card qing">
       <div class="card-banner">
@@ -516,10 +638,94 @@
 
   <div class="footer">
     <p>数据来源：各朝代正史及权威历史著作 · 仅供学习参考</p>
-    <p style="margin-top:6px;color:#404040;">共 6 份王朝简表 · 持续更新中</p>
+    <p style="margin-top:6px;color:#404040;">共 9 份王朝简表 · 持续更新中</p>
   </div>
 
 </div>
+
+<script>
+(function(){
+  var MIN = -27, MAX = 2030, TOTAL = MAX - MIN;
+  var tracks = {
+    china: [
+      { name:'南北朝', full:'南北朝', years:'420 - 589', dur:'169年', start:420, end:589, href:'nanbeichao-dynasty.html', grad:'linear-gradient(90deg,#0e7490,#b45309)', note:'南朝宋齐梁陈 · 北朝北魏周齐' },
+      { gap:true, name:'隋', full:'隋朝', years:'589 - 618', start:589, end:618, note:'杨坚统一 · 大运河 · 二世而亡' },
+      { name:'唐', full:'唐朝', years:'618 - 907', dur:'289年', start:618, end:907, href:'tang-dynasty.html', grad:'linear-gradient(90deg,#9b1b30,#c0392b)', note:'贞观之治 · 开元盛世' },
+      { gap:true, name:'五代', full:'五代十国', years:'907 - 960', start:907, end:960, note:'藩镇割据 · 政权更迭' },
+      { name:'宋', full:'宋朝', years:'960 - 1279', dur:'319年', start:960, end:1279, href:'song-dynasty.html', grad:'linear-gradient(90deg,#b8860b,#daa520)', note:'北宋 · 南宋 · 文盛武弱' },
+      { gap:true, name:'元', full:'元朝', years:'1279 - 1368', start:1279, end:1368, note:'蒙元统治（约89年）' },
+      { name:'明', full:'明朝', years:'1368 - 1644', dur:'276年', start:1368, end:1644, href:'ming-dynasty.html', grad:'linear-gradient(90deg,#8b0000,#dc2626)', note:'洪武开国 → 崇祯殉国' },
+      { name:'清', full:'清朝', years:'1644 - 1912', dur:'268年', start:1644, end:1912, href:'qing-dynasty.html', grad:'linear-gradient(90deg,#1a3a5c,#c9941e)', note:'康乾盛世 → 辛亥革命' }
+    ],
+    europe: [
+      { name:'罗马', full:'罗马帝国', years:'前27 - 476', dur:'503年', start:-27, end:476, href:'roman-empire.html', grad:'linear-gradient(90deg,#6d28d9,#8b5cf6)', note:'奥古斯都 → 西罗马灭亡' },
+      { gap:true, name:'中世纪', full:'中世纪早期', years:'476 - 987', start:476, end:987, note:'法兰克王国 · 维京时代' },
+      { name:'法兰西', full:'法兰西君主制', years:'987 - 1870', dur:'883年', start:987, end:1870, lane:0, href:'france-monarchy.html', grad:'linear-gradient(90deg,#1e3a8a,#3b82f6)', note:'卡佩 → 瓦卢瓦 → 波旁 → 帝国' },
+      { name:'英国', full:'英国君主制', years:'1066 - 2022', dur:'956年', start:1066, end:2022, lane:1, href:'british-monarchy.html', grad:'linear-gradient(90deg,#012169,#c8102e)', note:'诺曼 → 金雀花 → 都铎 → 温莎' }
+    ],
+    japan: [
+      { name:'大和-平安', full:'日本古代', years:'250 - 1185', dur:'935年', start:250, end:1185, href:'japan-history.html', grad:'linear-gradient(90deg,#b91c1c,#ef4444)', note:'大和·飞鸟·奈良·平安 · 天皇亲政→摄关院政' },
+      { name:'镰仓-江户', full:'武家时代', years:'1185 - 1868', dur:'683年', start:1185, end:1868, href:'japan-history.html', grad:'linear-gradient(90deg,#7f1d1d,#b91c1c)', note:'镰仓·室町·安土桃山·江户 · 幕府政治' },
+      { name:'明治-令和', full:'近现代日本', years:'1868 - 2022', dur:'154年', start:1868, end:2022, href:'japan-history.html', grad:'linear-gradient(90deg,#1e3a8a,#3b82f6)', note:'明治维新 · 二战 · 和平宪法 · 平成令和' }
+    ]
+  };
+
+  Object.keys(tracks).forEach(function(key){
+    var el = document.getElementById('track' + key.charAt(0).toUpperCase() + key.slice(1));
+    tracks[key].forEach(function(it){
+      var left = ((it.start - MIN) / TOTAL) * 100;
+      var width = ((it.end - it.start) / TOTAL) * 100;
+      var seg = document.createElement(it.gap ? 'div' : 'a');
+      seg.className = 'timeline-seg' + (it.gap ? ' gap' : '') + (it.lane !== undefined ? ' lane lane-' + it.lane : '');
+      seg.style.left = left + '%';
+      seg.style.width = width + '%';
+      seg.title = it.full + ' ' + it.years + ' · ' + it.note;
+      var tip = '<b>' + it.full + '</b> ' + it.years + (it.dur ? '（' + it.dur + '）' : '') + '<br>' + it.note + (it.gap ? '' : '<br>点击查看详情 →');
+      seg.setAttribute('data-tip', tip);
+      if (!it.gap) { seg.href = it.href; seg.style.background = it.grad; }
+      seg.innerHTML = '<span class="seg-name">' + it.name + '</span>' + (it.gap ? '' : '<span class="seg-years">' + it.years + '</span>');
+      el.appendChild(seg);
+    });
+  });
+
+  // 年份刻度（与真实位置对齐）
+  var scale = document.getElementById('timelineScale');
+  var startTick = document.createElement('span');
+  startTick.className = 'tick start';
+  startTick.innerHTML = '<i></i>前27';
+  scale.appendChild(startTick);
+  [0, 500, 1000, 1500].forEach(function(y){
+    var pos = ((y - MIN) / TOTAL) * 100;
+    var s = document.createElement('span');
+    s.className = 'tick';
+    s.style.left = pos + '%';
+    s.innerHTML = '<i></i>' + y;
+    scale.appendChild(s);
+  });
+  var endTick = document.createElement('span');
+  endTick.className = 'tick end';
+  endTick.innerHTML = '<i></i>2022';
+  scale.appendChild(endTick);
+
+  // 浮动提示层（fixed，避免被轨道裁剪）
+  var tip = null;
+  document.addEventListener('mouseover', function(e){
+    var seg = e.target.closest ? e.target.closest('.timeline-seg') : null;
+    if (!seg || !seg.dataset.tip) return;
+    if (!tip) { tip = document.createElement('div'); tip.className = 'seg-tip'; document.body.appendChild(tip); }
+    tip.innerHTML = seg.dataset.tip;
+    var r = seg.getBoundingClientRect();
+    tip.style.left = Math.max(8, Math.min(r.left + r.width / 2 - tip.offsetWidth / 2, window.innerWidth - tip.offsetWidth - 8)) + 'px';
+    var top = r.top - tip.offsetHeight - 10;
+    if (top < 4) top = r.bottom + 8;
+    tip.style.top = top + 'px';
+    tip.style.opacity = '1';
+  });
+  document.addEventListener('mouseout', function(e){
+    if (e.target.closest && e.target.closest('.timeline-seg') && tip) tip.style.opacity = '0';
+  });
+})();
+</script>
 
 </body>
 </html>

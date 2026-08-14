@@ -1,0 +1,2284 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>南北朝帝王世系简表 (420-589)</title>
+<style>
+  :root{--bg:#f3f4f6;--card-bg:#fff;--early-color:#0e7490;--late-color:#b45309;--text:#1c1917;--text-light:#6b7280;--border:#d1d5db;--event-bg:#ecfeff;--minister-bg:#fffbeb;--highlight:#0891b2;--gold:#b8860b;--rev-color:#dc2626}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:"PingFang SC","Microsoft YaHei","Noto Serif SC",serif;background:var(--bg);color:var(--text);line-height:1.6}
+  .header{text-align:center;padding:50px 20px 30px;background:linear-gradient(135deg,#083344 0%,#0e7490 45%,#b45309 82%,#92400e 100%);color:#e0f2fe;position:relative;overflow:hidden}
+  .header::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffd700' fill-opacity='0.06'%3E%3Cpath d='M20 5l3 10h10l-8 6 3 10-8-6-8 6 3-10-8-6h10z'/%3E%3C/g%3E%3C/svg%3E");opacity:.6}
+  .header h1{font-size:40px;font-weight:900;letter-spacing:10px;position:relative;z-index:1;text-shadow:2px 2px 4px rgba(0,0,0,.5)}
+  .header .subtitle{font-size:18px;margin-top:12px;color:#fbbf24;letter-spacing:6px;position:relative;z-index:1}
+  .header .period{font-size:14px;margin-top:8px;color:#a5f3fc;letter-spacing:3px;position:relative;z-index:1}
+  .header .latin{font-size:13px;margin-top:4px;color:#c4b5fd;letter-spacing:2px;position:relative;z-index:1;font-style:italic}
+  .legend{display:flex;justify-content:center;gap:28px;padding:18px;background:#fff;border-bottom:2px solid var(--border);flex-wrap:wrap}
+  .legend-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-light)}
+  .legend-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0}
+  .container{max-width:1400px;margin:0 auto;padding:20px}
+  .section-title{text-align:center;padding:30px 20px 20px;font-size:28px;font-weight:bold;letter-spacing:6px;position:relative}
+  .section-title.early{color:var(--early-color)}.section-title.late{color:var(--late-color)}
+  .section-title::after{content:'';display:block;width:80px;height:3px;margin:12px auto 0}
+  .section-title.early::after{background:var(--early-color)}.section-title.late::after{background:var(--late-color)}
+  .timeline{position:relative;padding:20px 0}
+  .timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:4px;transform:translateX(-50%);z-index:0}
+  .timeline.early::before{background:var(--early-color)}.timeline.late::before{background:var(--late-color)}
+  .timeline-entry{display:flex;align-items:flex-start;position:relative;margin-bottom:20px}
+  .entry-content{display:flex;width:100%;align-items:flex-start}.entry-left,.entry-right{width:48%;padding:0 15px}
+  .entry-center{width:4%;display:flex;justify-content:center;position:relative;z-index:1}
+  .year-marker{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold;color:#fff;flex-shrink:0;z-index:2}
+  .early .year-marker{background:var(--early-color)}.late .year-marker{background:var(--late-color)}
+  .emperor-card{background:var(--card-bg);border-radius:12px;padding:20px;box-shadow:0 4px 20px rgba(0,0,0,.08);border-left:5px solid;position:relative;transition:transform .3s,box-shadow .3s}
+  .emperor-card:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,.15)}
+  .early .emperor-card{border-left-color:var(--early-color)}.late .emperor-card{border-left-color:var(--late-color)}
+  .emperor-card .order{position:absolute;top:-10px;right:15px;background:var(--highlight);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold}
+  .emperor-name{font-size:20px;font-weight:bold;margin-bottom:2px}
+  .emperor-latin{font-size:12px;color:var(--text-light);font-style:italic;margin-bottom:4px}
+  .emperor-meta{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;margin:10px 0;font-size:12px}
+  .meta-item{display:flex;align-items:center;gap:4px}.meta-label{color:var(--text-light);white-space:nowrap}.meta-value{font-weight:600}
+  .life-bar{height:8px;background:#eee;border-radius:4px;margin:10px 0 5px;position:relative;overflow:visible}
+  .life-bar .reign{position:absolute;height:100%;border-radius:4px;opacity:.8}
+  .early .life-bar .reign{background:var(--early-color)}.late .life-bar .reign{background:var(--late-color)}
+  .life-bar-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--text-light)}
+  .relation-tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;margin-top:6px;border:1px solid}
+  .early .relation-tag{background:#ecfeff;color:#0e7490;border-color:#67e8f9}
+  .late .relation-tag{background:#fffbeb;color:#b45309;border-color:#fcd34d}
+  .dynasty-tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:10px;margin-top:4px;margin-left:4px;background:#fef3c7;color:#92400e;border:1px solid #fcd34d}
+  .events-panel{background:var(--event-bg);border-radius:10px;padding:14px;margin-top:5px;border:1px solid #a5f3fc}
+  .events-panel h4{font-size:13px;color:var(--highlight);margin-bottom:8px;display:flex;align-items:center;gap:5px}
+  .event-item{font-size:12px;padding:4px 0;border-bottom:1px dashed #a5f3fc;display:flex;gap:6px}
+  .event-item:last-child{border-bottom:none}
+  .event-year{color:var(--highlight);font-weight:bold;white-space:nowrap;min-width:42px}
+  .ministers-panel{background:var(--minister-bg);border-radius:10px;padding:14px;margin-top:8px;border:1px solid #fcd34d}
+  .ministers-panel h4{font-size:13px;color:#92400e;margin-bottom:8px;display:flex;align-items:center;gap:5px}
+  .minister-list{display:flex;flex-wrap:wrap;gap:5px}
+  .minister-tag{font-size:11px;padding:3px 8px;background:#fef9ee;color:#92400e;border-radius:12px;border:1px solid #fcd34d}
+  .minister-tag.negative{background:#fde8e8;color:#b91c1c;border-color:#f0b8b8}
+  .family-tree-section{margin:40px 0;padding:30px;background:#fff;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.06)}
+  .family-tree-section h2{text-align:center;font-size:24px;color:var(--text);margin-bottom:30px;letter-spacing:4px}
+  .tree-container{overflow-x:auto;padding:20px 0}
+  .lifecycle-section{margin:40px 0;padding:30px;background:#fff;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.06)}
+  .lifecycle-section h2{text-align:center;font-size:24px;color:var(--text);margin-bottom:10px;letter-spacing:4px}
+  .lifecycle-section .note{text-align:center;font-size:12px;color:var(--text-light);margin-bottom:20px}
+  .gantt-container{overflow-x:auto;padding:10px 0}.gantt-chart{min-width:900px}
+  .gantt-row{display:flex;align-items:center;height:30px;margin:2px 0}
+  .gantt-label{width:140px;font-size:11px;font-weight:600;text-align:right;padding-right:12px;flex-shrink:0;white-space:nowrap}
+  .gantt-bar-area{flex:1;position:relative;height:100%}
+  .gantt-bar{position:absolute;height:10px;top:50%;transform:translateY(-50%);border-radius:5px;opacity:.3;cursor:pointer}
+  .gantt-bar.reign-bar{height:18px;opacity:.85;z-index:1}
+  .gantt-bar:hover{opacity:1}
+  .gantt-bar .tooltip{display:none;position:absolute;bottom:calc(100% + 5px);left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:4px 8px;border-radius:4px;font-size:11px;white-space:nowrap;z-index:10}
+  .gantt-bar:hover .tooltip{display:block}
+  .gantt-header{display:flex;align-items:center;height:30px;border-bottom:2px solid var(--border);margin-bottom:10px}
+  .gantt-header .gantt-label{font-size:12px;color:var(--text-light)}
+  .gantt-year-tick{position:absolute;font-size:10px;color:var(--text-light);transform:translateX(-50%);top:0}
+  .transition-divider{text-align:center;padding:40px 20px;position:relative}
+  .transition-divider .divider-line{height:2px;background:linear-gradient(to right,transparent,var(--rev-color),transparent);margin:0 auto;max-width:600px}
+  .transition-divider .divider-text{display:inline-block;background:var(--bg);padding:8px 25px;position:relative;top:-14px;font-size:16px;color:var(--rev-color);font-weight:bold;letter-spacing:4px;border:2px solid var(--rev-color);border-radius:20px}
+  .mini-divider{text-align:center;padding:18px}
+  .mini-divider .mini-text{display:inline-block;background:#ecfeff;padding:5px 18px;font-size:12px;color:#0e7490;font-weight:bold;letter-spacing:2px;border:1px solid #67e8f9;border-radius:14px}
+  .mini-divider .mini-text.red{background:#fef2f2;color:#b91c1c;border-color:#fca5a5}
+  .overview-stats{display:flex;justify-content:center;gap:28px;padding:20px;flex-wrap:wrap}
+  .stat-box{text-align:center;padding:15px 22px;background:#fff;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.06);min-width:110px}
+  .stat-number{font-size:26px;font-weight:bold;color:var(--highlight)}
+  .stat-desc{font-size:12px;color:var(--text-light);margin-top:4px}
+  .footer{text-align:center;padding:30px;color:var(--text-light);font-size:13px;border-top:2px solid var(--border);margin-top:40px}
+  @media(max-width:900px){.entry-content{flex-direction:column!important;align-items:center}.entry-left,.entry-right{width:100%;padding:10px 0}.entry-center{width:100%;justify-content:center;margin:10px 0}.timeline::before{display:none}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>南北朝帝王世系简表</h1>
+  <div class="subtitle">宋 齐 梁 陈 · 北魏 周 齐</div>
+  <div class="period">南朝 (420-589) ─ 北朝 (386-581) · 隋统天下 (589)</div>
+  <div class="latin">🏮 南北对峙 · 六朝金粉 🏮</div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:var(--early-color)"></div><span>南朝君主（宋齐梁陈）</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--late-color)"></div><span>北朝君主（北魏/东魏西魏/北齐北周）</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div><span>重要人物</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--rev-color)"></div><span>重大事件</span></div>
+</div>
+
+<div class="overview-stats">
+  <div class="stat-box"><div class="stat-number">169</div><div class="stat-desc">南北朝历时（年）</div></div>
+  <div class="stat-box"><div class="stat-number">53</div><div class="stat-desc">收录帝王总数</div></div>
+  <div class="stat-box"><div class="stat-number">24+29</div><div class="stat-desc">南朝 24 · 北朝 29</div></div>
+  <div class="stat-box"><div class="stat-number">420</div><div class="stat-desc">刘宋建国（南朝始）</div></div>
+  <div class="stat-box"><div class="stat-number">589</div><div class="stat-desc">隋灭陈 · 天下统一</div></div>
+  <div class="stat-box"><div class="stat-number">建康·洛阳</div><div class="stat-desc">南北都城</div></div>
+</div>
+
+<div class="container">
+
+<div class="lifecycle-section">
+  <h2>帝王生卒与在位时间对照图</h2>
+  <div class="note">浅色条为生卒跨度，深色条为在位时间（青=南朝，赭=北朝，可见南北并立），鼠标悬停查看详情</div>
+  <div class="gantt-container"><div class="gantt-chart" id="ganttChart"></div></div>
+</div>
+
+<!-- ==================== 南朝 ==================== -->
+<div class="section-title early">南 朝</div>
+<div style="text-align:center;color:#999;font-size:13px;margin-bottom:20px;">420年 — 589年 · 宋 → 齐 → 梁 → 陈 · 都城：建康（今南京）</div>
+
+<div class="timeline early">
+  <!-- 刘裕 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">1</div>
+        <div class="emperor-name">宋武帝 刘裕</div>
+        <div class="emperor-latin">Liu Yu · Founder of Liu Song</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">363-422（59岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">420-422（2年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:96.6%;width:3.4%"></div></div>
+        <div class="life-bar-labels"><span>363</span><span>420 在位</span><span>422</span></div>
+        <div class="relation-tag">寒门出身 · 北伐英雄 · 南朝开国之君</div>
+        <div class="dynasty-tag">南朝宋</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">檀道济</span>
+          <span class="minister-tag">王镇恶</span>
+          <span class="minister-tag">谢晦</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">420</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">405</span><span>灭桓玄，掌控东晋朝政</span></div>
+        <div class="event-item"><span class="event-year">409-417</span><span>义熙北伐，灭南燕、后秦，收复洛阳、长安</span></div>
+        <div class="event-item"><span class="event-year">420</span><span>代晋称帝，南朝宋建立</span></div>
+        <div class="event-item"><span class="event-year">422</span><span>病逝，寒门天子开启南朝</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 少帝 刘义符 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">422</span><span>刘裕病逝，17岁即位</span></div>
+        <div class="event-item"><span class="event-year">423</span><span>不理朝政，专好游戏</span></div>
+        <div class="event-item"><span class="event-year">424</span><span>被徐羡之、傅亮等废黜，旋遭杀害</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">422</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">2</div>
+        <div class="emperor-name">宋少帝 刘义符</div>
+        <div class="emperor-latin">Liu Yifu · Emperor Shao</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">406-424（18岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">422-424（2年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:88.9%;width:11.1%"></div></div>
+        <div class="life-bar-labels"><span>406</span><span>422 在位</span><span>424</span></div>
+        <div class="relation-tag">刘裕长子 · 被废杀</div>
+        <div class="dynasty-tag">南朝宋</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag negative">徐羡之</span>
+          <span class="minister-tag negative">傅亮</span>
+          <span class="minister-tag negative">谢晦</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 文帝 刘义隆 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">3</div>
+        <div class="emperor-name">宋文帝 刘义隆</div>
+        <div class="emperor-latin">Liu Yilong · Yuanjia Reign</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">407-453（46岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">424-453（29年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:37%;width:63%"></div></div>
+        <div class="life-bar-labels"><span>407</span><span>424 在位</span><span>453</span></div>
+        <div class="relation-tag">刘裕第三子 · 元嘉之治 · 被弑而亡</div>
+        <div class="dynasty-tag">南朝宋</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">檀道济（冤杀）</span>
+          <span class="minister-tag">谢灵运（诗人）</span>
+          <span class="minister-tag">裴松之</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">424</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">424</span><span>即位，诛杀废帝权臣</span></div>
+        <div class="event-item"><span class="event-year">430</span><span>元嘉北伐失利</span></div>
+        <div class="event-item"><span class="event-year">445</span><span>元嘉之治，江南经济文化鼎盛</span></div>
+        <div class="event-item"><span class="event-year">450</span><span>北魏太武帝南征至瓜步，国力大损</span></div>
+        <div class="event-item"><span class="event-year">453</span><span>被太子刘劭弑杀，"元嘉草草"</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 孝武帝 刘骏 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">453</span><span>起兵诛杀弑父的刘劭，即位</span></div>
+        <div class="event-item"><span class="event-year">454</span><span>平定刘义宣之乱</span></div>
+        <div class="event-item"><span class="event-year">459</span><span>诛杀竟陵王刘诞</span></div>
+        <div class="event-item"><span class="event-year">464</span><span>病逝，大明之政苛暴</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">453</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">4</div>
+        <div class="emperor-name">孝武帝 刘骏</div>
+        <div class="emperor-latin">Liu Jun · Emperor Xiaowu</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">430-464（34岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">453-464（11年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:67.6%;width:32.4%"></div></div>
+        <div class="life-bar-labels"><span>430</span><span>453 在位</span><span>464</span></div>
+        <div class="relation-tag">刘义隆第三子 · 平定刘劭之乱</div>
+        <div class="dynasty-tag">南朝宋</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">戴法兴</span>
+          <span class="minister-tag">颜竣</span>
+          <span class="minister-tag">刘义恭</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 前废帝 刘子业 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">5</div>
+        <div class="emperor-name">前废帝 刘子业</div>
+        <div class="emperor-latin">Liu Ziye · Deposed Emperor</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">449-465（16岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">464-465（1年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:93.8%;width:6.3%"></div></div>
+        <div class="life-bar-labels"><span>449</span><span>464 在位</span><span>465</span></div>
+        <div class="relation-tag">刘骏长子 · 15岁即位 · 荒淫残暴</div>
+        <div class="dynasty-tag">南朝宋</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag negative">刘彧（湘东王）</span>
+          <span class="minister-tag">阮佃夫</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">464</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">464</span><span>即位，行为悖逆无度</span></div>
+        <div class="event-item"><span class="event-year">465</span><span>被湘东王刘彧指使近侍刺杀</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 明帝 刘彧 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">465</span><span>弑前废帝即位</span></div>
+        <div class="event-item"><span class="event-year">466</span><span>平定刘子勋之乱，尽诛宗室诸王</span></div>
+        <div class="event-item"><span class="event-year">472</span><span>病逝，晚年猜忌嗜杀</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">465</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">6</div>
+        <div class="emperor-name">明帝 刘彧</div>
+        <div class="emperor-latin">Liu Yu · Emperor Ming</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">439-472（33岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">465-472（7年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:78.8%;width:21.2%"></div></div>
+        <div class="life-bar-labels"><span>439</span><span>465 在位</span><span>472</span></div>
+        <div class="relation-tag">刘义隆第十一子 · 弑侄自立</div>
+        <div class="dynasty-tag">南朝宋</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">萧道成（后来的齐高帝）</span>
+          <span class="minister-tag">褚渊</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 后废帝 刘昱 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">7</div>
+        <div class="emperor-name">后废帝 刘昱</div>
+        <div class="emperor-latin">Liu Yu · Deposed Emperor</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">463-477（14岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">472-477（5年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:64.3%;width:35.7%"></div></div>
+        <div class="life-bar-labels"><span>463</span><span>472 在位</span><span>477</span></div>
+        <div class="relation-tag">刘彧长子 · 9岁即位 · 凶暴嗜杀</div>
+        <div class="dynasty-tag">南朝宋</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">萧道成（掌权）</span>
+          <span class="minister-tag">杨玉夫</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">472</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">472</span><span>即位，萧道成渐掌大权</span></div>
+        <div class="event-item"><span class="event-year">477</span><span>夜出无度，被萧道成指使杨玉夫弑杀</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 顺帝 刘准 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">477</span><span>10岁即位，萧道成摄政</span></div>
+        <div class="event-item"><span class="event-year">479</span><span>禅位于萧道成，刘宋灭亡；后被鸩杀</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">477</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">8</div>
+        <div class="emperor-name">顺帝 刘准</div>
+        <div class="emperor-latin">Liu Zhun · Last Emperor of Song</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">467-479（12岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">477-479（2年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:83.3%;width:16.7%"></div></div>
+        <div class="life-bar-labels"><span>467</span><span>477 在位</span><span>479</span></div>
+        <div class="relation-tag">刘宋末帝 · 禅让被杀</div>
+        <div class="dynasty-tag">南朝宋</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag negative">萧道成</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 禅代分隔 -->
+  <div class="mini-divider"><div class="mini-text">刘宋禅让 · 479年 · 萧齐代宋</div></div>
+
+  <!-- 齐高帝 萧道成 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">9</div>
+        <div class="emperor-name">齐高帝 萧道成</div>
+        <div class="emperor-latin">Xiao Daocheng · Southern Qi</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">427-482（55岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">479-482（3年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:94.5%;width:5.5%"></div></div>
+        <div class="life-bar-labels"><span>427</span><span>479 在位</span><span>482</span></div>
+        <div class="relation-tag">平刘宋内乱 · 禅代建齐 · 提倡节俭</div>
+        <div class="dynasty-tag">南朝齐</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">褚渊</span>
+          <span class="minister-tag">王僧虔</span>
+          <span class="minister-tag">刘祥</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">479</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">477</span><span>平定刘宋内乱，掌控朝政</span></div>
+        <div class="event-item"><span class="event-year">479</span><span>代宋建齐（南齐）</span></div>
+        <div class="event-item"><span class="event-year">480</span><span>清查户籍，厉行节俭</span></div>
+        <div class="event-item"><span class="event-year">482</span><span>病逝</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 齐武帝 萧赜 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">482</span><span>即位</span></div>
+        <div class="event-item"><span class="event-year">483-493</span><span>永明之治，与北魏通好，江南安定</span></div>
+        <div class="event-item"><span class="event-year">493</span><span>病逝</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">482</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">10</div>
+        <div class="emperor-name">齐武帝 萧赜</div>
+        <div class="emperor-latin">Xiao Ze · Emperor Wu of Qi</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">440-493（53岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">482-493（11年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:79.2%;width:20.8%"></div></div>
+        <div class="life-bar-labels"><span>440</span><span>482 在位</span><span>493</span></div>
+        <div class="relation-tag">萧道成长子 · 永明之治</div>
+        <div class="dynasty-tag">南朝齐</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">王俭</span>
+          <span class="minister-tag">萧嶷（豫章王）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 郁林王 萧昭业 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">11</div>
+        <div class="emperor-name">郁林王 萧昭业</div>
+        <div class="emperor-latin">Xiao Zhaoye · Prince of Yulin</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">473-494（21岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">493-494（1年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:95.2%;width:4.8%"></div></div>
+        <div class="life-bar-labels"><span>473</span><span>493 在位</span><span>494</span></div>
+        <div class="relation-tag">萧赜之孙 · 荒淫挥霍 · 被废杀</div>
+        <div class="dynasty-tag">南朝齐</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag negative">萧鸾（后来的明帝）</span>
+          <span class="minister-tag">王融</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">493</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">493</span><span>即位，挥霍无度</span></div>
+        <div class="event-item"><span class="event-year">494</span><span>被萧鸾废为郁林王，不久被杀</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 海陵王 萧昭文 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">494</span><span>被萧鸾立为傀儡皇帝</span></div>
+        <div class="event-item"><span class="event-year">494</span><span>在位仅数月，被萧鸾废黜杀害</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">494</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">12</div>
+        <div class="emperor-name">海陵王 萧昭文</div>
+        <div class="emperor-latin">Xiao Zhaowen · Prince of Hailing</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">480-494（14岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">494（数月）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:99.3%;width:0.7%"></div></div>
+        <div class="life-bar-labels"><span>480</span><span></span><span>494</span></div>
+        <div class="relation-tag">萧昭业之弟 · 傀儡被废杀</div>
+        <div class="dynasty-tag">南朝齐</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag negative">萧鸾</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 齐明帝 萧鸾 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">13</div>
+        <div class="emperor-name">齐明帝 萧鸾</div>
+        <div class="emperor-latin">Xiao Luan · Emperor Ming of Qi</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">452-498（46岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">494-498（4年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:91.3%;width:8.7%"></div></div>
+        <div class="life-bar-labels"><span>452</span><span>494 在位</span><span>498</span></div>
+        <div class="relation-tag">萧道成之侄 · 废二帝篡位 · 屠戮宗室</div>
+        <div class="dynasty-tag">南朝齐</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">萧衍（后来的梁武帝）</span>
+          <span class="minister-tag">徐孝嗣</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">494</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">494</span><span>废杀郁林王、海陵王，自立为帝</span></div>
+        <div class="event-item"><span class="event-year">495</span><span>大诛高帝、武帝子孙</span></div>
+        <div class="event-item"><span class="event-year">498</span><span>病逝</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 东昏侯 萧宝卷 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">498</span><span>即位，昏暴著称</span></div>
+        <div class="event-item"><span class="event-year">500</span><span>萧衍于襄阳起兵</span></div>
+        <div class="event-item"><span class="event-year">501</span><span>建康城破，被部下所杀，追贬东昏侯</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">498</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">14</div>
+        <div class="emperor-name">东昏侯 萧宝卷</div>
+        <div class="emperor-latin">Xiao Baojuan · Marquis of Donghun</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">483-501（18岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">498-501（3年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:83.3%;width:16.7%"></div></div>
+        <div class="life-bar-labels"><span>483</span><span>498 在位</span><span>501</span></div>
+        <div class="relation-tag">萧鸾次子 · 昏君典型 · 被弑</div>
+        <div class="dynasty-tag">南朝齐</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">潘玉儿（宠妃）</span>
+          <span class="minister-tag negative">萧衍</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 齐和帝 萧宝融 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">15</div>
+        <div class="emperor-name">齐和帝 萧宝融</div>
+        <div class="emperor-latin">Xiao Baorong · Last Emperor of Qi</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">488-502（14岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">501-502（1年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:92.9%;width:7.1%"></div></div>
+        <div class="life-bar-labels"><span>488</span><span>501 在位</span><span>502</span></div>
+        <div class="relation-tag">萧宝卷之弟 · 傀儡 · 禅让被杀</div>
+        <div class="dynasty-tag">南朝齐</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag negative">萧衍</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">501</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">501</span><span>被萧衍拥立于江陵</span></div>
+        <div class="event-item"><span class="event-year">502</span><span>禅让萧衍，萧齐灭亡；不久被鸩杀</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 禅代分隔 -->
+  <div class="mini-divider"><div class="mini-text">萧齐禅让 · 502年 · 萧梁代齐</div></div>
+
+  <!-- 梁武帝 萧衍 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">502</span><span>代齐建梁</span></div>
+        <div class="event-item"><span class="event-year">505</span><span>北伐无功而返</span></div>
+        <div class="event-item"><span class="event-year">527</span><span>舍身同泰寺，佛教极盛</span></div>
+        <div class="event-item"><span class="event-year">547</span><span>接纳东魏叛将侯景，引狼入室</span></div>
+        <div class="event-item"><span class="event-year">549</span><span>侯景之乱，饿死台城，在位48年</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">502</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">16</div>
+        <div class="emperor-name">梁武帝 萧衍</div>
+        <div class="emperor-latin">Xiao Yan · Emperor Wu of Liang</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">464-549（86岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">502-549（48年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:44.7%;width:55.3%"></div></div>
+        <div class="life-bar-labels"><span>464</span><span>502 在位</span><span>549</span></div>
+        <div class="relation-tag">南朝在位最久 · 崇佛佞佛 · 饿死台城</div>
+        <div class="dynasty-tag">南朝梁</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">沈约</span>
+          <span class="minister-tag">刘勰（文心雕龙）</span>
+          <span class="minister-tag">陶弘景</span>
+          <span class="minister-tag">昭明太子萧统</span>
+          <span class="minister-tag negative">侯景（降将）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 简文帝 萧纲 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">17</div>
+        <div class="emperor-name">简文帝 萧纲</div>
+        <div class="emperor-latin">Xiao Gang · Emperor Jianwen</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">503-551（48岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">549-551（2年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:95.8%;width:4.2%"></div></div>
+        <div class="life-bar-labels"><span>503</span><span>549 在位</span><span>551</span></div>
+        <div class="relation-tag">萧衍第三子 · 宫体诗代表 · 侯景傀儡</div>
+        <div class="dynasty-tag">南朝梁</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag negative">侯景</span>
+          <span class="minister-tag">庾肩吾</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">549</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">549</span><span>侯景攻陷台城后拥立为帝</span></div>
+        <div class="event-item"><span class="event-year">551</span><span>被侯景废黜杀害</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 元帝 萧绎 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">552</span><span>王僧辩、陈霸先平侯景之乱，在江陵即位</span></div>
+        <div class="event-item"><span class="event-year">554</span><span>西魏攻陷江陵，被俘遭杀，焚毁典籍</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">552</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">18</div>
+        <div class="emperor-name">元帝 萧绎</div>
+        <div class="emperor-latin">Xiao Yi · Emperor Yuan</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">508-555（47岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">552-555（3年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:93.6%;width:6.4%"></div></div>
+        <div class="life-bar-labels"><span>508</span><span>552 在位</span><span>555</span></div>
+        <div class="relation-tag">萧衍第七子 · 才子皇帝 · 江陵之祸</div>
+        <div class="dynasty-tag">南朝梁</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">王僧辩</span>
+          <span class="minister-tag">陈霸先</span>
+          <span class="minister-tag">庾信（文学家）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 敬帝 萧方智 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">19</div>
+        <div class="emperor-name">敬帝 萧方智</div>
+        <div class="emperor-latin">Xiao Fangzhi · Last Emperor of Liang</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">543-557（14岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">555-557（2年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:85.7%;width:14.3%"></div></div>
+        <div class="life-bar-labels"><span>543</span><span>555 在位</span><span>557</span></div>
+        <div class="relation-tag">萧绎第九子 · 陈霸先所立 · 禅让被杀</div>
+        <div class="dynasty-tag">南朝梁</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">陈霸先</span>
+          <span class="minister-tag negative">王僧辩</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">555</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">555</span><span>王僧辩与陈霸先相争后，陈霸先立其为帝</span></div>
+        <div class="event-item"><span class="event-year">557</span><span>禅让陈霸先，萧梁灭亡；后被杀害</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 禅代分隔 -->
+  <div class="mini-divider"><div class="mini-text">萧梁禅让 · 557年 · 陈霸先建陈</div></div>
+
+  <!-- 陈武帝 陈霸先 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">548</span><span>侯景之乱爆发，起兵勤王</span></div>
+        <div class="event-item"><span class="event-year">552</span><span>平定侯景之乱</span></div>
+        <div class="event-item"><span class="event-year">557</span><span>代梁建陈，疆域最为狭小</span></div>
+        <div class="event-item"><span class="event-year">559</span><span>病逝</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">557</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">20</div>
+        <div class="emperor-name">陈武帝 陈霸先</div>
+        <div class="emperor-latin">Chen Baxian · Chen Dynasty</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">503-559（56岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">557-559（2年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:96.4%;width:3.6%"></div></div>
+        <div class="life-bar-labels"><span>503</span><span>557 在位</span><span>559</span></div>
+        <div class="relation-tag">平侯景之乱 · 禅代建陈 · 南朝末代政权</div>
+        <div class="dynasty-tag">南朝陈</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">王僧辩（政敌）</span>
+          <span class="minister-tag">杜僧明</span>
+          <span class="minister-tag">吴明彻</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 陈文帝 陈蒨 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">21</div>
+        <div class="emperor-name">陈文帝 陈蒨</div>
+        <div class="emperor-latin">Chen Qian · Emperor Wen of Chen</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">522-566（44岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">559-566（7年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:84.1%;width:15.9%"></div></div>
+        <div class="life-bar-labels"><span>522</span><span>559 在位</span><span>566</span></div>
+        <div class="relation-tag">陈霸先之侄 · 天嘉之治 · 江南复苏</div>
+        <div class="dynasty-tag">南朝陈</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">侯安都</span>
+          <span class="minister-tag">陈顼（弟）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">559</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">559</span><span>即位，天嘉之治，轻徭薄赋</span></div>
+        <div class="event-item"><span class="event-year">560</span><span>平定王琳之乱</span></div>
+        <div class="event-item"><span class="event-year">566</span><span>病逝</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 陈废帝 陈伯宗 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">566</span><span>即位，叔父陈顼辅政</span></div>
+        <div class="event-item"><span class="event-year">568</span><span>被陈顼废为临海王，后遭杀害</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">566</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">22</div>
+        <div class="emperor-name">陈废帝 陈伯宗</div>
+        <div class="emperor-latin">Chen Bozong · Deposed Emperor</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">552-570（18岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">566-568（2年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:77.8%;width:11.1%"></div></div>
+        <div class="life-bar-labels"><span>552</span><span>566 在位</span><span>570</span></div>
+        <div class="relation-tag">陈蒨长子 · 被叔父废杀</div>
+        <div class="dynasty-tag">南朝陈</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag negative">陈顼</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 陈宣帝 陈顼 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">23</div>
+        <div class="emperor-name">陈宣帝 陈顼</div>
+        <div class="emperor-latin">Chen Xu · Emperor Xuan of Chen</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">530-582（52岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">568-582（14年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:73.1%;width:26.9%"></div></div>
+        <div class="life-bar-labels"><span>530</span><span>568 在位</span><span>582</span></div>
+        <div class="relation-tag">陈霸先之侄 · 太建北伐 · 收复淮南</div>
+        <div class="dynasty-tag">南朝陈</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">吴明彻</span>
+          <span class="minister-tag">毛喜</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">568</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">568</span><span>废侄自立</span></div>
+        <div class="event-item"><span class="event-year">573-577</span><span>太建北伐，收复淮南失地</span></div>
+        <div class="event-item"><span class="event-year">582</span><span>病逝</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 陈后主 陈叔宝 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">582</span><span>即位，荒于酒色</span></div>
+        <div class="event-item"><span class="event-year">584</span><span>大兴土木，建临春、结绮、望仙三阁</span></div>
+        <div class="event-item"><span class="event-year">588</span><span>隋文帝发兵五十一万八路南下</span></div>
+        <div class="event-item"><span class="event-year">589</span><span>隋灭陈，被俘押往长安，南朝终结</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">582</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">24</div>
+        <div class="emperor-name">陈后主 陈叔宝</div>
+        <div class="emperor-latin">Chen Shubao · Last Emperor of Chen</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">553-604（51岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">582-589（7年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:56.9%;width:13.7%"></div></div>
+        <div class="life-bar-labels"><span>553</span><span>582 在位</span><span>604</span></div>
+        <div class="relation-tag">陈朝亡国之君 · 《玉树后庭花》</div>
+        <div class="dynasty-tag">南朝陈</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">张丽华（贵妃）</span>
+          <span class="minister-tag">江总（狎客）</span>
+          <span class="minister-tag">袁宪（忠臣）</span>
+          <span class="minister-tag negative">杨坚（隋文帝）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+</div><!-- end early timeline -->
+
+<!-- ===== 南朝转折 ===== -->
+<div class="transition-divider">
+  <div class="divider-line"></div>
+  <div class="divider-text">侯景之乱 · 549年 · 南朝元气大伤</div>
+</div>
+
+<!-- ==================== 北朝 ==================== -->
+<div class="section-title late">北 朝</div>
+<div style="text-align:center;color:#999;font-size:13px;margin-bottom:20px;">386年 — 581年 · 北魏 → 东魏/西魏 → 北齐/北周 · 都城：平城→洛阳</div>
+
+<div class="timeline late">
+  <!-- 道武帝 拓跋珪 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">25</div>
+        <div class="emperor-name">道武帝 拓跋珪</div>
+        <div class="emperor-latin">Tuoba Gui · Founder of Northern Wei</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">371-409（38岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">386-409（23年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:39.5%;width:60.5%"></div></div>
+        <div class="life-bar-labels"><span>371</span><span>386 在位</span><span>409</span></div>
+        <div class="relation-tag">鲜卑拓跋部 · 重建代国改称魏 · 定都平城</div>
+        <div class="dynasty-tag">北魏</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">邓渊</span>
+          <span class="minister-tag">许谦</span>
+          <span class="minister-tag">崔玄伯</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">386</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">386</span><span>重建代国，改称魏（北魏）</span></div>
+        <div class="event-item"><span class="event-year">398</span><span>定都平城（今大同），即皇帝位</span></div>
+        <div class="event-item"><span class="event-year">398</span><span>离散诸部，计口授田，奠定国本</span></div>
+        <div class="event-item"><span class="event-year">409</span><span>被次子拓跋绍弑杀</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 明元帝 拓跋嗣 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">409</span><span>诛杀弑父的拓跋绍，即位</span></div>
+        <div class="event-item"><span class="event-year">416-423</span><span>趁刘裕北伐之机南进，取得河南之地</span></div>
+        <div class="event-item"><span class="event-year">423</span><span>病逝</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">409</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">26</div>
+        <div class="emperor-name">明元帝 拓跋嗣</div>
+        <div class="emperor-latin">Tuoba Si · Emperor Mingyuan</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">392-423（31岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">409-423（14年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:54.8%;width:45.2%"></div></div>
+        <div class="life-bar-labels"><span>392</span><span>409 在位</span><span>423</span></div>
+        <div class="relation-tag">拓跋珪长子 · 承上启下 · 南取河南</div>
+        <div class="dynasty-tag">北魏</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">崔浩</span>
+          <span class="minister-tag">长孙嵩</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 太武帝 拓跋焘 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">27</div>
+        <div class="emperor-name">太武帝 拓跋焘</div>
+        <div class="emperor-latin">Tuoba Tao · Unifier of North China</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">408-452（44岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">423-452（29年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:34.1%;width:65.9%"></div></div>
+        <div class="life-bar-labels"><span>408</span><span>423 在位</span><span>452</span></div>
+        <div class="relation-tag">拓跋珪之孙 · 统一北方 · 太武灭佛</div>
+        <div class="dynasty-tag">北魏</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">崔浩（被杀）</span>
+          <span class="minister-tag">古弼</span>
+          <span class="minister-tag negative">宗爱（宦官）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">423</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">423</span><span>即位，武功强盛</span></div>
+        <div class="event-item"><span class="event-year">439</span><span>灭北凉，统一北方</span></div>
+        <div class="event-item"><span class="event-year">446</span><span>灭佛（中国历史上首次大规模灭佛）</span></div>
+        <div class="event-item"><span class="event-year">450</span><span>南征刘宋至瓜步，饮马长江</span></div>
+        <div class="event-item"><span class="event-year">452</span><span>被宦官宗爱弑杀</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 南安王 拓跋余 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">452</span><span>宗爱弑太武帝后立其为帝</span></div>
+        <div class="event-item"><span class="event-year">452</span><span>同年被宗爱所杀，在位仅数月</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">452</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">28</div>
+        <div class="emperor-name">南安王 拓跋余</div>
+        <div class="emperor-latin">Tuoba Yu · Prince of Nan'an</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">？-452</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">452（数月）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:88%;width:12%"></div></div>
+        <div class="life-bar-labels"><span>？</span><span>452 在位</span><span>452</span></div>
+        <div class="relation-tag">拓跋焘之子 · 宦官所立 · 旋被弑</div>
+        <div class="dynasty-tag">北魏</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag negative">宗爱（宦官）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 文成帝 拓跋濬 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">29</div>
+        <div class="emperor-name">文成帝 拓跋濬</div>
+        <div class="emperor-latin">Tuoba Jun · Emperor Wencheng</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">440-465（25岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">452-465（13年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:48%;width:52%"></div></div>
+        <div class="life-bar-labels"><span>440</span><span>452 在位</span><span>465</span></div>
+        <div class="relation-tag">拓跋焘之孙 · 诛宗爱 · 复兴佛教</div>
+        <div class="dynasty-tag">北魏</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">陆丽</span>
+          <span class="minister-tag">源贺</span>
+          <span class="minister-tag">冯太后（后来的）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">452</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">452</span><span>宗室诛杀宗爱，拥立即位</span></div>
+        <div class="event-item"><span class="event-year">452</span><span>下诏恢复佛教，开凿云冈石窟</span></div>
+        <div class="event-item"><span class="event-year">465</span><span>病逝</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 献文帝 拓跋弘 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">465</span><span>12岁即位，冯太后临朝</span></div>
+        <div class="event-item"><span class="event-year">471</span><span>好佛老，禅位于5岁的太子元宏</span></div>
+        <div class="event-item"><span class="event-year">476</span><span>被冯太后毒杀（一说暴毙）</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">465</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">30</div>
+        <div class="emperor-name">献文帝 拓跋弘</div>
+        <div class="emperor-latin">Tuoba Hong · Emperor Xianwen</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">454-476（22岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">465-471（6年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:50%;width:27.3%"></div></div>
+        <div class="life-bar-labels"><span>454</span><span>465 在位 471</span><span>476</span></div>
+        <div class="relation-tag">拓跋濬长子 · 禅位幼子 · 太上皇被毒杀</div>
+        <div class="dynasty-tag">北魏</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">冯太后</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 孝文帝 元宏 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">31</div>
+        <div class="emperor-name">孝文帝 元宏</div>
+        <div class="emperor-latin">Yuan Hong · Emperor Xiaowen</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">467-499（32岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">471-499（28年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:12.5%;width:87.5%"></div></div>
+        <div class="life-bar-labels"><span>467</span><span>471 在位</span><span>499</span></div>
+        <div class="relation-tag">拓跋焘曾孙 · 迁都洛阳 · 全面汉化</div>
+        <div class="dynasty-tag">北魏</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">冯太后（祖母摄政）</span>
+          <span class="minister-tag">李冲</span>
+          <span class="minister-tag">王肃</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">471</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">471</span><span>5岁即位，冯太后临朝摄政</span></div>
+        <div class="event-item"><span class="event-year">485</span><span>推行均田制</span></div>
+        <div class="event-item"><span class="event-year">490</span><span>冯太后去世，亲政</span></div>
+        <div class="event-item"><span class="event-year">494</span><span>迁都洛阳</span></div>
+        <div class="event-item"><span class="event-year">496</span><span>改汉姓（拓跋→元），禁胡服胡语</span></div>
+        <div class="event-item"><span class="event-year">499</span><span>南征途中病逝</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 宣武帝 元恪 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">499</span><span>即位，延续汉化政策</span></div>
+        <div class="event-item"><span class="event-year">505-515</span><span>崇佛极盛，开凿龙门石窟</span></div>
+        <div class="event-item"><span class="event-year">515</span><span>病逝，宣武之政由盛转衰</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">499</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">32</div>
+        <div class="emperor-name">宣武帝 元恪</div>
+        <div class="emperor-latin">Yuan Ke · Emperor Xuanwu</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">483-515（32岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">499-515（16年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:50%;width:50%"></div></div>
+        <div class="life-bar-labels"><span>483</span><span>499 在位</span><span>515</span></div>
+        <div class="relation-tag">元宏次子 · 扩建洛阳 · 佞佛误国</div>
+        <div class="dynasty-tag">北魏</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">高肇</span>
+          <span class="minister-tag">胡充华（后来的胡太后）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 孝明帝 元诩 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">33</div>
+        <div class="emperor-name">孝明帝 元诩</div>
+        <div class="emperor-latin">Yuan Xu · Emperor Xiaoming</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">510-528（18岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">515-528（13年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:27.8%;width:72.2%"></div></div>
+        <div class="life-bar-labels"><span>510</span><span>515 在位</span><span>528</span></div>
+        <div class="relation-tag">元恪之子 · 6岁即位 · 胡太后临朝</div>
+        <div class="dynasty-tag">北魏</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag negative">胡太后</span>
+          <span class="minister-tag negative">尔朱荣</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">515</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">515</span><span>即位，胡太后临朝称制</span></div>
+        <div class="event-item"><span class="event-year">520</span><span>元乂、刘腾政变，胡太后被幽禁</span></div>
+        <div class="event-item"><span class="event-year">525</span><span>六镇起义爆发，北魏衰落</span></div>
+        <div class="event-item"><span class="event-year">528</span><span>被胡太后毒杀</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 孝庄帝 元子攸 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">528</span><span>尔朱荣入洛，拥立为帝</span></div>
+        <div class="event-item"><span class="event-year">530</span><span>设计诛杀尔朱荣，旋被尔朱兆所弑</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">528</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">34</div>
+        <div class="emperor-name">孝庄帝 元子攸</div>
+        <div class="emperor-latin">Yuan Ziyou · Emperor Xiaozhuang</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">507-531（24岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">528-530（2年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:87.5%;width:8.3%"></div></div>
+        <div class="life-bar-labels"><span>507</span><span>528 在位</span><span>531</span></div>
+        <div class="relation-tag">尔朱荣所立 · 手刃权臣 · 身死国乱</div>
+        <div class="dynasty-tag">北魏</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag negative">尔朱荣</span>
+          <span class="minister-tag negative">尔朱兆</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 节闵帝 元恭 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">35</div>
+        <div class="emperor-name">节闵帝 元恭</div>
+        <div class="emperor-latin">Yuan Gong · Emperor Jiemin</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">498-532（34岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">531-532（1年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:97.1%;width:2.9%"></div></div>
+        <div class="life-bar-labels"><span>498</span><span>531 在位</span><span>532</span></div>
+        <div class="relation-tag">尔朱氏所立 · 高欢起兵后被废杀</div>
+        <div class="dynasty-tag">北魏</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag negative">尔朱世隆</span>
+          <span class="minister-tag negative">高欢</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">531</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">531</span><span>尔朱氏拥立为帝</span></div>
+        <div class="event-item"><span class="event-year">532</span><span>高欢起兵击败尔朱氏，被废杀</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 废帝 元朗 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">531</span><span>高欢立其为帝，对抗尔朱氏</span></div>
+        <div class="event-item"><span class="event-year">532</span><span>高欢入洛后将其废黜杀害</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">531</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">36</div>
+        <div class="emperor-name">废帝 元朗</div>
+        <div class="emperor-latin">Yuan Lang · Deposed Emperor</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">513-532（19岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">531-532（1年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:94.7%;width:5.3%"></div></div>
+        <div class="life-bar-labels"><span>513</span><span>531 在位</span><span>532</span></div>
+        <div class="relation-tag">高欢所立 · 同年被废杀</div>
+        <div class="dynasty-tag">北魏</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag negative">高欢</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 孝武帝 元修 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">37</div>
+        <div class="emperor-name">孝武帝 元修</div>
+        <div class="emperor-latin">Yuan Xiu · Last Emperor of Northern Wei</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">510-535（25岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">532-534（2年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:88%;width:8%"></div></div>
+        <div class="life-bar-labels"><span>510</span><span>532 在位</span><span>535</span></div>
+        <div class="relation-tag">高欢所立 · 西奔宇文泰 · 北魏终结</div>
+        <div class="dynasty-tag">北魏</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag negative">高欢</span>
+          <span class="minister-tag negative">宇文泰</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">532</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">532</span><span>高欢拥立为帝，定都洛阳</span></div>
+        <div class="event-item"><span class="event-year">534</span><span>与高欢决裂，西奔长安依宇文泰，北魏分裂</span></div>
+        <div class="event-item"><span class="event-year">535</span><span>被宇文泰毒杀</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 分裂分隔 -->
+  <div class="mini-divider"><div class="mini-text red">北魏分裂 · 534年 · 东魏（高欢）与西魏（宇文泰）对峙</div></div>
+
+  <!-- 东魏孝静帝 元善见 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">534</span><span>高欢立其为帝，迁都邺城</span></div>
+        <div class="event-item"><span class="event-year">544</span><span>与高欢子高澄冲突，君臣失和</span></div>
+        <div class="event-item"><span class="event-year">550</span><span>禅让高洋，东魏灭亡；后被鸩杀</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">534</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">38</div>
+        <div class="emperor-name">东魏孝静帝 元善见</div>
+        <div class="emperor-latin">Yuan Shanjian · Eastern Wei</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">524-552（28岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">534-550（16年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:35.7%;width:57.1%"></div></div>
+        <div class="life-bar-labels"><span>524</span><span>534 在位 550</span><span>552</span></div>
+        <div class="relation-tag">东魏唯一皇帝 · 高欢傀儡 · 禅让被杀</div>
+        <div class="dynasty-tag">东魏</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag negative">高欢</span>
+          <span class="minister-tag negative">高澄</span>
+          <span class="minister-tag negative">高洋</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 西魏文帝 元宝炬 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">39</div>
+        <div class="emperor-name">西魏文帝 元宝炬</div>
+        <div class="emperor-latin">Yuan Baoju · Western Wei</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">507-551（44岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">535-551（16年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:63.6%;width:36.4%"></div></div>
+        <div class="life-bar-labels"><span>507</span><span>535 在位</span><span>551</span></div>
+        <div class="relation-tag">宇文泰所立 · 恭俭有度 · 西魏开国之君</div>
+        <div class="dynasty-tag">西魏</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">宇文泰（权臣）</span>
+          <span class="minister-tag">苏绰（改革家）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">535</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">535</span><span>宇文泰拥立于长安</span></div>
+        <div class="event-item"><span class="event-year">543</span><span>东西魏邙山之战，宇文泰兵败</span></div>
+        <div class="event-item"><span class="event-year">551</span><span>病逝</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 西魏废帝 元钦 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">551</span><span>即位，不甘为傀儡</span></div>
+        <div class="event-item"><span class="event-year">554</span><span>谋诛宇文泰事泄，被废杀</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">551</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">40</div>
+        <div class="emperor-name">西魏废帝 元钦</div>
+        <div class="emperor-latin">Yuan Qin · Deposed Emperor</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">？-554</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">551-554（3年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:88%;width:12%"></div></div>
+        <div class="life-bar-labels"><span>？</span><span>551 在位</span><span>554</span></div>
+        <div class="relation-tag">元宝炬长子 · 谋诛权臣 · 被废杀</div>
+        <div class="dynasty-tag">西魏</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag negative">宇文泰</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 西魏恭帝 拓跋廓 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">41</div>
+        <div class="emperor-name">西魏恭帝 拓跋廓</div>
+        <div class="emperor-latin">Tuoba Kuo · Last Emperor of Western Wei</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">？-557</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">554-556（2年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:85%;width:15%"></div></div>
+        <div class="life-bar-labels"><span>？</span><span>554 在位</span><span>557</span></div>
+        <div class="relation-tag">元钦之弟 · 复姓拓跋 · 禅让被杀</div>
+        <div class="dynasty-tag">西魏</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag negative">宇文泰</span>
+          <span class="minister-tag negative">宇文护</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">554</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">554</span><span>宇文泰立其为帝，恢复拓跋姓氏</span></div>
+        <div class="event-item"><span class="event-year">556</span><span>禅让宇文觉，西魏灭亡；后被杀害</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 北齐文宣帝 高洋 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">550</span><span>代东魏建北齐，定都邺城</span></div>
+        <div class="event-item"><span class="event-year">552</span><span>大破柔然，北击突厥</span></div>
+        <div class="event-item"><span class="event-year">554</span><span>乘西魏灭梁之机，并江北之地</span></div>
+        <div class="event-item"><span class="event-year">559</span><span>前期励精图治，后期酗酒暴虐，暴毙</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">550</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">42</div>
+        <div class="emperor-name">北齐文宣帝 高洋</div>
+        <div class="emperor-latin">Gao Yang · Northern Qi</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">526-559（33岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">550-559（9年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:72.7%;width:27.3%"></div></div>
+        <div class="life-bar-labels"><span>526</span><span>550 在位</span><span>559</span></div>
+        <div class="relation-tag">高欢次子 · 东魏禅让 · 前期明君后期暴君</div>
+        <div class="dynasty-tag">北齐</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">高欢（父·东魏权臣）</span>
+          <span class="minister-tag">杨愔</span>
+          <span class="minister-tag">段韶</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 北齐废帝 高殷 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">43</div>
+        <div class="emperor-name">北齐废帝 高殷</div>
+        <div class="emperor-latin">Gao Yin · Deposed Emperor</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">545-561（16岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">559-560（1年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:87.5%;width:6.3%"></div></div>
+        <div class="life-bar-labels"><span>545</span><span>559 在位</span><span>561</span></div>
+        <div class="relation-tag">高洋长子 · 被叔父高演废杀</div>
+        <div class="dynasty-tag">北齐</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">杨愔（被杀）</span>
+          <span class="minister-tag negative">高演</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">559</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">559</span><span>即位，叔父高演辅政</span></div>
+        <div class="event-item"><span class="event-year">560</span><span>被高演废黜，次年遭杀害</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 北齐孝昭帝 高演 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">560</span><span>废侄自立</span></div>
+        <div class="event-item"><span class="event-year">561</span><span>坠马伤重，临终传位弟高湛，不久去世</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">560</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">44</div>
+        <div class="emperor-name">北齐孝昭帝 高演</div>
+        <div class="emperor-latin">Gao Yan · Emperor Xiaozhao</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">535-561（26岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">560-561（1年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:96.2%;width:3.8%"></div></div>
+        <div class="life-bar-labels"><span>535</span><span>560 在位</span><span>561</span></div>
+        <div class="relation-tag">高洋之弟 · 废侄自立 · 在位仅一年多</div>
+        <div class="dynasty-tag">北齐</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">高湛（弟）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 北齐武成帝 高湛 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">45</div>
+        <div class="emperor-name">北齐武成帝 高湛</div>
+        <div class="emperor-latin">Gao Zhan · Emperor Wucheng</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">537-569（32岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">561-565（4年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:75%;width:12.5%"></div></div>
+        <div class="life-bar-labels"><span>537</span><span>561 在位 565</span><span>569</span></div>
+        <div class="relation-tag">高演之弟 · 荒淫无度 · 禅位太上皇</div>
+        <div class="dynasty-tag">北齐</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag negative">和士开</span>
+          <span class="minister-tag negative">祖珽</span>
+          <span class="minister-tag">斛律光</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">561</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">561</span><span>即位，宠信和士开等佞臣</span></div>
+        <div class="event-item"><span class="event-year">565</span><span>禅位太子高纬，自任太上皇仍掌权</span></div>
+        <div class="event-item"><span class="event-year">569</span><span>纵欲暴毙</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 北齐后主 高纬 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">565</span><span>9岁即位，宠幸冯小怜</span></div>
+        <div class="event-item"><span class="event-year">576</span><span>冤杀名将斛律光，自毁长城</span></div>
+        <div class="event-item"><span class="event-year">577</span><span>北周灭齐，被俘后赐死</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">565</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">46</div>
+        <div class="emperor-name">北齐后主 高纬</div>
+        <div class="emperor-latin">Gao Wei · Last Emperor of Qi</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">556-577（21岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">565-577（12年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:42.9%;width:57.1%"></div></div>
+        <div class="life-bar-labels"><span>556</span><span>565 在位</span><span>577</span></div>
+        <div class="relation-tag">高湛长子 · 宠妃误国 · 亡国之君</div>
+        <div class="dynasty-tag">北齐</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">冯小怜（淑妃）</span>
+          <span class="minister-tag negative">穆提婆</span>
+          <span class="minister-tag">斛律光（冤杀）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 北齐幼主 高恒 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">47</div>
+        <div class="emperor-name">北齐幼主 高恒</div>
+        <div class="emperor-latin">Gao Heng · Child Emperor</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">570-577（7岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">577（不足一月）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:98%;width:2%"></div></div>
+        <div class="life-bar-labels"><span>570</span><span></span><span>577</span></div>
+        <div class="relation-tag">高纬之子 · 即位不足一月 · 北齐灭亡</div>
+        <div class="dynasty-tag">北齐</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">高纬（父）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">577</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">577</span><span>北周攻破邺城前夕，高纬禅位幼子</span></div>
+        <div class="event-item"><span class="event-year">577</span><span>父子被俘，北齐灭亡，高恒被赐死</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 北周孝闵帝 宇文觉 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">557</span><span>宇文护废恭帝，立其为帝，北周建立</span></div>
+        <div class="event-item"><span class="event-year">557</span><span>同年被堂兄宇文护废黜杀害</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">557</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">48</div>
+        <div class="emperor-name">北周孝闵帝 宇文觉</div>
+        <div class="emperor-latin">Yuwen Jue · Northern Zhou</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">542-557（15岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">557（数月）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:97%;width:3%"></div></div>
+        <div class="life-bar-labels"><span>542</span><span></span><span>557</span></div>
+        <div class="relation-tag">宇文泰第三子 · 北周开国之君 · 被废杀</div>
+        <div class="dynasty-tag">北周</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag negative">宇文护</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 北周明帝 宇文毓 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">49</div>
+        <div class="emperor-name">北周明帝 宇文毓</div>
+        <div class="emperor-latin">Yuwen Yu · Emperor Ming</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">534-560（26岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">557-560（3年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:88.5%;width:11.5%"></div></div>
+        <div class="life-bar-labels"><span>534</span><span>557 在位</span><span>560</span></div>
+        <div class="relation-tag">宇文泰长子 · 宇文护所立 · 被毒杀</div>
+        <div class="dynasty-tag">北周</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag negative">宇文护</span>
+          <span class="minister-tag">韦孝宽</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">557</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">557</span><span>宇文护废孝闵帝后立其为帝</span></div>
+        <div class="event-item"><span class="event-year">560</span><span>试图亲政，被宇文护毒杀</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 北周武帝 宇文邕 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">560</span><span>即位，宇文护专权</span></div>
+        <div class="event-item"><span class="event-year">572</span><span>诛杀宇文护，亲政</span></div>
+        <div class="event-item"><span class="event-year">574</span><span>灭佛，还俗僧尼百万</span></div>
+        <div class="event-item"><span class="event-year">577</span><span>灭北齐，北方再度统一</span></div>
+        <div class="event-item"><span class="event-year">578</span><span>北征突厥途中病逝，年仅35</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">560</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">50</div>
+        <div class="emperor-name">北周武帝 宇文邕</div>
+        <div class="emperor-latin">Yuwen Yong · Northern Zhou</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">543-578（35岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">560-578（18年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:48.6%;width:51.4%"></div></div>
+        <div class="life-bar-labels"><span>543</span><span>560 在位</span><span>578</span></div>
+        <div class="relation-tag">宇文泰第四子 · 诛权臣亲政 · 灭北齐统一北方</div>
+        <div class="dynasty-tag">北周</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">宇文护（权臣）</span>
+          <span class="minister-tag">韦孝宽</span>
+          <span class="minister-tag">宇文宪（齐王）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 北周宣帝 宇文赟 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">51</div>
+        <div class="emperor-name">北周宣帝 宇文赟</div>
+        <div class="emperor-latin">Yuwen Yun · Emperor Xuan</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">559-580（21岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">578-579（1年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:90.5%;width:4.8%"></div></div>
+        <div class="life-bar-labels"><span>559</span><span>578 在位 579</span><span>580</span></div>
+        <div class="relation-tag">宇文邕长子 · 荒淫暴虐 · 禅位幼子</div>
+        <div class="dynasty-tag">北周</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">杨坚（岳父）</span>
+          <span class="minister-tag negative">郑译</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">578</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">578</span><span>即位，沉湎酒色，滥施刑罚</span></div>
+        <div class="event-item"><span class="event-year">579</span><span>禅位幼子宇文阐，自任天元皇帝</span></div>
+        <div class="event-item"><span class="event-year">580</span><span>纵欲暴毙，杨坚趁机掌权</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 北周静帝 宇文阐 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">579</span><span>6岁即位，杨坚辅政</span></div>
+        <div class="event-item"><span class="event-year">581</span><span>禅让杨坚，北周灭亡；后被杀害</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">579</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">52</div>
+        <div class="emperor-name">北周静帝 宇文阐</div>
+        <div class="emperor-latin">Yuwen Chan · Last Emperor of Zhou</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">573-581（8岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">579-581（2年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:75%;width:25%"></div></div>
+        <div class="life-bar-labels"><span>573</span><span>579 在位</span><span>581</span></div>
+        <div class="relation-tag">宇文赟之子 · 禅让被杀 · 北周终结</div>
+        <div class="dynasty-tag">北周</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag negative">杨坚</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 统一分隔 -->
+  <div class="mini-divider"><div class="mini-text red">581年 杨坚代周建隋 · 589年 灭陈 · 天下重归一统</div></div>
+
+  <!-- 隋文帝 杨坚 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">53</div>
+        <div class="emperor-name">隋文帝 杨坚</div>
+        <div class="emperor-latin">Yang Jian · Reunifier of China</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">541-604（63岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">581-604（23年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:63.5%;width:36.5%"></div></div>
+        <div class="life-bar-labels"><span>541</span><span>581 在位</span><span>604</span></div>
+        <div class="relation-tag">北周外戚 · 代周建隋 · 开皇之治 · 天下一统</div>
+        <div class="dynasty-tag">隋朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">高颎</span>
+          <span class="minister-tag">杨素</span>
+          <span class="minister-tag">独孤皇后</span>
+          <span class="minister-tag">李德林</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">581</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">581</span><span>代周建隋，改元开皇</span></div>
+        <div class="event-item"><span class="event-year">583</span><span>击败突厥，离间其内部分裂</span></div>
+        <div class="event-item"><span class="event-year">585</span><span>推行均田制、输籍定样，整顿户籍</span></div>
+        <div class="event-item"><span class="event-year">588-589</span><span>灭陈，南北统一，结束近三百年分裂</span></div>
+        <div class="event-item"><span class="event-year">604</span><span>被次子杨广（隋炀帝）所弑</span></div>
+      </div>
+    </div>
+  </div></div>
+
+</div><!-- end late timeline -->
+
+<!-- ==================== 世系关系图 ==================== -->
+<div class="family-tree-section">
+  <h2>南北朝世系关系图</h2>
+  <div class="tree-container">
+    <svg class="tree-svg" viewBox="0 0 1300 940" width="1300" height="940" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="nanG" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#0e7490;stop-opacity:1"/><stop offset="100%" style="stop-color:#22d3ee;stop-opacity:1"/>
+        </linearGradient>
+        <linearGradient id="beiG" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#b45309;stop-opacity:1"/><stop offset="100%" style="stop-color:#f59e0b;stop-opacity:1"/>
+        </linearGradient>
+        <linearGradient id="suiG" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#991b1b;stop-opacity:1"/><stop offset="100%" style="stop-color:#dc2626;stop-opacity:1"/>
+        </linearGradient>
+        <filter id="sh"><feDropShadow dx="1" dy="2" stdDeviation="3" flood-opacity="0.15"/></filter>
+        <marker id="aN" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#0e7490"/></marker>
+        <marker id="aB" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#b45309"/></marker>
+        <marker id="aR" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#b91c1c"/></marker>
+      </defs>
+
+      <!-- 背景 -->
+      <rect x="0" y="0" width="1300" height="360" fill="#ecfeff" rx="12"/>
+      <rect x="0" y="370" width="1300" height="560" fill="#fffbeb" rx="12"/>
+      <text x="20" y="30" font-size="16" fill="#0e7490" font-weight="bold" font-family="PingFang SC,serif">南朝世系 · 宋 齐 梁 陈 (420-589) · 皆禅让更替</text>
+      <text x="20" y="400" font-size="16" fill="#b45309" font-weight="bold" font-family="PingFang SC,serif">北朝世系 · 北魏 → 东魏/西魏 → 北齐/北周 → 隋 (386-581)</text>
+
+      <!-- ══════ 南朝 ══════ -->
+      <!-- 宋 -->
+      <g>
+        <rect x="40" y="60" width="280" height="94" rx="8" fill="url(#nanG)" filter="url(#sh)"/>
+        <text x="52" y="80" fill="#fff" font-size="11" font-weight="bold" font-family="PingFang SC,serif">① 南朝宋 420-479（8帝）</text>
+        <text x="52" y="98" fill="#a5f3fc" font-size="9" font-family="PingFang SC,serif">武帝刘裕 420-422 · 少帝刘义符 422-424</text>
+        <text x="52" y="114" fill="#a5f3fc" font-size="9" font-family="PingFang SC,serif">文帝刘义隆 424-453 · 孝武帝刘骏 453-464</text>
+        <text x="52" y="130" fill="#a5f3fc" font-size="9" font-family="PingFang SC,serif">前废帝刘子业 464-465 · 明帝刘彧 465-472</text>
+        <text x="52" y="146" fill="#a5f3fc" font-size="9" font-family="PingFang SC,serif">后废帝刘昱 472-477 · 顺帝刘准 477-479</text>
+      </g>
+      <!-- 齐 -->
+      <g>
+        <rect x="380" y="60" width="280" height="94" rx="8" fill="url(#nanG)" filter="url(#sh)"/>
+        <text x="392" y="80" fill="#fff" font-size="11" font-weight="bold" font-family="PingFang SC,serif">② 南朝齐 479-502（7帝）</text>
+        <text x="392" y="98" fill="#a5f3fc" font-size="9" font-family="PingFang SC,serif">高帝萧道成 479-482 · 武帝萧赜 482-493</text>
+        <text x="392" y="114" fill="#a5f3fc" font-size="9" font-family="PingFang SC,serif">郁林王萧昭业 493-494 · 海陵王萧昭文 494</text>
+        <text x="392" y="130" fill="#a5f3fc" font-size="9" font-family="PingFang SC,serif">明帝萧鸾 494-498 · 东昏侯萧宝卷 498-501</text>
+        <text x="392" y="146" fill="#a5f3fc" font-size="9" font-family="PingFang SC,serif">和帝萧宝融 501-502</text>
+      </g>
+      <!-- 梁 -->
+      <g>
+        <rect x="720" y="60" width="280" height="94" rx="8" fill="url(#nanG)" filter="url(#sh)"/>
+        <text x="732" y="80" fill="#fff" font-size="11" font-weight="bold" font-family="PingFang SC,serif">③ 南朝梁 502-557（4帝）</text>
+        <text x="732" y="98" fill="#a5f3fc" font-size="9" font-family="PingFang SC,serif">武帝萧衍 502-549（在位48年）</text>
+        <text x="732" y="114" fill="#a5f3fc" font-size="9" font-family="PingFang SC,serif">简文帝萧纲 549-551（侯景所立）</text>
+        <text x="732" y="130" fill="#a5f3fc" font-size="9" font-family="PingFang SC,serif">元帝萧绎 552-555 · 敬帝萧方智 555-557</text>
+      </g>
+      <!-- 陈 -->
+      <g>
+        <rect x="40" y="270" width="280" height="62" rx="8" fill="url(#nanG)" filter="url(#sh)"/>
+        <text x="52" y="290" fill="#fff" font-size="11" font-weight="bold" font-family="PingFang SC,serif">④ 南朝陈 557-589（5帝）</text>
+        <text x="52" y="308" fill="#a5f3fc" font-size="9" font-family="PingFang SC,serif">武帝陈霸先 557-559 · 文帝陈蒨 559-566</text>
+        <text x="52" y="324" fill="#a5f3fc" font-size="9" font-family="PingFang SC,serif">废帝陈伯宗 566-568 · 宣帝陈顼 568-582 · 后主陈叔宝 582-589</text>
+      </g>
+
+      <!-- 禅让箭头 -->
+      <line x1="320" y1="107" x2="378" y2="107" stroke="#0e7490" stroke-width="2" marker-end="url(#aN)"/>
+      <text x="349" y="100" text-anchor="middle" fill="#0e7490" font-size="9" font-family="PingFang SC,serif">禅让479</text>
+      <line x1="660" y1="107" x2="718" y2="107" stroke="#0e7490" stroke-width="2" marker-end="url(#aN)"/>
+      <text x="689" y="100" text-anchor="middle" fill="#0e7490" font-size="9" font-family="PingFang SC,serif">禅让502</text>
+      <path d="M860 154 C860 210, 180 210, 180 268" stroke="#b91c1c" stroke-width="2" stroke-dasharray="6,3" fill="none" marker-end="url(#aR)"/>
+      <text x="520" y="205" text-anchor="middle" fill="#b91c1c" font-size="9" font-family="PingFang SC,serif">禅让 557 · 平侯景乱建陈</text>
+
+      <!-- 南朝底部标注 -->
+      <line x1="20" y1="340" x2="1280" y2="340" stroke="#0e7490" stroke-width="1.5" stroke-dasharray="10,5"/>
+      <text x="650" y="335" text-anchor="middle" fill="#0e7490" font-size="11" font-weight="bold" font-family="PingFang SC,serif">── 南朝四代 · 皆以禅让更替 · 都城建康（今南京）──</text>
+
+      <!-- ══════ 北朝 ══════ -->
+      <!-- 北魏 -->
+      <g>
+        <rect x="40" y="420" width="280" height="126" rx="8" fill="url(#beiG)" filter="url(#sh)"/>
+        <text x="52" y="440" fill="#fff" font-size="11" font-weight="bold" font-family="PingFang SC,serif">⑤ 北魏 386-534（13帝）</text>
+        <text x="52" y="458" fill="#fde68a" font-size="9" font-family="PingFang SC,serif">道武帝拓跋珪 386-409 · 明元帝拓跋嗣 409-423</text>
+        <text x="52" y="474" fill="#fde68a" font-size="9" font-family="PingFang SC,serif">太武帝拓跋焘 423-452 · 南安王拓跋余 452</text>
+        <text x="52" y="490" fill="#fde68a" font-size="9" font-family="PingFang SC,serif">文成帝拓跋濬 452-465 · 献文帝拓跋弘 465-471</text>
+        <text x="52" y="506" fill="#fde68a" font-size="9" font-family="PingFang SC,serif">孝文帝元宏 471-499 · 宣武帝元恪 499-515</text>
+        <text x="52" y="522" fill="#fde68a" font-size="9" font-family="PingFang SC,serif">孝明帝元诩 515-528 · 孝庄帝元子攸 528-530</text>
+        <text x="52" y="538" fill="#fde68a" font-size="9" font-family="PingFang SC,serif">节闵帝元恭 531-532 · 废帝元朗 531-532 · 孝武帝元修 532-534</text>
+      </g>
+      <!-- 东魏 -->
+      <g>
+        <rect x="380" y="420" width="220" height="46" rx="8" fill="url(#beiG)" filter="url(#sh)"/>
+        <text x="392" y="440" fill="#fff" font-size="11" font-weight="bold" font-family="PingFang SC,serif">东魏 534-550（1帝）</text>
+        <text x="392" y="458" fill="#fde68a" font-size="9" font-family="PingFang SC,serif">孝静帝元善见 534-550（高欢掌权）</text>
+      </g>
+      <!-- 西魏 -->
+      <g>
+        <rect x="620" y="420" width="220" height="78" rx="8" fill="url(#beiG)" filter="url(#sh)"/>
+        <text x="632" y="440" fill="#fff" font-size="11" font-weight="bold" font-family="PingFang SC,serif">西魏 535-556（3帝）</text>
+        <text x="632" y="458" fill="#fde68a" font-size="9" font-family="PingFang SC,serif">文帝元宝炬 535-551</text>
+        <text x="632" y="474" fill="#fde68a" font-size="9" font-family="PingFang SC,serif">废帝元钦 551-554</text>
+        <text x="632" y="490" fill="#fde68a" font-size="9" font-family="PingFang SC,serif">恭帝拓跋廓 554-556（宇文泰掌权）</text>
+      </g>
+      <!-- 北齐 -->
+      <g>
+        <rect x="380" y="560" width="220" height="126" rx="8" fill="url(#beiG)" filter="url(#sh)"/>
+        <text x="392" y="580" fill="#fff" font-size="11" font-weight="bold" font-family="PingFang SC,serif">北齐 550-577（6帝）</text>
+        <text x="392" y="598" fill="#fde68a" font-size="9" font-family="PingFang SC,serif">文宣帝高洋 550-559 · 废帝高殷 559-560</text>
+        <text x="392" y="614" fill="#fde68a" font-size="9" font-family="PingFang SC,serif">孝昭帝高演 560-561 · 武成帝高湛 561-565</text>
+        <text x="392" y="630" fill="#fde68a" font-size="9" font-family="PingFang SC,serif">后主高纬 565-577 · 幼主高恒 577</text>
+      </g>
+      <!-- 北周 -->
+      <g>
+        <rect x="620" y="560" width="220" height="110" rx="8" fill="url(#beiG)" filter="url(#sh)"/>
+        <text x="632" y="580" fill="#fff" font-size="11" font-weight="bold" font-family="PingFang SC,serif">北周 557-581（5帝）</text>
+        <text x="632" y="598" fill="#fde68a" font-size="9" font-family="PingFang SC,serif">孝闵帝宇文觉 557 · 明帝宇文毓 557-560</text>
+        <text x="632" y="614" fill="#fde68a" font-size="9" font-family="PingFang SC,serif">武帝宇文邕 560-578（灭北齐）</text>
+        <text x="632" y="630" fill="#fde68a" font-size="9" font-family="PingFang SC,serif">宣帝宇文赟 578-579 · 静帝宇文阐 579-581</text>
+      </g>
+      <!-- 隋 -->
+      <g>
+        <rect x="40" y="790" width="280" height="62" rx="8" fill="url(#suiG)" filter="url(#sh)"/>
+        <text x="52" y="810" fill="#fff" font-size="11" font-weight="bold" font-family="PingFang SC,serif">⑥ 隋朝 581-618</text>
+        <text x="52" y="828" fill="#fecaca" font-size="9" font-family="PingFang SC,serif">文帝杨坚 581-604（本表收录）</text>
+        <text x="52" y="844" fill="#fecaca" font-size="9" font-family="PingFang SC,serif">炀帝杨广 604-618（未收录）</text>
+      </g>
+
+      <!-- 分裂箭头 -->
+      <path d="M180 546 V575 H345 V443 H378" stroke="#b45309" stroke-width="2" fill="none" marker-end="url(#aB)"/>
+      <text x="262" y="567" text-anchor="middle" fill="#92400e" font-size="9" font-family="PingFang SC,serif">高欢掌权 534</text>
+      <path d="M180 546 V575 H555 V443 H618" stroke="#b45309" stroke-width="2" fill="none" marker-end="url(#aB)"/>
+      <text x="468" y="567" text-anchor="middle" fill="#92400e" font-size="9" font-family="PingFang SC,serif">宇文泰掌权 535</text>
+      <text x="180" y="560" text-anchor="end" fill="#b91c1c" font-size="10" font-weight="bold" font-family="PingFang SC,serif">534 分裂</text>
+
+      <!-- 禅让箭头 -->
+      <line x1="490" y1="466" x2="490" y2="558" stroke="#b45309" stroke-width="2" marker-end="url(#aB)"/>
+      <text x="507" y="515" fill="#92400e" font-size="9" font-family="PingFang SC,serif">禅让550</text>
+      <line x1="730" y1="498" x2="730" y2="558" stroke="#b45309" stroke-width="2" marker-end="url(#aB)"/>
+      <text x="747" y="530" fill="#92400e" font-size="9" font-family="PingFang SC,serif">禅让557</text>
+      <path d="M730 670 C730 720, 180 720, 180 786" stroke="#b91c1c" stroke-width="2" stroke-dasharray="6,3" fill="none" marker-end="url(#aR)"/>
+      <text x="455" y="745" text-anchor="middle" fill="#b91c1c" font-size="9" font-family="PingFang SC,serif">外戚代周 581</text>
+      <text x="455" y="762" text-anchor="middle" fill="#b91c1c" font-size="10" font-weight="bold" font-family="PingFang SC,serif">577 北周灭北齐 · 北方再统一</text>
+
+      <!-- 统一标记 -->
+      <rect x="380" y="790" width="240" height="60" rx="8" fill="#fde8e8" stroke="#dc2626" stroke-width="1.5"/>
+      <text x="500" y="818" text-anchor="middle" fill="#dc2626" font-size="13" font-weight="bold" font-family="PingFang SC,serif">589 灭陈 · 南北统一</text>
+      <text x="500" y="838" text-anchor="middle" fill="#b91c1c" font-size="9" font-family="PingFang SC,serif">结束近三百年分裂</text>
+
+      <!-- 图例 -->
+      <g>
+        <rect x="760" y="790" width="480" height="140" rx="8" fill="#fff" stroke="#ccc"/>
+        <text x="780" y="813" font-size="13" font-weight="bold" fill="#333" font-family="PingFang SC,serif">图例 — 政权 / 关系</text>
+        <rect x="780" y="825" width="15" height="12" rx="3" fill="url(#nanG)"/>
+        <text x="805" y="836" font-size="10" fill="#333" font-family="PingFang SC,serif">南朝（宋·齐·梁·陈）420-589 · 24帝</text>
+        <rect x="780" y="845" width="15" height="12" rx="3" fill="url(#beiG)"/>
+        <text x="805" y="856" font-size="10" fill="#333" font-family="PingFang SC,serif">北朝（北魏·东魏西魏·北齐北周）386-581 · 28帝</text>
+        <rect x="780" y="865" width="15" height="12" rx="3" fill="url(#suiG)"/>
+        <text x="805" y="876" font-size="10" fill="#333" font-family="PingFang SC,serif">隋朝（581-618）· 收录开国者杨坚</text>
+        <line x1="780" y1="894" x2="820" y2="894" stroke="#0e7490" stroke-width="2" marker-end="url(#aN)"/>
+        <text x="830" y="898" font-size="10" fill="#333" font-family="PingFang SC,serif">承接 / 禅让（南朝线）</text>
+        <line x1="780" y1="916" x2="820" y2="916" stroke="#b91c1c" stroke-width="1.5" stroke-dasharray="6,3"/>
+        <text x="830" y="920" font-size="10" fill="#333" font-family="PingFang SC,serif">分裂 / 代立（北朝线）</text>
+      </g>
+    </svg>
+  </div>
+</div>
+
+</div><!-- end container -->
+
+<div class="footer">
+  <p>南北朝（420-589），中国历史上南北分裂对峙近两百年：南朝历经宋、齐、梁、陈四代二十四帝，偏安江南；北朝自北魏统一北方，经分裂、演变，共历二十九帝，终为北周所承。</p>
+  <p style="margin-top:8px;">孝文帝汉化改革推动民族融合，均田制、府兵制等制度为隋唐盛世奠定基础；南方经济文化持续发展，"六朝金粉"繁华一时。</p>
+  <p style="margin-top:8px;">589年隋文帝灭陈，天下重归一统，结束了自西晋末年以来的长期分裂局面。</p>
+  <p style="margin-top:8px;">数据来源：《宋书》《南齐书》《梁书》《陈书》《魏书》《北齐书》《周书》《隋书》等 · 仅供学习参考</p>
+</div>
+
+<script>
+(function(){
+  const emperors = [
+    { name:'宋武帝 刘裕', birth:363, death:422, reigns:[{s:420,e:422}], type:'early' },
+    { name:'宋少帝 刘义符', birth:406, death:424, reigns:[{s:422,e:424}], type:'early' },
+    { name:'宋文帝 刘义隆', birth:407, death:453, reigns:[{s:424,e:453}], type:'early' },
+    { name:'宋孝武帝 刘骏', birth:430, death:464, reigns:[{s:453,e:464}], type:'early' },
+    { name:'宋前废帝 刘子业', birth:449, death:465, reigns:[{s:464,e:465}], type:'early' },
+    { name:'宋明帝 刘彧', birth:439, death:472, reigns:[{s:465,e:472}], type:'early' },
+    { name:'宋后废帝 刘昱', birth:463, death:477, reigns:[{s:472,e:477}], type:'early' },
+    { name:'宋顺帝 刘准', birth:467, death:479, reigns:[{s:477,e:479}], type:'early' },
+    { name:'齐高帝 萧道成', birth:427, death:482, reigns:[{s:479,e:482}], type:'early' },
+    { name:'齐武帝 萧赜', birth:440, death:493, reigns:[{s:482,e:493}], type:'early' },
+    { name:'齐郁林王 萧昭业', birth:473, death:494, reigns:[{s:493,e:494}], type:'early' },
+    { name:'齐海陵王 萧昭文', birth:480, death:494, reigns:[{s:494,e:494}], type:'early' },
+    { name:'齐明帝 萧鸾', birth:452, death:498, reigns:[{s:494,e:498}], type:'early' },
+    { name:'齐东昏侯 萧宝卷', birth:483, death:501, reigns:[{s:498,e:501}], type:'early' },
+    { name:'齐和帝 萧宝融', birth:488, death:502, reigns:[{s:501,e:502}], type:'early' },
+    { name:'梁武帝 萧衍', birth:464, death:549, reigns:[{s:502,e:549}], type:'early' },
+    { name:'梁简文帝 萧纲', birth:503, death:551, reigns:[{s:549,e:551}], type:'early' },
+    { name:'梁元帝 萧绎', birth:508, death:555, reigns:[{s:552,e:555}], type:'early' },
+    { name:'梁敬帝 萧方智', birth:543, death:557, reigns:[{s:555,e:557}], type:'early' },
+    { name:'陈武帝 陈霸先', birth:503, death:559, reigns:[{s:557,e:559}], type:'early' },
+    { name:'陈文帝 陈蒨', birth:522, death:566, reigns:[{s:559,e:566}], type:'early' },
+    { name:'陈废帝 陈伯宗', birth:552, death:570, reigns:[{s:566,e:568}], type:'early' },
+    { name:'陈宣帝 陈顼', birth:530, death:582, reigns:[{s:568,e:582}], type:'early' },
+    { name:'陈后主 陈叔宝', birth:553, death:604, reigns:[{s:582,e:589}], type:'early' },
+    { name:'北魏道武帝 拓跋珪', birth:371, death:409, reigns:[{s:386,e:409}], type:'late' },
+    { name:'北魏明元帝 拓跋嗣', birth:392, death:423, reigns:[{s:409,e:423}], type:'late' },
+    { name:'北魏太武帝 拓跋焘', birth:408, death:452, reigns:[{s:423,e:452}], type:'late' },
+    { name:'北魏南安王 拓跋余', birth:430, death:452, reigns:[{s:452,e:452}], type:'late', unk:true },
+    { name:'北魏文成帝 拓跋濬', birth:440, death:465, reigns:[{s:452,e:465}], type:'late' },
+    { name:'北魏献文帝 拓跋弘', birth:454, death:476, reigns:[{s:465,e:471}], type:'late' },
+    { name:'北魏孝文帝 元宏', birth:467, death:499, reigns:[{s:471,e:499}], type:'late' },
+    { name:'北魏宣武帝 元恪', birth:483, death:515, reigns:[{s:499,e:515}], type:'late' },
+    { name:'北魏孝明帝 元诩', birth:510, death:528, reigns:[{s:515,e:528}], type:'late' },
+    { name:'北魏孝庄帝 元子攸', birth:507, death:531, reigns:[{s:528,e:530}], type:'late' },
+    { name:'北魏节闵帝 元恭', birth:498, death:532, reigns:[{s:531,e:532}], type:'late' },
+    { name:'北魏废帝 元朗', birth:513, death:532, reigns:[{s:531,e:532}], type:'late' },
+    { name:'北魏孝武帝 元修', birth:510, death:535, reigns:[{s:532,e:534}], type:'late' },
+    { name:'东魏孝静帝 元善见', birth:524, death:552, reigns:[{s:534,e:550}], type:'late' },
+    { name:'西魏文帝 元宝炬', birth:507, death:551, reigns:[{s:535,e:551}], type:'late' },
+    { name:'西魏废帝 元钦', birth:540, death:554, reigns:[{s:551,e:554}], type:'late', unk:true },
+    { name:'西魏恭帝 拓跋廓', birth:542, death:557, reigns:[{s:554,e:556}], type:'late', unk:true },
+    { name:'北齐文宣帝 高洋', birth:526, death:559, reigns:[{s:550,e:559}], type:'late' },
+    { name:'北齐废帝 高殷', birth:545, death:561, reigns:[{s:559,e:560}], type:'late' },
+    { name:'北齐孝昭帝 高演', birth:535, death:561, reigns:[{s:560,e:561}], type:'late' },
+    { name:'北齐武成帝 高湛', birth:537, death:569, reigns:[{s:561,e:565}], type:'late' },
+    { name:'北齐后主 高纬', birth:556, death:577, reigns:[{s:565,e:577}], type:'late' },
+    { name:'北齐幼主 高恒', birth:570, death:577, reigns:[{s:577,e:577}], type:'late' },
+    { name:'北周孝闵帝 宇文觉', birth:542, death:557, reigns:[{s:557,e:557}], type:'late' },
+    { name:'北周明帝 宇文毓', birth:534, death:560, reigns:[{s:557,e:560}], type:'late' },
+    { name:'北周武帝 宇文邕', birth:543, death:578, reigns:[{s:560,e:578}], type:'late' },
+    { name:'北周宣帝 宇文赟', birth:559, death:580, reigns:[{s:578,e:579}], type:'late' },
+    { name:'北周静帝 宇文阐', birth:573, death:581, reigns:[{s:579,e:581}], type:'late' },
+    { name:'隋文帝 杨坚', birth:541, death:604, reigns:[{s:581,e:604}], type:'late' },
+  ];
+
+  const minYear=360, maxYear=610, totalYears=maxYear-minYear;
+  const colors = { early:'#0e7490', late:'#b45309' };
+
+  const container = document.getElementById('ganttChart');
+  let headerHTML = '<div class="gantt-header"><div class="gantt-label" style="width:140px">年份</div><div class="gantt-bar-area" style="position:relative;height:30px;">';
+  for(let y=400;y<=600;y+=50){
+    headerHTML += `<span class="gantt-year-tick" style="left:${((y-minYear)/totalYears)*100}%">${y}</span>`;
+  }
+  headerHTML += '</div></div>';
+  container.innerHTML = headerHTML;
+
+  let bodyHTML = '<div class="gantt-body">';
+  emperors.forEach(emp => {
+    const color = colors[emp.type];
+    const lifeLeft = ((emp.birth-minYear)/totalYears)*100;
+    const lifeWidth = ((emp.death-emp.birth)/totalYears)*100;
+    let reignBars = '';
+    emp.reigns.forEach(r => {
+      const rLeft = ((r.s-minYear)/totalYears)*100;
+      const rWidth = Math.max(((r.e-r.s)/totalYears)*100, 0.4);
+      reignBars += `<div class="gantt-bar reign-bar" style="left:${rLeft}%;width:${rWidth}%;background:${color};"><div class="tooltip">在位：${r.s}-${r.e}（${r.e-r.s}年）</div></div>`;
+    });
+    bodyHTML += `<div class="gantt-row"><div class="gantt-label" style="color:${color};width:140px">${emp.name}</div><div class="gantt-bar-area"><div class="gantt-bar" style="left:${lifeLeft}%;width:${lifeWidth}%;background:${color};"><div class="tooltip">生卒：${emp.unk ? '？' : emp.birth}-${emp.death}</div></div>${reignBars}</div></div>`;
+  });
+  bodyHTML += '</div>';
+  container.innerHTML += bodyHTML;
+})();
+</script>
+</body>
+</html>

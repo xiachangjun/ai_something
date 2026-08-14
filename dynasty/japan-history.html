@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本历史时代与天皇世系简表</title>
+<style>
+  :root{--bg:#f7f5f2;--card-bg:#fff;--early-color:#b91c1c;--late-color:#1e3a8a;--text:#1c1917;--text-light:#6b7280;--border:#d1d5db;--event-bg:#fef2f2;--minister-bg:#eff6ff;--highlight:#dc2626;--gold:#b8860b;--rev-color:#7f1d1d}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:"PingFang SC","Microsoft YaHei","Noto Serif SC",serif;background:var(--bg);color:var(--text);line-height:1.6}
+  .header{text-align:center;padding:50px 20px 30px;background:linear-gradient(135deg,#450a0a 0%,#b91c1c 45%,#dc2626 70%,#1e3a8a 100%);color:#fef2f2;position:relative;overflow:hidden}
+  .header::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='20' r='9' fill='none' stroke='%23ffffff' stroke-opacity='0.05' stroke-width='2'/%3E%3Ccircle cx='20' cy='20' r='5' fill='%23ffffff' fill-opacity='0.05'/%3E%3C/svg%3E");opacity:.6}
+  .header h1{font-size:38px;font-weight:900;letter-spacing:10px;position:relative;z-index:1;text-shadow:2px 2px 4px rgba(0,0,0,.5)}
+  .header .subtitle{font-size:18px;margin-top:12px;color:#fbbf24;letter-spacing:6px;position:relative;z-index:1}
+  .header .period{font-size:14px;margin-top:8px;color:#fecaca;letter-spacing:3px;position:relative;z-index:1}
+  .header .latin{font-size:13px;margin-top:4px;color:#bfdbfe;letter-spacing:2px;position:relative;z-index:1;font-style:italic}
+  .legend{display:flex;justify-content:center;gap:28px;padding:18px;background:#fff;border-bottom:2px solid var(--border);flex-wrap:wrap}
+  .legend-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-light)}
+  .legend-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0}
+  .container{max-width:1400px;margin:0 auto;padding:20px}
+  .section-title{text-align:center;padding:30px 20px 20px;font-size:28px;font-weight:bold;letter-spacing:6px;position:relative}
+  .section-title.early{color:var(--early-color)}.section-title.late{color:var(--late-color)}
+  .section-title::after{content:'';display:block;width:80px;height:3px;margin:12px auto 0}
+  .section-title.early::after{background:var(--early-color)}.section-title.late::after{background:var(--late-color)}
+  .timeline{position:relative;padding:20px 0}
+  .timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:4px;transform:translateX(-50%);z-index:0}
+  .timeline.early::before{background:var(--early-color)}.timeline.late::before{background:var(--late-color)}
+  .timeline-entry{display:flex;align-items:flex-start;position:relative;margin-bottom:20px}
+  .entry-content{display:flex;width:100%;align-items:flex-start}.entry-left,.entry-right{width:48%;padding:0 15px}
+  .entry-center{width:4%;display:flex;justify-content:center;position:relative;z-index:1}
+  .year-marker{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold;color:#fff;flex-shrink:0;z-index:2;text-align:center;line-height:1.2;padding:0 2px}
+  .early .year-marker{background:var(--early-color)}.late .year-marker{background:var(--late-color)}
+  .era-card{background:var(--card-bg);border-radius:12px;padding:20px;box-shadow:0 4px 20px rgba(0,0,0,.08);border-left:5px solid;position:relative;transition:transform .3s,box-shadow .3s}
+  .era-card:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,.15)}
+  .early .era-card{border-left-color:var(--early-color)}.late .era-card{border-left-color:var(--late-color)}
+  .era-card .order{position:absolute;top:-10px;right:15px;background:var(--highlight);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold}
+  .era-name{font-size:20px;font-weight:bold;margin-bottom:2px}
+  .era-jp{font-size:12px;color:var(--text-light);font-style:italic;margin-bottom:6px}
+  .era-meta{display:flex;flex-wrap:wrap;gap:6px 14px;margin:8px 0;font-size:12px}
+  .era-meta .meta-item{display:flex;align-items:center;gap:4px}
+  .era-meta .meta-label{color:var(--text-light);white-space:nowrap}
+  .era-meta .meta-value{font-weight:600}
+  .relation-tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;margin-top:6px;border:1px solid}
+  .early .relation-tag{background:#fef2f2;color:#b91c1c;border-color:#fca5a5}
+  .late .relation-tag{background:#eff6ff;color:#1e3a8a;border-color:#bfdbfe}
+  .events-panel{background:var(--event-bg);border-radius:10px;padding:14px;margin-top:5px;border:1px solid #fecaca}
+  .events-panel h4{font-size:13px;color:var(--highlight);margin-bottom:8px;display:flex;align-items:center;gap:5px}
+  .event-item{font-size:12px;padding:4px 0;border-bottom:1px dashed #fecaca;display:flex;gap:6px}
+  .event-item:last-child{border-bottom:none}
+  .event-year{color:var(--highlight);font-weight:bold;white-space:nowrap;min-width:42px}
+  .ministers-panel{background:var(--minister-bg);border-radius:10px;padding:14px;margin-top:8px;border:1px solid #bfdbfe}
+  .ministers-panel h4{font-size:13px;color:#1e40af;margin-bottom:8px;display:flex;align-items:center;gap:5px}
+  .minister-list{display:flex;flex-wrap:wrap;gap:5px}
+  .minister-tag{font-size:11px;padding:3px 8px;background:#dbeafe;color:#1e40af;border-radius:12px;border:1px solid #bfdbfe}
+  .minister-tag.negative{background:#fde8e8;color:#b91c1c;border-color:#f0b8b8}
+  .family-tree-section,.lifecycle-section,.tenno-section{margin:40px 0;padding:30px;background:#fff;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.06)}
+  .family-tree-section h2,.lifecycle-section h2,.tenno-section h2{text-align:center;font-size:24px;color:var(--text);margin-bottom:10px;letter-spacing:4px}
+  .lifecycle-section .note,.tenno-section .note{text-align:center;font-size:12px;color:var(--text-light);margin-bottom:20px}
+  .tree-container{overflow-x:auto;padding:20px 0}
+  .gantt-container{overflow-x:auto;padding:10px 0}.gantt-chart{min-width:900px}
+  .gantt-row{display:flex;align-items:center;height:34px;margin:2px 0}
+  .gantt-label{width:120px;font-size:12px;font-weight:600;text-align:right;padding-right:12px;flex-shrink:0;white-space:nowrap}
+  .gantt-bar-area{flex:1;position:relative;height:100%}
+  .gantt-bar{position:absolute;height:14px;top:50%;transform:translateY(-50%);border-radius:7px;opacity:.85;cursor:pointer}
+  .gantt-bar:hover{opacity:1;filter:brightness(1.1)}
+  .gantt-bar .tooltip{display:none;position:absolute;bottom:calc(100% + 5px);left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:4px 8px;border-radius:4px;font-size:11px;white-space:nowrap;z-index:10}
+  .gantt-bar:hover .tooltip{display:block}
+  .gantt-header{display:flex;align-items:center;height:30px;border-bottom:2px solid var(--border);margin-bottom:10px}
+  .gantt-header .gantt-label{font-size:12px;color:var(--text-light)}
+  .gantt-year-tick{position:absolute;font-size:10px;color:var(--text-light);transform:translateX(-50%);top:0}
+  .transition-divider{text-align:center;padding:40px 20px;position:relative}
+  .transition-divider .divider-line{height:2px;background:linear-gradient(to right,transparent,var(--rev-color),transparent);margin:0 auto;max-width:600px}
+  .transition-divider .divider-text{display:inline-block;background:var(--bg);padding:8px 25px;position:relative;top:-14px;font-size:16px;color:var(--rev-color);font-weight:bold;letter-spacing:4px;border:2px solid var(--rev-color);border-radius:20px}
+  .mini-divider{text-align:center;padding:18px}
+  .mini-divider .mini-text{display:inline-block;background:#fef2f2;padding:5px 18px;font-size:12px;color:#b91c1c;font-weight:bold;letter-spacing:2px;border:1px solid #fca5a5;border-radius:14px}
+  .overview-stats{display:flex;justify-content:center;gap:28px;padding:20px;flex-wrap:wrap}
+  .stat-box{text-align:center;padding:15px 22px;background:#fff;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.06);min-width:110px}
+  .stat-number{font-size:26px;font-weight:bold;color:var(--highlight)}
+  .stat-desc{font-size:12px;color:var(--text-light);margin-top:4px}
+  .tenno-group{margin-bottom:26px}
+  .tenno-group h3{font-size:16px;color:var(--highlight);border-left:4px solid var(--highlight);padding-left:10px;margin-bottom:4px;letter-spacing:2px}
+  .tenno-group .range{font-size:12px;color:var(--text-light);margin:0 0 10px 14px}
+  .tenno-list{display:grid;grid-template-columns:repeat(3,1fr);gap:4px 18px;font-size:12px}
+  .tenno-item{display:flex;gap:6px}
+  .tenno-item .no{color:var(--text-light);min-width:36px;flex-shrink:0}
+  .tenno-item .name{font-weight:600}
+  .tenno-item .reign{color:var(--text-light)}
+  .footer{text-align:center;padding:30px;color:var(--text-light);font-size:13px;border-top:2px solid var(--border);margin-top:40px}
+  @media(max-width:900px){.entry-content{flex-direction:column!important;align-items:center}.entry-left,.entry-right{width:100%;padding:10px 0}.entry-center{width:100%;justify-content:center;margin:10px 0}.timeline::before{display:none}.tenno-list{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.tenno-list{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>日本历史时代与天皇世系简表</h1>
+  <div class="subtitle">万世一系 · 天皇与武家的时代</div>
+  <div class="period">传说·大和 (前660?-) ─ 飞鸟·奈良·平安 ─ 武家时代 ─ 明治至令和</div>
+  <div class="latin">🌸 日本歴史 · 天皇系譜 🌸</div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:var(--early-color)"></div><span>古代（传说·飞鸟·奈良·平安）</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--late-color)"></div><span>武家时代与近现代（镰仓—令和）</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div><span>重要人物</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--rev-color)"></div><span>重大事件</span></div>
+</div>
+
+<div class="overview-stats">
+  <div class="stat-box"><div class="stat-number">126</div><div class="stat-desc">历代天皇（万世一系）</div></div>
+  <div class="stat-box"><div class="stat-number">9</div><div class="stat-desc">大时代分期</div></div>
+  <div class="stat-box"><div class="stat-number">2600+</div><div class="stat-desc">天皇制延续（年）</div></div>
+  <div class="stat-box"><div class="stat-number">592</div><div class="stat-desc">信史时代开端（推古朝）</div></div>
+  <div class="stat-box"><div class="stat-number">1868</div><div class="stat-desc">明治维新 · 王政复古</div></div>
+  <div class="stat-box"><div class="stat-number">东京</div><div class="stat-desc">首都（1868年迁都）</div></div>
+</div>
+
+<div class="container">
+
+<div class="lifecycle-section">
+  <h2>日本历史时代对照图</h2>
+  <div class="note">各时代的起止年代（飞鸟时代起进入信史，传说时代未入图），鼠标悬停查看详情</div>
+  <div class="gantt-container"><div class="gantt-chart" id="ganttChart"></div></div>
+</div>
+
+<!-- ==================== 古代 ==================== -->
+<div class="section-title early">古 代 日 本</div>
+<div style="text-align:center;color:#999;font-size:13px;margin-bottom:20px;">传说时代 — 平安末期 (1185) · 天皇亲政 · 律令国家 · 摄关与院政</div>
+
+<div class="timeline early">
+  <!-- 传说·大和时代 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="era-card">
+        <div class="order">1</div>
+        <div class="era-name">传说·大和时代</div>
+        <div class="era-jp">神代 · 大和朝廷 · 古坟文化</div>
+        <div class="era-meta">
+          <div class="meta-item"><span class="meta-label">年代：</span><span class="meta-value">前660? - 592（传说为主）</span></div>
+          <div class="meta-item"><span class="meta-label">代表天皇：</span><span class="meta-value">神武 · 应神 · 仁德</span></div>
+        </div>
+        <div class="relation-tag">万世一系之始 · 大和朝廷统一 · 古坟与倭五王</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">神武天皇（传说开国）</span>
+          <span class="minister-tag">仁德天皇</span>
+          <span class="minister-tag">苏我马子</span>
+          <span class="minister-tag">圣德太子（后）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">前660?</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">前660</span><span>神武天皇即位（传说，建国纪元）</span></div>
+        <div class="event-item"><span class="event-year">3-5世纪</span><span>大和朝廷兴起，前方后圆坟遍布畿内</span></div>
+        <div class="event-item"><span class="event-year">5世纪</span><span>"倭五王"遣使中国南朝（刘宋）</span></div>
+        <div class="event-item"><span class="event-year">538</span><span>佛教经百济传入日本</span></div>
+        <div class="event-item"><span class="event-year">587</span><span>苏我马子灭物部氏，翌年弑崇峻天皇</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 飞鸟时代 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">592</span><span>推古女帝即位，圣德太子摄政</span></div>
+        <div class="event-item"><span class="event-year">603</span><span>制定冠位十二阶</span></div>
+        <div class="event-item"><span class="event-year">604</span><span>颁布十七条宪法</span></div>
+        <div class="event-item"><span class="event-year">607</span><span>小野妹子遣隋使，国书"日出处天子"</span></div>
+        <div class="event-item"><span class="event-year">645</span><span>大化改新（中大兄皇子·中臣镰足）</span></div>
+        <div class="event-item"><span class="event-year">663</span><span>白村江之战败于唐·新罗联军</span></div>
+        <div class="event-item"><span class="event-year">701</span><span>《大宝律令》完成，律令国家确立</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">592</div></div>
+    <div class="entry-right">
+      <div class="era-card">
+        <div class="order">2</div>
+        <div class="era-name">飞鸟时代</div>
+        <div class="era-jp">飛鳥時代 · Asuka</div>
+        <div class="era-meta">
+          <div class="meta-item"><span class="meta-label">年代：</span><span class="meta-value">592 - 710</span></div>
+          <div class="meta-item"><span class="meta-label">代表天皇：</span><span class="meta-value">推古 · 天智 · 天武</span></div>
+        </div>
+        <div class="relation-tag">圣德太子改革 · 大化改新 · 律令国家奠基</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">圣德太子</span>
+          <span class="minister-tag">中臣镰足（藤原氏始祖）</span>
+          <span class="minister-tag">中大兄皇子（天智）</span>
+          <span class="minister-tag negative">苏我虾夷·入鹿</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 奈良时代 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="era-card">
+        <div class="order">3</div>
+        <div class="era-name">奈良时代</div>
+        <div class="era-jp">奈良時代 · Nara</div>
+        <div class="era-meta">
+          <div class="meta-item"><span class="meta-label">年代：</span><span class="meta-value">710 - 794</span></div>
+          <div class="meta-item"><span class="meta-label">代表天皇：</span><span class="meta-value">元明 · 圣武 · 称德</span></div>
+        </div>
+        <div class="relation-tag">平城京 · 天平文化 · 律令政治巅峰</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">圣武天皇</span>
+          <span class="minister-tag">藤原不比等</span>
+          <span class="minister-tag">行基</span>
+          <span class="minister-tag">鉴真（唐）</span>
+          <span class="minister-tag">橘诸兄</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">710</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">710</span><span>迁都平城京（奈良）</span></div>
+        <div class="event-item"><span class="event-year">712/720</span><span>编纂《古事记》《日本书纪》</span></div>
+        <div class="event-item"><span class="event-year">729-749</span><span>圣武天皇天平盛世，建造东大寺大佛</span></div>
+        <div class="event-item"><span class="event-year">753</span><span>鉴真东渡成功，传律宗</span></div>
+        <div class="event-item"><span class="event-year">784</span><span>桓武天皇迁都长冈京，奈良时代落幕</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 平安时代 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">794</span><span>迁都平安京（京都），平安时代开始</span></div>
+        <div class="event-item"><span class="event-year">858</span><span>藤原良房任摄政，摄关政治形成</span></div>
+        <div class="event-item"><span class="event-year">894</span><span>废止遣唐使，国风文化兴起</span></div>
+        <div class="event-item"><span class="event-year">1000前后</span><span>《源氏物语》《枕草子》问世</span></div>
+        <div class="event-item"><span class="event-year">1068</span><span>后三条天皇亲政，1086白河上皇开院政</span></div>
+        <div class="event-item"><span class="event-year">1156/1159</span><span>保元·平治之乱，武士登上政治舞台</span></div>
+        <div class="event-item"><span class="event-year">1180-1185</span><span>源平合战，1185坛之浦平氏灭亡</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">794</div></div>
+    <div class="entry-right">
+      <div class="era-card">
+        <div class="order">4</div>
+        <div class="era-name">平安时代</div>
+        <div class="era-jp">平安時代 · Heian</div>
+        <div class="era-meta">
+          <div class="meta-item"><span class="meta-label">年代：</span><span class="meta-value">794 - 1185</span></div>
+          <div class="meta-item"><span class="meta-label">代表天皇：</span><span class="meta-value">桓武 · 醍醐 · 白河</span></div>
+        </div>
+        <div class="relation-tag">摄关政治 · 院政 · 国风文化 · 源平争霸</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">藤原道长（摄关全盛）</span>
+          <span class="minister-tag">紫式部（源氏物语）</span>
+          <span class="minister-tag">清少纳言（枕草子）</span>
+          <span class="minister-tag">源赖朝（后）</span>
+          <span class="minister-tag">平清盛（后）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+</div><!-- end early timeline -->
+
+<!-- ===== 武家时代分界 ===== -->
+<div class="transition-divider">
+  <div class="divider-line"></div>
+  <div class="divider-text">源平合战 · 1185年 · 武家政权登场</div>
+</div>
+
+<!-- ==================== 武家时代与近现代 ==================== -->
+<div class="section-title late">武 家 时 代 与 近 现 代</div>
+<div style="text-align:center;color:#999;font-size:13px;margin-bottom:20px;">镰仓 (1185) — 令和 (今) · 幕府政治 · 明治维新 · 象征天皇制</div>
+
+<div class="timeline late">
+  <!-- 镰仓时代 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="era-card">
+        <div class="order">5</div>
+        <div class="era-name">镰仓时代</div>
+        <div class="era-jp">鎌倉時代 · Kamakura</div>
+        <div class="era-meta">
+          <div class="meta-item"><span class="meta-label">年代：</span><span class="meta-value">1185 - 1333</span></div>
+          <div class="meta-item"><span class="meta-label">代表天皇：</span><span class="meta-value">后鸟羽 · 后醍醐</span></div>
+        </div>
+        <div class="relation-tag">镰仓幕府 · 武士政权之始 · 抵御蒙古</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">源赖朝（首任征夷大将军）</span>
+          <span class="minister-tag">北条政子（尼将军）</span>
+          <span class="minister-tag">北条时宗</span>
+          <span class="minister-tag">楠木正成（后）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1185</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1185</span><span>坛之浦之战平氏覆灭；1192源赖朝任征夷大将军</span></div>
+        <div class="event-item"><span class="event-year">1199</span><span>赖朝去世，北条氏架空将军执权</span></div>
+        <div class="event-item"><span class="event-year">1221</span><span>承久之乱，后鸟羽上皇举兵失败，朝廷臣服</span></div>
+        <div class="event-item"><span class="event-year">1232</span><span>制定《御成败式目》（武家法）</span></div>
+        <div class="event-item"><span class="event-year">1274/1281</span><span>蒙古来袭（文永·弘安之役），台风"神风"</span></div>
+        <div class="event-item"><span class="event-year">1333</span><span>后醍醐天皇倒幕，镰仓幕府灭亡</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 南北朝·室町时代 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1334</span><span>建武新政，后醍醐天皇亲政</span></div>
+        <div class="event-item"><span class="event-year">1336</span><span>足利尊氏建室町幕府，南北朝并立</span></div>
+        <div class="event-item"><span class="event-year">1392</span><span>南北朝合一（南朝后龟山让位北朝后小松）</span></div>
+        <div class="event-item"><span class="event-year">1467</span><span>应仁之乱，进入战国时代</span></div>
+        <div class="event-item"><span class="event-year">1543/1549</span><span>铁炮、基督教传入</span></div>
+        <div class="event-item"><span class="event-year">1568</span><span>织田信长上洛，室町幕府名存实亡</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1336</div></div>
+    <div class="entry-right">
+      <div class="era-card">
+        <div class="order">6</div>
+        <div class="era-name">南北朝·室町时代</div>
+        <div class="era-jp">南北朝 · 室町時代 · Muromachi</div>
+        <div class="era-meta">
+          <div class="meta-item"><span class="meta-label">年代：</span><span class="meta-value">1336 - 1573</span></div>
+          <div class="meta-item"><span class="meta-label">代表天皇：</span><span class="meta-value">后醍醐 · 后小松</span></div>
+        </div>
+        <div class="relation-tag">建武新政 · 南北朝合一 · 应仁之乱 · 战国序幕</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">足利尊氏</span>
+          <span class="minister-tag">足利义满（金阁寺）</span>
+          <span class="minister-tag">足利义政（银阁寺）</span>
+          <span class="minister-tag">楠木正成</span>
+          <span class="minister-tag">织田信长（后）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 安土桃山时代 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="era-card">
+        <div class="order">7</div>
+        <div class="era-name">安土桃山时代</div>
+        <div class="era-jp">安土桃山時代 · Azuchi-Momoyama</div>
+        <div class="era-meta">
+          <div class="meta-item"><span class="meta-label">年代：</span><span class="meta-value">1573 - 1603</span></div>
+          <div class="meta-item"><span class="meta-label">代表天皇：</span><span class="meta-value">正亲町 · 后阳成</span></div>
+        </div>
+        <div class="relation-tag">信长·秀吉统一天下 · 全国统一完成</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">织田信长（天下布武）</span>
+          <span class="minister-tag">丰臣秀吉（太阁）</span>
+          <span class="minister-tag">德川家康（后）</span>
+          <span class="minister-tag">千利休（茶道）</span>
+          <span class="minister-tag negative">明智光秀</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1573</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1573</span><span>信长放逐足利义昭，室町幕府灭亡</span></div>
+        <div class="event-item"><span class="event-year">1582</span><span>本能寺之变，信长自尽；秀吉继之</span></div>
+        <div class="event-item"><span class="event-year">1590</span><span>秀吉平定小田原，统一全国</span></div>
+        <div class="event-item"><span class="event-year">1592/1597</span><span>两次出兵朝鲜（文禄·庆长之役）</span></div>
+        <div class="event-item"><span class="event-year">1598</span><span>秀吉病逝；1600关原之战家康胜出</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 江户时代 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1603</span><span>德川家康任征夷大将军，江户幕府开府</span></div>
+        <div class="event-item"><span class="event-year">1615</span><span>大阪夏之阵，丰臣氏灭亡，幕藩体制确立</span></div>
+        <div class="event-item"><span class="event-year">1633-1639</span><span>锁国令，仅留长崎与中国、荷兰通商</span></div>
+        <div class="event-item"><span class="event-year">1853</span><span>黑船来航（美国佩里舰队），被迫开国</span></div>
+        <div class="event-item"><span class="event-year">1867/1868</span><span>大政奉还 · 王政复古，幕府落幕</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1603</div></div>
+    <div class="entry-right">
+      <div class="era-card">
+        <div class="order">8</div>
+        <div class="era-name">江户时代</div>
+        <div class="era-jp">江戸時代 · Edo</div>
+        <div class="era-meta">
+          <div class="meta-item"><span class="meta-label">年代：</span><span class="meta-value">1603 - 1868</span></div>
+          <div class="meta-item"><span class="meta-label">代表天皇：</span><span class="meta-value">后水尾 · 孝明</span></div>
+        </div>
+        <div class="relation-tag">德川幕府 · 锁国与太平 · 黑船开国 · 明治维新前夜</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">德川家康</span>
+          <span class="minister-tag">德川家光</span>
+          <span class="minister-tag">德川吉宗（享保改革）</span>
+          <span class="minister-tag">吉田松阴</span>
+          <span class="minister-tag">坂本龙马</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 明治至令和 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="era-card">
+        <div class="order">9</div>
+        <div class="era-name">明治至令和</div>
+        <div class="era-jp">明治 — 令和 · Modern Japan</div>
+        <div class="era-meta">
+          <div class="meta-item"><span class="meta-label">年代：</span><span class="meta-value">1868 - 今</span></div>
+          <div class="meta-item"><span class="meta-label">天皇：</span><span class="meta-value">明治 · 大正 · 昭和 · 明仁 · 德仁</span></div>
+        </div>
+        <div class="relation-tag">明治维新 · 军国扩张与战败 · 和平宪法 · 象征天皇制</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">明治天皇</span>
+          <span class="minister-tag">伊藤博文（首任内阁总理）</span>
+          <span class="minister-tag">昭和天皇</span>
+          <span class="minister-tag">麦克阿瑟（战后驻日盟军司令）</span>
+          <span class="minister-tag">明仁天皇（平成）</span>
+          <span class="minister-tag">德仁天皇（令和）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1868</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1868</span><span>明治维新，迁都东京，天皇亲政</span></div>
+        <div class="event-item"><span class="event-year">1889</span><span>颁布《大日本帝国宪法》，天皇总揽统治权</span></div>
+        <div class="event-item"><span class="event-year">1894/1904</span><span>甲午战争、日俄战争，跻身列强</span></div>
+        <div class="event-item"><span class="event-year">1912-1926</span><span>大正时代，大正民主运动</span></div>
+        <div class="event-item"><span class="event-year">1931-1945</span><span>侵华战争与太平洋战争，1945战败投降</span></div>
+        <div class="event-item"><span class="event-year">1947</span><span>和平宪法，天皇成为"日本国象征"</span></div>
+        <div class="event-item"><span class="event-year">1989-2019</span><span>平成时代；2019德仁即位，改元令和</span></div>
+      </div>
+    </div>
+  </div></div>
+
+</div><!-- end late timeline -->
+
+<!-- ==================== 历代天皇世系 ==================== -->
+<div class="tenno-section">
+  <h2>历代天皇世系总表（126 代）</h2>
+  <div class="note">按时代分组；第一至第二十五代属传说时代，系年为传统纪年（推定）；南北朝时代并立时以南朝为正统纪年，北朝（光严系）不计入代数</div>
+  <div class="tenno-group">
+    <h3>传说时代（第1-25代）</h3>
+    <div class="range">神武 — 武烈 · 系年为传统纪年（推定），考古上对应古坟文化形成期</div>
+    <div class="tenno-list">
+      <div class="tenno-item"><span class="no">第1代</span><span class="name">神武天皇</span><span class="reign">前660-前585</span></div>
+      <div class="tenno-item"><span class="no">第2代</span><span class="name">绥靖天皇</span><span class="reign">前581-前549</span></div>
+      <div class="tenno-item"><span class="no">第3代</span><span class="name">安宁天皇</span><span class="reign">前549-前511</span></div>
+      <div class="tenno-item"><span class="no">第4代</span><span class="name">懿德天皇</span><span class="reign">前510-前477</span></div>
+      <div class="tenno-item"><span class="no">第5代</span><span class="name">孝昭天皇</span><span class="reign">前475-前393</span></div>
+      <div class="tenno-item"><span class="no">第6代</span><span class="name">孝安天皇</span><span class="reign">前392-前291</span></div>
+      <div class="tenno-item"><span class="no">第7代</span><span class="name">孝灵天皇</span><span class="reign">前290-前215</span></div>
+      <div class="tenno-item"><span class="no">第8代</span><span class="name">孝元天皇</span><span class="reign">前214-前158</span></div>
+      <div class="tenno-item"><span class="no">第9代</span><span class="name">开化天皇</span><span class="reign">前158-前98</span></div>
+      <div class="tenno-item"><span class="no">第10代</span><span class="name">崇神天皇</span><span class="reign">前97-前30</span></div>
+      <div class="tenno-item"><span class="no">第11代</span><span class="name">垂仁天皇</span><span class="reign">前29-70</span></div>
+      <div class="tenno-item"><span class="no">第12代</span><span class="name">景行天皇</span><span class="reign">71-130</span></div>
+      <div class="tenno-item"><span class="no">第13代</span><span class="name">成务天皇</span><span class="reign">131-190</span></div>
+      <div class="tenno-item"><span class="no">第14代</span><span class="name">仲哀天皇</span><span class="reign">192-200</span></div>
+      <div class="tenno-item"><span class="no">第15代</span><span class="name">应神天皇</span><span class="reign">270-310</span></div>
+      <div class="tenno-item"><span class="no">第16代</span><span class="name">仁德天皇</span><span class="reign">313-399</span></div>
+      <div class="tenno-item"><span class="no">第17代</span><span class="name">履中天皇</span><span class="reign">400-405</span></div>
+      <div class="tenno-item"><span class="no">第18代</span><span class="name">反正天皇</span><span class="reign">406-410</span></div>
+      <div class="tenno-item"><span class="no">第19代</span><span class="name">允恭天皇</span><span class="reign">411-453</span></div>
+      <div class="tenno-item"><span class="no">第20代</span><span class="name">安康天皇</span><span class="reign">453-456</span></div>
+      <div class="tenno-item"><span class="no">第21代</span><span class="name">雄略天皇</span><span class="reign">456-479</span></div>
+      <div class="tenno-item"><span class="no">第22代</span><span class="name">清宁天皇</span><span class="reign">480-484</span></div>
+      <div class="tenno-item"><span class="no">第23代</span><span class="name">显宗天皇</span><span class="reign">485-487</span></div>
+      <div class="tenno-item"><span class="no">第24代</span><span class="name">仁贤天皇</span><span class="reign">488-498</span></div>
+      <div class="tenno-item"><span class="no">第25代</span><span class="name">武烈天皇</span><span class="reign">498-506</span></div>
+    </div>
+  </div>
+
+  <div class="tenno-group">
+    <h3>大和·飞鸟时代（第26-42代）</h3>
+    <div class="range">继体 — 文武 · 圣德太子改革与大化改新的时代</div>
+    <div class="tenno-list">
+      <div class="tenno-item"><span class="no">第26代</span><span class="name">继体天皇</span><span class="reign">507-531</span></div>
+      <div class="tenno-item"><span class="no">第27代</span><span class="name">安闲天皇</span><span class="reign">531-535</span></div>
+      <div class="tenno-item"><span class="no">第28代</span><span class="name">宣化天皇</span><span class="reign">535-539</span></div>
+      <div class="tenno-item"><span class="no">第29代</span><span class="name">钦明天皇</span><span class="reign">539-571</span></div>
+      <div class="tenno-item"><span class="no">第30代</span><span class="name">敏达天皇</span><span class="reign">572-585</span></div>
+      <div class="tenno-item"><span class="no">第31代</span><span class="name">用明天皇</span><span class="reign">585-587</span></div>
+      <div class="tenno-item"><span class="no">第32代</span><span class="name">崇峻天皇</span><span class="reign">587-592</span></div>
+      <div class="tenno-item"><span class="no">第33代</span><span class="name">推古天皇（女帝）</span><span class="reign">592-628</span></div>
+      <div class="tenno-item"><span class="no">第34代</span><span class="name">舒明天皇</span><span class="reign">629-641</span></div>
+      <div class="tenno-item"><span class="no">第35代</span><span class="name">皇极天皇（女帝）</span><span class="reign">642-645</span></div>
+      <div class="tenno-item"><span class="no">第36代</span><span class="name">孝德天皇</span><span class="reign">645-654</span></div>
+      <div class="tenno-item"><span class="no">第37代</span><span class="name">齐明天皇（女帝，重祚）</span><span class="reign">655-661</span></div>
+      <div class="tenno-item"><span class="no">第38代</span><span class="name">天智天皇</span><span class="reign">661-672</span></div>
+      <div class="tenno-item"><span class="no">第39代</span><span class="name">弘文天皇</span><span class="reign">672</span></div>
+      <div class="tenno-item"><span class="no">第40代</span><span class="name">天武天皇</span><span class="reign">673-686</span></div>
+      <div class="tenno-item"><span class="no">第41代</span><span class="name">持统天皇（女帝）</span><span class="reign">686-697</span></div>
+      <div class="tenno-item"><span class="no">第42代</span><span class="name">文武天皇</span><span class="reign">697-707</span></div>
+    </div>
+  </div>
+
+  <div class="tenno-group">
+    <h3>奈良时代（第43-49代）</h3>
+    <div class="range">元明 — 称德 · 平城京与天平文化</div>
+    <div class="tenno-list">
+      <div class="tenno-item"><span class="no">第43代</span><span class="name">元明天皇（女帝）</span><span class="reign">707-715</span></div>
+      <div class="tenno-item"><span class="no">第44代</span><span class="name">元正天皇（女帝）</span><span class="reign">715-724</span></div>
+      <div class="tenno-item"><span class="no">第45代</span><span class="name">圣武天皇</span><span class="reign">724-749</span></div>
+      <div class="tenno-item"><span class="no">第46代</span><span class="name">孝谦天皇（女帝）</span><span class="reign">749-758</span></div>
+      <div class="tenno-item"><span class="no">第47代</span><span class="name">淳仁天皇</span><span class="reign">758-764</span></div>
+      <div class="tenno-item"><span class="no">第48代</span><span class="name">称德天皇（女帝，重祚）</span><span class="reign">764-770</span></div>
+      <div class="tenno-item"><span class="no">第49代</span><span class="name">光仁天皇</span><span class="reign">770-781</span></div>
+    </div>
+  </div>
+
+  <div class="tenno-group">
+    <h3>平安时代（第50-83代）</h3>
+    <div class="range">桓武 — 土御门 · 摄关政治与院政，国风文化全盛</div>
+    <div class="tenno-list">
+      <div class="tenno-item"><span class="no">第50代</span><span class="name">桓武天皇</span><span class="reign">781-806</span></div>
+      <div class="tenno-item"><span class="no">第51代</span><span class="name">平城天皇</span><span class="reign">806-809</span></div>
+      <div class="tenno-item"><span class="no">第52代</span><span class="name">嵯峨天皇</span><span class="reign">809-823</span></div>
+      <div class="tenno-item"><span class="no">第53代</span><span class="name">淳和天皇</span><span class="reign">823-833</span></div>
+      <div class="tenno-item"><span class="no">第54代</span><span class="name">仁明天皇</span><span class="reign">833-850</span></div>
+      <div class="tenno-item"><span class="no">第55代</span><span class="name">文德天皇</span><span class="reign">850-858</span></div>
+      <div class="tenno-item"><span class="no">第56代</span><span class="name">清和天皇</span><span class="reign">858-876</span></div>
+      <div class="tenno-item"><span class="no">第57代</span><span class="name">阳成天皇</span><span class="reign">876-884</span></div>
+      <div class="tenno-item"><span class="no">第58代</span><span class="name">光孝天皇</span><span class="reign">884-887</span></div>
+      <div class="tenno-item"><span class="no">第59代</span><span class="name">宇多天皇</span><span class="reign">887-897</span></div>
+      <div class="tenno-item"><span class="no">第60代</span><span class="name">醍醐天皇</span><span class="reign">897-930</span></div>
+      <div class="tenno-item"><span class="no">第61代</span><span class="name">朱雀天皇</span><span class="reign">930-946</span></div>
+      <div class="tenno-item"><span class="no">第62代</span><span class="name">村上天皇</span><span class="reign">946-967</span></div>
+      <div class="tenno-item"><span class="no">第63代</span><span class="name">冷泉天皇</span><span class="reign">967-969</span></div>
+      <div class="tenno-item"><span class="no">第64代</span><span class="name">圆融天皇</span><span class="reign">969-984</span></div>
+      <div class="tenno-item"><span class="no">第65代</span><span class="name">花山天皇</span><span class="reign">984-986</span></div>
+      <div class="tenno-item"><span class="no">第66代</span><span class="name">一条天皇</span><span class="reign">986-1011</span></div>
+      <div class="tenno-item"><span class="no">第67代</span><span class="name">三条天皇</span><span class="reign">1011-1016</span></div>
+      <div class="tenno-item"><span class="no">第68代</span><span class="name">后一条天皇</span><span class="reign">1016-1036</span></div>
+      <div class="tenno-item"><span class="no">第69代</span><span class="name">后朱雀天皇</span><span class="reign">1036-1045</span></div>
+      <div class="tenno-item"><span class="no">第70代</span><span class="name">后冷泉天皇</span><span class="reign">1045-1068</span></div>
+      <div class="tenno-item"><span class="no">第71代</span><span class="name">后三条天皇</span><span class="reign">1068-1072</span></div>
+      <div class="tenno-item"><span class="no">第72代</span><span class="name">白河天皇</span><span class="reign">1072-1086</span></div>
+      <div class="tenno-item"><span class="no">第73代</span><span class="name">堀河天皇</span><span class="reign">1086-1107</span></div>
+      <div class="tenno-item"><span class="no">第74代</span><span class="name">鸟羽天皇</span><span class="reign">1107-1123</span></div>
+      <div class="tenno-item"><span class="no">第75代</span><span class="name">崇德天皇</span><span class="reign">1123-1142</span></div>
+      <div class="tenno-item"><span class="no">第76代</span><span class="name">近卫天皇</span><span class="reign">1142-1155</span></div>
+      <div class="tenno-item"><span class="no">第77代</span><span class="name">后白河天皇</span><span class="reign">1155-1158</span></div>
+      <div class="tenno-item"><span class="no">第78代</span><span class="name">二条天皇</span><span class="reign">1158-1165</span></div>
+      <div class="tenno-item"><span class="no">第79代</span><span class="name">六条天皇</span><span class="reign">1165-1168</span></div>
+      <div class="tenno-item"><span class="no">第80代</span><span class="name">高仓天皇</span><span class="reign">1168-1180</span></div>
+      <div class="tenno-item"><span class="no">第81代</span><span class="name">安德天皇</span><span class="reign">1180-1185</span></div>
+      <div class="tenno-item"><span class="no">第82代</span><span class="name">后鸟羽天皇</span><span class="reign">1183-1198</span></div>
+      <div class="tenno-item"><span class="no">第83代</span><span class="name">土御门天皇</span><span class="reign">1198-1210</span></div>
+    </div>
+  </div>
+
+  <div class="tenno-group">
+    <h3>镰仓时代（第84-95代）</h3>
+    <div class="range">顺德 — 花园 · 承久之乱后朝廷听命于幕府</div>
+    <div class="tenno-list">
+      <div class="tenno-item"><span class="no">第84代</span><span class="name">顺德天皇</span><span class="reign">1210-1221</span></div>
+      <div class="tenno-item"><span class="no">第85代</span><span class="name">仲恭天皇</span><span class="reign">1221</span></div>
+      <div class="tenno-item"><span class="no">第86代</span><span class="name">后堀河天皇</span><span class="reign">1221-1232</span></div>
+      <div class="tenno-item"><span class="no">第87代</span><span class="name">四条天皇</span><span class="reign">1232-1242</span></div>
+      <div class="tenno-item"><span class="no">第88代</span><span class="name">后嵯峨天皇</span><span class="reign">1242-1246</span></div>
+      <div class="tenno-item"><span class="no">第89代</span><span class="name">后深草天皇</span><span class="reign">1246-1259</span></div>
+      <div class="tenno-item"><span class="no">第90代</span><span class="name">龟山天皇</span><span class="reign">1259-1274</span></div>
+      <div class="tenno-item"><span class="no">第91代</span><span class="name">后宇多天皇</span><span class="reign">1274-1287</span></div>
+      <div class="tenno-item"><span class="no">第92代</span><span class="name">伏见天皇</span><span class="reign">1287-1298</span></div>
+      <div class="tenno-item"><span class="no">第93代</span><span class="name">后伏见天皇</span><span class="reign">1298-1301</span></div>
+      <div class="tenno-item"><span class="no">第94代</span><span class="name">后二条天皇</span><span class="reign">1301-1308</span></div>
+      <div class="tenno-item"><span class="no">第95代</span><span class="name">花园天皇</span><span class="reign">1308-1318</span></div>
+    </div>
+  </div>
+
+  <div class="tenno-group">
+    <h3>南北朝·室町时代（第96-103代）</h3>
+    <div class="range">后醍醐 — 后土御门 · 1336-1392 南朝（吉野）与北朝（京都）并立，以南朝为正统纪年</div>
+    <div class="tenno-list">
+      <div class="tenno-item"><span class="no">第96代</span><span class="name">后醍醐天皇</span><span class="reign">1318-1339</span></div>
+      <div class="tenno-item"><span class="no">第97代</span><span class="name">后村上天皇（南朝）</span><span class="reign">1339-1368</span></div>
+      <div class="tenno-item"><span class="no">第98代</span><span class="name">长庆天皇（南朝）</span><span class="reign">1368-1383</span></div>
+      <div class="tenno-item"><span class="no">第99代</span><span class="name">后龟山天皇（南朝）</span><span class="reign">1383-1392</span></div>
+      <div class="tenno-item"><span class="no">第100代</span><span class="name">后小松天皇</span><span class="reign">1382-1412</span></div>
+      <div class="tenno-item"><span class="no">第101代</span><span class="name">称光天皇</span><span class="reign">1412-1428</span></div>
+      <div class="tenno-item"><span class="no">第102代</span><span class="name">后花园天皇</span><span class="reign">1428-1464</span></div>
+      <div class="tenno-item"><span class="no">第103代</span><span class="name">后土御门天皇</span><span class="reign">1464-1500</span></div>
+    </div>
+  </div>
+
+  <div class="tenno-group">
+    <h3>战国·安土桃山时代（第104-107代）</h3>
+    <div class="range">后柏原 — 后阳成 · 战国乱世，天皇朝仪困顿</div>
+    <div class="tenno-list">
+      <div class="tenno-item"><span class="no">第104代</span><span class="name">后柏原天皇</span><span class="reign">1500-1526</span></div>
+      <div class="tenno-item"><span class="no">第105代</span><span class="name">后奈良天皇</span><span class="reign">1526-1557</span></div>
+      <div class="tenno-item"><span class="no">第106代</span><span class="name">正亲町天皇</span><span class="reign">1557-1586</span></div>
+      <div class="tenno-item"><span class="no">第107代</span><span class="name">后阳成天皇</span><span class="reign">1586-1611</span></div>
+    </div>
+  </div>
+
+  <div class="tenno-group">
+    <h3>江户时代（第108-121代）</h3>
+    <div class="range">后水尾 — 孝明 · 幕藩体制下朝廷与幕府并存</div>
+    <div class="tenno-list">
+      <div class="tenno-item"><span class="no">第108代</span><span class="name">后水尾天皇</span><span class="reign">1611-1629</span></div>
+      <div class="tenno-item"><span class="no">第109代</span><span class="name">明正天皇（女帝）</span><span class="reign">1629-1643</span></div>
+      <div class="tenno-item"><span class="no">第110代</span><span class="name">后光明天皇</span><span class="reign">1643-1654</span></div>
+      <div class="tenno-item"><span class="no">第111代</span><span class="name">后西天皇</span><span class="reign">1654-1663</span></div>
+      <div class="tenno-item"><span class="no">第112代</span><span class="name">灵元天皇</span><span class="reign">1663-1687</span></div>
+      <div class="tenno-item"><span class="no">第113代</span><span class="name">东山天皇</span><span class="reign">1687-1709</span></div>
+      <div class="tenno-item"><span class="no">第114代</span><span class="name">中御门天皇</span><span class="reign">1709-1735</span></div>
+      <div class="tenno-item"><span class="no">第115代</span><span class="name">樱町天皇</span><span class="reign">1735-1747</span></div>
+      <div class="tenno-item"><span class="no">第116代</span><span class="name">桃园天皇</span><span class="reign">1747-1762</span></div>
+      <div class="tenno-item"><span class="no">第117代</span><span class="name">后樱町天皇（女帝）</span><span class="reign">1762-1770</span></div>
+      <div class="tenno-item"><span class="no">第118代</span><span class="name">后桃园天皇</span><span class="reign">1770-1779</span></div>
+      <div class="tenno-item"><span class="no">第119代</span><span class="name">光格天皇</span><span class="reign">1779-1817</span></div>
+      <div class="tenno-item"><span class="no">第120代</span><span class="name">仁孝天皇</span><span class="reign">1817-1846</span></div>
+      <div class="tenno-item"><span class="no">第121代</span><span class="name">孝明天皇</span><span class="reign">1846-1867</span></div>
+    </div>
+  </div>
+
+  <div class="tenno-group">
+    <h3>明治至令和（第122-126代）</h3>
+    <div class="range">明治 — 德仁 · 近代天皇制与战后象征天皇制</div>
+    <div class="tenno-list">
+      <div class="tenno-item"><span class="no">第122代</span><span class="name">明治天皇</span><span class="reign">1867-1912</span></div>
+      <div class="tenno-item"><span class="no">第123代</span><span class="name">大正天皇</span><span class="reign">1912-1926</span></div>
+      <div class="tenno-item"><span class="no">第124代</span><span class="name">昭和天皇</span><span class="reign">1926-1989</span></div>
+      <div class="tenno-item"><span class="no">第125代</span><span class="name">明仁天皇（平成）</span><span class="reign">1989-2019</span></div>
+      <div class="tenno-item"><span class="no">第126代</span><span class="name">德仁天皇（令和，今上）</span><span class="reign">2019-今</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 世系与权力形态图 ==================== -->
+<div class="family-tree-section">
+  <h2>天皇世系主线与权力形态变迁</h2>
+  <div class="tree-container">
+    <svg class="tree-svg" viewBox="0 0 1300 880" width="1300" height="880" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="tenG" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#b91c1c;stop-opacity:1"/><stop offset="100%" style="stop-color:#ef4444;stop-opacity:1"/>
+        </linearGradient>
+        <linearGradient id="powG" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#1e3a8a;stop-opacity:1"/><stop offset="100%" style="stop-color:#3b82f6;stop-opacity:1"/>
+        </linearGradient>
+        <filter id="sh"><feDropShadow dx="1" dy="2" stdDeviation="3" flood-opacity="0.15"/></filter>
+        <marker id="aR" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#b91c1c"/></marker>
+        <marker id="aB" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#1e3a8a"/></marker>
+      </defs>
+
+      <!-- 面板1：天皇世系主线 -->
+      <rect x="0" y="0" width="1300" height="420" fill="#fef2f2" rx="12"/>
+      <text x="20" y="30" font-size="16" fill="#b91c1c" font-weight="bold" font-family="PingFang SC,serif">天皇世系主线 · 万世一系（节选重要天皇，未中断）</text>
+
+      <g font-family="PingFang SC,serif">
+        <rect x="30" y="70" width="92" height="52" rx="8" fill="url(#tenG)" filter="url(#sh)"/>
+        <text x="76" y="91" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">神武</text>
+        <text x="76" y="108" text-anchor="middle" fill="#fecaca" font-size="8">前660·传说</text>
+
+        <rect x="127" y="70" width="92" height="52" rx="8" fill="url(#tenG)" filter="url(#sh)"/>
+        <text x="173" y="91" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">应神</text>
+        <text x="173" y="108" text-anchor="middle" fill="#fecaca" font-size="8">270-310</text>
+
+        <rect x="224" y="70" width="92" height="52" rx="8" fill="url(#tenG)" filter="url(#sh)"/>
+        <text x="270" y="91" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">仁德</text>
+        <text x="270" y="108" text-anchor="middle" fill="#fecaca" font-size="8">313-399</text>
+
+        <rect x="321" y="70" width="92" height="52" rx="8" fill="url(#tenG)" filter="url(#sh)"/>
+        <text x="367" y="91" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">继体</text>
+        <text x="367" y="108" text-anchor="middle" fill="#fecaca" font-size="8">507-531</text>
+
+        <rect x="418" y="70" width="92" height="52" rx="8" fill="url(#tenG)" filter="url(#sh)"/>
+        <text x="464" y="91" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">钦明</text>
+        <text x="464" y="108" text-anchor="middle" fill="#fecaca" font-size="8">539-571</text>
+
+        <rect x="515" y="70" width="92" height="52" rx="8" fill="url(#tenG)" filter="url(#sh)"/>
+        <text x="561" y="91" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">推古</text>
+        <text x="561" y="108" text-anchor="middle" fill="#fecaca" font-size="8">592-628 女帝</text>
+
+        <rect x="612" y="70" width="92" height="52" rx="8" fill="url(#tenG)" filter="url(#sh)"/>
+        <text x="658" y="91" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">天武</text>
+        <text x="658" y="108" text-anchor="middle" fill="#fecaca" font-size="8">673-686</text>
+
+        <rect x="709" y="70" width="92" height="52" rx="8" fill="url(#tenG)" filter="url(#sh)"/>
+        <text x="755" y="91" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">桓武</text>
+        <text x="755" y="108" text-anchor="middle" fill="#fecaca" font-size="8">781-806</text>
+
+        <rect x="806" y="70" width="92" height="52" rx="8" fill="url(#tenG)" filter="url(#sh)"/>
+        <text x="852" y="91" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">醍醐</text>
+        <text x="852" y="108" text-anchor="middle" fill="#fecaca" font-size="8">897-930</text>
+
+        <rect x="903" y="70" width="92" height="52" rx="8" fill="url(#tenG)" filter="url(#sh)"/>
+        <text x="949" y="91" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">后醍醐</text>
+        <text x="949" y="108" text-anchor="middle" fill="#fecaca" font-size="8">1318-1339</text>
+
+        <rect x="1000" y="70" width="92" height="52" rx="8" fill="url(#tenG)" filter="url(#sh)"/>
+        <text x="1046" y="91" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">明治</text>
+        <text x="1046" y="108" text-anchor="middle" fill="#fecaca" font-size="8">1867-1912</text>
+
+        <rect x="1097" y="70" width="92" height="52" rx="8" fill="url(#tenG)" filter="url(#sh)"/>
+        <text x="1143" y="91" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">昭和</text>
+        <text x="1143" y="108" text-anchor="middle" fill="#fecaca" font-size="8">1926-1989</text>
+
+        <rect x="1194" y="70" width="92" height="52" rx="8" fill="url(#tenG)" filter="url(#sh)"/>
+        <text x="1240" y="91" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">德仁</text>
+        <text x="1240" y="108" text-anchor="middle" fill="#fecaca" font-size="8">2019-今</text>
+
+        <line x1="122" y1="96" x2="125" y2="96" stroke="#b91c1c" stroke-width="2" marker-end="url(#aR)"/>
+        <line x1="219" y1="96" x2="222" y2="96" stroke="#b91c1c" stroke-width="2" marker-end="url(#aR)"/>
+        <line x1="316" y1="96" x2="319" y2="96" stroke="#b91c1c" stroke-width="2" marker-end="url(#aR)"/>
+        <line x1="413" y1="96" x2="416" y2="96" stroke="#b91c1c" stroke-width="2" marker-end="url(#aR)"/>
+        <line x1="510" y1="96" x2="513" y2="96" stroke="#b91c1c" stroke-width="2" marker-end="url(#aR)"/>
+        <line x1="607" y1="96" x2="610" y2="96" stroke="#b91c1c" stroke-width="2" marker-end="url(#aR)"/>
+        <line x1="704" y1="96" x2="707" y2="96" stroke="#b91c1c" stroke-width="2" marker-end="url(#aR)"/>
+        <line x1="801" y1="96" x2="804" y2="96" stroke="#b91c1c" stroke-width="2" marker-end="url(#aR)"/>
+        <line x1="898" y1="96" x2="901" y2="96" stroke="#b91c1c" stroke-width="2" marker-end="url(#aR)"/>
+        <line x1="995" y1="96" x2="998" y2="96" stroke="#b91c1c" stroke-width="2" marker-end="url(#aR)"/>
+        <line x1="1092" y1="96" x2="1095" y2="96" stroke="#b91c1c" stroke-width="2" marker-end="url(#aR)"/>
+        <line x1="1189" y1="96" x2="1192" y2="96" stroke="#b91c1c" stroke-width="2" marker-end="url(#aR)"/>
+      </g>
+
+      <!-- 转折标注 -->
+      <g font-family="PingFang SC,serif" fill="#7f1d1d">
+        <text x="561" y="150" text-anchor="middle" font-size="10" font-weight="bold">645 大化改新</text>
+        <text x="755" y="150" text-anchor="middle" font-size="10" font-weight="bold">858 摄关 / 1086 院政</text>
+        <text x="949" y="150" text-anchor="middle" font-size="10" font-weight="bold">1334 建武新政</text>
+        <text x="1046" y="150" text-anchor="middle" font-size="10" font-weight="bold">1868 明治维新</text>
+        <text x="1143" y="150" text-anchor="middle" font-size="10" font-weight="bold">1947 和平宪法</text>
+      </g>
+      <line x1="20" y1="170" x2="1280" y2="170" stroke="#b91c1c" stroke-width="1.5" stroke-dasharray="10,5"/>
+      <text x="650" y="165" text-anchor="middle" fill="#b91c1c" font-size="11" font-weight="bold" font-family="PingFang SC,serif">── 传说 → 信史（推古朝起）→ 古代 → 中世 → 近现代 · 皇统一脉相承 ──</text>
+      <text x="650" y="200" text-anchor="middle" fill="#6b7280" font-size="11" font-family="PingFang SC,serif">神武至武烈（第1-25代）为传说时代；继体天皇（26代）以后系谱渐趋可靠；南北朝并立时期（96-99代）以南朝为正统。</text>
+      <text x="650" y="222" text-anchor="middle" fill="#6b7280" font-size="11" font-family="PingFang SC,serif">平安时代中后期天皇渐失实权：摄关政治（藤原氏）→ 院政（上皇）→ 镰仓以降武家执政，但皇统本身延续至今。</text>
+
+      <!-- 面板2：权力形态变迁 -->
+      <rect x="0" y="440" width="1300" height="420" fill="#eff6ff" rx="12"/>
+      <text x="20" y="470" font-size="16" fill="#1e3a8a" font-weight="bold" font-family="PingFang SC,serif">天皇权力形态变迁 · 亲政 → 外戚 → 院政 → 武家 → 象征</text>
+
+      <g font-family="PingFang SC,serif">
+        <rect x="40" y="520" width="210" height="64" rx="8" fill="url(#powG)" filter="url(#sh)"/>
+        <text x="145" y="543" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">律令天皇制</text>
+        <text x="145" y="562" text-anchor="middle" fill="#bfdbfe" font-size="9">592-858 · 天皇亲政</text>
+
+        <rect x="280" y="520" width="210" height="64" rx="8" fill="url(#powG)" filter="url(#sh)"/>
+        <text x="385" y="543" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">摄关政治</text>
+        <text x="385" y="562" text-anchor="middle" fill="#bfdbfe" font-size="9">858-1086 · 藤原氏外戚</text>
+
+        <rect x="520" y="520" width="210" height="64" rx="8" fill="url(#powG)" filter="url(#sh)"/>
+        <text x="625" y="543" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">院政</text>
+        <text x="625" y="562" text-anchor="middle" fill="#bfdbfe" font-size="9">1086-1185 · 上皇执政</text>
+
+        <rect x="760" y="520" width="210" height="64" rx="8" fill="url(#powG)" filter="url(#sh)"/>
+        <text x="865" y="543" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">武家政权</text>
+        <text x="865" y="562" text-anchor="middle" fill="#bfdbfe" font-size="9">1185-1868 · 镰仓/室町/江户幕府</text>
+
+        <rect x="1000" y="520" width="210" height="64" rx="8" fill="url(#powG)" filter="url(#sh)"/>
+        <text x="1105" y="543" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">象征天皇制</text>
+        <text x="1105" y="562" text-anchor="middle" fill="#bfdbfe" font-size="9">1947-今 · 国民主权</text>
+
+        <line x1="250" y1="552" x2="278" y2="552" stroke="#1e3a8a" stroke-width="2" marker-end="url(#aB)"/>
+        <line x1="490" y1="552" x2="518" y2="552" stroke="#1e3a8a" stroke-width="2" marker-end="url(#aB)"/>
+        <line x1="730" y1="552" x2="758" y2="552" stroke="#1e3a8a" stroke-width="2" marker-end="url(#aB)"/>
+        <line x1="970" y1="552" x2="998" y2="552" stroke="#1e3a8a" stroke-width="2" marker-end="url(#aB)"/>
+      </g>
+
+      <!-- 说明行 -->
+      <g font-family="PingFang SC,serif" fill="#6b7280">
+        <text x="145" y="616" text-anchor="middle" font-size="9">圣德太子 · 大化改新 · 律令</text>
+        <text x="385" y="616" text-anchor="middle" font-size="9">藤原良房以来外戚摄关</text>
+        <text x="625" y="616" text-anchor="middle" font-size="9">白河上皇开创院政</text>
+        <text x="865" y="616" text-anchor="middle" font-size="9">源赖朝 · 足利 · 德川</text>
+        <text x="1105" y="616" text-anchor="middle" font-size="9">和平宪法 · 象征地位</text>
+      </g>
+      <text x="650" y="660" text-anchor="middle" fill="#7f1d1d" font-size="11" font-weight="bold" font-family="PingFang SC,serif">1868 王政复古：明治天皇收回政权，开启近代天皇制；1947 和平宪法后转为"日本国与国民统合的象征"。</text>
+
+      <!-- 图例 -->
+      <g font-family="PingFang SC,serif">
+        <rect x="40" y="720" width="1220" height="110" rx="8" fill="#fff" stroke="#ccc"/>
+        <text x="60" y="744" font-size="13" font-weight="bold" fill="#333">图例</text>
+        <rect x="60" y="756" width="15" height="12" rx="3" fill="url(#tenG)"/>
+        <text x="85" y="767" font-size="10" fill="#333">天皇系谱（万世一系）</text>
+        <rect x="280" y="756" width="15" height="12" rx="3" fill="url(#powG)"/>
+        <text x="305" y="767" font-size="10" fill="#333">权力形态（摄关·院政·幕府）</text>
+        <line x1="520" y1="762" x2="560" y2="762" stroke="#1e3a8a" stroke-width="2" marker-end="url(#aB)"/>
+        <text x="570" y="767" font-size="10" fill="#333">权力转移</text>
+        <line x1="720" y1="762" x2="760" y2="762" stroke="#b91c1c" stroke-width="2" marker-end="url(#aR)"/>
+        <text x="770" y="767" font-size="10" fill="#333">皇统传承</text>
+        <text x="60" y="800" font-size="11" font-weight="bold" fill="#444">关键年份</text>
+        <text x="60" y="818" font-size="10" fill="#555">592 推古即位（信史开端）· 645 大化改新 · 858 摄关开始 · 1086 院政 · 1185 源平合战（武家时代始）</text>
+        <text x="60" y="836" font-size="10" fill="#555">1336 南北朝并立 · 1392 合一 · 1467 应仁之乱 · 1603 江户幕府 · 1853 黑船来航 · 1868 明治维新 · 1947 和平宪法 · 2019 令和改元</text>
+      </g>
+    </svg>
+  </div>
+</div>
+
+</div><!-- end container -->
+
+<div class="footer">
+  <p>日本天皇号称"万世一系"，自神武天皇（传说前660年）至今第126代德仁天皇，血脉延续两千六百余年，为世界上延续最久的君主制。</p>
+  <p style="margin-top:8px;">天皇的权力形态几经变迁：古代律令天皇制 → 平安摄关政治 → 院政 → 镰仓以降武家幕府 → 明治维新王政复古 → 战后象征天皇制，但皇统从未中断。</p>
+  <p style="margin-top:8px;">2019年明仁天皇退位（平成），德仁天皇即位改元令和，开启新时代。</p>
+  <p style="margin-top:8px;">数据来源：《日本书纪》《古事记》及权威日本史著作 · 传说时代系年为传统纪年 · 仅供学习参考</p>
+</div>
+
+<script>
+(function(){
+  const eras = [
+    { name:'大和·古坟', start:250, end:592, type:'early', note:'前方后圆坟 · 倭五王 · 佛教传入' },
+    { name:'飞鸟', start:592, end:710, type:'early', note:'圣德太子 · 大化改新 · 白村江之战' },
+    { name:'奈良', start:710, end:794, type:'early', note:'平城京 · 天平文化 · 东大寺大佛' },
+    { name:'平安', start:794, end:1185, type:'early', note:'摄关政治 · 院政 · 源平合战' },
+    { name:'镰仓', start:1185, end:1333, type:'late', note:'源赖朝幕府 · 北条氏 · 蒙古来袭' },
+    { name:'南北朝·室町', start:1336, end:1573, type:'late', note:'建武新政 · 南北朝合一 · 应仁之乱 · 战国' },
+    { name:'安土桃山', start:1573, end:1603, type:'late', note:'织田信长 · 丰臣秀吉 · 关原之战' },
+    { name:'江户', start:1603, end:1868, type:'late', note:'德川幕府 · 锁国 · 黑船来航 · 明治维新前夜' },
+    { name:'明治-令和', start:1868, end:2024, type:'late', note:'明治维新 · 二战 · 和平宪法 · 平成令和' },
+  ];
+
+  const minYear=200, maxYear=2030, totalYears=maxYear-minYear;
+  const colors = { early:'#b91c1c', late:'#1e3a8a' };
+
+  const container = document.getElementById('ganttChart');
+  let headerHTML = '<div class="gantt-header"><div class="gantt-label" style="width:120px">年份</div><div class="gantt-bar-area" style="position:relative;height:30px;">';
+  for(let y=300;y<=2000;y+=100){
+    headerHTML += `<span class="gantt-year-tick" style="left:${((y-minYear)/totalYears)*100}%">${y}</span>`;
+  }
+  headerHTML += '</div></div>';
+  container.innerHTML = headerHTML;
+
+  let bodyHTML = '<div class="gantt-body">';
+  eras.forEach(era => {
+    const color = colors[era.type];
+    const left = ((era.start-minYear)/totalYears)*100;
+    const width = Math.max(((era.end-era.start)/totalYears)*100, 0.5);
+    bodyHTML += `<div class="gantt-row"><div class="gantt-label" style="color:${color};width:120px">${era.name}</div><div class="gantt-bar-area"><div class="gantt-bar" style="left:${left}%;width:${width}%;background:${color};"><div class="tooltip">${era.name} ${era.start}-${era.end}<br>${era.note}</div></div></div></div>`;
+  });
+  bodyHTML += '</div>';
+  container.innerHTML += bodyHTML;
+})();
+</script>
+</body>
+</html>
