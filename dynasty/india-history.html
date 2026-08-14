@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>印度历史时代与王朝世系简表</title>
+<style>
+  :root{--bg:#f7f5f2;--card-bg:#fff;--early-color:#c2410c;--late-color:#166534;--text:#1c1917;--text-light:#6b7280;--border:#d1d5db;--event-bg:#fff7ed;--minister-bg:#f0fdf4;--highlight:#ea580c;--gold:#b8860b;--rev-color:#7c2d12}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:"PingFang SC","Microsoft YaHei","Noto Serif SC",serif;background:var(--bg);color:var(--text);line-height:1.6}
+  .header{text-align:center;padding:50px 20px 30px;background:linear-gradient(135deg,#7c2d12 0%,#c2410c 45%,#ea580c 70%,#166534 100%);color:#fff7ed;position:relative;overflow:hidden}
+  .header::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffd700' fill-opacity='0.05'%3E%3Cpath d='M20 5l3 10h10l-8 6 3 10-8-6-8 6 3-10-8-6h10z'/%3E%3C/g%3E%3C/svg%3E");opacity:.6}
+  .header h1{font-size:38px;font-weight:900;letter-spacing:10px;position:relative;z-index:1;text-shadow:2px 2px 4px rgba(0,0,0,.5)}
+  .header .subtitle{font-size:18px;margin-top:12px;color:#fbbf24;letter-spacing:6px;position:relative;z-index:1}
+  .header .period{font-size:14px;margin-top:8px;color:#fed7aa;letter-spacing:3px;position:relative;z-index:1}
+  .header .latin{font-size:13px;margin-top:4px;color:#bbf7d0;letter-spacing:2px;position:relative;z-index:1;font-style:italic}
+  .legend{display:flex;justify-content:center;gap:28px;padding:18px;background:#fff;border-bottom:2px solid var(--border);flex-wrap:wrap}
+  .legend-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-light)}
+  .legend-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0}
+  .container{max-width:1400px;margin:0 auto;padding:20px}
+  .section-title{text-align:center;padding:30px 20px 20px;font-size:28px;font-weight:bold;letter-spacing:6px;position:relative}
+  .section-title.early{color:var(--early-color)}.section-title.late{color:var(--late-color)}
+  .section-title::after{content:'';display:block;width:80px;height:3px;margin:12px auto 0}
+  .section-title.early::after{background:var(--early-color)}.section-title.late::after{background:var(--late-color)}
+  .timeline{position:relative;padding:20px 0}
+  .timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:4px;transform:translateX(-50%);z-index:0}
+  .timeline.early::before{background:var(--early-color)}.timeline.late::before{background:var(--late-color)}
+  .timeline-entry{display:flex;align-items:flex-start;position:relative;margin-bottom:20px}
+  .entry-content{display:flex;width:100%;align-items:flex-start}.entry-left,.entry-right{width:48%;padding:0 15px}
+  .entry-center{width:4%;display:flex;justify-content:center;position:relative;z-index:1}
+  .year-marker{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold;color:#fff;flex-shrink:0;z-index:2;text-align:center;line-height:1.2;padding:0 2px}
+  .early .year-marker{background:var(--early-color)}.late .year-marker{background:var(--late-color)}
+  .era-card{background:var(--card-bg);border-radius:12px;padding:20px;box-shadow:0 4px 20px rgba(0,0,0,.08);border-left:5px solid;position:relative;transition:transform .3s,box-shadow .3s}
+  .era-card:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,.15)}
+  .early .era-card{border-left-color:var(--early-color)}.late .era-card{border-left-color:var(--late-color)}
+  .era-card .order{position:absolute;top:-10px;right:15px;background:var(--highlight);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold}
+  .era-name{font-size:20px;font-weight:bold;margin-bottom:2px}
+  .era-jp{font-size:12px;color:var(--text-light);font-style:italic;margin-bottom:6px}
+  .era-meta{display:flex;flex-wrap:wrap;gap:6px 14px;margin:8px 0;font-size:12px}
+  .era-meta .meta-item{display:flex;align-items:center;gap:4px}
+  .era-meta .meta-label{color:var(--text-light);white-space:nowrap}
+  .era-meta .meta-value{font-weight:600}
+  .relation-tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;margin-top:6px;border:1px solid}
+  .early .relation-tag{background:#fff7ed;color:#c2410c;border-color:#fdba74}
+  .late .relation-tag{background:#f0fdf4;color:#166534;border-color:#86efac}
+  .events-panel{background:var(--event-bg);border-radius:10px;padding:14px;margin-top:5px;border:1px solid #fdba74}
+  .events-panel h4{font-size:13px;color:var(--highlight);margin-bottom:8px;display:flex;align-items:center;gap:5px}
+  .event-item{font-size:12px;padding:4px 0;border-bottom:1px dashed #fdba74;display:flex;gap:6px}
+  .event-item:last-child{border-bottom:none}
+  .event-year{color:var(--highlight);font-weight:bold;white-space:nowrap;min-width:42px}
+  .ministers-panel{background:var(--minister-bg);border-radius:10px;padding:14px;margin-top:8px;border:1px solid #86efac}
+  .ministers-panel h4{font-size:13px;color:#15803d;margin-bottom:8px;display:flex;align-items:center;gap:5px}
+  .minister-list{display:flex;flex-wrap:wrap;gap:5px}
+  .minister-tag{font-size:11px;padding:3px 8px;background:#dcfce7;color:#15803d;border-radius:12px;border:1px solid #86efac}
+  .minister-tag.negative{background:#fde8e8;color:#b91c1c;border-color:#f0b8b8}
+  .family-tree-section,.lifecycle-section,.ruler-section{margin:40px 0;padding:30px;background:#fff;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.06)}
+  .family-tree-section h2,.lifecycle-section h2,.ruler-section h2{text-align:center;font-size:24px;color:var(--text);margin-bottom:10px;letter-spacing:4px}
+  .lifecycle-section .note,.ruler-section .note{text-align:center;font-size:12px;color:var(--text-light);margin-bottom:20px}
+  .tree-container{overflow-x:auto;padding:20px 0}
+  .gantt-container{overflow-x:auto;padding:10px 0}.gantt-chart{min-width:900px}
+  .gantt-row{display:flex;align-items:center;height:34px;margin:2px 0}
+  .gantt-label{width:150px;font-size:12px;font-weight:600;text-align:right;padding-right:12px;flex-shrink:0;white-space:nowrap}
+  .gantt-bar-area{flex:1;position:relative;height:100%}
+  .gantt-bar{position:absolute;height:14px;top:50%;transform:translateY(-50%);border-radius:7px;opacity:.85;cursor:pointer}
+  .gantt-bar:hover{opacity:1;filter:brightness(1.1)}
+  .gantt-bar .tooltip{display:none;position:absolute;bottom:calc(100% + 5px);left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:4px 8px;border-radius:4px;font-size:11px;white-space:nowrap;z-index:10}
+  .gantt-bar:hover .tooltip{display:block}
+  .gantt-header{display:flex;align-items:center;height:30px;border-bottom:2px solid var(--border);margin-bottom:10px}
+  .gantt-header .gantt-label{font-size:12px;color:var(--text-light)}
+  .gantt-year-tick{position:absolute;font-size:10px;color:var(--text-light);transform:translateX(-50%);top:0}
+  .transition-divider{text-align:center;padding:40px 20px;position:relative}
+  .transition-divider .divider-line{height:2px;background:linear-gradient(to right,transparent,var(--rev-color),transparent);margin:0 auto;max-width:600px}
+  .transition-divider .divider-text{display:inline-block;background:var(--bg);padding:8px 25px;position:relative;top:-14px;font-size:16px;color:var(--rev-color);font-weight:bold;letter-spacing:4px;border:2px solid var(--rev-color);border-radius:20px}
+  .mini-divider{text-align:center;padding:18px}
+  .mini-divider .mini-text{display:inline-block;background:#fff7ed;padding:5px 18px;font-size:12px;color:#c2410c;font-weight:bold;letter-spacing:2px;border:1px solid #fdba74;border-radius:14px}
+  .overview-stats{display:flex;justify-content:center;gap:28px;padding:20px;flex-wrap:wrap}
+  .stat-box{text-align:center;padding:15px 22px;background:#fff;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.06);min-width:110px}
+  .stat-number{font-size:26px;font-weight:bold;color:var(--highlight)}
+  .stat-desc{font-size:12px;color:var(--text-light);margin-top:4px}
+  .ruler-group{margin-bottom:26px}
+  .ruler-group h3{font-size:16px;color:var(--highlight);border-left:4px solid var(--highlight);padding-left:10px;margin-bottom:4px;letter-spacing:2px}
+  .ruler-group .range{font-size:12px;color:var(--text-light);margin:0 0 10px 14px}
+  .ruler-list{display:grid;grid-template-columns:repeat(3,1fr);gap:4px 18px;font-size:12px}
+  .ruler-item{display:flex;gap:6px}
+  .ruler-item .no{color:var(--text-light);min-width:36px;flex-shrink:0}
+  .ruler-item .name{font-weight:600}
+  .ruler-item .reign{color:var(--text-light)}
+  .footer{text-align:center;padding:30px;color:var(--text-light);font-size:13px;border-top:2px solid var(--border);margin-top:40px}
+  @media(max-width:900px){.entry-content{flex-direction:column!important;align-items:center}.entry-left,.entry-right{width:100%;padding:10px 0}.entry-center{width:100%;justify-content:center;margin:10px 0}.timeline::before{display:none}.ruler-list{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.ruler-list{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>印度历史时代与王朝世系简表</h1>
+  <div class="subtitle">印度河文明 · 孔雀 · 笈多 · 德里苏丹 · 莫卧儿</div>
+  <div class="period">古代 (前2500-647) ─ 中世与近代 (647-1947) ─ 印度共和国 (1947-今)</div>
+  <div class="latin">🪔 भारत का इतिहास · Bharat 🪔</div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:var(--early-color)"></div><span>古代印度（印度河·吠陀·孔雀·笈多·戒日）</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--late-color)"></div><span>中世与近代（苏丹·莫卧儿·英属·共和国）</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div><span>重要人物</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--rev-color)"></div><span>重大事件</span></div>
+</div>
+
+<div class="overview-stats">
+  <div class="stat-box"><div class="stat-number">4500+</div><div class="stat-desc">文明史（年，前2500起）</div></div>
+  <div class="stat-box"><div class="stat-number">10</div><div class="stat-desc">大时代分期</div></div>
+  <div class="stat-box"><div class="stat-number">30+</div><div class="stat-desc">收录统治者</div></div>
+  <div class="stat-box"><div class="stat-number">前321</div><div class="stat-desc">孔雀帝国建立</div></div>
+  <div class="stat-box"><div class="stat-number">1947</div><div class="stat-desc">独立 · 印巴分治</div></div>
+  <div class="stat-box"><div class="stat-number">新德里</div><div class="stat-desc">首都</div></div>
+</div>
+
+<div class="container">
+
+<div class="lifecycle-section">
+  <h2>印度历史时代对照图</h2>
+  <div class="note">各时代的起止年代，鼠标悬停查看详情</div>
+  <div class="gantt-container"><div class="gantt-chart" id="ganttChart"></div></div>
+</div>
+
+<!-- ==================== 古代印度 ==================== -->
+<div class="section-title early">古 代 印 度</div>
+<div style="text-align:center;color:#999;font-size:13px;margin-bottom:20px;">前2500年 — 647年 · 印度河文明 · 吠陀 · 孔雀 · 笈多 · 戒日</div>
+
+<div class="timeline early">
+  <!-- 印度河文明 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="era-card">
+        <div class="order">1</div>
+        <div class="era-name">印度河文明</div>
+        <div class="era-jp">सिन्धु घाटी सभ्यता · Indus Valley</div>
+        <div class="era-meta">
+          <div class="meta-item"><span class="meta-label">年代：</span><span class="meta-value">前2500 - 前1500</span></div>
+          <div class="meta-item"><span class="meta-label">代表城市：</span><span class="meta-value">哈拉帕 · 摩亨佐-达罗</span></div>
+        </div>
+        <div class="relation-tag">世界最早城市文明之一 · 青铜器 · 印章文字</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">哈拉帕（遗址命名城市）</span>
+          <span class="minister-tag">摩亨佐-达罗（"死人之丘"）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">前2500</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">前2500左右</span><span>印度河流域城市文明兴起，规划整齐、排水系统发达</span></div>
+        <div class="event-item"><span class="event-year">前2000前后</span><span>与美索不达米亚贸易往来</span></div>
+        <div class="event-item"><span class="event-year">前1500左右</span><span>城市文明衰落，原因有洪水、气候变迁等假说</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 吠陀时代与列国 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">前1500-前600</span><span>雅利安人进入印度，编撰《吠陀》，种姓制度形成</span></div>
+        <div class="event-item"><span class="event-year">前6世纪</span><span>释迦牟尼创立佛教，大雄创立耆那教</span></div>
+        <div class="event-item"><span class="event-year">前6-前4世纪</span><span>"十六雄国"争霸，摩揭陀国崛起</span></div>
+        <div class="event-item"><span class="event-year">前327-前325</span><span>亚历山大东征至印度河流域</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">前1500</div></div>
+    <div class="entry-right">
+      <div class="era-card">
+        <div class="order">2</div>
+        <div class="era-name">吠陀时代与列国时代</div>
+        <div class="era-jp">वैदिक काल · Vedic &amp; Mahajanapadas</div>
+        <div class="era-meta">
+          <div class="meta-item"><span class="meta-label">年代：</span><span class="meta-value">前1500 - 前321</span></div>
+          <div class="meta-item"><span class="meta-label">代表政权：</span><span class="meta-value">摩揭陀 · 十六雄国</span></div>
+        </div>
+        <div class="relation-tag">《吠陀》与种姓制度 · 佛陀与大雄 · 列国争霸</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">释迦牟尼（佛陀）</span>
+          <span class="minister-tag">大雄（耆那教）</span>
+          <span class="minister-tag">频毗娑罗（摩揭陀王）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 孔雀王朝 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="era-card">
+        <div class="order">3</div>
+        <div class="era-name">孔雀王朝</div>
+        <div class="era-jp">मौर्य साम्राज्य · Maurya Empire</div>
+        <div class="era-meta">
+          <div class="meta-item"><span class="meta-label">年代：</span><span class="meta-value">前321 - 前185</span></div>
+          <div class="meta-item"><span class="meta-label">代表君主：</span><span class="meta-value">旃陀罗笈多 · 阿育王</span></div>
+        </div>
+        <div class="relation-tag">印度首个大一统帝国 · 阿育王弘法</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">旃陀罗笈多·孔雀</span>
+          <span class="minister-tag">考底利耶（《政事论》）</span>
+          <span class="minister-tag">阿育王（转轮王）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">前321</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">前321</span><span>旃陀罗笈多推翻难陀王朝，建立孔雀帝国</span></div>
+        <div class="event-item"><span class="event-year">前305</span><span>击退塞琉古帝国，疆域达阿富汗</span></div>
+        <div class="event-item"><span class="event-year">前268</span><span>阿育王即位，帝国极盛</span></div>
+        <div class="event-item"><span class="event-year">前261</span><span>羯陵伽之战后皈依佛教，立石柱诏令弘扬佛法</span></div>
+        <div class="event-item"><span class="event-year">前185</span><span>被巽伽王朝取代</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 分裂时期 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">前185</span><span>巽伽王朝取代孔雀，帝国分裂</span></div>
+        <div class="event-item"><span class="event-year">前2-前1世纪</span><span>希腊-印度王国、百乘王朝并立</span></div>
+        <div class="event-item"><span class="event-year">1-3世纪</span><span>贵霜帝国兴起，迦腻色伽大兴佛教、召开佛典结集</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">前185</div></div>
+    <div class="entry-right">
+      <div class="era-card">
+        <div class="order">4</div>
+        <div class="era-name">分裂时期</div>
+        <div class="era-jp">分裂時代 · Fragmentation</div>
+        <div class="era-meta">
+          <div class="meta-item"><span class="meta-label">年代：</span><span class="meta-value">前185 - 320</span></div>
+          <div class="meta-item"><span class="meta-label">代表政权：</span><span class="meta-value">巽伽 · 百乘 · 贵霜</span></div>
+        </div>
+        <div class="relation-tag">多国并立 · 贵霜与丝路贸易 · 大乘佛教兴起</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">普舍耶密多罗（巽伽开国）</span>
+          <span class="minister-tag">迦腻色伽（贵霜君主）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 笈多王朝 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="era-card">
+        <div class="order">5</div>
+        <div class="era-name">笈多王朝</div>
+        <div class="era-jp">गुप्त साम्राज्य · Gupta Empire</div>
+        <div class="era-meta">
+          <div class="meta-item"><span class="meta-label">年代：</span><span class="meta-value">320 - 550</span></div>
+          <div class="meta-item"><span class="meta-label">代表君主：</span><span class="meta-value">沙摩陀罗笈多 · 旃陀罗笈多二世</span></div>
+        </div>
+        <div class="relation-tag">印度"黄金时代" · 梵文文学与艺术巅峰</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">旃陀罗笈多一世</span>
+          <span class="minister-tag">沙摩陀罗笈多（印度拿破仑）</span>
+          <span class="minister-tag">迦梨陀娑（诗人）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">320</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">320</span><span>旃陀罗笈多一世建笈多王朝</span></div>
+        <div class="event-item"><span class="event-year">335-380</span><span>沙摩陀罗笈多征服北印度大部</span></div>
+        <div class="event-item"><span class="event-year">380-415</span><span>旃陀罗笈多二世（超日王）全盛，"黄金时代"</span></div>
+        <div class="event-item"><span class="event-year">5世纪</span><span>那烂陀寺兴起，阿旃陀石窟艺术繁盛</span></div>
+        <div class="event-item"><span class="event-year">550前后</span><span>嚈哒入侵，笈多衰亡</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 戒日王朝 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">606</span><span>戒日王即位，逐步统一北印度</span></div>
+        <div class="event-item"><span class="event-year">630-643</span><span>玄奘游学印度，著《大唐西域记》</span></div>
+        <div class="event-item"><span class="event-year">643</span><span>曲女城无遮大会，玄奘宣讲大乘佛法</span></div>
+        <div class="event-item"><span class="event-year">647</span><span>戒日王去世，帝国瓦解，北印度再度分裂</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">606</div></div>
+    <div class="entry-right">
+      <div class="era-card">
+        <div class="order">6</div>
+        <div class="era-name">戒日王朝</div>
+        <div class="era-jp">हर्ष साम्राज्य · Harsha Empire</div>
+        <div class="era-meta">
+          <div class="meta-item"><span class="meta-label">年代：</span><span class="meta-value">606 - 647</span></div>
+          <div class="meta-item"><span class="meta-label">代表君主：</span><span class="meta-value">戒日王（曷利沙）</span></div>
+        </div>
+        <div class="relation-tag">北印度最后的统一王朝 · 玄奘来印的时代</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">戒日王（诗人兼君主）</span>
+          <span class="minister-tag">玄奘（唐代高僧）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+</div><!-- end early timeline -->
+
+<!-- ===== 中世分界 ===== -->
+<div class="transition-divider">
+  <div class="divider-line"></div>
+  <div class="divider-text">德里苏丹国建立 · 1206年 · 伊斯兰王朝登场</div>
+</div>
+
+<!-- ==================== 中世与近代 ==================== -->
+<div class="section-title late">中 世 与 近 代</div>
+<div style="text-align:center;color:#999;font-size:13px;margin-bottom:20px;">1206年 — 今 · 德里苏丹 · 莫卧儿 · 英属印度 · 印度共和国</div>
+
+<div class="timeline late">
+  <!-- 德里苏丹国 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="era-card">
+        <div class="order">7</div>
+        <div class="era-name">德里苏丹国</div>
+        <div class="era-jp">दिल्ली सल्तनत · Delhi Sultanate</div>
+        <div class="era-meta">
+          <div class="meta-item"><span class="meta-label">年代：</span><span class="meta-value">1206 - 1526</span></div>
+          <div class="meta-item"><span class="meta-label">代表王朝：</span><span class="meta-value">奴隶 · 卡尔吉 · 图格鲁克</span></div>
+        </div>
+        <div class="relation-tag">突厥-伊斯兰王朝统治德里 · 五朝更替</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">库特布丁·艾巴克（奴隶王朝）</span>
+          <span class="minister-tag">阿拉丁·卡尔吉</span>
+          <span class="minister-tag">穆罕默德·图格鲁克</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1206</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1206</span><span>库特布丁·艾巴克建奴隶王朝，德里苏丹国始</span></div>
+        <div class="event-item"><span class="event-year">1296-1316</span><span>阿拉丁·卡尔吉南征，苏丹国疆域极盛</span></div>
+        <div class="event-item"><span class="event-year">1398</span><span>帖木儿洗劫德里，苏丹国元气大伤</span></div>
+        <div class="event-item"><span class="event-year">1451-1526</span><span>洛迪王朝（阿富汗人）统治</span></div>
+        <div class="event-item"><span class="event-year">1526</span><span>帕尼帕特战役败于巴卑尔，苏丹国终结</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 莫卧儿帝国 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1526</span><span>巴卑尔帕尼帕特战役获胜，莫卧儿帝国建立</span></div>
+        <div class="event-item"><span class="event-year">1556-1605</span><span>阿克巴大帝在位，宗教宽容、行省改革</span></div>
+        <div class="event-item"><span class="event-year">1632-1653</span><span>沙贾汗建泰姬陵（为爱妃穆塔兹·玛哈尔）</span></div>
+        <div class="event-item"><span class="event-year">1658-1707</span><span>奥朗则布在位，帝国疆域极盛后走向衰落</span></div>
+        <div class="event-item"><span class="event-year">1857</span><span>印度民族大起义后，末帝巴哈杜尔·沙二世被废</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1526</div></div>
+    <div class="entry-right">
+      <div class="era-card">
+        <div class="order">8</div>
+        <div class="era-name">莫卧儿帝国</div>
+        <div class="era-jp">मुग़ल साम्राज्य · Mughal Empire</div>
+        <div class="era-meta">
+          <div class="meta-item"><span class="meta-label">年代：</span><span class="meta-value">1526 - 1857</span></div>
+          <div class="meta-item"><span class="meta-label">代表君主：</span><span class="meta-value">阿克巴 · 沙贾汗 · 奥朗则布</span></div>
+        </div>
+        <div class="relation-tag">帖木儿后裔的伊斯兰帝国 · 泰姬陵 · 帝国极盛</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">巴卑尔（开国之君）</span>
+          <span class="minister-tag">阿克巴（大帝）</span>
+          <span class="minister-tag">沙贾汗（泰姬陵）</span>
+          <span class="minister-tag">奥朗则布（末代强君）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 马拉塔与英属印度 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="era-card">
+        <div class="order">9</div>
+        <div class="era-name">马拉塔与英属印度</div>
+        <div class="era-jp">मराठा · ब्रिटिश राज · British Raj</div>
+        <div class="era-meta">
+          <div class="meta-item"><span class="meta-label">年代：</span><span class="meta-value">1674 - 1947</span></div>
+          <div class="meta-item"><span class="meta-label">代表政权：</span><span class="meta-value">马拉塔 · 东印度公司 · 英王直辖</span></div>
+        </div>
+        <div class="relation-tag">马拉塔崛起 · 英国殖民 · 民族独立运动</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">希瓦吉（马拉塔开国）</span>
+          <span class="minister-tag">维多利亚女皇（印度女皇）</span>
+          <span class="minister-tag">圣雄甘地（非暴力运动）</span>
+          <span class="minister-tag">尼赫鲁（首任总理）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1757</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1674</span><span>希瓦吉加冕，马拉塔帝国建立</span></div>
+        <div class="event-item"><span class="event-year">1757</span><span>普拉西战役，东印度公司控制孟加拉</span></div>
+        <div class="event-item"><span class="event-year">1857</span><span>印度民族大起义；1858英王直接统治印度</span></div>
+        <div class="event-item"><span class="event-year">1885</span><span>国大党成立，独立运动兴起</span></div>
+        <div class="event-item"><span class="event-year">1947</span><span>蒙巴顿方案，印度独立、印巴分治</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 印度共和国 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1947</span><span>8月15日独立，尼赫鲁任首任总理</span></div>
+        <div class="event-item"><span class="event-year">1950</span><span>宪法生效，成立印度共和国</span></div>
+        <div class="event-item"><span class="event-year">1962</span><span>中印边界冲突</span></div>
+        <div class="event-item"><span class="event-year">1971</span><span>第三次印巴战争，孟加拉国独立</span></div>
+        <div class="event-item"><span class="event-year">1991</span><span>经济自由化改革</span></div>
+        <div class="event-item"><span class="event-year">2014</span><span>莫迪就任总理，经济快速发展</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1947</div></div>
+    <div class="entry-right">
+      <div class="era-card">
+        <div class="order">10</div>
+        <div class="era-name">印度共和国</div>
+        <div class="era-jp">भारत गणराज्य · Republic of India</div>
+        <div class="era-meta">
+          <div class="meta-item"><span class="meta-label">年代：</span><span class="meta-value">1947 - 今</span></div>
+          <div class="meta-item"><span class="meta-label">代表总理：</span><span class="meta-value">尼赫鲁 · 英迪拉·甘地 · 莫迪</span></div>
+        </div>
+        <div class="relation-tag">世界最大民主国家 · 经济崛起 · 南亚大国</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">尼赫鲁（开国总理）</span>
+          <span class="minister-tag">英迪拉·甘地（铁娘子）</span>
+          <span class="minister-tag">曼莫汉·辛格（改革总理）</span>
+          <span class="minister-tag">莫迪（现任总理）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+</div><!-- end late timeline -->
+
+<!-- ==================== 统治者世系总表 ==================== -->
+<div class="ruler-section">
+  <h2>历代统治者世系总表</h2>
+  <div class="note">孔雀 — 笈多 — 戒日 — 德里苏丹诸朝 — 莫卧儿帝国 — 英属印度 — 印度共和国；部分早期年代为推定</div>
+  <div class="ruler-group">
+    <h3>孔雀王朝（前321-前185）</h3>
+    <div class="range">印度历史上第一个大一统帝国</div>
+    <div class="ruler-list">
+      <div class="ruler-item"><span class="no">旃陀罗笈多</span><span class="name">旃陀罗笈多·孔雀（开国）</span><span class="reign">前321-前297</span></div>
+      <div class="ruler-item"><span class="no">宾头娑罗</span><span class="name">宾头娑罗（阿米特拉伽多）</span><span class="reign">前297-前272</span></div>
+      <div class="ruler-item"><span class="no">阿育王</span><span class="name">阿育王（无忧王）★</span><span class="reign">前268-前232</span></div>
+    </div>
+  </div>
+
+  <div class="ruler-group">
+    <h3>笈多王朝（320-550）</h3>
+    <div class="range">印度"黄金时代"，梵文文化巅峰</div>
+    <div class="ruler-list">
+      <div class="ruler-item"><span class="no">旃陀罗笈多一世</span><span class="name">旃陀罗笈多一世（开国）</span><span class="reign">320-335</span></div>
+      <div class="ruler-item"><span class="no">沙摩陀罗笈多</span><span class="name">沙摩陀罗笈多（印度拿破仑）</span><span class="reign">335-380</span></div>
+      <div class="ruler-item"><span class="no">旃陀罗笈多二世</span><span class="name">旃陀罗笈多二世（超日王）★</span><span class="reign">380-415</span></div>
+      <div class="ruler-item"><span class="no">鸠摩罗笈多</span><span class="name">鸠摩罗笈多一世</span><span class="reign">415-455</span></div>
+    </div>
+  </div>
+
+  <div class="ruler-group">
+    <h3>戒日王朝（606-647）</h3>
+    <div class="range">北印度最后的统一王朝</div>
+    <div class="ruler-list">
+      <div class="ruler-item"><span class="no">戒日王</span><span class="name">戒日王（曷利沙·伐弹那）★</span><span class="reign">606-647</span></div>
+    </div>
+  </div>
+
+  <div class="ruler-group">
+    <h3>德里苏丹国（1206-1526）</h3>
+    <div class="range">五大王朝：奴隶 · 卡尔吉 · 图格鲁克 · 赛义德 · 洛迪</div>
+    <div class="ruler-list">
+      <div class="ruler-item"><span class="no">艾巴克</span><span class="name">库特布丁·艾巴克（奴隶王朝）</span><span class="reign">1206-1210</span></div>
+      <div class="ruler-item"><span class="no">伊勒图特米什</span><span class="name">伊勒图特米什（奴隶王朝）</span><span class="reign">1211-1236</span></div>
+      <div class="ruler-item"><span class="no">阿拉丁</span><span class="name">阿拉丁·卡尔吉（卡尔吉王朝）</span><span class="reign">1296-1316</span></div>
+      <div class="ruler-item"><span class="no">穆罕默德</span><span class="name">穆罕默德·图格鲁克（图格鲁克王朝）</span><span class="reign">1325-1351</span></div>
+      <div class="ruler-item"><span class="no">菲鲁兹</span><span class="name">菲鲁兹·沙·图格鲁克</span><span class="reign">1351-1388</span></div>
+      <div class="ruler-item"><span class="no">易卜拉欣</span><span class="name">易卜拉欣·洛迪（末代）</span><span class="reign">1517-1526</span></div>
+    </div>
+  </div>
+
+  <div class="ruler-group">
+    <h3>莫卧儿帝国（1526-1857）</h3>
+    <div class="range">帖木儿后裔，统治印度三百余年</div>
+    <div class="ruler-list">
+      <div class="ruler-item"><span class="no">巴卑尔</span><span class="name">巴卑尔（开国之君）</span><span class="reign">1526-1530</span></div>
+      <div class="ruler-item"><span class="no">胡马雍</span><span class="name">胡马雍</span><span class="reign">1530-1556</span></div>
+      <div class="ruler-item"><span class="no">阿克巴</span><span class="name">阿克巴（大帝）★</span><span class="reign">1556-1605</span></div>
+      <div class="ruler-item"><span class="no">贾汉吉尔</span><span class="name">贾汉吉尔</span><span class="reign">1605-1627</span></div>
+      <div class="ruler-item"><span class="no">沙贾汗</span><span class="name">沙贾汗（泰姬陵）★</span><span class="reign">1628-1658</span></div>
+      <div class="ruler-item"><span class="no">奥朗则布</span><span class="name">奥朗则布（末代强君）</span><span class="reign">1658-1707</span></div>
+      <div class="ruler-item"><span class="no">巴哈杜尔二世</span><span class="name">巴哈杜尔·沙二世（末帝）</span><span class="reign">1837-1857</span></div>
+    </div>
+  </div>
+
+  <div class="ruler-group">
+    <h3>英属印度（1858-1947）</h3>
+    <div class="range">英王直辖时期（1858年前为东印度公司统治）</div>
+    <div class="ruler-list">
+      <div class="ruler-item"><span class="no">维多利亚</span><span class="name">维多利亚（印度女皇）</span><span class="reign">1858-1901</span></div>
+      <div class="ruler-item"><span class="no">坎宁</span><span class="name">坎宁伯爵（首任总督）</span><span class="reign">1858-1862</span></div>
+      <div class="ruler-item"><span class="no">寇松</span><span class="name">寇松侯爵（总督）</span><span class="reign">1899-1905</span></div>
+      <div class="ruler-item"><span class="no">蒙巴顿</span><span class="name">蒙巴顿勋爵（末任总督）</span><span class="reign">1947</span></div>
+    </div>
+  </div>
+
+  <div class="ruler-group">
+    <h3>印度共和国总理（1947-今）</h3>
+    <div class="range">议会制共和国，总理为政府首脑</div>
+    <div class="ruler-list">
+      <div class="ruler-item"><span class="no">尼赫鲁</span><span class="name">贾瓦哈拉尔·尼赫鲁（开国）</span><span class="reign">1947-1964</span></div>
+      <div class="ruler-item"><span class="no">英迪拉</span><span class="name">英迪拉·甘地（铁娘子）</span><span class="reign">1966-1977/1980-1984</span></div>
+      <div class="ruler-item"><span class="no">拉吉夫</span><span class="name">拉吉夫·甘地</span><span class="reign">1984-1989</span></div>
+      <div class="ruler-item"><span class="no">瓦杰帕伊</span><span class="name">阿塔尔·瓦杰帕伊</span><span class="reign">1998-2004</span></div>
+      <div class="ruler-item"><span class="no">辛格</span><span class="name">曼莫汉·辛格（改革总理）</span><span class="reign">2004-2014</span></div>
+      <div class="ruler-item"><span class="no">莫迪</span><span class="name">纳伦德拉·莫迪（现任）</span><span class="reign">2014-今</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 王朝主线与时代变迁图 ==================== -->
+<div class="family-tree-section">
+  <h2>王朝主线与时代变迁</h2>
+  <div class="tree-container">
+    <svg class="tree-svg" viewBox="0 0 1300 880" width="1300" height="880" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="anG" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#c2410c;stop-opacity:1"/><stop offset="100%" style="stop-color:#f97316;stop-opacity:1"/>
+        </linearGradient>
+        <linearGradient id="moG" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#166534;stop-opacity:1"/><stop offset="100%" style="stop-color:#22c55e;stop-opacity:1"/>
+        </linearGradient>
+        <linearGradient id="eraG" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#b45309;stop-opacity:1"/><stop offset="100%" style="stop-color:#f59e0b;stop-opacity:1"/>
+        </linearGradient>
+        <filter id="sh"><feDropShadow dx="1" dy="2" stdDeviation="3" flood-opacity="0.15"/></filter>
+        <marker id="aO" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#c2410c"/></marker>
+        <marker id="aG" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#166534"/></marker>
+        <marker id="aB" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#b45309"/></marker>
+      </defs>
+
+      <!-- 面板1：王朝主线 -->
+      <rect x="0" y="0" width="1300" height="420" fill="#fff7ed" rx="12"/>
+      <text x="20" y="30" font-size="16" fill="#c2410c" font-weight="bold" font-family="PingFang SC,serif">王朝主线 · 印度河文明 → 孔雀 → 笈多 → 德里苏丹 → 莫卧儿 → 共和国</text>
+
+      <g font-family="PingFang SC,serif">
+        <rect x="30" y="70" width="104" height="52" rx="8" fill="url(#anG)" filter="url(#sh)"/>
+        <text x="82" y="91" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">印度河文明</text>
+        <text x="82" y="108" text-anchor="middle" fill="#fed7aa" font-size="8">前2500-前1500</text>
+
+        <rect x="154" y="70" width="104" height="52" rx="8" fill="url(#anG)" filter="url(#sh)"/>
+        <text x="206" y="91" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">吠陀·列国</text>
+        <text x="206" y="108" text-anchor="middle" fill="#fed7aa" font-size="8">前1500-前321</text>
+
+        <rect x="278" y="70" width="104" height="52" rx="8" fill="url(#anG)" filter="url(#sh)"/>
+        <text x="330" y="91" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">孔雀·阿育王</text>
+        <text x="330" y="108" text-anchor="middle" fill="#fed7aa" font-size="8">前321-前185</text>
+
+        <rect x="402" y="70" width="104" height="52" rx="8" fill="url(#anG)" filter="url(#sh)"/>
+        <text x="454" y="91" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">分裂时期</text>
+        <text x="454" y="108" text-anchor="middle" fill="#fed7aa" font-size="8">前185-320</text>
+
+        <rect x="526" y="70" width="104" height="52" rx="8" fill="url(#anG)" filter="url(#sh)"/>
+        <text x="578" y="91" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">笈多王朝</text>
+        <text x="578" y="108" text-anchor="middle" fill="#fed7aa" font-size="8">320-550 黄金时代</text>
+
+        <rect x="650" y="70" width="104" height="52" rx="8" fill="url(#anG)" filter="url(#sh)"/>
+        <text x="702" y="91" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">戒日王朝</text>
+        <text x="702" y="108" text-anchor="middle" fill="#fed7aa" font-size="8">606-647</text>
+
+        <rect x="774" y="70" width="104" height="52" rx="8" fill="url(#moG)" filter="url(#sh)"/>
+        <text x="826" y="91" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">德里苏丹</text>
+        <text x="826" y="108" text-anchor="middle" fill="#bbf7d0" font-size="8">1206-1526</text>
+
+        <rect x="898" y="70" width="104" height="52" rx="8" fill="url(#moG)" filter="url(#sh)"/>
+        <text x="950" y="91" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">莫卧儿帝国</text>
+        <text x="950" y="108" text-anchor="middle" fill="#bbf7d0" font-size="8">1526-1857</text>
+
+        <rect x="1022" y="70" width="104" height="52" rx="8" fill="url(#moG)" filter="url(#sh)"/>
+        <text x="1074" y="91" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">英属印度</text>
+        <text x="1074" y="108" text-anchor="middle" fill="#bbf7d0" font-size="8">1858-1947</text>
+
+        <rect x="1146" y="70" width="104" height="52" rx="8" fill="url(#moG)" filter="url(#sh)"/>
+        <text x="1198" y="91" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">印度共和国</text>
+        <text x="1198" y="108" text-anchor="middle" fill="#bbf7d0" font-size="8">1947-今</text>
+
+        <line x1="134" y1="96" x2="152" y2="96" stroke="#c2410c" stroke-width="2" marker-end="url(#aO)"/>
+        <line x1="258" y1="96" x2="276" y2="96" stroke="#c2410c" stroke-width="2" marker-end="url(#aO)"/>
+        <line x1="382" y1="96" x2="400" y2="96" stroke="#c2410c" stroke-width="2" marker-end="url(#aO)"/>
+        <line x1="506" y1="96" x2="524" y2="96" stroke="#c2410c" stroke-width="2" marker-end="url(#aO)"/>
+        <line x1="630" y1="96" x2="648" y2="96" stroke="#c2410c" stroke-width="2" marker-end="url(#aO)"/>
+        <line x1="754" y1="96" x2="772" y2="96" stroke="#166534" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#aG)"/>
+        <line x1="878" y1="96" x2="896" y2="96" stroke="#166534" stroke-width="2" marker-end="url(#aG)"/>
+        <line x1="1002" y1="96" x2="1020" y2="96" stroke="#166534" stroke-width="2" marker-end="url(#aG)"/>
+        <line x1="1126" y1="96" x2="1144" y2="96" stroke="#166534" stroke-width="2" marker-end="url(#aG)"/>
+      </g>
+
+      <!-- 转折标注 -->
+      <g font-family="PingFang SC,serif" fill="#7c2d12">
+        <text x="330" y="150" text-anchor="middle" font-size="10" font-weight="bold">前261 阿育王皈依佛教</text>
+        <text x="578" y="150" text-anchor="middle" font-size="10" font-weight="bold">320 笈多黄金时代</text>
+        <text x="702" y="150" text-anchor="middle" font-size="10" font-weight="bold">643 玄奘曲女城大会</text>
+        <text x="826" y="150" text-anchor="middle" font-size="10" font-weight="bold">1206 苏丹国建立</text>
+        <text x="950" y="150" text-anchor="middle" font-size="10" font-weight="bold">1526 帕尼帕特战役</text>
+        <text x="1074" y="150" text-anchor="middle" font-size="10" font-weight="bold">1857 民族大起义</text>
+        <text x="1198" y="150" text-anchor="middle" font-size="10" font-weight="bold">1947 独立</text>
+      </g>
+      <line x1="20" y1="170" x2="1280" y2="170" stroke="#c2410c" stroke-width="1.5" stroke-dasharray="10,5"/>
+      <text x="650" y="165" text-anchor="middle" fill="#c2410c" font-size="11" font-weight="bold" font-family="PingFang SC,serif">── 古代诸王朝（橙）→ 伊斯兰与近代（绿）· 印度教与伊斯兰文明交汇 ──</text>
+      <text x="650" y="200" text-anchor="middle" fill="#6b7280" font-size="11" font-family="PingFang SC,serif">孔雀帝国首次统一次大陆大部，阿育王以"法"治国、弘扬佛教；笈多王朝为印度教文化黄金时代。</text>
+      <text x="650" y="222" text-anchor="middle" fill="#6b7280" font-size="11" font-family="PingFang SC,serif">1206年后德里苏丹与莫卧儿相继统治，伊斯兰文化与印度文化深度融合；1858-1947为英属印度时期。</text>
+
+      <!-- 面板2：时代变迁 -->
+      <rect x="0" y="440" width="1300" height="420" fill="#f0fdf4" rx="12"/>
+      <text x="20" y="470" font-size="16" fill="#166534" font-weight="bold" font-family="PingFang SC,serif">时代变迁 · 城市文明 → 帝国 → 分裂 → 黄金时代 → 伊斯兰王朝 → 英殖民 → 共和国</text>
+
+      <g font-family="PingFang SC,serif">
+        <rect x="40" y="520" width="180" height="64" rx="8" fill="url(#eraG)" filter="url(#sh)"/>
+        <text x="130" y="543" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">印度河文明</text>
+        <text x="130" y="562" text-anchor="middle" fill="#fde68a" font-size="9">前2500-前1500 · 城市</text>
+
+        <rect x="250" y="520" width="180" height="64" rx="8" fill="url(#eraG)" filter="url(#sh)"/>
+        <text x="340" y="543" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">吠陀·列国</text>
+        <text x="340" y="562" text-anchor="middle" fill="#fde68a" font-size="9">前1500-前321 · 佛陀</text>
+
+        <rect x="460" y="520" width="180" height="64" rx="8" fill="url(#eraG)" filter="url(#sh)"/>
+        <text x="550" y="543" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">孔雀帝国</text>
+        <text x="550" y="562" text-anchor="middle" fill="#fde68a" font-size="9">前321-前185 · 大一统</text>
+
+        <rect x="670" y="520" width="180" height="64" rx="8" fill="url(#eraG)" filter="url(#sh)"/>
+        <text x="760" y="543" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">分裂与笈多</text>
+        <text x="760" y="562" text-anchor="middle" fill="#fde68a" font-size="9">前185-550 · 黄金时代</text>
+
+        <rect x="880" y="520" width="180" height="64" rx="8" fill="url(#eraG)" filter="url(#sh)"/>
+        <text x="970" y="543" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">苏丹与莫卧儿</text>
+        <text x="970" y="562" text-anchor="middle" fill="#fde68a" font-size="9">1206-1857 · 伊斯兰王朝</text>
+
+        <rect x="1090" y="520" width="180" height="64" rx="8" fill="url(#eraG)" filter="url(#sh)"/>
+        <text x="1180" y="543" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">英国与共和</text>
+        <text x="1180" y="562" text-anchor="middle" fill="#fde68a" font-size="9">1858-今 · 殖民→独立</text>
+
+        <line x1="220" y1="552" x2="248" y2="552" stroke="#b45309" stroke-width="2" marker-end="url(#aB)"/>
+        <line x1="430" y1="552" x2="458" y2="552" stroke="#b45309" stroke-width="2" marker-end="url(#aB)"/>
+        <line x1="640" y1="552" x2="668" y2="552" stroke="#b45309" stroke-width="2" marker-end="url(#aB)"/>
+        <line x1="850" y1="552" x2="878" y2="552" stroke="#b45309" stroke-width="2" marker-end="url(#aB)"/>
+        <line x1="1060" y1="552" x2="1088" y2="552" stroke="#b45309" stroke-width="2" marker-end="url(#aB)"/>
+      </g>
+
+      <!-- 说明行 -->
+      <g font-family="PingFang SC,serif" fill="#6b7280">
+        <text x="130" y="616" text-anchor="middle" font-size="9">哈拉帕 · 摩亨佐-达罗</text>
+        <text x="340" y="616" text-anchor="middle" font-size="9">种姓制度 · 佛教耆那教</text>
+        <text x="550" y="616" text-anchor="middle" font-size="9">阿育王弘扬佛法</text>
+        <text x="760" y="616" text-anchor="middle" font-size="9">笈多·戒日·玄奘</text>
+        <text x="970" y="616" text-anchor="middle" font-size="9">泰姬陵 · 阿克巴</text>
+        <text x="1180" y="616" text-anchor="middle" font-size="9">甘地 · 尼赫鲁 · 莫迪</text>
+      </g>
+      <text x="650" y="660" text-anchor="middle" fill="#7c2d12" font-size="11" font-weight="bold" font-family="PingFang SC,serif">1947年印度独立、印巴分治；1950年成立共和国，成为世界上人口最多的民主国家。</text>
+
+      <!-- 图例 -->
+      <g font-family="PingFang SC,serif">
+        <rect x="40" y="720" width="1220" height="110" rx="8" fill="#fff" stroke="#ccc"/>
+        <text x="60" y="744" font-size="13" font-weight="bold" fill="#333">图例</text>
+        <rect x="60" y="756" width="15" height="12" rx="3" fill="url(#anG)"/>
+        <text x="85" y="767" font-size="10" fill="#333">古代王朝（印度河—戒日）</text>
+        <rect x="300" y="756" width="15" height="12" rx="3" fill="url(#moG)"/>
+        <text x="325" y="767" font-size="10" fill="#333">伊斯兰与近代（苏丹—共和国）</text>
+        <line x1="600" y1="762" x2="640" y2="762" stroke="#b45309" stroke-width="2" marker-end="url(#aB)"/>
+        <text x="650" y="767" font-size="10" fill="#333">时代演进</text>
+        <line x1="800" y1="762" x2="840" y2="762" stroke="#166534" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#aG)"/>
+        <text x="850" y="767" font-size="10" fill="#333">王朝断裂（600余年间隙）</text>
+        <text x="60" y="800" font-size="11" font-weight="bold" fill="#444">关键年份</text>
+        <text x="60" y="818" font-size="10" fill="#555">前2500 印度河文明 · 前1500 吠陀时代 · 前321 孔雀建国 · 前261 阿育王皈依 · 320 笈多开国 · 606 戒日即位 · 1206 德里苏丹</text>
+        <text x="60" y="836" font-size="10" fill="#555">1526 莫卧儿建立 · 1556 阿克巴即位 · 1658 奥朗则布 · 1757 普拉西战役 · 1857 民族大起义 · 1947 独立分治 · 1950 共和国成立</text>
+      </g>
+    </svg>
+  </div>
+</div>
+
+</div><!-- end container -->
+
+<div class="footer">
+  <p>印度河文明（前2500年左右）开启南亚五千年文明史；其后吠陀时代奠定种姓制度，孔雀帝国（前321-前185）首次统一次大陆大部，阿育王皈依佛教。</p>
+  <p style="margin-top:8px;">笈多王朝被称为印度"黄金时代"，戒日王朝时期玄奘来印求法；中世德里苏丹国与莫卧儿帝国相继统治，泰姬陵为其建筑巅峰。</p>
+  <p style="margin-top:8px;">1757年普拉西战役后英国东印度公司逐步控制印度，1858年英王直辖；1947年印度独立、印巴分治，1950年成立印度共和国。</p>
+  <p style="margin-top:8px;">数据来源：《印度史》等权威著作 · 早期年代为推定 · 仅供学习参考</p>
+</div>
+
+<script>
+(function(){
+  const eras = [
+    { name:'印度河文明', start:-2500, end:-1500, type:'early', note:'哈拉帕 · 摩亨佐-达罗城市文明' },
+    { name:'吠陀·列国', start:-1500, end:-321, type:'early', note:'《吠陀》 · 种姓制度 · 佛陀与大雄 · 十六雄国' },
+    { name:'孔雀王朝', start:-321, end:-185, type:'early', note:'旃陀罗笈多 · 阿育王弘法' },
+    { name:'分裂时期', start:-185, end:320, type:'early', note:'巽伽 · 百乘 · 贵霜' },
+    { name:'笈多王朝', start:320, end:550, type:'early', note:'黄金时代 · 那烂陀寺 · 阿旃陀石窟' },
+    { name:'戒日王朝', start:606, end:647, type:'early', note:'戒日王 · 玄奘来印求法' },
+    { name:'拉其普特诸国', start:647, end:1206, type:'late', note:'北印度诸王国并立' },
+    { name:'德里苏丹国', start:1206, end:1526, type:'late', note:'五大王朝 · 帖木儿洗劫德里' },
+    { name:'莫卧儿帝国', start:1526, end:1857, type:'late', note:'阿克巴大帝 · 泰姬陵 · 奥朗则布' },
+    { name:'英属印度', start:1858, end:1947, type:'late', note:'东印度公司 → 英王直辖 · 独立运动' },
+    { name:'印度共和国', start:1947, end:2024, type:'late', note:'尼赫鲁开国 · 经济改革 · 莫迪时代' },
+  ];
+
+  const minYear=-2500, maxYear=2030, totalYears=maxYear-minYear;
+  const colors = { early:'#c2410c', late:'#166534' };
+
+  const container = document.getElementById('ganttChart');
+  let headerHTML = '<div class="gantt-header"><div class="gantt-label" style="width:150px">年份</div><div class="gantt-bar-area" style="position:relative;height:30px;">';
+  for(let y=-2000;y<=2000;y+=500){
+    headerHTML += `<span class="gantt-year-tick" style="left:${((y-minYear)/totalYears)*100}%">${y>0?y:'前'+(-y)}</span>`;
+  }
+  headerHTML += '</div></div>';
+  container.innerHTML = headerHTML;
+
+  let bodyHTML = '<div class="gantt-body">';
+  eras.forEach(era => {
+    const color = colors[era.type];
+    const left = ((era.start-minYear)/totalYears)*100;
+    const width = Math.max(((era.end-era.start)/totalYears)*100, 0.5);
+    bodyHTML += `<div class="gantt-row"><div class="gantt-label" style="color:${color};width:150px">${era.name}</div><div class="gantt-bar-area"><div class="gantt-bar" style="left:${left}%;width:${width}%;background:${color};"><div class="tooltip">${era.name} ${era.start<0?'前'+(-era.start):era.start}-${era.end}<br>${era.note}</div></div></div></div>`;
+  });
+  bodyHTML += '</div>';
+  container.innerHTML += bodyHTML;
+})();
+</script>
+</body>
+</html>
