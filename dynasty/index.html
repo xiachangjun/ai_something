@@ -129,13 +129,48 @@
     .timeline-scale { margin-left: 46px; }
   }
 
+  /* Cards toolbar */
+  .cards-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 44px 0 18px;
+  }
+  .cards-filter { display: flex; gap: 8px; flex-wrap: wrap; }
+  .filter-btn {
+    font-family: inherit;
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    color: #a3a3a3;
+    font-size: 12px;
+    letter-spacing: 1px;
+    padding: 7px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all .2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .filter-btn:hover { color: #e5e5e5; border-color: #444; }
+  .filter-btn.active {
+    background: linear-gradient(135deg, #fbbf24, #d97706);
+    color: #1a1a1a;
+    border-color: #fbbf24;
+    font-weight: bold;
+  }
+  .filter-btn .cnt { font-size: 10px; opacity: .65; font-weight: normal; }
+  .cards-count { font-size: 12px; color: #737373; letter-spacing: 1px; }
+
   /* Cards grid */
   .cards-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
-    margin-top: 50px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
   }
+  .card.hidden { display: none; }
 
   @media (max-width: 768px) {
     .cards-grid { grid-template-columns: 1fr; }
@@ -168,7 +203,7 @@
   }
 
   .card-banner {
-    height: 180px;
+    height: 112px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -181,47 +216,52 @@
     bottom: 0;
     left: 0;
     right: 0;
-    height: 80px;
+    height: 40px;
     background: linear-gradient(transparent, var(--card-bg));
   }
   .card-banner .banner-icon {
-    font-size: 72px;
+    font-size: 42px;
     position: relative;
     z-index: 1;
-    opacity: 0.15;
+    opacity: 0.2;
+    transition: transform .3s, opacity .3s;
+  }
+  .card:hover .banner-icon {
+    transform: scale(1.18) translateY(-3px);
+    opacity: 0.3;
   }
   .card-banner .banner-title {
     position: absolute;
     z-index: 2;
-    font-size: 36px;
+    font-size: 24px;
     font-weight: 900;
-    letter-spacing: 8px;
-    text-shadow: 0 2px 20px rgba(0,0,0,0.5);
+    letter-spacing: 4px;
+    text-shadow: 0 2px 14px rgba(0,0,0,0.5);
   }
   .card-banner .banner-latin {
     position: absolute;
     z-index: 2;
-    bottom: 20px;
-    font-size: 12px;
-    letter-spacing: 3px;
+    bottom: 12px;
+    font-size: 10px;
+    letter-spacing: 2px;
     opacity: 0.6;
     font-style: italic;
   }
 
   .card-body {
-    padding: 24px 28px 28px;
+    padding: 16px 20px 14px;
   }
   .card-body h2 {
-    font-size: 22px;
+    font-size: 18px;
     font-weight: bold;
-    margin-bottom: 8px;
-    letter-spacing: 2px;
+    margin-bottom: 6px;
+    letter-spacing: 1px;
   }
   .card-meta {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
-    margin: 12px 0 16px;
+    gap: 8px;
+    margin: 8px 0 10px;
   }
   .card-meta .meta-chip {
     font-size: 12px;
@@ -233,28 +273,50 @@
     gap: 4px;
   }
   .card-desc {
-    font-size: 13px;
+    font-size: 12px;
     color: var(--text-light);
-    line-height: 1.8;
-    margin-bottom: 16px;
+    line-height: 1.7;
+    margin-bottom: 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 40px;
   }
   .card-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
+    gap: 5px;
   }
   .card-tags span {
-    font-size: 11px;
-    padding: 3px 10px;
+    font-size: 10px;
+    padding: 2px 8px;
     background: #262626;
-    border-radius: 12px;
+    border-radius: 10px;
     color: #a3a3a3;
+  }
+  .card-timescale {
+    position: relative;
+    height: 10px;
+    margin: 12px 20px 0;
+    background: #171717;
+    border-radius: 5px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .card-timescale .ts-bar {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    border-radius: 5px;
+    background: linear-gradient(90deg, var(--gold), #fbbf24);
+    opacity: .85;
   }
   .card-footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 16px 28px;
+    padding: 12px 20px;
     border-top: 1px solid var(--border);
   }
   .card-footer .enter-text {
@@ -390,10 +452,19 @@
   </div>
 
   <!-- 卡片 -->
+  <div class="cards-toolbar">
+    <div class="cards-filter" id="cardsFilter">
+      <button class="filter-btn active" data-group="all">🗂 全部 <span class="cnt">10</span></button>
+      <button class="filter-btn" data-group="china">🇨🇳 中国 <span class="cnt">5</span></button>
+      <button class="filter-btn" data-group="europe">🇪🇺 欧洲 <span class="cnt">4</span></button>
+      <button class="filter-btn" data-group="asia">🇯🇵 亚洲 <span class="cnt">1</span></button>
+    </div>
+    <div class="cards-count" id="cardsCount">显示 10 / 10 份简表</div>
+  </div>
   <div class="cards-grid">
 
     <!-- 南北朝 -->
-    <a href="nanbeichao-dynasty.html" class="card nanbei">
+    <a href="nanbeichao-dynasty.html" class="card nanbei" data-group="china" data-tsmin="420" data-tsmax="589">
       <div class="card-banner">
         <div class="banner-icon">🏮</div>
         <div class="banner-title">南北朝</div>
@@ -414,6 +485,7 @@
           <span>元嘉之治</span><span>孝文帝改革</span><span>侯景之乱</span><span>北周灭北齐</span><span>隋灭陈</span>
         </div>
       </div>
+      <div class="card-timescale"></div>
       <div class="card-footer">
         <span class="enter-text">查看详情</span>
         <span class="arrow">→</span>
@@ -421,7 +493,7 @@
     </a>
 
     <!-- 日本 -->
-    <a href="japan-history.html" class="card japan">
+    <a href="japan-history.html" class="card japan" data-group="asia" data-tsmin="-660" data-tsmax="2022">
       <div class="card-banner">
         <div class="banner-icon">🗾</div>
         <div class="banner-title">日 本</div>
@@ -442,6 +514,7 @@
           <span>大化改新</span><span>平安时代</span><span>源平合战</span><span>明治维新</span><span>平成令和</span>
         </div>
       </div>
+      <div class="card-timescale"></div>
       <div class="card-footer">
         <span class="enter-text">查看详情</span>
         <span class="arrow">→</span>
@@ -449,7 +522,7 @@
     </a>
 
     <!-- 唐朝 -->
-    <a href="tang-dynasty.html" class="card tang">
+    <a href="tang-dynasty.html" class="card tang" data-group="china" data-tsmin="618" data-tsmax="907">
       <div class="card-banner">
         <div class="banner-icon">龍</div>
         <div class="banner-title">大 唐</div>
@@ -470,6 +543,7 @@
           <span>贞观之治</span><span>武则天</span><span>开元盛世</span><span>安史之乱</span><span>黄巢起义</span>
         </div>
       </div>
+      <div class="card-timescale"></div>
       <div class="card-footer">
         <span class="enter-text">查看详情</span>
         <span class="arrow">→</span>
@@ -477,7 +551,7 @@
     </a>
 
     <!-- 宋朝 -->
-    <a href="song-dynasty.html" class="card song">
+    <a href="song-dynasty.html" class="card song" data-group="china" data-tsmin="960" data-tsmax="1279">
       <div class="card-banner">
         <div class="banner-icon">宋</div>
         <div class="banner-title">大 宋</div>
@@ -498,6 +572,7 @@
           <span>陈桥兵变</span><span>王安石变法</span><span>靖康之变</span><span>岳飞北伐</span><span>崖山海战</span>
         </div>
       </div>
+      <div class="card-timescale"></div>
       <div class="card-footer">
         <span class="enter-text">查看详情</span>
         <span class="arrow">→</span>
@@ -505,7 +580,7 @@
     </a>
 
     <!-- 明朝 -->
-    <a href="ming-dynasty.html" class="card ming">
+    <a href="ming-dynasty.html" class="card ming" data-group="china" data-tsmin="1368" data-tsmax="1644">
       <div class="card-banner">
         <div class="banner-icon">明</div>
         <div class="banner-title">大 明</div>
@@ -526,6 +601,7 @@
           <span>靖难之役</span><span>郑和下西洋</span><span>土木之变</span><span>张居正改革</span><span>崇祯殉国</span>
         </div>
       </div>
+      <div class="card-timescale"></div>
       <div class="card-footer">
         <span class="enter-text">查看详情</span>
         <span class="arrow">→</span>
@@ -533,7 +609,7 @@
     </a>
 
     <!-- 罗马帝国 -->
-    <a href="roman-empire.html" class="card rome">
+    <a href="roman-empire.html" class="card rome" data-group="europe" data-tsmin="-27" data-tsmax="476">
       <div class="card-banner">
         <div class="banner-icon">SPQR</div>
         <div class="banner-title">罗 马</div>
@@ -554,6 +630,7 @@
           <span>奥古斯都</span><span>五贤帝</span><span>君士坦丁</span><span>基督教</span><span>帝国分裂</span>
         </div>
       </div>
+      <div class="card-timescale"></div>
       <div class="card-footer">
         <span class="enter-text">查看详情</span>
         <span class="arrow">→</span>
@@ -561,7 +638,7 @@
     </a>
 
     <!-- 法兰西 -->
-    <a href="france-monarchy.html" class="card france">
+    <a href="france-monarchy.html" class="card france" data-group="europe" data-tsmin="987" data-tsmax="1870">
       <div class="card-banner">
         <div class="banner-icon">⚜</div>
         <div class="banner-title">法兰西</div>
@@ -582,6 +659,7 @@
           <span>百年战争</span><span>太阳王</span><span>凡尔赛宫</span><span>大革命</span><span>拿破仑</span>
         </div>
       </div>
+      <div class="card-timescale"></div>
       <div class="card-footer">
         <span class="enter-text">查看详情</span>
         <span class="arrow">→</span>
@@ -589,7 +667,7 @@
     </a>
 
     <!-- 英国 -->
-    <a href="british-monarchy.html" class="card britain">
+    <a href="british-monarchy.html" class="card britain" data-group="europe" data-tsmin="1066" data-tsmax="2022">
       <div class="card-banner">
         <div class="banner-icon">👑</div>
         <div class="banner-title">英 国</div>
@@ -610,6 +688,7 @@
           <span>大宪章</span><span>百年战争</span><span>都铎王朝</span><span>光荣革命</span><span>维多利亚时代</span>
         </div>
       </div>
+      <div class="card-timescale"></div>
       <div class="card-footer">
         <span class="enter-text">查看详情</span>
         <span class="arrow">→</span>
@@ -617,7 +696,7 @@
     </a>
 
     <!-- 俄国 -->
-    <a href="russia-history.html" class="card russia">
+    <a href="russia-history.html" class="card russia" data-group="europe" data-tsmin="862" data-tsmax="2022">
       <div class="card-banner">
         <div class="banner-icon">🦅</div>
         <div class="banner-title">俄 国</div>
@@ -638,6 +717,7 @@
           <span>罗斯受洗</span><span>彼得大帝</span><span>叶卡捷琳娜二世</span><span>罗曼诺夫王朝</span><span>十月革命</span>
         </div>
       </div>
+      <div class="card-timescale"></div>
       <div class="card-footer">
         <span class="enter-text">查看详情</span>
         <span class="arrow">→</span>
@@ -645,7 +725,7 @@
     </a>
 
     <!-- 清朝 -->
-    <a href="qing-dynasty.html" class="card qing">
+    <a href="qing-dynasty.html" class="card qing" data-group="china" data-tsmin="1616" data-tsmax="1912">
       <div class="card-banner">
         <div class="banner-icon">龍</div>
         <div class="banner-title">大 清</div>
@@ -666,6 +746,7 @@
           <span>康乾盛世</span><span>鸦片战争</span><span>洋务运动</span><span>甲午战争</span><span>辛亥革命</span>
         </div>
       </div>
+      <div class="card-timescale"></div>
       <div class="card-footer">
         <span class="enter-text">查看详情</span>
         <span class="arrow">→</span>
@@ -766,6 +847,41 @@
   });
   document.addEventListener('mouseout', function(e){
     if (e.target.closest && e.target.closest('.timeline-seg') && tip) tip.style.opacity = '0';
+  });
+
+  // 卡片筛选
+  var filterBtns = document.querySelectorAll('.filter-btn');
+  var filterCards = document.querySelectorAll('.cards-grid .card');
+  var cardsCount = document.getElementById('cardsCount');
+  filterBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      filterBtns.forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      var g = btn.dataset.group;
+      var shown = 0;
+      filterCards.forEach(function(card){
+        var show = (g === 'all') || (card.dataset.group === g);
+        card.classList.toggle('hidden', !show);
+        if (show) {
+          shown++;
+          card.style.animation = 'none';
+          void card.offsetWidth;
+          card.style.animation = '';
+        }
+      });
+      if (cardsCount) cardsCount.textContent = '显示 ' + shown + ' / ' + filterCards.length + ' 份简表';
+    });
+  });
+
+  // 卡片迷你时间条（统一时间比例）
+  var TMIN = -50, TMAX = 2030, TTOTAL = TMAX - TMIN;
+  document.querySelectorAll('.card-timescale').forEach(function(el){
+    var card = el.closest('.card');
+    if (!card) return;
+    var s = parseFloat(card.dataset.tsmin), e = parseFloat(card.dataset.tsmax);
+    var left = Math.max(((s - TMIN) / TTOTAL) * 100, 0);
+    var width = Math.min(((e - TMIN) / TTOTAL) * 100, 100) - left;
+    el.innerHTML = '<div class="ts-bar" style="left:' + left + '%;width:' + Math.max(width, 1) + '%"></div>';
   });
 })();
 </script>
