@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>元朝皇帝世系简表 (1206-1368)</title>
+<style>
+  :root{--bg:#f7f5f2;--card-bg:#fff;--early-color:#1e3a8a;--late-color:#7c2d12;--text:#1c1917;--text-light:#6b7280;--border:#d1d5db;--event-bg:#eff6ff;--minister-bg:#fef9ee;--highlight:#2563eb;--gold:#b8860b;--rev-color:#7f1d1d}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:"PingFang SC","Microsoft YaHei","Noto Serif SC",serif;background:var(--bg);color:var(--text);line-height:1.6}
+  .header{text-align:center;padding:50px 20px 30px;background:linear-gradient(135deg,#0c1445 0%,#1e3a8a 55%,#7c2d12 100%);color:#e0e7ff;position:relative;overflow:hidden}
+  .header::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffd700' fill-opacity='0.05'%3E%3Cpath d='M20 5l3 10h10l-8 6 3 10-8-6-8 6 3-10-8-6h10z'/%3E%3C/g%3E%3C/svg%3E");opacity:.6}
+  .header h1{font-size:40px;font-weight:900;letter-spacing:10px;position:relative;z-index:1;text-shadow:2px 2px 4px rgba(0,0,0,.5)}
+  .header .subtitle{font-size:18px;margin-top:12px;color:#fbbf24;letter-spacing:6px;position:relative;z-index:1}
+  .header .period{font-size:14px;margin-top:8px;color:#93c5fd;letter-spacing:3px;position:relative;z-index:1}
+  .legend{display:flex;justify-content:center;gap:24px;padding:18px;background:#fff;border-bottom:2px solid var(--border);flex-wrap:wrap}
+  .legend-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-light)}
+  .legend-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0}
+  .container{max-width:1400px;margin:0 auto;padding:20px}
+  .section-title{text-align:center;padding:30px 20px 20px;font-size:28px;font-weight:bold;letter-spacing:6px;position:relative}
+  .section-title.early{color:var(--early-color)}.section-title.late{color:var(--late-color)}
+  .section-title::after{content:'';display:block;width:80px;height:3px;margin:12px auto 0}
+  .section-title.early::after{background:var(--early-color)}.section-title.late::after{background:var(--late-color)}
+  .timeline{position:relative;padding:20px 0}
+  .timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:4px;transform:translateX(-50%);z-index:0}
+  .timeline.early::before{background:var(--early-color)}.timeline.late::before{background:var(--late-color)}
+  .timeline-entry{display:flex;align-items:flex-start;position:relative;margin-bottom:20px}
+  .entry-content{display:flex;width:100%;align-items:flex-start}.entry-left,.entry-right{width:48%;padding:0 15px}
+  .entry-center{width:4%;display:flex;justify-content:center;position:relative;z-index:1}
+  .year-marker{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold;color:#fff;flex-shrink:0;z-index:2}
+  .early .year-marker{background:var(--early-color)}.late .year-marker{background:var(--late-color)}
+  .emperor-card{background:var(--card-bg);border-radius:12px;padding:20px;box-shadow:0 4px 20px rgba(0,0,0,.08);border-left:5px solid;position:relative;transition:transform .3s,box-shadow .3s}
+  .emperor-card:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,.15)}
+  .early .emperor-card{border-left-color:var(--early-color)}.late .emperor-card{border-left-color:var(--late-color)}
+  .emperor-card .order{position:absolute;top:-10px;right:15px;background:var(--highlight);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold}
+  .emperor-name{font-size:20px;font-weight:bold;margin-bottom:2px}
+  .emperor-latin{font-size:12px;color:var(--text-light);font-style:italic;margin-bottom:8px}
+  .emperor-meta{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;margin:10px 0;font-size:12px}
+  .meta-item{display:flex;align-items:center;gap:4px}.meta-label{color:var(--text-light);white-space:nowrap}.meta-value{font-weight:600}
+  .life-bar{height:8px;background:#eee;border-radius:4px;margin:10px 0 5px;position:relative;overflow:visible}
+  .life-bar .reign{position:absolute;height:100%;border-radius:4px;opacity:.8}
+  .early .life-bar .reign{background:var(--early-color)}.late .life-bar .reign{background:var(--late-color)}
+  .life-bar-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--text-light)}
+  .relation-tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;margin-top:6px;border:1px solid}
+  .early .relation-tag{background:#eff6ff;color:#1e3a8a;border-color:#93c5fd}
+  .late .relation-tag{background:#fef9ee;color:#7c2d12;border-color:#fcd34d}
+  .dynasty-tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:10px;margin-top:4px;margin-left:4px;background:#fef3c7;color:#92400e;border:1px solid #fcd34d}
+  .events-panel{background:var(--event-bg);border-radius:10px;padding:14px;margin-top:5px;border:1px solid #bfdbfe}
+  .events-panel h4{font-size:13px;color:var(--highlight);margin-bottom:8px;display:flex;align-items:center;gap:5px}
+  .event-item{font-size:12px;padding:4px 0;border-bottom:1px dashed #bfdbfe;display:flex;gap:6px}
+  .event-item:last-child{border-bottom:none}
+  .event-year{color:var(--highlight);font-weight:bold;white-space:nowrap;min-width:42px}
+  .ministers-panel{background:var(--minister-bg);border-radius:10px;padding:14px;margin-top:8px;border:1px solid #fcd34d}
+  .ministers-panel h4{font-size:13px;color:#92400e;margin-bottom:8px;display:flex;align-items:center;gap:5px}
+  .minister-list{display:flex;flex-wrap:wrap;gap:5px}
+  .minister-tag{font-size:11px;padding:3px 8px;background:#fef9ee;color:#92400e;border-radius:12px;border:1px solid #fcd34d}
+  .minister-tag.negative{background:#fde8e8;color:#b91c1c;border-color:#f0b8b8}
+  .family-tree-section,.lifecycle-section{margin:40px 0;padding:30px;background:#fff;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.06)}
+  .family-tree-section h2,.lifecycle-section h2{text-align:center;font-size:24px;color:var(--text);margin-bottom:10px;letter-spacing:4px}
+  .lifecycle-section .note{text-align:center;font-size:12px;color:var(--text-light);margin-bottom:20px}
+  .tree-container{overflow-x:auto;padding:20px 0}
+  .gantt-container{overflow-x:auto;padding:10px 0}.gantt-chart{min-width:900px}
+  .gantt-row{display:flex;align-items:center;height:32px;margin:2px 0}
+  .gantt-label{width:150px;font-size:12px;font-weight:600;text-align:right;padding-right:12px;flex-shrink:0;white-space:nowrap}
+  .gantt-bar-area{flex:1;position:relative;height:100%}
+  .gantt-bar{position:absolute;height:12px;top:50%;transform:translateY(-50%);border-radius:6px;opacity:.85;cursor:pointer}
+  .gantt-bar:hover{opacity:1;filter:brightness(1.1)}
+  .gantt-bar .tooltip{display:none;position:absolute;bottom:calc(100% + 5px);left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:4px 8px;border-radius:4px;font-size:11px;white-space:nowrap;z-index:10}
+  .gantt-bar:hover .tooltip{display:block}
+  .gantt-header{display:flex;align-items:center;height:30px;border-bottom:2px solid var(--border);margin-bottom:10px}
+  .gantt-header .gantt-label{font-size:12px;color:var(--text-light)}
+  .gantt-year-tick{position:absolute;font-size:10px;color:var(--text-light);transform:translateX(-50%);top:0}
+  .mini-divider{text-align:center;padding:18px}
+  .mini-divider .mini-text{display:inline-block;background:#eff6ff;padding:5px 18px;font-size:12px;color:#1e3a8a;font-weight:bold;letter-spacing:2px;border:1px solid #93c5fd;border-radius:14px}
+  .mini-divider .mini-text.red{background:#fef2f2;color:#b91c1c;border-color:#fca5a5}
+  .overview-stats{display:flex;justify-content:center;gap:28px;padding:20px;flex-wrap:wrap}
+  .stat-box{text-align:center;padding:15px 22px;background:#fff;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.06);min-width:110px}
+  .stat-number{font-size:26px;font-weight:bold;color:var(--highlight)}
+  .stat-desc{font-size:12px;color:var(--text-light);margin-top:4px}
+  .footer{text-align:center;padding:30px;color:var(--text-light);font-size:13px;border-top:2px solid var(--border);margin-top:40px}
+  @media(max-width:900px){.entry-content{flex-direction:column!important;align-items:center}.entry-left,.entry-right{width:100%;padding:10px 0}.entry-center{width:100%;justify-content:center;margin:10px 0}.timeline::before{display:none}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>元朝皇帝世系简表</h1>
+  <div class="subtitle">蒙 古 帝 国 · 大 元 一 统</div>
+  <div class="period">1206年（蒙古建国）— 1368年（元亡）· 中国历史上疆域最广的王朝之一</div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:var(--early-color)"></div><span>大蒙古国四汗（1206-1259）</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--late-color)"></div><span>元朝皇帝（1260-1368）与北元</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div><span>重要人物</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--rev-color)"></div><span>重大事件</span></div>
+</div>
+
+<div class="overview-stats">
+  <div class="stat-box"><div class="stat-number">162</div><div class="stat-desc">蒙古建国至元亡（年）</div></div>
+  <div class="stat-box"><div class="stat-number">17</div><div class="stat-desc">皇帝（四汗+元十一帝+北元二帝）</div></div>
+  <div class="stat-box"><div class="stat-number">1271</div><div class="stat-desc">改国号"大元"</div></div>
+  <div class="stat-box"><div class="stat-number">1368</div><div class="stat-desc">明军攻大都 · 元亡</div></div>
+  <div class="stat-box"><div class="stat-number">大都（北京）</div><div class="stat-desc">都城</div></div>
+</div>
+
+<div class="container">
+
+<div class="lifecycle-section">
+  <h2>皇帝生卒与在位时间对照图</h2>
+  <div class="note">浅色条为生卒跨度，深色条为在位时间（蓝=大蒙古国四汗，赭=元朝皇帝），鼠标悬停查看详情</div>
+  <div class="gantt-container"><div class="gantt-chart" id="ganttChart"></div></div>
+</div>
+
+<!-- ==================== 大蒙古国 ==================== -->
+<div class="section-title early">大 蒙 古 国</div>
+<div style="text-align:center;color:#999;font-size:13px;margin-bottom:20px;">1206年 — 1259年 · 成吉思汗建国 · 追尊为元朝皇帝</div>
+
+<div class="timeline early">
+
+  <!-- 成吉思汗 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">1</div>
+        <div class="emperor-name">太祖（成吉思汗）</div>
+        <div class="emperor-latin">Genghis Khan · Temujin</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1162-1227（65岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1206-1227（21年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:67.7%;width:32.3%"></div></div>
+        <div class="life-bar-labels"><span>1162</span><span>1206 在位</span><span>1227</span></div>
+        <div class="relation-tag">蒙古帝国创建者 · 统一蒙古诸部 · 追尊太祖</div>
+        <div class="dynasty-tag">蒙古·追尊</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">木华黎（太师国王）</span>
+          <span class="minister-tag">博尔术（四杰之一）</span>
+          <span class="minister-tag">耶律楚材（后）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1206</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1206</span><span>斡难河源大会，称成吉思汗，蒙古帝国建立</span></div>
+        <div class="event-item"><span class="event-year">1211-1215</span><span>攻金，破中都（今北京）</span></div>
+        <div class="event-item"><span class="event-year">1218-1223</span><span>西征花剌子模，兵锋达黑海</span></div>
+        <div class="event-item"><span class="event-year">1227</span><span>灭西夏前夕病逝</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 窝阔台 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1229</span><span>继任大汗（追尊太宗）</span></div>
+        <div class="event-item"><span class="event-year">1234</span><span>与宋联军灭金</span></div>
+        <div class="event-item"><span class="event-year">1235-1241</span><span>长子西征（拔都），深入欧洲</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1229</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">2</div>
+        <div class="emperor-name">太宗（窝阔台）</div>
+        <div class="emperor-latin">Ogedei Khan</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1186-1241（55岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1229-1241（12年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:78.2%;width:21.8%"></div></div>
+        <div class="life-bar-labels"><span>1186</span><span>1229 在位</span><span>1241</span></div>
+        <div class="relation-tag">成吉思汗第三子 · 灭金 · 西征欧洲</div>
+        <div class="dynasty-tag">蒙古·追尊</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">耶律楚材（中书令）</span>
+          <span class="minister-tag">速不台（西征统帅）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 贵由 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">3</div>
+        <div class="emperor-name">定宗（贵由）</div>
+        <div class="emperor-latin">Guyuk Khan</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1206-1248（42岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1246-1248（2年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:95.2%;width:4.8%"></div></div>
+        <div class="life-bar-labels"><span>1206</span><span>1246 在位</span><span>1248</span></div>
+        <div class="relation-tag">窝阔台长子 · 在位短暂 · 西征后即卒</div>
+        <div class="dynasty-tag">蒙古·追尊</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">脱列哥那（母后摄政）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1246</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1246</span><span>即位，与拔都失和</span></div>
+        <div class="event-item"><span class="event-year">1248</span><span>西巡途中病逝</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 蒙哥 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1251</span><span>拖雷系夺回汗位（追尊宪宗）</span></div>
+        <div class="event-item"><span class="event-year">1252-1258</span><span>三路攻宋；旭烈兀西征灭阿拉伯阿拔斯朝</span></div>
+        <div class="event-item"><span class="event-year">1259</span><span>攻合州钓鱼城，战死城下</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1251</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">4</div>
+        <div class="emperor-name">宪宗（蒙哥）</div>
+        <div class="emperor-latin">Mongke Khan</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1209-1259（50岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1251-1259（8年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:84%;width:16%"></div></div>
+        <div class="life-bar-labels"><span>1209</span><span>1251 在位</span><span>1259</span></div>
+        <div class="relation-tag">拖雷长子 · 汗位归拖雷系 · 攻宋战死</div>
+        <div class="dynasty-tag">蒙古·追尊</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">忽必烈（弟，攻鄂州）</span>
+          <span class="minister-tag">旭烈兀（弟，西征）</span>
+          <span class="minister-tag">郭侃（汉将）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+</div><!-- end early timeline -->
+
+<!-- ===== 大元分界 ===== -->
+<div class="mini-divider"><div class="mini-text red">1260年 忽必烈即汗位 · 1271年 改国号"大元" · 1279年 灭南宋一统天下</div></div>
+
+<!-- ==================== 元朝 ==================== -->
+<div class="section-title late">元 朝</div>
+<div style="text-align:center;color:#999;font-size:13px;margin-bottom:20px;">1260年 — 1368年 · 都城：大都（今北京）· 另有北元二帝</div>
+
+<div class="timeline late">
+
+  <!-- 忽必烈 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">5</div>
+        <div class="emperor-name">世祖（忽必烈）</div>
+        <div class="emperor-latin">Kublai Khan · Emperor Shizu</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1215-1294（79岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1260-1294（34年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:57%;width:43%"></div></div>
+        <div class="life-bar-labels"><span>1215</span><span>1260 在位</span><span>1294</span></div>
+        <div class="relation-tag">拖雷第四子 · 建元朝 · 灭南宋统一</div>
+        <div class="dynasty-tag">元朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">刘秉忠（定国号）</span>
+          <span class="minister-tag">伯颜（灭宋统帅）</span>
+          <span class="minister-tag">郭守敬（授时历）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1260</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1260</span><span>即大汗位，建元中统</span></div>
+        <div class="event-item"><span class="event-year">1271</span><span>取《易经》"大哉乾元"，改国号"大元"</span></div>
+        <div class="event-item"><span class="event-year">1276/1279</span><span>陷临安；崖山海战灭南宋，一统天下</span></div>
+        <div class="event-item"><span class="event-year">1274/1281</span><span>两次征日失败</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 铁穆耳 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1294</span><span>即位，守成之君</span></div>
+        <div class="event-item"><span class="event-year">1304</span><span>与西北诸汗国约和，名义上恢复宗藩关系</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1294</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">6</div>
+        <div class="emperor-name">成宗（铁穆耳）</div>
+        <div class="emperor-latin">Temur · Emperor Chengzong</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1265-1307（42岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1294-1307（13年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:69%;width:31%"></div></div>
+        <div class="life-bar-labels"><span>1265</span><span>1294 在位</span><span>1307</span></div>
+        <div class="relation-tag">忽必烈之孙 · 守成 · 诸汗国归附</div>
+        <div class="dynasty-tag">元朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">哈剌哈孙（中书右丞相）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 海山 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">7</div>
+        <div class="emperor-name">武宗（海山）</div>
+        <div class="emperor-latin">Khaishan · Emperor Wuzong</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1281-1311（30岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1307-1311（4年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:86.7%;width:13.3%"></div></div>
+        <div class="life-bar-labels"><span>1281</span><span>1307 在位</span><span>1311</span></div>
+        <div class="relation-tag">忽必烈曾孙 · 1306败海都军 · 滥赏致财政困顿</div>
+        <div class="dynasty-tag">元朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">三宝奴（理财）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1307</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1307</span><span>即位，大量封赏蒙古诸王</span></div>
+        <div class="event-item"><span class="event-year">1311</span><span>病逝</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 爱育黎拔力八达 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1311</span><span>即位，推行汉法</span></div>
+        <div class="event-item"><span class="event-year">1314</span><span>恢复科举（延祐复科）</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1311</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">8</div>
+        <div class="emperor-name">仁宗（爱育黎拔力八达）</div>
+        <div class="emperor-latin">Ayurbarwada · Emperor Renzong</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1285-1320（35岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1311-1320（9年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:74.3%;width:25.7%"></div></div>
+        <div class="life-bar-labels"><span>1285</span><span>1311 在位</span><span>1320</span></div>
+        <div class="relation-tag">武宗之弟 · 崇儒重教 · 恢复科举</div>
+        <div class="dynasty-tag">元朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">李孟（汉臣）</span>
+          <span class="minister-tag">程钜夫</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 硕德八剌 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">9</div>
+        <div class="emperor-name">英宗（硕德八剌）</div>
+        <div class="emperor-latin">Shidibala · Emperor Yingzong</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1302-1323（21岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1320-1323（3年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:85.7%;width:14.3%"></div></div>
+        <div class="life-bar-labels"><span>1302</span><span>1320 在位</span><span>1323</span></div>
+        <div class="relation-tag">仁宗之子 · 锐意改革 · 南坡之变遇刺</div>
+        <div class="dynasty-tag">元朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">拜住（右丞相）</span>
+          <span class="minister-tag negative">铁失（弑君）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1320</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1322-1323</span><span>推行新政，抑制权贵</span></div>
+        <div class="event-item"><span class="event-year">1323</span><span>南坡之变，被铁失刺杀</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 也孙铁木儿 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1323</span><span>南坡之变后被迎立（泰定帝）</span></div>
+        <div class="event-item"><span class="event-year">1328</span><span>病逝，引发两都之战</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1323</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">10</div>
+        <div class="emperor-name">泰定帝（也孙铁木儿）</div>
+        <div class="emperor-latin">Yesun Temur · Emperor Taiding</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1293-1328（35岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1323-1328（5年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:85.7%;width:14.3%"></div></div>
+        <div class="life-bar-labels"><span>1293</span><span>1323 在位</span><span>1328</span></div>
+        <div class="relation-tag">甘麻剌之子 · 被权臣拥立 · 死后内乱</div>
+        <div class="dynasty-tag">元朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag negative">铁失（拥立者）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 天顺帝 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">11</div>
+        <div class="emperor-name">天顺帝（阿速吉八）</div>
+        <div class="emperor-latin">Ragibagh · Emperor Tianshun</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1320-1328（8岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1328（月余）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:97%;width:3%"></div></div>
+        <div class="life-bar-labels"><span>1320</span><span></span><span>1328</span></div>
+        <div class="relation-tag">泰定帝之子 · 两都之战失败被杀</div>
+        <div class="dynasty-tag">元朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag negative">倒剌沙（上都党）</span>
+          <span class="minister-tag negative">燕帖木儿（大都党）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1328</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1328</span><span>两都之战，上都军败，天顺帝被杀</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 图帖睦尔 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1328</span><span>燕帖木儿拥立，文宗即位；让位兄明宗</span></div>
+        <div class="event-item"><span class="event-year">1329</span><span>明宗暴卒（一说被毒杀），文宗复位</span></div>
+        <div class="event-item"><span class="event-year">1332</span><span>病逝</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1328</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">12</div>
+        <div class="emperor-name">文宗（图帖睦尔）</div>
+        <div class="emperor-latin">Tugh Temur · Emperor Wenzong</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1304-1332（28岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1328-1329, 1329-1332</span></div>
+        </div>
+        <div class="life-bar" data-birth="1304" data-death="1332" data-multi="1328,1329,1329,1332"><div class="reign"></div><div class="reign" style="position:absolute"></div></div>
+        <div class="life-bar-labels"><span>1304</span><span>两度在位</span><span>1332</span></div>
+        <div class="relation-tag">武宗次子 · 两度即位 · 汉文化造诣高</div>
+        <div class="dynasty-tag">元朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">燕帖木儿（权臣）</span>
+          <span class="minister-tag">虞集（奎章阁学士）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 和世㻋 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">13</div>
+        <div class="emperor-name">明宗（和世㻋）</div>
+        <div class="emperor-latin">Kusala · Emperor Mingzong</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1300-1329（29岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1329（数月）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:97%;width:3%"></div></div>
+        <div class="life-bar-labels"><span>1300</span><span></span><span>1329</span></div>
+        <div class="relation-tag">武宗长子 · 被迎立于漠北 · 暴卒</div>
+        <div class="dynasty-tag">元朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag negative">燕帖木儿（疑弑）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1329</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1329</span><span>即位于和宁，旋在返大都途中暴卒</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 懿璘质班 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1332</span><span>即位，在位仅四十三天</span></div>
+        <div class="event-item"><span class="event-year">1332</span><span>病逝</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1332</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">14</div>
+        <div class="emperor-name">宁宗（懿璘质班）</div>
+        <div class="emperor-latin">Rinchinbal · Emperor Ningzong</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1326-1332（6岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1332（43天）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:96%;width:4%"></div></div>
+        <div class="life-bar-labels"><span>1326</span><span></span><span>1332</span></div>
+        <div class="relation-tag">明宗之子 · 幼年即位 · 旋即夭折</div>
+        <div class="dynasty-tag">元朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag negative">燕帖木儿（辅政）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 妥懽帖睦尔 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">15</div>
+        <div class="emperor-name">惠宗（元顺帝）</div>
+        <div class="emperor-latin">Toghon Temur · Last Emperor of Yuan</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1320-1370（50岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1333-1368（35年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:26%;width:70%"></div></div>
+        <div class="life-bar-labels"><span>1320</span><span>1333 在位</span><span>1370</span></div>
+        <div class="relation-tag">明宗长子 · 元朝末帝 · 北逃后病逝</div>
+        <div class="dynasty-tag">元朝</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">脱脱（贤相）</span>
+          <span class="minister-tag negative">伯颜（权臣）</span>
+          <span class="minister-tag negative">朱元璋（明太祖）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1333</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1335-1340</span><span>伯颜专权，后脱脱为相，一度中兴</span></div>
+        <div class="event-item"><span class="event-year">1351</span><span>红巾军起义（刘福通、朱元璋等）</span></div>
+        <div class="event-item"><span class="event-year">1368</span><span>明军徐达攻入大都，顺帝北逃，元朝在中原的统治结束</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 北元 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1370</span><span>顺帝病逝，其子继位，退居漠北（北元）</span></div>
+        <div class="event-item"><span class="event-year">1388</span><span>蓝玉捕鱼儿海之战，北元主力覆灭</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1370</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">16-17</div>
+        <div class="emperor-name">北元二帝</div>
+        <div class="emperor-latin">Northern Yuan · Zhao Zong &amp; Tianyuan</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">昭宗1338-1378 · 天元帝1342-1388</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1370-1378 · 1378-1388</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:76%;width:24%"></div></div>
+        <div class="life-bar-labels"><span>1338</span><span>北元时期</span><span>1388</span></div>
+        <div class="relation-tag">昭宗爱猷识理达腊 · 天元帝脱古思帖木儿</div>
+        <div class="dynasty-tag">北元</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">王保保（扩廓帖木儿）</span>
+          <span class="minister-tag negative">蓝玉（明将）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+</div><!-- end late timeline -->
+
+<!-- ==================== 世系关系图 ==================== -->
+<div class="family-tree-section">
+  <h2>元朝世系关系图</h2>
+  <div class="tree-container">
+    <svg class="tree-svg" viewBox="0 0 1300 360" width="1300" height="360" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="mgG" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#1e3a8a;stop-opacity:1"/><stop offset="100%" style="stop-color:#3b82f6;stop-opacity:1"/>
+        </linearGradient>
+        <linearGradient id="yyG" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#7c2d12;stop-opacity:1"/><stop offset="100%" style="stop-color:#d97706;stop-opacity:1"/>
+        </linearGradient>
+        <marker id="aM" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#1e3a8a"/></marker>
+        <marker id="aY" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#7c2d12"/></marker>
+        <filter id="sh"><feDropShadow dx="1" dy="2" stdDeviation="3" flood-opacity="0.15"/></filter>
+      </defs>
+      <rect x="0" y="0" width="1300" height="360" fill="#f3f4f6" rx="12"/>
+      <text x="20" y="30" font-size="16" fill="#1e3a8a" font-weight="bold" font-family="PingFang SC,serif">元朝世系 · 成吉思汗 → 忽必烈 → 顺帝 → 北元</text>
+
+      <g font-family="PingFang SC,serif">
+        <rect x="30" y="70" width="150" height="55" rx="8" fill="url(#mgG)" filter="url(#sh)"/>
+        <text x="105" y="93" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">①成吉思汗</text>
+        <text x="105" y="112" text-anchor="middle" fill="#bfdbfe" font-size="9">1206-1227</text>
+        <rect x="220" y="70" width="150" height="55" rx="8" fill="url(#mgG)" filter="url(#sh)"/>
+        <text x="295" y="93" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">②窝阔台</text>
+        <text x="295" y="112" text-anchor="middle" fill="#bfdbfe" font-size="9">1229-1241</text>
+        <rect x="410" y="70" width="150" height="55" rx="8" fill="url(#mgG)" filter="url(#sh)"/>
+        <text x="485" y="93" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">③贵由</text>
+        <text x="485" y="112" text-anchor="middle" fill="#bfdbfe" font-size="9">1246-1248</text>
+        <rect x="600" y="70" width="150" height="55" rx="8" fill="url(#mgG)" filter="url(#sh)"/>
+        <text x="675" y="93" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">④蒙哥</text>
+        <text x="675" y="112" text-anchor="middle" fill="#bfdbfe" font-size="9">1251-1259</text>
+        <rect x="790" y="70" width="150" height="55" rx="8" fill="url(#yyG)" filter="url(#sh)"/>
+        <text x="865" y="93" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">⑤忽必烈</text>
+        <text x="865" y="112" text-anchor="middle" fill="#fde68a" font-size="9">1260-1294 建元</text>
+        <rect x="980" y="70" width="150" height="55" rx="8" fill="url(#yyG)" filter="url(#sh)"/>
+        <text x="1055" y="93" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">⑥-⑭ 九帝</text>
+        <text x="1055" y="112" text-anchor="middle" fill="#fde68a" font-size="9">1294-1333</text>
+        <rect x="1170" y="70" width="110" height="55" rx="8" fill="url(#yyG)" filter="url(#sh)"/>
+        <text x="1225" y="93" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">⑮顺帝</text>
+        <text x="1225" y="112" text-anchor="middle" fill="#fde68a" font-size="9">1333-1368</text>
+
+        <line x1="180" y1="97" x2="218" y2="97" stroke="#1e3a8a" stroke-width="2" marker-end="url(#aM)"/>
+        <line x1="370" y1="97" x2="408" y2="97" stroke="#1e3a8a" stroke-width="2" marker-end="url(#aM)"/>
+        <line x1="560" y1="97" x2="598" y2="97" stroke="#1e3a8a" stroke-width="2" marker-end="url(#aM)"/>
+        <line x1="750" y1="97" x2="788" y2="97" stroke="#7c2d12" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#aY)"/>
+        <line x1="940" y1="97" x2="978" y2="97" stroke="#7c2d12" stroke-width="2" marker-end="url(#aY)"/>
+        <line x1="1130" y1="97" x2="1168" y2="97" stroke="#7c2d12" stroke-width="2" marker-end="url(#aY)"/>
+      </g>
+      <text x="650" y="150" text-anchor="middle" fill="#1e3a8a" font-size="10" font-family="PingFang SC,serif">汗位传承：成吉思汗→窝阔台系→拖雷系（蒙哥、忽必烈）；忽必烈后汗位在武宗/仁宗、明宗/文宗两系间更替</text>
+
+      <line x1="20" y1="190" x2="1280" y2="190" stroke="#b91c1c" stroke-width="1.5" stroke-dasharray="10,5"/>
+      <text x="650" y="185" text-anchor="middle" fill="#b91c1c" font-size="11" font-weight="bold" font-family="PingFang SC,serif">── 1368 明军攻大都 · 元朝灭亡 · 北元退居漠北 ──</text>
+      <text x="650" y="225" text-anchor="middle" fill="#6b7280" font-size="11" font-family="PingFang SC,serif">元朝统治中原九十八年（1271-1368），实行行省制、四等人制；蒙古帝国四大汗国（金帐、察合台、窝阔台、伊儿）先后独立。</text>
+      <text x="650" y="250" text-anchor="middle" fill="#6b7280" font-size="11" font-family="PingFang SC,serif">北元政权延续至15世纪，后演变为鞑靼、瓦剌诸部；元顺帝后追尊与世系以《元史》为准。</text>
+
+      <!-- 图例 -->
+      <g font-family="PingFang SC,serif">
+        <rect x="900" y="280" width="340" height="60" rx="8" fill="#fff" stroke="#ccc"/>
+        <rect x="920" y="295" width="15" height="12" rx="3" fill="url(#mgG)"/>
+        <text x="945" y="306" font-size="10" fill="#333">大蒙古国四汗（1206-1259，追尊）</text>
+        <rect x="920" y="315" width="15" height="12" rx="3" fill="url(#yyG)"/>
+        <text x="945" y="326" font-size="10" fill="#333">元朝皇帝（1260-1368）与北元</text>
+      </g>
+    </svg>
+  </div>
+</div>
+
+</div><!-- end container -->
+
+<div class="footer">
+  <p>元朝（1271-1368），由蒙古族建立的中国大一统王朝，前身成吉思汗所建大蒙古国（1206年）。</p>
+  <p style="margin-top:8px;">忽必烈定国号"大元"，灭南宋后一统天下，实行行省制度，疆域空前辽阔；但因民族等级与财政问题，统治不足百年即被朱元璋所建的明朝取代。</p>
+  <p style="margin-top:8px;">数据来源：《元史》《新元史》等 · 大蒙古国四汗为追尊帝号 · 仅供学习参考</p>
+</div>
+
+<script>
+(function(){
+  const emperors = [
+    { name:'太祖 成吉思汗', birth:1162, death:1227, reigns:[{s:1206,e:1227}], type:'early' },
+    { name:'太宗 窝阔台', birth:1186, death:1241, reigns:[{s:1229,e:1241}], type:'early' },
+    { name:'定宗 贵由', birth:1206, death:1248, reigns:[{s:1246,e:1248}], type:'early' },
+    { name:'宪宗 蒙哥', birth:1209, death:1259, reigns:[{s:1251,e:1259}], type:'early' },
+    { name:'世祖 忽必烈', birth:1215, death:1294, reigns:[{s:1260,e:1294}], type:'late' },
+    { name:'成宗 铁穆耳', birth:1265, death:1307, reigns:[{s:1294,e:1307}], type:'late' },
+    { name:'武宗 海山', birth:1281, death:1311, reigns:[{s:1307,e:1311}], type:'late' },
+    { name:'仁宗 爱育黎拔力八达', birth:1285, death:1320, reigns:[{s:1311,e:1320}], type:'late' },
+    { name:'英宗 硕德八剌', birth:1302, death:1323, reigns:[{s:1320,e:1323}], type:'late' },
+    { name:'泰定帝 也孙铁木儿', birth:1293, death:1328, reigns:[{s:1323,e:1328}], type:'late' },
+    { name:'天顺帝 阿速吉八', birth:1320, death:1328, reigns:[{s:1328,e:1328}], type:'late' },
+    { name:'文宗 图帖睦尔', birth:1304, death:1332, reigns:[{s:1328,e:1329},{s:1329,e:1332}], type:'late' },
+    { name:'明宗 和世㻋', birth:1300, death:1329, reigns:[{s:1329,e:1329}], type:'late' },
+    { name:'宁宗 懿璘质班', birth:1326, death:1332, reigns:[{s:1332,e:1332}], type:'late' },
+    { name:'惠宗 妥懽帖睦尔', birth:1320, death:1370, reigns:[{s:1333,e:1368}], type:'late' },
+    { name:'北元昭宗 爱猷识理达腊', birth:1338, death:1378, reigns:[{s:1370,e:1378}], type:'late' },
+    { name:'北元天元帝 脱古思帖木儿', birth:1342, death:1388, reigns:[{s:1378,e:1388}], type:'late' },
+  ];
+  const minYear=1150, maxYear=1400, totalYears=maxYear-minYear;
+  const colors = { early:'#1e3a8a', late:'#7c2d12' };
+  const container = document.getElementById('ganttChart');
+  let headerHTML = '<div class="gantt-header"><div class="gantt-label" style="width:150px">年份</div><div class="gantt-bar-area" style="position:relative;height:30px;">';
+  for(let y=1200;y<=1380;y+=30){
+    headerHTML += `<span class="gantt-year-tick" style="left:${((y-minYear)/totalYears)*100}%">${y}</span>`;
+  }
+  headerHTML += '</div></div>';
+  container.innerHTML = headerHTML;
+  let bodyHTML = '<div class="gantt-body">';
+  emperors.forEach(emp => {
+    const c = colors[emp.type];
+    const ll = ((emp.birth-minYear)/totalYears)*100;
+    const lw = ((emp.death-emp.birth)/totalYears)*100;
+    let rb = '';
+    emp.reigns.forEach(r => {
+      const rl = ((r.s-minYear)/totalYears)*100;
+      const rw = Math.max(((r.e-r.s)/totalYears)*100, 0.5);
+      rb += `<div class="gantt-bar reign-bar" style="left:${rl}%;width:${rw}%;background:${c};"><div class="tooltip">在位：${r.s}-${r.e}</div></div>`;
+    });
+    bodyHTML += `<div class="gantt-row"><div class="gantt-label" style="color:${c};width:150px">${emp.name}</div><div class="gantt-bar-area"><div class="gantt-bar" style="left:${ll}%;width:${lw}%;background:${c};"><div class="tooltip">生卒：${emp.birth}-${emp.death}</div></div>${rb}</div></div>`;
+  });
+  bodyHTML += '</div>';
+  container.innerHTML += bodyHTML;
+
+  // 多段在位期生命条（文宗）
+  document.querySelectorAll('.life-bar[data-multi]').forEach(bar => {
+    const birth = parseInt(bar.dataset.birth);
+    const death = parseInt(bar.dataset.death);
+    const parts = bar.dataset.multi.split(',').map(Number);
+    const total = death - birth;
+    const reigns = bar.querySelectorAll('.reign');
+    if(reigns[0] && parts.length >= 2) {
+      reigns[0].style.left = ((parts[0]-birth)/total)*100 + '%';
+      reigns[0].style.width = ((parts[1]-parts[0])/total)*100 + '%';
+    }
+    if(reigns[1] && parts.length >= 4) {
+      reigns[1].style.left = ((parts[2]-birth)/total)*100 + '%';
+      reigns[1].style.width = ((parts[3]-parts[2])/total)*100 + '%';
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>五代皇帝世系简表 (907-960)</title>
+<style>
+  :root{--bg:#f7f5f2;--card-bg:#fff;--early-color:#475569;--late-color:#b91c1c;--text:#1c1917;--text-light:#6b7280;--border:#d1d5db;--event-bg:#f8fafc;--minister-bg:#fef2f2;--highlight:#64748b;--gold:#b8860b;--rev-color:#7f1d1d}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:"PingFang SC","Microsoft YaHei","Noto Serif SC",serif;background:var(--bg);color:var(--text);line-height:1.6}
+  .header{text-align:center;padding:50px 20px 30px;background:linear-gradient(135deg,#0f172a 0%,#475569 55%,#b91c1c 100%);color:#f8fafc;position:relative;overflow:hidden}
+  .header::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffd700' fill-opacity='0.05'%3E%3Cpath d='M20 5l3 10h10l-8 6 3 10-8-6-8 6 3-10-8-6h10z'/%3E%3C/g%3E%3C/svg%3E");opacity:.6}
+  .header h1{font-size:40px;font-weight:900;letter-spacing:10px;position:relative;z-index:1;text-shadow:2px 2px 4px rgba(0,0,0,.5)}
+  .header .subtitle{font-size:18px;margin-top:12px;color:#fbbf24;letter-spacing:6px;position:relative;z-index:1}
+  .header .period{font-size:14px;margin-top:8px;color:#cbd5e1;letter-spacing:3px;position:relative;z-index:1}
+  .legend{display:flex;justify-content:center;gap:24px;padding:18px;background:#fff;border-bottom:2px solid var(--border);flex-wrap:wrap}
+  .legend-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-light)}
+  .legend-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0}
+  .container{max-width:1400px;margin:0 auto;padding:20px}
+  .section-title{text-align:center;padding:30px 20px 20px;font-size:28px;font-weight:bold;letter-spacing:6px;position:relative}
+  .section-title.early{color:var(--early-color)}.section-title.late{color:var(--late-color)}
+  .section-title::after{content:'';display:block;width:80px;height:3px;margin:12px auto 0}
+  .section-title.early::after{background:var(--early-color)}.section-title.late::after{background:var(--late-color)}
+  .timeline{position:relative;padding:20px 0}
+  .timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:4px;transform:translateX(-50%);z-index:0}
+  .timeline.early::before{background:var(--early-color)}.timeline.late::before{background:var(--late-color)}
+  .timeline-entry{display:flex;align-items:flex-start;position:relative;margin-bottom:20px}
+  .entry-content{display:flex;width:100%;align-items:flex-start}.entry-left,.entry-right{width:48%;padding:0 15px}
+  .entry-center{width:4%;display:flex;justify-content:center;position:relative;z-index:1}
+  .year-marker{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold;color:#fff;flex-shrink:0;z-index:2}
+  .early .year-marker{background:var(--early-color)}.late .year-marker{background:var(--late-color)}
+  .emperor-card{background:var(--card-bg);border-radius:12px;padding:20px;box-shadow:0 4px 20px rgba(0,0,0,.08);border-left:5px solid;position:relative;transition:transform .3s,box-shadow .3s}
+  .emperor-card:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,.15)}
+  .early .emperor-card{border-left-color:var(--early-color)}.late .emperor-card{border-left-color:var(--late-color)}
+  .emperor-card .order{position:absolute;top:-10px;right:15px;background:var(--highlight);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold}
+  .emperor-name{font-size:20px;font-weight:bold;margin-bottom:2px}
+  .emperor-latin{font-size:12px;color:var(--text-light);font-style:italic;margin-bottom:8px}
+  .emperor-meta{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;margin:10px 0;font-size:12px}
+  .meta-item{display:flex;align-items:center;gap:4px}.meta-label{color:var(--text-light);white-space:nowrap}.meta-value{font-weight:600}
+  .life-bar{height:8px;background:#eee;border-radius:4px;margin:10px 0 5px;position:relative;overflow:visible}
+  .life-bar .reign{position:absolute;height:100%;border-radius:4px;opacity:.8}
+  .early .life-bar .reign{background:var(--early-color)}.late .life-bar .reign{background:var(--late-color)}
+  .life-bar-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--text-light)}
+  .relation-tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;margin-top:6px;border:1px solid}
+  .early .relation-tag{background:#f1f5f9;color:#475569;border-color:#cbd5e1}
+  .late .relation-tag{background:#fef2f2;color:#b91c1c;border-color:#fca5a5}
+  .dynasty-tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:10px;margin-top:4px;margin-left:4px;background:#fef3c7;color:#92400e;border:1px solid #fcd34d}
+  .events-panel{background:var(--event-bg);border-radius:10px;padding:14px;margin-top:5px;border:1px solid #cbd5e1}
+  .events-panel h4{font-size:13px;color:var(--highlight);margin-bottom:8px;display:flex;align-items:center;gap:5px}
+  .event-item{font-size:12px;padding:4px 0;border-bottom:1px dashed #cbd5e1;display:flex;gap:6px}
+  .event-item:last-child{border-bottom:none}
+  .event-year{color:var(--highlight);font-weight:bold;white-space:nowrap;min-width:42px}
+  .ministers-panel{background:var(--minister-bg);border-radius:10px;padding:14px;margin-top:8px;border:1px solid #fca5a5}
+  .ministers-panel h4{font-size:13px;color:#b91c1c;margin-bottom:8px;display:flex;align-items:center;gap:5px}
+  .minister-list{display:flex;flex-wrap:wrap;gap:5px}
+  .minister-tag{font-size:11px;padding:3px 8px;background:#fef2f2;color:#b91c1c;border-radius:12px;border:1px solid #fca5a5}
+  .minister-tag.negative{background:#fde8e8;color:#b91c1c;border-color:#f0b8b8}
+  .family-tree-section,.lifecycle-section{margin:40px 0;padding:30px;background:#fff;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.06)}
+  .family-tree-section h2,.lifecycle-section h2{text-align:center;font-size:24px;color:var(--text);margin-bottom:10px;letter-spacing:4px}
+  .lifecycle-section .note{text-align:center;font-size:12px;color:var(--text-light);margin-bottom:20px}
+  .tree-container{overflow-x:auto;padding:20px 0}
+  .gantt-container{overflow-x:auto;padding:10px 0}.gantt-chart{min-width:800px}
+  .gantt-row{display:flex;align-items:center;height:32px;margin:2px 0}
+  .gantt-label{width:130px;font-size:12px;font-weight:600;text-align:right;padding-right:12px;flex-shrink:0;white-space:nowrap}
+  .gantt-bar-area{flex:1;position:relative;height:100%}
+  .gantt-bar{position:absolute;height:12px;top:50%;transform:translateY(-50%);border-radius:6px;opacity:.85;cursor:pointer}
+  .gantt-bar:hover{opacity:1;filter:brightness(1.1)}
+  .gantt-bar .tooltip{display:none;position:absolute;bottom:calc(100% + 5px);left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:4px 8px;border-radius:4px;font-size:11px;white-space:nowrap;z-index:10}
+  .gantt-bar:hover .tooltip{display:block}
+  .gantt-header{display:flex;align-items:center;height:30px;border-bottom:2px solid var(--border);margin-bottom:10px}
+  .gantt-header .gantt-label{font-size:12px;color:var(--text-light)}
+  .gantt-year-tick{position:absolute;font-size:10px;color:var(--text-light);transform:translateX(-50%);top:0}
+  .overview-stats{display:flex;justify-content:center;gap:28px;padding:20px;flex-wrap:wrap}
+  .stat-box{text-align:center;padding:15px 22px;background:#fff;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.06);min-width:110px}
+  .stat-number{font-size:26px;font-weight:bold;color:var(--highlight)}
+  .stat-desc{font-size:12px;color:var(--text-light);margin-top:4px}
+  .footer{text-align:center;padding:30px;color:var(--text-light);font-size:13px;border-top:2px solid var(--border);margin-top:40px}
+  @media(max-width:900px){.entry-content{flex-direction:column!important;align-items:center}.entry-left,.entry-right{width:100%;padding:10px 0}.entry-center{width:100%;justify-content:center;margin:10px 0}.timeline::before{display:none}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>五代皇帝世系简表</h1>
+  <div class="subtitle">后梁 · 后唐 · 后晋 · 后汉 · 后周</div>
+  <div class="period">907年 — 960年 · 五代更迭 · 十国并立 · 乱世武夫</div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:var(--early-color)"></div><span>后梁（907-923）· 后唐（923-936）</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--late-color)"></div><span>后晋（936-947）· 后汉（947-951）· 后周（951-960）</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div><span>重要人物</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--rev-color)"></div><span>重大事件</span></div>
+</div>
+
+<div class="overview-stats">
+  <div class="stat-box"><div class="stat-number">53</div><div class="stat-desc">五代时期（年）</div></div>
+  <div class="stat-box"><div class="stat-number">14</div><div class="stat-desc">皇帝（5朝）</div></div>
+  <div class="stat-box"><div class="stat-number">907</div><div class="stat-desc">朱温代唐</div></div>
+  <div class="stat-box"><div class="stat-number">960</div><div class="stat-desc">陈桥兵变 · 宋兴</div></div>
+  <div class="stat-box"><div class="stat-number">开封</div><div class="stat-desc">都城</div></div>
+</div>
+
+<div class="container">
+
+<div class="lifecycle-section">
+  <h2>皇帝生卒与在位时间对照图</h2>
+  <div class="note">浅色条为生卒跨度，深色条为在位时间（灰=后梁后唐，红=后晋后汉后周），鼠标悬停查看详情</div>
+  <div class="gantt-container"><div class="gantt-chart" id="ganttChart"></div></div>
+</div>
+
+<!-- ==================== 后梁 后唐 ==================== -->
+<div class="section-title early">后 梁 · 后 唐</div>
+<div style="text-align:center;color:#999;font-size:13px;margin-bottom:20px;">907年 — 936年 · 朱梁代唐 · 沙陀建唐</div>
+
+<div class="timeline early">
+
+  <!-- 朱温 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">1</div>
+        <div class="emperor-name">后梁太祖</div>
+        <div class="emperor-latin">Zhu Wen · Emperor Taizu of Liang</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">852-912（60岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">907-912（5年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:91.7%;width:8.3%"></div></div>
+        <div class="life-bar-labels"><span>852</span><span>907 在位</span><span>912</span></div>
+        <div class="relation-tag">黄巢降将 · 代唐建梁 · 五代开端</div>
+        <div class="dynasty-tag">后梁</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">敬翔（谋主）</span>
+          <span class="minister-tag negative">李存勖（河东劲敌）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">907</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">907</span><span>逼唐哀帝禅位，建后梁，定都开封</span></div>
+        <div class="event-item"><span class="event-year">912</span><span>被亲子朱友珪弑杀</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 朱友珪 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">912</span><span>弑父篡位</span></div>
+        <div class="event-item"><span class="event-year">913</span><span>被弟朱友贞所杀，在位仅数月</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">912</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">2</div>
+        <div class="emperor-name">郢王</div>
+        <div class="emperor-latin">Zhu Yougui · Usurper</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">884-913（29岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">912-913（数月）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:96.6%;width:3.4%"></div></div>
+        <div class="life-bar-labels"><span>884</span><span></span><span>913</span></div>
+        <div class="relation-tag">朱温之子 · 弑父自立 · 旋被诛</div>
+        <div class="dynasty-tag">后梁</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag negative">朱友贞（弟）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 朱友贞 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">3</div>
+        <div class="emperor-name">后梁末帝</div>
+        <div class="emperor-latin">Zhu Youzhen · Last Emperor of Liang</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">888-923（35岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">913-923（10年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:71.4%;width:28.6%"></div></div>
+        <div class="life-bar-labels"><span>888</span><span>913 在位</span><span>923</span></div>
+        <div class="relation-tag">朱温之子 · 与后唐拉锯 · 国灭自杀</div>
+        <div class="dynasty-tag">后梁</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">王彦章（铁枪将）</span>
+          <span class="minister-tag negative">李存勖</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">913</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">913</span><span>诛朱友珪即位</span></div>
+        <div class="event-item"><span class="event-year">923</span><span>后唐庄宗李存勖灭梁，城破自尽</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 李存勖 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">923</span><span>灭后梁，建立后唐，定都洛阳</span></div>
+        <div class="event-item"><span class="event-year">926</span><span>宠信伶人，兴教门之变，中箭身亡</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">923</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">4</div>
+        <div class="emperor-name">后唐庄宗</div>
+        <div class="emperor-latin">Li Cunxu · Emperor Zhuangzong</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">885-926（41岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">923-926（3年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:92.7%;width:7.3%"></div></div>
+        <div class="life-bar-labels"><span>885</span><span>923 在位</span><span>926</span></div>
+        <div class="relation-tag">沙陀李克用之子 · 灭梁建唐 · 宠伶误国</div>
+        <div class="dynasty-tag">后唐</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">郭崇韬（谋臣）</span>
+          <span class="minister-tag negative">李嗣源（义兄）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 李嗣源 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">5</div>
+        <div class="emperor-name">后唐明宗</div>
+        <div class="emperor-latin">Li Siyuan · Emperor Mingzong</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">867-933（66岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">926-933（7年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:89.4%;width:10.6%"></div></div>
+        <div class="life-bar-labels"><span>867</span><span>926 在位</span><span>933</span></div>
+        <div class="relation-tag">李克用养子 · 五代少有的仁君 · 小康之治</div>
+        <div class="dynasty-tag">后唐</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">安重诲（权臣）</span>
+          <span class="minister-tag">石敬瑭（女婿）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">926</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">926</span><span>兴教门之变后即位</span></div>
+        <div class="event-item"><span class="event-year">926-933</span><span>轻徭薄赋，史称"小康"</span></div>
+        <div class="event-item"><span class="event-year">933</span><span>病逝</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 李从厚 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">933</span><span>即位</span></div>
+        <div class="event-item"><span class="event-year">934</span><span>被李从珂废黜杀害</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">933</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">6</div>
+        <div class="emperor-name">后唐闵帝</div>
+        <div class="emperor-latin">Li Conghou · Emperor Min</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">914-934（20岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">933-934（1年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:95%;width:5%"></div></div>
+        <div class="life-bar-labels"><span>914</span><span>933 在位</span><span>934</span></div>
+        <div class="relation-tag">明宗之子 · 被义兄李从珂所废</div>
+        <div class="dynasty-tag">后唐</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag negative">李从珂</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 李从珂 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">7</div>
+        <div class="emperor-name">后唐末帝</div>
+        <div class="emperor-latin">Li Congke · Last Emperor of Tang</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">885-936（51岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">934-936（2年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:96.1%;width:3.9%"></div></div>
+        <div class="life-bar-labels"><span>885</span><span>934 在位</span><span>936</span></div>
+        <div class="relation-tag">明宗养子 · 石敬瑭引契丹灭之</div>
+        <div class="dynasty-tag">后唐</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag negative">石敬瑭</span>
+          <span class="minister-tag negative">耶律德光（契丹）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">934</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">936</span><span>石敬瑭勾结契丹灭后唐，李从珂自焚</span></div>
+      </div>
+    </div>
+  </div></div>
+
+</div><!-- end early timeline -->
+
+<!-- ==================== 后晋 后汉 后周 ==================== -->
+<div class="section-title late">后 晋 · 后 汉 · 后 周</div>
+<div style="text-align:center;color:#999;font-size:13px;margin-bottom:20px;">936年 — 960年 · 儿皇帝 · 郭威代汉 · 陈桥兵变</div>
+
+<div class="timeline late">
+
+  <!-- 石敬瑭 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">936</span><span>以割燕云十六州、称儿皇帝为代价，借契丹灭后唐建晋</span></div>
+        <div class="event-item"><span class="event-year">942</span><span>病逝</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">936</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">8</div>
+        <div class="emperor-name">后晋高祖</div>
+        <div class="emperor-latin">Shi Jingtang · Emperor Gaozu</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">892-942（50岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">936-942（6年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:88%;width:12%"></div></div>
+        <div class="life-bar-labels"><span>892</span><span>936 在位</span><span>942</span></div>
+        <div class="relation-tag">沙陀人 · "儿皇帝" · 割燕云十六州</div>
+        <div class="dynasty-tag">后晋</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">桑维翰（主和派）</span>
+          <span class="minister-tag negative">耶律德光（契丹）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 石重贵 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">9</div>
+        <div class="emperor-name">后晋出帝</div>
+        <div class="emperor-latin">Shi Chonggui · Last Emperor of Jin</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">914-974（60岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">942-946（4年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:46.7%;width:6.7%"></div></div>
+        <div class="life-bar-labels"><span>914</span><span>942 在位</span><span>974</span></div>
+        <div class="relation-tag">石敬瑭之侄 · 拒称臣契丹 · 被掳北去</div>
+        <div class="dynasty-tag">后晋</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">景延广（主战派）</span>
+          <span class="minister-tag negative">耶律德光</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">942</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">946</span><span>契丹南下灭后晋，出帝被掳往契丹</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 刘知远 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">947</span><span>契丹北撤后于太原称帝，建后汉</span></div>
+        <div class="event-item"><span class="event-year">948</span><span>病逝，在位仅一年</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">947</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">10</div>
+        <div class="emperor-name">后汉高祖</div>
+        <div class="emperor-latin">Liu Zhiyuan · Emperor Gaozu</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">895-948（53岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">947-948（1年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:98.1%;width:1.9%"></div></div>
+        <div class="life-bar-labels"><span>895</span><span>947 在位</span><span>948</span></div>
+        <div class="relation-tag">沙陀人 · 五代最短命的王朝开国之君</div>
+        <div class="dynasty-tag">后汉</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">郭威（大将）</span>
+          <span class="minister-tag">苏逢吉</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 刘承祐 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">11</div>
+        <div class="emperor-name">后汉隐帝</div>
+        <div class="emperor-latin">Liu Chengyou · Last Emperor of Han</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">930-951（21岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">948-951（3年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:85.7%;width:14.3%"></div></div>
+        <div class="life-bar-labels"><span>930</span><span>948 在位</span><span>951</span></div>
+        <div class="relation-tag">刘知远之子 · 猜忌诛杀大将 · 郭威兵变</div>
+        <div class="dynasty-tag">后汉</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag negative">郭威（兵变）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">948</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">951</span><span>郭威起兵，隐帝被杀，后汉灭亡</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 郭威 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">951</span><span>黄袍加身（先例）建后周，废苛捐杂税</span></div>
+        <div class="event-item"><span class="event-year">954</span><span>病逝，传位养子柴荣</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">951</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">12</div>
+        <div class="emperor-name">后周太祖</div>
+        <div class="emperor-latin">Guo Wei · Emperor Taizu of Zhou</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">904-954（50岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">951-954（3年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:94%;width:6%"></div></div>
+        <div class="life-bar-labels"><span>904</span><span>951 在位</span><span>954</span></div>
+        <div class="relation-tag">五代明君 · 节俭爱民 · 黄袍加身之先例</div>
+        <div class="dynasty-tag">后周</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">柴荣（养子）</span>
+          <span class="minister-tag">王峻（枢密使）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 柴荣 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">13</div>
+        <div class="emperor-name">后周世宗</div>
+        <div class="emperor-latin">Chai Rong · Emperor Shizong</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">921-959（38岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">954-959（5年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:86.8%;width:13.2%"></div></div>
+        <div class="life-bar-labels"><span>921</span><span>954 在位</span><span>959</span></div>
+        <div class="relation-tag">郭威养子 · 革新政治 · 为宋统一奠基</div>
+        <div class="dynasty-tag">后周</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">赵匡胤（殿前都点检）</span>
+          <span class="minister-tag">王朴（谋臣）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">954</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">954</span><span>高平之战大败北汉、契丹联军</span></div>
+        <div class="event-item"><span class="event-year">955-959</span><span>整顿禁军、限佛、三征南唐取江北</span></div>
+        <div class="event-item"><span class="event-year">959</span><span>北伐契丹途中病逝</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 柴宗训 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">959</span><span>7岁即位</span></div>
+        <div class="event-item"><span class="event-year">960</span><span>陈桥兵变，赵匡胤黄袍加身，禅位，后周亡</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">959</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">14</div>
+        <div class="emperor-name">后周恭帝</div>
+        <div class="emperor-latin">Chai Zongxun · Last Emperor of Zhou</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">953-973（20岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">959-960（1年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:30%;width:5%"></div></div>
+        <div class="life-bar-labels"><span>953</span><span>959 在位</span><span>973</span></div>
+        <div class="relation-tag">世宗之子 · 禅位赵匡胤 · 五代终结</div>
+        <div class="dynasty-tag">后周</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag negative">赵匡胤（陈桥兵变）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+</div><!-- end late timeline -->
+
+<!-- ==================== 世系关系图 ==================== -->
+<div class="family-tree-section">
+  <h2>五代世系更迭图</h2>
+  <div class="tree-container">
+    <svg class="tree-svg" viewBox="0 0 1300 320" width="1300" height="320" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="llG" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#475569;stop-opacity:1"/><stop offset="100%" style="stop-color:#94a3b8;stop-opacity:1"/>
+        </linearGradient>
+        <linearGradient id="hzG" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#b91c1c;stop-opacity:1"/><stop offset="100%" style="stop-color:#ef4444;stop-opacity:1"/>
+        </linearGradient>
+        <marker id="aL" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#64748b"/></marker>
+        <marker id="aH" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#b91c1c"/></marker>
+        <filter id="sh"><feDropShadow dx="1" dy="2" stdDeviation="3" flood-opacity="0.15"/></filter>
+      </defs>
+      <rect x="0" y="0" width="1300" height="320" fill="#f8fafc" rx="12"/>
+      <text x="20" y="30" font-size="16" fill="#475569" font-weight="bold" font-family="PingFang SC,serif">五代更迭 · 后梁 → 后唐 → 后晋 → 后汉 → 后周 → 宋</text>
+
+      <g font-family="PingFang SC,serif">
+        <rect x="30" y="80" width="180" height="60" rx="8" fill="url(#llG)" filter="url(#sh)"/>
+        <text x="120" y="104" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">①后梁 907-923</text>
+        <text x="120" y="124" text-anchor="middle" fill="#e2e8f0" font-size="9">朱温 · 3帝（含郢王）</text>
+        <rect x="250" y="80" width="180" height="60" rx="8" fill="url(#llG)" filter="url(#sh)"/>
+        <text x="340" y="104" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">②后唐 923-936</text>
+        <text x="340" y="124" text-anchor="middle" fill="#e2e8f0" font-size="9">李存勖 · 4帝 · 沙陀</text>
+        <rect x="470" y="80" width="180" height="60" rx="8" fill="url(#hzG)" filter="url(#sh)"/>
+        <text x="560" y="104" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">③后晋 936-947</text>
+        <text x="560" y="124" text-anchor="middle" fill="#fecaca" font-size="9">石敬瑭 · 儿皇帝</text>
+        <rect x="690" y="80" width="180" height="60" rx="8" fill="url(#hzG)" filter="url(#sh)"/>
+        <text x="780" y="104" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">④后汉 947-951</text>
+        <text x="780" y="124" text-anchor="middle" fill="#fecaca" font-size="9">刘知远 · 最短命</text>
+        <rect x="910" y="80" width="180" height="60" rx="8" fill="url(#hzG)" filter="url(#sh)"/>
+        <text x="1000" y="104" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">⑤后周 951-960</text>
+        <text x="1000" y="124" text-anchor="middle" fill="#fecaca" font-size="9">郭威·柴荣 · 3帝</text>
+        <rect x="1130" y="80" width="140" height="60" rx="8" fill="#166534" filter="url(#sh)"/>
+        <text x="1200" y="104" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">宋 960-</text>
+        <text x="1200" y="124" text-anchor="middle" fill="#bbf7d0" font-size="9">赵匡胤</text>
+
+        <line x1="210" y1="110" x2="248" y2="110" stroke="#64748b" stroke-width="2" marker-end="url(#aL)"/>
+        <line x1="430" y1="110" x2="468" y2="110" stroke="#b91c1c" stroke-width="2" marker-end="url(#aH)"/>
+        <line x1="650" y1="110" x2="688" y2="110" stroke="#b91c1c" stroke-width="2" marker-end="url(#aH)"/>
+        <line x1="870" y1="110" x2="908" y2="110" stroke="#b91c1c" stroke-width="2" marker-end="url(#aH)"/>
+        <line x1="1090" y1="110" x2="1128" y2="110" stroke="#b91c1c" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#aH)"/>
+      </g>
+
+      <text x="650" y="190" text-anchor="middle" fill="#64748b" font-size="11" font-weight="bold" font-family="PingFang SC,serif">更替方式：代唐自立（梁）→ 灭国（唐灭梁）→ 借外力（晋借契丹）→ 自立（汉）→ 兵变（周代汉）→ 黄袍加身（宋代周）</text>
+      <line x1="20" y1="220" x2="1280" y2="220" stroke="#b91c1c" stroke-width="1.5" stroke-dasharray="10,5"/>
+      <text x="650" y="215" text-anchor="middle" fill="#b91c1c" font-size="11" font-weight="bold" font-family="PingFang SC,serif">── 960 陈桥兵变 · 五代终结 · 北宋建立 ──</text>
+      <text x="650" y="255" text-anchor="middle" fill="#6b7280" font-size="11" font-family="PingFang SC,serif">五代之外尚有十国（吴、南唐、吴越、楚、闽、南汉、前蜀、后蜀、南平、北汉）并立，详见《宋史》等。</text>
+      <text x="650" y="280" text-anchor="middle" fill="#6b7280" font-size="11" font-family="PingFang SC,serif">石敬瑭割让燕云十六州，致此后中原四百余年失去北方屏障，影响深远。</text>
+    </svg>
+  </div>
+</div>
+
+</div><!-- end container -->
+
+<div class="footer">
+  <p>五代（907-960），后梁、后唐、后晋、后汉、后周五个政权相继更迭于中原，与南方十国并立，共五十四年。</p>
+  <p style="margin-top:8px;">五代多为武夫当国，皇位更迭频繁；后周世宗柴荣的改革为北宋统一奠定基础。</p>
+  <p style="margin-top:8px;">数据来源：《旧五代史》《新五代史》《资治通鉴》等 · 仅供学习参考</p>
+</div>
+
+<script>
+(function(){
+  const emperors = [
+    { name:'后梁太祖 朱温', birth:852, death:912, reigns:[{s:907,e:912}], type:'early' },
+    { name:'后梁郢王 朱友珪', birth:884, death:913, reigns:[{s:912,e:913}], type:'early' },
+    { name:'后梁末帝 朱友贞', birth:888, death:923, reigns:[{s:913,e:923}], type:'early' },
+    { name:'后唐庄宗 李存勖', birth:885, death:926, reigns:[{s:923,e:926}], type:'early' },
+    { name:'后唐明宗 李嗣源', birth:867, death:933, reigns:[{s:926,e:933}], type:'early' },
+    { name:'后唐闵帝 李从厚', birth:914, death:934, reigns:[{s:933,e:934}], type:'early' },
+    { name:'后唐末帝 李从珂', birth:885, death:936, reigns:[{s:934,e:936}], type:'early' },
+    { name:'后晋高祖 石敬瑭', birth:892, death:942, reigns:[{s:936,e:942}], type:'late' },
+    { name:'后晋出帝 石重贵', birth:914, death:974, reigns:[{s:942,e:946}], type:'late' },
+    { name:'后汉高祖 刘知远', birth:895, death:948, reigns:[{s:947,e:948}], type:'late' },
+    { name:'后汉隐帝 刘承祐', birth:930, death:951, reigns:[{s:948,e:951}], type:'late' },
+    { name:'后周太祖 郭威', birth:904, death:954, reigns:[{s:951,e:954}], type:'late' },
+    { name:'后周世宗 柴荣', birth:921, death:959, reigns:[{s:954,e:959}], type:'late' },
+    { name:'后周恭帝 柴宗训', birth:953, death:973, reigns:[{s:959,e:960}], type:'late' },
+  ];
+  const minYear=840, maxYear=980, totalYears=maxYear-minYear;
+  const colors = { early:'#475569', late:'#b91c1c' };
+  const container = document.getElementById('ganttChart');
+  let headerHTML = '<div class="gantt-header"><div class="gantt-label" style="width:130px">年份</div><div class="gantt-bar-area" style="position:relative;height:30px;">';
+  for(let y=860;y<=960;y+=20){
+    headerHTML += `<span class="gantt-year-tick" style="left:${((y-minYear)/totalYears)*100}%">${y}</span>`;
+  }
+  headerHTML += '</div></div>';
+  container.innerHTML = headerHTML;
+  let bodyHTML = '<div class="gantt-body">';
+  emperors.forEach(emp => {
+    const c = colors[emp.type];
+    const ll = ((emp.birth-minYear)/totalYears)*100;
+    const lw = ((emp.death-emp.birth)/totalYears)*100;
+    let rb = '';
+    emp.reigns.forEach(r => {
+      const rl = ((r.s-minYear)/totalYears)*100;
+      const rw = Math.max(((r.e-r.s)/totalYears)*100, 0.5);
+      rb += `<div class="gantt-bar reign-bar" style="left:${rl}%;width:${rw}%;background:${c};"><div class="tooltip">在位：${r.s}-${r.e}</div></div>`;
+    });
+    bodyHTML += `<div class="gantt-row"><div class="gantt-label" style="color:${c};width:130px">${emp.name}</div><div class="gantt-bar-area"><div class="gantt-bar" style="left:${ll}%;width:${lw}%;background:${c};"><div class="tooltip">生卒：${emp.birth}-${emp.death}</div></div>${rb}</div></div>`;
+  });
+  bodyHTML += '</div>';
+  container.innerHTML += bodyHTML;
+})();
+</script>
+
+</body>
+</html>

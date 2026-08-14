@@ -404,6 +404,48 @@
   .card.india .banner-title { color: #fef3c7; }
   .card.india .banner-latin { color: #fbbf24; }
   .card.india .meta-chip { border-color: #c2410c40; color: #fb923c; }
+  .card.qin::before { background: linear-gradient(90deg, #374151, #b8860b); }
+  .card.qin .card-banner { background: linear-gradient(135deg, #111827, #374151, #b8860b); }
+  .card.qin .banner-title { color: #f5f5f4; }
+  .card.qin .banner-latin { color: #fbbf24; }
+  .card.qin .meta-chip { border-color: #37415140; color: #9ca3af; }
+
+  .card.han::before { background: linear-gradient(90deg, #b91c1c, #7c2d12); }
+  .card.han .card-banner { background: linear-gradient(135deg, #450a0a, #b91c1c, #7c2d12); }
+  .card.han .banner-title { color: #fef2f2; }
+  .card.han .banner-latin { color: #fbbf24; }
+  .card.han .meta-chip { border-color: #b91c1c40; color: #f87171; }
+
+  .card.sanguo::before { background: linear-gradient(90deg, #1e3a8a, #b91c1c); }
+  .card.sanguo .card-banner { background: linear-gradient(135deg, #1e1b4b, #1e3a8a, #b91c1c); }
+  .card.sanguo .banner-title { color: #e0e7ff; }
+  .card.sanguo .banner-latin { color: #fbbf24; }
+  .card.sanguo .meta-chip { border-color: #1e3a8a40; color: #818cf8; }
+
+  .card.jin::before { background: linear-gradient(90deg, #92400e, #1e40af); }
+  .card.jin .card-banner { background: linear-gradient(135deg, #451a03, #92400e, #1e40af); }
+  .card.jin .banner-title { color: #fef9ee; }
+  .card.jin .banner-latin { color: #fbbf24; }
+  .card.jin .meta-chip { border-color: #92400e40; color: #fbbf24; }
+
+  .card.sui::before { background: linear-gradient(90deg, #0e7490, #b45309); }
+  .card.sui .card-banner { background: linear-gradient(135deg, #164e63, #0e7490, #b45309); }
+  .card.sui .banner-title { color: #ecfeff; }
+  .card.sui .banner-latin { color: #fbbf24; }
+  .card.sui .meta-chip { border-color: #0e749040; color: #22d3ee; }
+
+  .card.wudai::before { background: linear-gradient(90deg, #475569, #b91c1c); }
+  .card.wudai .card-banner { background: linear-gradient(135deg, #0f172a, #475569, #b91c1c); }
+  .card.wudai .banner-title { color: #f8fafc; }
+  .card.wudai .banner-latin { color: #fbbf24; }
+  .card.wudai .meta-chip { border-color: #47556940; color: #94a3b8; }
+
+  .card.yuan::before { background: linear-gradient(90deg, #1e3a8a, #7c2d12); }
+  .card.yuan .card-banner { background: linear-gradient(135deg, #0c1445, #1e3a8a, #7c2d12); }
+  .card.yuan .banner-title { color: #e0e7ff; }
+  .card.yuan .banner-latin { color: #fbbf24; }
+  .card.yuan .meta-chip { border-color: #1e3a8a40; color: #818cf8; }
+
 
   /* Footer */
   .footer {
@@ -464,14 +506,122 @@
   <!-- 卡片 -->
   <div class="cards-toolbar">
     <div class="cards-filter" id="cardsFilter">
-      <button class="filter-btn active" data-group="all">🗂 全部 <span class="cnt">11</span></button>
-      <button class="filter-btn" data-group="china">🇨🇳 中国 <span class="cnt">5</span></button>
+      <button class="filter-btn active" data-group="all">🗂 全部 <span class="cnt">18</span></button>
+      <button class="filter-btn" data-group="china">🇨🇳 中国 <span class="cnt">12</span></button>
       <button class="filter-btn" data-group="europe">🇪🇺 欧洲 <span class="cnt">4</span></button>
       <button class="filter-btn" data-group="asia">🇯🇵 亚洲 <span class="cnt">2</span></button>
     </div>
-    <div class="cards-count" id="cardsCount">显示 11 / 11 份简表</div>
+    <div class="cards-count" id="cardsCount">显示 18 / 18 份简表</div>
   </div>
   <div class="cards-grid">
+
+    <!-- 秦朝皇帝世系简表 -->
+    <a href="qin-dynasty.html" class="card qin" data-group="china" data-tsmin="-221" data-tsmax="-207">
+      <div class="card-banner">
+        <div class="banner-icon">🏛</div>
+        <div class="banner-title">秦 朝</div>
+        <div class="banner-latin">Qin Dynasty</div>
+      </div>
+      <div class="card-body">
+        <h2>秦朝皇帝世系简表</h2>
+        <div class="card-meta">
+          <div class="meta-chip">前221 - 前207</div>
+          <div class="meta-chip">15年 · 3位君主</div>
+        </div>
+        <div class="card-desc">
+          中国历史上第一个大一统中央集权王朝。秦始皇统一六国、废分封行郡县，书同文车同轨；然严刑峻法，二世而亡（含子婴降称秦王）。
+        </div>
+        <div class="card-tags">
+          <span>统一六国</span><span>郡县制</span><span>书同文</span><span>焚书坑儒</span><span>二世而亡</span>
+        </div>
+      </div>
+      <div class="card-timescale"></div>
+      <div class="card-footer">
+        <span class="enter-text">查看详情</span>
+        <span class="arrow">→</span>
+      </div>
+    </a>
+
+    <!-- 汉朝皇帝世系简表 -->
+    <a href="han-dynasty.html" class="card han" data-group="china" data-tsmin="-202" data-tsmax="220">
+      <div class="card-banner">
+        <div class="banner-icon">汉</div>
+        <div class="banner-title">大 汉</div>
+        <div class="banner-latin">Han Dynasty</div>
+      </div>
+      <div class="card-body">
+        <h2>汉朝皇帝世系简表</h2>
+        <div class="card-meta">
+          <div class="meta-chip">前202 - 220</div>
+          <div class="meta-chip">405年 · 28位皇帝</div>
+        </div>
+        <div class="card-desc">
+          西汉、新莽、东汉三阶段合计四百余年：文景之治、汉武盛世（北击匈奴、开丝绸之路）、光武中兴、明章之治，东汉末黄巾起义后为三国取代，"汉"成为民族之名。
+        </div>
+        <div class="card-tags">
+          <span>文景之治</span><span>汉武帝</span><span>丝绸之路</span><span>光武中兴</span><span>党锢之祸</span>
+        </div>
+      </div>
+      <div class="card-timescale"></div>
+      <div class="card-footer">
+        <span class="enter-text">查看详情</span>
+        <span class="arrow">→</span>
+      </div>
+    </a>
+
+    <!-- 三国帝王世系简表 -->
+    <a href="three-kingdoms.html" class="card sanguo" data-group="china" data-tsmin="220" data-tsmax="280">
+      <div class="card-banner">
+        <div class="banner-icon">⚔️</div>
+        <div class="banner-title">三 国</div>
+        <div class="banner-latin">Three Kingdoms</div>
+      </div>
+      <div class="card-body">
+        <h2>三国帝王世系简表</h2>
+        <div class="card-meta">
+          <div class="meta-chip">220 - 280</div>
+          <div class="meta-chip">60年 · 11位帝王</div>
+        </div>
+        <div class="card-desc">
+          曹魏、蜀汉、孙吴三足鼎立六十年：曹操"挟天子以令诸侯"、诸葛亮北伐、赤壁之战定鼎局，280年西晋灭吴完成统一。
+        </div>
+        <div class="card-tags">
+          <span>赤壁之战</span><span>诸葛亮北伐</span><span>司马懿</span><span>九品中正制</span><span>三分归晋</span>
+        </div>
+      </div>
+      <div class="card-timescale"></div>
+      <div class="card-footer">
+        <span class="enter-text">查看详情</span>
+        <span class="arrow">→</span>
+      </div>
+    </a>
+
+    <!-- 晋朝皇帝世系简表 -->
+    <a href="jin-dynasty.html" class="card jin" data-group="china" data-tsmin="265" data-tsmax="420">
+      <div class="card-banner">
+        <div class="banner-icon">晋</div>
+        <div class="banner-title">晋 朝</div>
+        <div class="banner-latin">Jin Dynasty</div>
+      </div>
+      <div class="card-body">
+        <h2>晋朝皇帝世系简表</h2>
+        <div class="card-meta">
+          <div class="meta-chip">265 - 420</div>
+          <div class="meta-chip">155年 · 15位皇帝</div>
+        </div>
+        <div class="card-desc">
+          西晋灭吴一统后八王之乱、五胡乱华，永嘉南渡后东晋偏安江南，淝水之战大败前秦，门阀士族政治盛行，420年刘裕代晋。
+        </div>
+        <div class="card-tags">
+          <span>八王之乱</span><span>永嘉之乱</span><span>衣冠南渡</span><span>淝水之战</span><span>王与马共天下</span>
+        </div>
+      </div>
+      <div class="card-timescale"></div>
+      <div class="card-footer">
+        <span class="enter-text">查看详情</span>
+        <span class="arrow">→</span>
+      </div>
+    </a>
 
     <!-- 南北朝 -->
     <a href="nanbeichao-dynasty.html" class="card nanbei" data-group="china" data-tsmin="420" data-tsmax="589">
@@ -560,6 +710,33 @@
       </div>
     </a>
 
+    <!-- 隋朝皇帝世系简表 -->
+    <a href="sui-dynasty.html" class="card sui" data-group="china" data-tsmin="581" data-tsmax="618">
+      <div class="card-banner">
+        <div class="banner-icon">隋</div>
+        <div class="banner-title">大 隋</div>
+        <div class="banner-latin">Sui Dynasty</div>
+      </div>
+      <div class="card-body">
+        <h2>隋朝皇帝世系简表</h2>
+        <div class="card-meta">
+          <div class="meta-chip">581 - 618</div>
+          <div class="meta-chip">37年 · 3位皇帝</div>
+        </div>
+        <div class="card-desc">
+          文帝杨坚代周建隋、灭陈统一南北，开皇之治创三省六部与科举雏形；炀帝开凿大运河、三征高句丽，民力耗尽，二世而亡。
+        </div>
+        <div class="card-tags">
+          <span>开皇之治</span><span>灭陈统一</span><span>大运河</span><span>科举雏形</span><span>二世而亡</span>
+        </div>
+      </div>
+      <div class="card-timescale"></div>
+      <div class="card-footer">
+        <span class="enter-text">查看详情</span>
+        <span class="arrow">→</span>
+      </div>
+    </a>
+
     <!-- 唐朝 -->
     <a href="tang-dynasty.html" class="card tang" data-group="china" data-tsmin="618" data-tsmax="907">
       <div class="card-banner">
@@ -589,6 +766,33 @@
       </div>
     </a>
 
+    <!-- 五代皇帝世系简表 -->
+    <a href="wudai-dynasty.html" class="card wudai" data-group="china" data-tsmin="907" data-tsmax="960">
+      <div class="card-banner">
+        <div class="banner-icon">🗡</div>
+        <div class="banner-title">五 代</div>
+        <div class="banner-latin">Five Dynasties</div>
+      </div>
+      <div class="card-body">
+        <h2>五代皇帝世系简表</h2>
+        <div class="card-meta">
+          <div class="meta-chip">907 - 960</div>
+          <div class="meta-chip">53年 · 14位皇帝</div>
+        </div>
+        <div class="card-desc">
+          后梁、后唐、后晋、后汉、后周五个政权相继更迭于中原，与南方十国并立；石敬瑭割燕云十六州，后周柴荣改革为北宋统一奠基。
+        </div>
+        <div class="card-tags">
+          <span>朱温代唐</span><span>沙陀三朝</span><span>儿皇帝</span><span>燕云十六州</span><span>陈桥兵变</span>
+        </div>
+      </div>
+      <div class="card-timescale"></div>
+      <div class="card-footer">
+        <span class="enter-text">查看详情</span>
+        <span class="arrow">→</span>
+      </div>
+    </a>
+
     <!-- 宋朝 -->
     <a href="song-dynasty.html" class="card song" data-group="china" data-tsmin="960" data-tsmax="1279">
       <div class="card-banner">
@@ -609,6 +813,33 @@
         </div>
         <div class="card-tags">
           <span>陈桥兵变</span><span>王安石变法</span><span>靖康之变</span><span>岳飞北伐</span><span>崖山海战</span>
+        </div>
+      </div>
+      <div class="card-timescale"></div>
+      <div class="card-footer">
+        <span class="enter-text">查看详情</span>
+        <span class="arrow">→</span>
+      </div>
+    </a>
+
+    <!-- 元朝皇帝世系简表 -->
+    <a href="yuan-dynasty.html" class="card yuan" data-group="china" data-tsmin="1271" data-tsmax="1368">
+      <div class="card-banner">
+        <div class="banner-icon">🐎</div>
+        <div class="banner-title">大 元</div>
+        <div class="banner-latin">Yuan Dynasty</div>
+      </div>
+      <div class="card-body">
+        <h2>元朝皇帝世系简表</h2>
+        <div class="card-meta">
+          <div class="meta-chip">1206 - 1368</div>
+          <div class="meta-chip">162年 · 17位皇帝（含北元）</div>
+        </div>
+        <div class="card-desc">
+          成吉思汗建蒙古帝国，忽必烈改国号大元、灭南宋一统天下，疆域空前；实行行省制与四等人制，统治不足百年即为明朝取代。
+        </div>
+        <div class="card-tags">
+          <span>成吉思汗</span><span>忽必烈</span><span>行省制</span><span>崖山海战</span><span>元顺帝北逃</span>
         </div>
       </div>
       <div class="card-timescale"></div>
@@ -796,7 +1027,7 @@
 
   <div class="footer">
     <p>数据来源：各朝代正史及权威历史著作 · 仅供学习参考</p>
-    <p style="margin-top:6px;color:#404040;">共 11 份王朝简表 · 持续更新中</p>
+    <p style="margin-top:6px;color:#404040;">共 18 份王朝简表 · 持续更新中</p>
   </div>
 
 </div>
@@ -806,12 +1037,16 @@
   var MIN = -27, MAX = 2030, TOTAL = MAX - MIN;
   var tracks = {
     china: [
+      { name:'秦', full:'秦朝', years:'前221 - 前207', dur:'15年', start:-221, end:-207, href:'qin-dynasty.html', grad:'linear-gradient(90deg,#374151,#b8860b)', note:'统一六国 · 郡县制 · 二世而亡（早于刻度起点，按最小宽度显示）' },
+      { name:'汉', full:'汉朝', years:'前202 - 220', dur:'405年', start:-202, end:220, href:'han-dynasty.html', grad:'linear-gradient(90deg,#b91c1c,#7c2d12)', note:'文景之治 · 汉武盛世 · 光武中兴（部分早于刻度起点）' },
+      { name:'三国', full:'三国', years:'220 - 280', dur:'60年', start:220, end:263, href:'three-kingdoms.html', grad:'linear-gradient(90deg,#1e3a8a,#b91c1c)', note:'魏蜀吴鼎立（段至蜀亡263，吴亡于280）' },
+      { name:'晋', full:'晋朝', years:'265 - 420', dur:'155年', start:265, end:420, href:'jin-dynasty.html', grad:'linear-gradient(90deg,#92400e,#1e40af)', note:'八王之乱 · 永嘉南渡 · 淝水之战' },
       { name:'南北朝', full:'南北朝', years:'420 - 589', dur:'169年', start:420, end:589, href:'nanbeichao-dynasty.html', grad:'linear-gradient(90deg,#0e7490,#b45309)', note:'南朝宋齐梁陈 · 北朝北魏周齐' },
-      { gap:true, name:'隋', full:'隋朝', years:'589 - 618', start:589, end:618, note:'杨坚统一 · 大运河 · 二世而亡' },
+      { name:'隋', full:'隋朝', years:'589 - 618', dur:'29年', start:589, end:618, href:'sui-dynasty.html', grad:'linear-gradient(90deg,#0e7490,#b45309)', note:'581建隋 · 589灭陈统一 · 大运河' },
       { name:'唐', full:'唐朝', years:'618 - 907', dur:'289年', start:618, end:907, href:'tang-dynasty.html', grad:'linear-gradient(90deg,#9b1b30,#c0392b)', note:'贞观之治 · 开元盛世' },
-      { gap:true, name:'五代', full:'五代十国', years:'907 - 960', start:907, end:960, note:'藩镇割据 · 政权更迭' },
+      { name:'五代', full:'五代十国', years:'907 - 960', dur:'53年', start:907, end:960, href:'wudai-dynasty.html', grad:'linear-gradient(90deg,#475569,#b91c1c)', note:'后梁后唐后晋后汉后周 · 十国并立' },
       { name:'宋', full:'宋朝', years:'960 - 1279', dur:'319年', start:960, end:1279, href:'song-dynasty.html', grad:'linear-gradient(90deg,#b8860b,#daa520)', note:'北宋 · 南宋 · 文盛武弱' },
-      { gap:true, name:'元', full:'元朝', years:'1279 - 1368', start:1279, end:1368, note:'蒙元统治（约89年）' },
+      { name:'元', full:'元朝', years:'1279 - 1368', dur:'89年', start:1279, end:1368, href:'yuan-dynasty.html', grad:'linear-gradient(90deg,#1e3a8a,#7c2d12)', note:'1271建元 · 1279灭南宋统一（段自灭宋起）' },
       { name:'明', full:'明朝', years:'1368 - 1644', dur:'276年', start:1368, end:1644, href:'ming-dynasty.html', grad:'linear-gradient(90deg,#8b0000,#dc2626)', note:'洪武开国 → 崇祯殉国' },
       { name:'清', full:'清朝', years:'1644 - 1912', dur:'268年', start:1644, end:1912, href:'qing-dynasty.html', grad:'linear-gradient(90deg,#1a3a5c,#c9941e)', note:'康乾盛世 → 辛亥革命' }
     ],
@@ -843,6 +1078,7 @@
     tracks[key].forEach(function(it){
       var left = Math.max(((it.start - MIN) / TOTAL) * 100, 0);
       var width = Math.min(((it.end - MIN) / TOTAL) * 100, 100) - left;
+      if (width < 1) width = 1.2;
       var seg = document.createElement(it.gap ? 'div' : 'a');
       seg.className = 'timeline-seg' + (it.gap ? ' gap' : '') + (it.lane !== undefined ? ' lane lane-' + it.lane : '');
       seg.style.left = left + '%';

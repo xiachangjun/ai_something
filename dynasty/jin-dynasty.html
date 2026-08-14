@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>晋朝皇帝世系简表 (265-420)</title>
+<style>
+  :root{--bg:#f7f5f2;--card-bg:#fff;--early-color:#92400e;--late-color:#1e40af;--text:#1c1917;--text-light:#6b7280;--border:#d1d5db;--event-bg:#fef9ee;--minister-bg:#eff6ff;--highlight:#92400e;--gold:#b8860b;--rev-color:#7f1d1d}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:"PingFang SC","Microsoft YaHei","Noto Serif SC",serif;background:var(--bg);color:var(--text);line-height:1.6}
+  .header{text-align:center;padding:50px 20px 30px;background:linear-gradient(135deg,#451a03 0%,#92400e 50%,#1e40af 100%);color:#fef9ee;position:relative;overflow:hidden}
+  .header::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffd700' fill-opacity='0.05'%3E%3Cpath d='M20 5l3 10h10l-8 6 3 10-8-6-8 6 3-10-8-6h10z'/%3E%3C/g%3E%3C/svg%3E");opacity:.6}
+  .header h1{font-size:40px;font-weight:900;letter-spacing:10px;position:relative;z-index:1;text-shadow:2px 2px 4px rgba(0,0,0,.5)}
+  .header .subtitle{font-size:18px;margin-top:12px;color:#fbbf24;letter-spacing:6px;position:relative;z-index:1}
+  .header .period{font-size:14px;margin-top:8px;color:#fcd34d;letter-spacing:3px;position:relative;z-index:1}
+  .legend{display:flex;justify-content:center;gap:28px;padding:18px;background:#fff;border-bottom:2px solid var(--border);flex-wrap:wrap}
+  .legend-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-light)}
+  .legend-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0}
+  .container{max-width:1400px;margin:0 auto;padding:20px}
+  .section-title{text-align:center;padding:30px 20px 20px;font-size:28px;font-weight:bold;letter-spacing:6px;position:relative}
+  .section-title.early{color:var(--early-color)}.section-title.late{color:var(--late-color)}
+  .section-title::after{content:'';display:block;width:80px;height:3px;margin:12px auto 0}
+  .section-title.early::after{background:var(--early-color)}.section-title.late::after{background:var(--late-color)}
+  .timeline{position:relative;padding:20px 0}
+  .timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:4px;transform:translateX(-50%);z-index:0}
+  .timeline.early::before{background:var(--early-color)}.timeline.late::before{background:var(--late-color)}
+  .timeline-entry{display:flex;align-items:flex-start;position:relative;margin-bottom:20px}
+  .entry-content{display:flex;width:100%;align-items:flex-start}.entry-left,.entry-right{width:48%;padding:0 15px}
+  .entry-center{width:4%;display:flex;justify-content:center;position:relative;z-index:1}
+  .year-marker{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold;color:#fff;flex-shrink:0;z-index:2}
+  .early .year-marker{background:var(--early-color)}.late .year-marker{background:var(--late-color)}
+  .emperor-card{background:var(--card-bg);border-radius:12px;padding:20px;box-shadow:0 4px 20px rgba(0,0,0,.08);border-left:5px solid;position:relative;transition:transform .3s,box-shadow .3s}
+  .emperor-card:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,.15)}
+  .early .emperor-card{border-left-color:var(--early-color)}.late .emperor-card{border-left-color:var(--late-color)}
+  .emperor-card .order{position:absolute;top:-10px;right:15px;background:var(--highlight);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold}
+  .emperor-name{font-size:20px;font-weight:bold;margin-bottom:2px}
+  .emperor-latin{font-size:12px;color:var(--text-light);font-style:italic;margin-bottom:8px}
+  .emperor-meta{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;margin:10px 0;font-size:12px}
+  .meta-item{display:flex;align-items:center;gap:4px}.meta-label{color:var(--text-light);white-space:nowrap}.meta-value{font-weight:600}
+  .life-bar{height:8px;background:#eee;border-radius:4px;margin:10px 0 5px;position:relative;overflow:visible}
+  .life-bar .reign{position:absolute;height:100%;border-radius:4px;opacity:.8}
+  .early .life-bar .reign{background:var(--early-color)}.late .life-bar .reign{background:var(--late-color)}
+  .life-bar-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--text-light)}
+  .relation-tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;margin-top:6px;border:1px solid}
+  .early .relation-tag{background:#fef9ee;color:#92400e;border-color:#fcd34d}
+  .late .relation-tag{background:#eff6ff;color:#1e40af;border-color:#bfdbfe}
+  .dynasty-tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:10px;margin-top:4px;margin-left:4px;background:#fef3c7;color:#92400e;border:1px solid #fcd34d}
+  .events-panel{background:var(--event-bg);border-radius:10px;padding:14px;margin-top:5px;border:1px solid #fcd34d}
+  .events-panel h4{font-size:13px;color:var(--highlight);margin-bottom:8px;display:flex;align-items:center;gap:5px}
+  .event-item{font-size:12px;padding:4px 0;border-bottom:1px dashed #fcd34d;display:flex;gap:6px}
+  .event-item:last-child{border-bottom:none}
+  .event-year{color:var(--highlight);font-weight:bold;white-space:nowrap;min-width:42px}
+  .ministers-panel{background:var(--minister-bg);border-radius:10px;padding:14px;margin-top:8px;border:1px solid #bfdbfe}
+  .ministers-panel h4{font-size:13px;color:#1e40af;margin-bottom:8px;display:flex;align-items:center;gap:5px}
+  .minister-list{display:flex;flex-wrap:wrap;gap:5px}
+  .minister-tag{font-size:11px;padding:3px 8px;background:#dbeafe;color:#1e40af;border-radius:12px;border:1px solid #bfdbfe}
+  .minister-tag.negative{background:#fde8e8;color:#b91c1c;border-color:#f0b8b8}
+  .family-tree-section,.lifecycle-section{margin:40px 0;padding:30px;background:#fff;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.06)}
+  .family-tree-section h2,.lifecycle-section h2{text-align:center;font-size:24px;color:var(--text);margin-bottom:10px;letter-spacing:4px}
+  .lifecycle-section .note{text-align:center;font-size:12px;color:var(--text-light);margin-bottom:20px}
+  .tree-container{overflow-x:auto;padding:20px 0}
+  .gantt-container{overflow-x:auto;padding:10px 0}.gantt-chart{min-width:800px}
+  .gantt-row{display:flex;align-items:center;height:32px;margin:2px 0}
+  .gantt-label{width:130px;font-size:12px;font-weight:600;text-align:right;padding-right:12px;flex-shrink:0;white-space:nowrap}
+  .gantt-bar-area{flex:1;position:relative;height:100%}
+  .gantt-bar{position:absolute;height:12px;top:50%;transform:translateY(-50%);border-radius:6px;opacity:.85;cursor:pointer}
+  .gantt-bar:hover{opacity:1;filter:brightness(1.1)}
+  .gantt-bar .tooltip{display:none;position:absolute;bottom:calc(100% + 5px);left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:4px 8px;border-radius:4px;font-size:11px;white-space:nowrap;z-index:10}
+  .gantt-bar:hover .tooltip{display:block}
+  .gantt-header{display:flex;align-items:center;height:30px;border-bottom:2px solid var(--border);margin-bottom:10px}
+  .gantt-header .gantt-label{font-size:12px;color:var(--text-light)}
+  .gantt-year-tick{position:absolute;font-size:10px;color:var(--text-light);transform:translateX(-50%);top:0}
+  .overview-stats{display:flex;justify-content:center;gap:28px;padding:20px;flex-wrap:wrap}
+  .stat-box{text-align:center;padding:15px 22px;background:#fff;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.06);min-width:110px}
+  .stat-number{font-size:26px;font-weight:bold;color:var(--highlight)}
+  .stat-desc{font-size:12px;color:var(--text-light);margin-top:4px}
+  .footer{text-align:center;padding:30px;color:var(--text-light);font-size:13px;border-top:2px solid var(--border);margin-top:40px}
+  @media(max-width:900px){.entry-content{flex-direction:column!important;align-items:center}.entry-left,.entry-right{width:100%;padding:10px 0}.entry-center{width:100%;justify-content:center;margin:10px 0}.timeline::before{display:none}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>晋朝皇帝世系简表</h1>
+  <div class="subtitle">西 晋 一 统 · 东 晋 南 渡</div>
+  <div class="period">265年 — 420年 · 八王之乱 · 永嘉南渡 · 门阀政治</div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:var(--early-color)"></div><span>西晋（265-316，洛阳）</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--late-color)"></div><span>东晋（317-420，建康）</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div><span>重要人物</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--rev-color)"></div><span>重大事件</span></div>
+</div>
+
+<div class="overview-stats">
+  <div class="stat-box"><div class="stat-number">155</div><div class="stat-desc">国祚（年）</div></div>
+  <div class="stat-box"><div class="stat-number">15</div><div class="stat-desc">皇帝（西晋4 东晋11）</div></div>
+  <div class="stat-box"><div class="stat-number">280</div><div class="stat-desc">灭吴统一</div></div>
+  <div class="stat-box"><div class="stat-number">316</div><div class="stat-desc">永嘉之乱 · 西晋亡</div></div>
+  <div class="stat-box"><div class="stat-number">洛阳·建康</div><div class="stat-desc">两都</div></div>
+</div>
+
+<div class="container">
+
+<div class="lifecycle-section">
+  <h2>皇帝生卒与在位时间对照图</h2>
+  <div class="note">浅色条为生卒跨度，深色条为在位时间（金=西晋，蓝=东晋），鼠标悬停查看详情</div>
+  <div class="gantt-container"><div class="gantt-chart" id="ganttChart"></div></div>
+</div>
+
+<!-- ==================== 西晋 ==================== -->
+<div class="section-title early">西 晋</div>
+<div style="text-align:center;color:#999;font-size:13px;margin-bottom:20px;">265年 — 316年 · 都城：洛阳</div>
+
+<div class="timeline early">
+
+  <!-- 武帝 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">1</div>
+        <div class="emperor-name">晋武帝</div>
+        <div class="emperor-latin">Sima Yan · Emperor Wu of Jin</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">236-290（54岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">265-290（25年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:53.7%;width:46.3%"></div></div>
+        <div class="life-bar-labels"><span>236</span><span>265 在位</span><span>290</span></div>
+        <div class="relation-tag">司马昭之子 · 代魏建晋 · 灭吴一统</div>
+        <div class="dynasty-tag">西晋</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">羊祜（灭吴之谋）</span>
+          <span class="minister-tag">杜预（平吴统帅）</span>
+          <span class="minister-tag">王濬（楼船破吴）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">265</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">265</span><span>代魏称帝，西晋建立</span></div>
+        <div class="event-item"><span class="event-year">279-280</span><span>六路伐吴，王濬楼船下益州，天下一统</span></div>
+        <div class="event-item"><span class="event-year">290</span><span>病逝，惠帝继位，埋下八王之乱祸根</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 惠帝 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">291-306</span><span>八王之乱，宗室互相残杀，国力大衰</span></div>
+        <div class="event-item"><span class="event-year">304</span><span>匈奴刘渊起兵，五胡乱华开始</span></div>
+        <div class="event-item"><span class="event-year">306</span><span>被毒杀（一说食饼中毒）</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">290</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">2</div>
+        <div class="emperor-name">晋惠帝</div>
+        <div class="emperor-latin">Sima Zhong · Emperor Hui</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">259-306（47岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">290-306（16年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:66%;width:34%"></div></div>
+        <div class="life-bar-labels"><span>259</span><span>290 在位</span><span>306</span></div>
+        <div class="relation-tag">武帝之子 · 智力低弱 · "何不食肉糜"</div>
+        <div class="dynasty-tag">西晋</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag negative">贾南风（皇后乱政）</span>
+          <span class="minister-tag negative">八王（汝南王等）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 怀帝 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">3</div>
+        <div class="emperor-name">晋怀帝</div>
+        <div class="emperor-latin">Sima Chi · Emperor Huai</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">284-313（29岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">306-311（5年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:75.9%;width:17.2%"></div></div>
+        <div class="life-bar-labels"><span>284</span><span>306 在位</span><span>313</span></div>
+        <div class="relation-tag">武帝之子 · 永嘉之乱被俘</div>
+        <div class="dynasty-tag">西晋</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag negative">刘聪（汉赵君主）</span>
+          <span class="minister-tag negative">刘曜（攻破洛阳）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">306</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">311</span><span>永嘉之乱，刘曜攻破洛阳，怀帝被俘</span></div>
+        <div class="event-item"><span class="event-year">313</span><span>在平阳被刘聪杀害</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 愍帝 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">313</span><span>于长安即位</span></div>
+        <div class="event-item"><span class="event-year">316</span><span>长安陷落，出降刘曜，西晋灭亡</span></div>
+        <div class="event-item"><span class="event-year">318</span><span>被刘聪杀害</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">313</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">4</div>
+        <div class="emperor-name">晋愍帝</div>
+        <div class="emperor-latin">Sima Ye · Last Emperor of Western Jin</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">300-318（18岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">313-316（3年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:72.2%;width:16.7%"></div></div>
+        <div class="life-bar-labels"><span>300</span><span>313 在位</span><span>318</span></div>
+        <div class="relation-tag">武帝之孙 · 西晋末帝 · 长安出降</div>
+        <div class="dynasty-tag">西晋</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag negative">刘曜（灭西晋）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+</div><!-- end early timeline -->
+
+<!-- ===== 南渡分界 ===== -->
+<div class="section-title late">东 晋</div>
+<div style="text-align:center;color:#999;font-size:13px;margin-bottom:20px;">317年 — 420年 · 都城：建康（今南京）· 门阀士族政治</div>
+
+<div class="timeline late">
+
+  <!-- 元帝 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">317</span><span>在建康即位，东晋建立，"王与马共天下"</span></div>
+        <div class="event-item"><span class="event-year">322</span><span>王敦之乱起，忧愤而卒</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">317</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">5</div>
+        <div class="emperor-name">晋元帝</div>
+        <div class="emperor-latin">Sima Rui · Emperor Yuan</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">276-323（47岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">317-322（5年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:87.2%;width:10.6%"></div></div>
+        <div class="life-bar-labels"><span>276</span><span>317 在位</span><span>323</span></div>
+        <div class="relation-tag">司马懿曾孙 · 永嘉南渡 · 东晋开国之君</div>
+        <div class="dynasty-tag">东晋</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">王导（琅琊王氏）</span>
+          <span class="minister-tag negative">王敦（谋反）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 明帝 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">6</div>
+        <div class="emperor-name">晋明帝</div>
+        <div class="emperor-latin">Sima Shao · Emperor Ming</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">299-325（26岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">322-325（3年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:88.5%;width:11.5%"></div></div>
+        <div class="life-bar-labels"><span>299</span><span>322 在位</span><span>325</span></div>
+        <div class="relation-tag">元帝长子 · 平王敦之乱 · 聪明有谋</div>
+        <div class="dynasty-tag">东晋</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">王导</span>
+          <span class="minister-tag">郗鉴（平乱）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">322</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">324</span><span>平定王敦之乱</span></div>
+        <div class="event-item"><span class="event-year">325</span><span>病逝，成帝继位</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 成帝 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">325</span><span>5岁即位，庾太后临朝</span></div>
+        <div class="event-item"><span class="event-year">327-328</span><span>苏峻、祖约之乱，建康被焚</span></div>
+        <div class="event-item"><span class="event-year">342</span><span>病逝</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">325</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">7</div>
+        <div class="emperor-name">晋成帝</div>
+        <div class="emperor-latin">Sima Yan · Emperor Cheng</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">321-342（21岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">325-342（17年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:19%;width:81%"></div></div>
+        <div class="life-bar-labels"><span>321</span><span>325 在位</span><span>342</span></div>
+        <div class="relation-tag">明帝长子 · 幼年即位 · 苏峻之乱</div>
+        <div class="dynasty-tag">东晋</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">庾亮（外戚）</span>
+          <span class="minister-tag">王导（辅政）</span>
+          <span class="minister-tag negative">苏峻</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 康帝 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">8</div>
+        <div class="emperor-name">晋康帝</div>
+        <div class="emperor-latin">Sima Yue · Emperor Kang</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">322-344（22岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">342-344（2年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:90.9%;width:9.1%"></div></div>
+        <div class="life-bar-labels"><span>322</span><span>342 在位</span><span>344</span></div>
+        <div class="relation-tag">成帝之弟 · 在位短暂</div>
+        <div class="dynasty-tag">东晋</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">庾冰（辅政）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">342</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">342</span><span>即位，外戚庾氏专权</span></div>
+        <div class="event-item"><span class="event-year">344</span><span>病逝</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 穆帝 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">344</span><span>2岁即位，褚太后临朝</span></div>
+        <div class="event-item"><span class="event-year">354-356</span><span>桓温三次北伐，一度收复洛阳</span></div>
+        <div class="event-item"><span class="event-year">361</span><span>病逝</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">344</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">9</div>
+        <div class="emperor-name">晋穆帝</div>
+        <div class="emperor-latin">Sima Dan · Emperor Mu</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">343-361（18岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">344-361（17年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:5.6%;width:94.4%"></div></div>
+        <div class="life-bar-labels"><span>343</span><span>344 在位</span><span>361</span></div>
+        <div class="relation-tag">康帝之子 · 幼龄即位 · 桓温北伐时代</div>
+        <div class="dynasty-tag">东晋</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">桓温（北伐名将）</span>
+          <span class="minister-tag">殷浩（政敌）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 哀帝 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">10</div>
+        <div class="emperor-name">晋哀帝</div>
+        <div class="emperor-latin">Sima Pi · Emperor Ai</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">341-365（24岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">361-365（4年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:83.3%;width:16.7%"></div></div>
+        <div class="life-bar-labels"><span>341</span><span>361 在位</span><span>365</span></div>
+        <div class="relation-tag">成帝长子 · 服丹药而亡</div>
+        <div class="dynasty-tag">东晋</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">桓温</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">361</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">361</span><span>即位，桓温继续掌权</span></div>
+        <div class="event-item"><span class="event-year">365</span><span>服长生丹药中毒，病逝</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 废帝 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">365</span><span>即位</span></div>
+        <div class="event-item"><span class="event-year">369-371</span><span>桓温北伐失利后废帝，立简文帝</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">365</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">11</div>
+        <div class="emperor-name">晋废帝（海西公）</div>
+        <div class="emperor-latin">Sima Yi · Deposed Emperor</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">342-386（44岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">365-371（6年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:52.3%;width:13.6%"></div></div>
+        <div class="life-bar-labels"><span>342</span><span>365 在位</span><span>386</span></div>
+        <div class="relation-tag">成帝长子 · 被桓温废为海西公</div>
+        <div class="dynasty-tag">东晋</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag negative">桓温（废帝）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 简文帝 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">12</div>
+        <div class="emperor-name">晋简文帝</div>
+        <div class="emperor-latin">Sima Yu · Emperor Jianwen</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">320-372（52岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">371-372（1年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:98.1%;width:1.9%"></div></div>
+        <div class="life-bar-labels"><span>320</span><span>371 在位</span><span>372</span></div>
+        <div class="relation-tag">元帝少子 · 桓温所立 · 忧惧而终</div>
+        <div class="dynasty-tag">东晋</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">谢安（后辅孝武）</span>
+          <span class="minister-tag negative">桓温</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">371</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">371</span><span>被桓温迎立，形同傀儡</span></div>
+        <div class="event-item"><span class="event-year">372</span><span>忧惧病逝，孝武帝继位</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 孝武帝 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">372</span><span>11岁即位，谢安辅政</span></div>
+        <div class="event-item"><span class="event-year">383</span><span>淝水之战，以少胜多大败前秦苻坚</span></div>
+        <div class="event-item"><span class="event-year">396</span><span>酒后戏言，被张贵人闷杀</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">372</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">13</div>
+        <div class="emperor-name">晋孝武帝</div>
+        <div class="emperor-latin">Sima Yao · Emperor Xiaowu</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">362-396（34岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">372-396（24年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:29.4%;width:70.6%"></div></div>
+        <div class="life-bar-labels"><span>362</span><span>372 在位</span><span>396</span></div>
+        <div class="relation-tag">简文帝之子 · 淝水之战 · 东晋复兴</div>
+        <div class="dynasty-tag">东晋</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">谢安（淝水之战）</span>
+          <span class="minister-tag">谢玄（北府兵）</span>
+          <span class="minister-tag negative">苻坚（前秦）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 安帝 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">14</div>
+        <div class="emperor-name">晋安帝</div>
+        <div class="emperor-latin">Sima Dezong · Emperor An</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">382-419（37岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">396-418（22年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:37.8%;width:59.5%"></div></div>
+        <div class="life-bar-labels"><span>382</span><span>396 在位</span><span>419</span></div>
+        <div class="relation-tag">孝武帝长子 · 智力低弱 · 桓玄篡位</div>
+        <div class="dynasty-tag">东晋</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">刘裕（掌权）</span>
+          <span class="minister-tag negative">桓玄（403-404称帝）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">396</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">403-404</span><span>桓玄篡位建楚，刘裕起兵讨平</span></div>
+        <div class="event-item"><span class="event-year">409-417</span><span>刘裕北伐灭南燕、后秦</span></div>
+        <div class="event-item"><span class="event-year">418</span><span>被刘裕派人缢杀</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 恭帝 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">418</span><span>刘裕立其为帝</span></div>
+        <div class="event-item"><span class="event-year">420</span><span>禅位于刘裕，东晋灭亡，南朝宋建立</span></div>
+        <div class="event-item"><span class="event-year">421</span><span>被刘裕杀害</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">418</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">15</div>
+        <div class="emperor-name">晋恭帝</div>
+        <div class="emperor-latin">Sima Dewen · Last Emperor of Jin</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">386-421（35岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">418-420（2年）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:91.4%;width:5.7%"></div></div>
+        <div class="life-bar-labels"><span>386</span><span>418 在位</span><span>421</span></div>
+        <div class="relation-tag">安帝之弟 · 末代皇帝 · 禅让被杀</div>
+        <div class="dynasty-tag">东晋</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag negative">刘裕（代晋）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+</div><!-- end late timeline -->
+
+<!-- ==================== 世系关系图 ==================== -->
+<div class="family-tree-section">
+  <h2>晋朝世系关系图</h2>
+  <div class="tree-container">
+    <svg class="tree-svg" viewBox="0 0 1300 300" width="1300" height="300" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="wjG" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#92400e;stop-opacity:1"/><stop offset="100%" style="stop-color:#f59e0b;stop-opacity:1"/>
+        </linearGradient>
+        <linearGradient id="djG" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#1e40af;stop-opacity:1"/><stop offset="100%" style="stop-color:#60a5fa;stop-opacity:1"/>
+        </linearGradient>
+        <marker id="aJ" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#92400e"/></marker>
+        <marker id="aD" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#1e40af"/></marker>
+        <filter id="sh"><feDropShadow dx="1" dy="2" stdDeviation="3" flood-opacity="0.15"/></filter>
+      </defs>
+      <rect x="0" y="0" width="1300" height="300" fill="#f3f4f6" rx="12"/>
+      <text x="20" y="30" font-size="16" fill="#92400e" font-weight="bold" font-family="PingFang SC,serif">晋朝世系 · 西晋（金）→ 永嘉南渡 → 东晋（蓝）</text>
+
+      <rect x="40" y="70" width="170" height="55" rx="8" fill="url(#wjG)" filter="url(#sh)"/>
+      <text x="125" y="93" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">①武帝 司马炎</text>
+      <text x="125" y="112" text-anchor="middle" fill="#fde68a" font-size="9" font-family="PingFang SC,serif">265-290 一统</text>
+      <rect x="250" y="70" width="170" height="55" rx="8" fill="url(#wjG)" filter="url(#sh)"/>
+      <text x="335" y="93" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">②惠帝</text>
+      <text x="335" y="112" text-anchor="middle" fill="#fde68a" font-size="9" font-family="PingFang SC,serif">290-306 八王之乱</text>
+      <line x1="210" y1="97" x2="248" y2="97" stroke="#92400e" stroke-width="2" marker-end="url(#aJ)"/>
+      <rect x="460" y="70" width="170" height="55" rx="8" fill="url(#wjG)" filter="url(#sh)"/>
+      <text x="545" y="93" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">③怀帝</text>
+      <text x="545" y="112" text-anchor="middle" fill="#fde68a" font-size="9" font-family="PingFang SC,serif">306-311 被俘</text>
+      <line x1="420" y1="97" x2="458" y2="97" stroke="#92400e" stroke-width="2" marker-end="url(#aJ)"/>
+      <rect x="670" y="70" width="170" height="55" rx="8" fill="url(#wjG)" filter="url(#sh)"/>
+      <text x="755" y="93" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">④愍帝</text>
+      <text x="755" y="112" text-anchor="middle" fill="#fde68a" font-size="9" font-family="PingFang SC,serif">313-316 西晋亡</text>
+      <line x1="630" y1="97" x2="668" y2="97" stroke="#92400e" stroke-width="2" marker-end="url(#aJ)"/>
+
+      <rect x="40" y="180" width="170" height="55" rx="8" fill="url(#djG)" filter="url(#sh)"/>
+      <text x="125" y="203" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">⑤元帝 司马睿</text>
+      <text x="125" y="222" text-anchor="middle" fill="#bfdbfe" font-size="9" font-family="PingFang SC,serif">317-322 南渡建国</text>
+      <path d="M755 125 C755 155, 125 155, 125 178" stroke="#1e40af" stroke-width="2" stroke-dasharray="6,3" fill="none" marker-end="url(#aD)"/>
+      <text x="440" y="158" text-anchor="middle" fill="#1e40af" font-size="9" font-family="PingFang SC,serif">司马懿曾孙 · 永嘉南渡</text>
+
+      <rect x="250" y="180" width="170" height="55" rx="8" fill="url(#djG)" filter="url(#sh)"/>
+      <text x="335" y="203" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">⑥-⑫ 传至简文</text>
+      <text x="335" y="222" text-anchor="middle" fill="#bfdbfe" font-size="9" font-family="PingFang SC,serif">明帝→哀帝→废帝→简文帝</text>
+      <line x1="210" y1="207" x2="248" y2="207" stroke="#1e40af" stroke-width="2" marker-end="url(#aD)"/>
+
+      <rect x="460" y="180" width="170" height="55" rx="8" fill="url(#djG)" filter="url(#sh)"/>
+      <text x="545" y="203" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">⑬孝武帝</text>
+      <text x="545" y="222" text-anchor="middle" fill="#bfdbfe" font-size="9" font-family="PingFang SC,serif">372-396 淝水之战</text>
+      <line x1="420" y1="207" x2="458" y2="207" stroke="#1e40af" stroke-width="2" marker-end="url(#aD)"/>
+
+      <rect x="670" y="180" width="170" height="55" rx="8" fill="url(#djG)" filter="url(#sh)"/>
+      <text x="755" y="203" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold" font-family="PingFang SC,serif">⑭安帝 · ⑮恭帝</text>
+      <text x="755" y="222" text-anchor="middle" fill="#bfdbfe" font-size="9" font-family="PingFang SC,serif">396-420 东晋亡</text>
+      <line x1="630" y1="207" x2="668" y2="207" stroke="#1e40af" stroke-width="2" marker-end="url(#aD)"/>
+
+      <text x="1060" y="120" fill="#7f1d1d" font-size="11" font-weight="bold" font-family="PingFang SC,serif">311 永嘉之乱 · 中原板荡</text>
+      <text x="1060" y="142" fill="#7f1d1d" font-size="10" font-family="PingFang SC,serif">五胡乱华 · 衣冠南渡</text>
+      <text x="1060" y="230" fill="#7f1d1d" font-size="11" font-weight="bold" font-family="PingFang SC,serif">420 刘裕代晋</text>
+      <text x="1060" y="252" fill="#6b7280" font-size="10" font-family="PingFang SC,serif">南北朝开始</text>
+    </svg>
+  </div>
+</div>
+
+</div><!-- end container -->
+
+<div class="footer">
+  <p>晋朝（265-420），西晋与东晋合计享国一百五十五年：西晋短暂统一后因八王之乱与五胡乱华而亡，衣冠南渡后东晋偏安江南。</p>
+  <p style="margin-top:8px;">东晋门阀政治（王谢等世家大族）与淝水之战、桓温北伐、刘裕崛起相继上演，最终刘裕代晋，开启南北朝时代。</p>
+  <p style="margin-top:8px;">数据来源：《晋书》《资治通鉴》等 · 仅供学习参考</p>
+</div>
+
+<script>
+(function(){
+  const emperors = [
+    { name:'晋武帝 司马炎', birth:236, death:290, reigns:[{s:265,e:290}], type:'early' },
+    { name:'晋惠帝 司马衷', birth:259, death:306, reigns:[{s:290,e:306}], type:'early' },
+    { name:'晋怀帝 司马炽', birth:284, death:313, reigns:[{s:306,e:311}], type:'early' },
+    { name:'晋愍帝 司马邺', birth:300, death:318, reigns:[{s:313,e:316}], type:'early' },
+    { name:'晋元帝 司马睿', birth:276, death:323, reigns:[{s:317,e:322}], type:'late' },
+    { name:'晋明帝 司马绍', birth:299, death:325, reigns:[{s:322,e:325}], type:'late' },
+    { name:'晋成帝 司马衍', birth:321, death:342, reigns:[{s:325,e:342}], type:'late' },
+    { name:'晋康帝 司马岳', birth:322, death:344, reigns:[{s:342,e:344}], type:'late' },
+    { name:'晋穆帝 司马聃', birth:343, death:361, reigns:[{s:344,e:361}], type:'late' },
+    { name:'晋哀帝 司马丕', birth:341, death:365, reigns:[{s:361,e:365}], type:'late' },
+    { name:'晋废帝 司马奕', birth:342, death:386, reigns:[{s:365,e:371}], type:'late' },
+    { name:'晋简文帝 司马昱', birth:320, death:372, reigns:[{s:371,e:372}], type:'late' },
+    { name:'晋孝武帝 司马曜', birth:362, death:396, reigns:[{s:372,e:396}], type:'late' },
+    { name:'晋安帝 司马德宗', birth:382, death:419, reigns:[{s:396,e:418}], type:'late' },
+    { name:'晋恭帝 司马德文', birth:386, death:421, reigns:[{s:418,e:420}], type:'late' },
+  ];
+  const minYear=230, maxYear=430, totalYears=maxYear-minYear;
+  const colors = { early:'#92400e', late:'#1e40af' };
+  const container = document.getElementById('ganttChart');
+  let headerHTML = '<div class="gantt-header"><div class="gantt-label" style="width:130px">年份</div><div class="gantt-bar-area" style="position:relative;height:30px;">';
+  for(let y=280;y<=400;y+=20){
+    headerHTML += `<span class="gantt-year-tick" style="left:${((y-minYear)/totalYears)*100}%">${y}</span>`;
+  }
+  headerHTML += '</div></div>';
+  container.innerHTML = headerHTML;
+  let bodyHTML = '<div class="gantt-body">';
+  emperors.forEach(emp => {
+    const c = colors[emp.type];
+    const ll = ((emp.birth-minYear)/totalYears)*100;
+    const lw = ((emp.death-emp.birth)/totalYears)*100;
+    let rb = '';
+    emp.reigns.forEach(r => {
+      const rl = ((r.s-minYear)/totalYears)*100;
+      const rw = Math.max(((r.e-r.s)/totalYears)*100, 0.5);
+      rb += `<div class="gantt-bar reign-bar" style="left:${rl}%;width:${rw}%;background:${c};"><div class="tooltip">在位：${r.s}-${r.e}</div></div>`;
+    });
+    bodyHTML += `<div class="gantt-row"><div class="gantt-label" style="color:${c};width:130px">${emp.name}</div><div class="gantt-bar-area"><div class="gantt-bar" style="left:${ll}%;width:${lw}%;background:${c};"><div class="tooltip">生卒：${emp.birth}-${emp.death}</div></div>${rb}</div></div>`;
+  });
+  bodyHTML += '</div>';
+  container.innerHTML += bodyHTML;
+})();
+</script>
+
+</body>
+</html>
