@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>俄罗斯历史时代与沙皇世系简表</title>
+<style>
+  :root{--bg:#f7f5f2;--card-bg:#fff;--early-color:#8b1a1a;--late-color:#1e3a8a;--text:#1c1917;--text-light:#6b7280;--border:#d1d5db;--event-bg:#fef2f2;--minister-bg:#eff6ff;--highlight:#b91c1c;--gold:#b8860b;--rev-color:#7f1d1d}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:"PingFang SC","Microsoft YaHei","Noto Serif SC",serif;background:var(--bg);color:var(--text);line-height:1.6}
+  .header{text-align:center;padding:50px 20px 30px;background:linear-gradient(135deg,#3b0a0a 0%,#8b1a1a 45%,#c8102e 70%,#1e3a8a 100%);color:#fef2f2;position:relative;overflow:hidden}
+  .header::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffd700' fill-opacity='0.05'%3E%3Cpath d='M20 5l3 10h10l-8 6 3 10-8-6-8 6 3-10-8-6h10z'/%3E%3C/g%3E%3C/svg%3E");opacity:.6}
+  .header h1{font-size:38px;font-weight:900;letter-spacing:10px;position:relative;z-index:1;text-shadow:2px 2px 4px rgba(0,0,0,.5)}
+  .header .subtitle{font-size:18px;margin-top:12px;color:#fbbf24;letter-spacing:6px;position:relative;z-index:1}
+  .header .period{font-size:14px;margin-top:8px;color:#fecaca;letter-spacing:3px;position:relative;z-index:1}
+  .header .latin{font-size:13px;margin-top:4px;color:#bfdbfe;letter-spacing:2px;position:relative;z-index:1;font-style:italic}
+  .legend{display:flex;justify-content:center;gap:28px;padding:18px;background:#fff;border-bottom:2px solid var(--border);flex-wrap:wrap}
+  .legend-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-light)}
+  .legend-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0}
+  .container{max-width:1400px;margin:0 auto;padding:20px}
+  .section-title{text-align:center;padding:30px 20px 20px;font-size:28px;font-weight:bold;letter-spacing:6px;position:relative}
+  .section-title.early{color:var(--early-color)}.section-title.late{color:var(--late-color)}
+  .section-title::after{content:'';display:block;width:80px;height:3px;margin:12px auto 0}
+  .section-title.early::after{background:var(--early-color)}.section-title.late::after{background:var(--late-color)}
+  .timeline{position:relative;padding:20px 0}
+  .timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:4px;transform:translateX(-50%);z-index:0}
+  .timeline.early::before{background:var(--early-color)}.timeline.late::before{background:var(--late-color)}
+  .timeline-entry{display:flex;align-items:flex-start;position:relative;margin-bottom:20px}
+  .entry-content{display:flex;width:100%;align-items:flex-start}.entry-left,.entry-right{width:48%;padding:0 15px}
+  .entry-center{width:4%;display:flex;justify-content:center;position:relative;z-index:1}
+  .year-marker{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold;color:#fff;flex-shrink:0;z-index:2;text-align:center;line-height:1.2;padding:0 2px}
+  .early .year-marker{background:var(--early-color)}.late .year-marker{background:var(--late-color)}
+  .era-card{background:var(--card-bg);border-radius:12px;padding:20px;box-shadow:0 4px 20px rgba(0,0,0,.08);border-left:5px solid;position:relative;transition:transform .3s,box-shadow .3s}
+  .era-card:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,.15)}
+  .early .era-card{border-left-color:var(--early-color)}.late .era-card{border-left-color:var(--late-color)}
+  .era-card .order{position:absolute;top:-10px;right:15px;background:var(--highlight);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold}
+  .era-name{font-size:20px;font-weight:bold;margin-bottom:2px}
+  .era-jp{font-size:12px;color:var(--text-light);font-style:italic;margin-bottom:6px}
+  .era-meta{display:flex;flex-wrap:wrap;gap:6px 14px;margin:8px 0;font-size:12px}
+  .era-meta .meta-item{display:flex;align-items:center;gap:4px}
+  .era-meta .meta-label{color:var(--text-light);white-space:nowrap}
+  .era-meta .meta-value{font-weight:600}
+  .relation-tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;margin-top:6px;border:1px solid}
+  .early .relation-tag{background:#fef2f2;color:#8b1a1a;border-color:#fca5a5}
+  .late .relation-tag{background:#eff6ff;color:#1e3a8a;border-color:#bfdbfe}
+  .events-panel{background:var(--event-bg);border-radius:10px;padding:14px;margin-top:5px;border:1px solid #fecaca}
+  .events-panel h4{font-size:13px;color:var(--highlight);margin-bottom:8px;display:flex;align-items:center;gap:5px}
+  .event-item{font-size:12px;padding:4px 0;border-bottom:1px dashed #fecaca;display:flex;gap:6px}
+  .event-item:last-child{border-bottom:none}
+  .event-year{color:var(--highlight);font-weight:bold;white-space:nowrap;min-width:42px}
+  .ministers-panel{background:var(--minister-bg);border-radius:10px;padding:14px;margin-top:8px;border:1px solid #bfdbfe}
+  .ministers-panel h4{font-size:13px;color:#1e40af;margin-bottom:8px;display:flex;align-items:center;gap:5px}
+  .minister-list{display:flex;flex-wrap:wrap;gap:5px}
+  .minister-tag{font-size:11px;padding:3px 8px;background:#dbeafe;color:#1e40af;border-radius:12px;border:1px solid #bfdbfe}
+  .minister-tag.negative{background:#fde8e8;color:#b91c1c;border-color:#f0b8b8}
+  .family-tree-section,.lifecycle-section,.ruler-section{margin:40px 0;padding:30px;background:#fff;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.06)}
+  .family-tree-section h2,.lifecycle-section h2,.ruler-section h2{text-align:center;font-size:24px;color:var(--text);margin-bottom:10px;letter-spacing:4px}
+  .lifecycle-section .note,.ruler-section .note{text-align:center;font-size:12px;color:var(--text-light);margin-bottom:20px}
+  .tree-container{overflow-x:auto;padding:20px 0}
+  .gantt-container{overflow-x:auto;padding:10px 0}.gantt-chart{min-width:900px}
+  .gantt-row{display:flex;align-items:center;height:34px;margin:2px 0}
+  .gantt-label{width:130px;font-size:12px;font-weight:600;text-align:right;padding-right:12px;flex-shrink:0;white-space:nowrap}
+  .gantt-bar-area{flex:1;position:relative;height:100%}
+  .gantt-bar{position:absolute;height:14px;top:50%;transform:translateY(-50%);border-radius:7px;opacity:.85;cursor:pointer}
+  .gantt-bar:hover{opacity:1;filter:brightness(1.1)}
+  .gantt-bar .tooltip{display:none;position:absolute;bottom:calc(100% + 5px);left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:4px 8px;border-radius:4px;font-size:11px;white-space:nowrap;z-index:10}
+  .gantt-bar:hover .tooltip{display:block}
+  .gantt-header{display:flex;align-items:center;height:30px;border-bottom:2px solid var(--border);margin-bottom:10px}
+  .gantt-header .gantt-label{font-size:12px;color:var(--text-light)}
+  .gantt-year-tick{position:absolute;font-size:10px;color:var(--text-light);transform:translateX(-50%);top:0}
+  .transition-divider{text-align:center;padding:40px 20px;position:relative}
+  .transition-divider .divider-line{height:2px;background:linear-gradient(to right,transparent,var(--rev-color),transparent);margin:0 auto;max-width:600px}
+  .transition-divider .divider-text{display:inline-block;background:var(--bg);padding:8px 25px;position:relative;top:-14px;font-size:16px;color:var(--rev-color);font-weight:bold;letter-spacing:4px;border:2px solid var(--rev-color);border-radius:20px}
+  .mini-divider{text-align:center;padding:18px}
+  .mini-divider .mini-text{display:inline-block;background:#fef2f2;padding:5px 18px;font-size:12px;color:#b91c1c;font-weight:bold;letter-spacing:2px;border:1px solid #fca5a5;border-radius:14px}
+  .overview-stats{display:flex;justify-content:center;gap:28px;padding:20px;flex-wrap:wrap}
+  .stat-box{text-align:center;padding:15px 22px;background:#fff;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.06);min-width:110px}
+  .stat-number{font-size:26px;font-weight:bold;color:var(--highlight)}
+  .stat-desc{font-size:12px;color:var(--text-light);margin-top:4px}
+  .ruler-group{margin-bottom:26px}
+  .ruler-group h3{font-size:16px;color:var(--highlight);border-left:4px solid var(--highlight);padding-left:10px;margin-bottom:4px;letter-spacing:2px}
+  .ruler-group .range{font-size:12px;color:var(--text-light);margin:0 0 10px 14px}
+  .ruler-list{display:grid;grid-template-columns:repeat(3,1fr);gap:4px 18px;font-size:12px}
+  .ruler-item{display:flex;gap:6px}
+  .ruler-item .no{color:var(--text-light);min-width:36px;flex-shrink:0}
+  .ruler-item .name{font-weight:600}
+  .ruler-item .reign{color:var(--text-light)}
+  .footer{text-align:center;padding:30px;color:var(--text-light);font-size:13px;border-top:2px solid var(--border);margin-top:40px}
+  @media(max-width:900px){.entry-content{flex-direction:column!important;align-items:center}.entry-left,.entry-right{width:100%;padding:10px 0}.entry-center{width:100%;justify-content:center;margin:10px 0}.timeline::before{display:none}.ruler-list{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.ruler-list{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>俄罗斯历史时代与沙皇世系简表</h1>
+  <div class="subtitle">留里克王朝 · 罗曼诺夫王朝 · 沙皇俄国</div>
+  <div class="period">基辅罗斯 (862-1240) ─ 蒙古与莫斯科 ─ 沙皇俄国 (1547-1917) ─ 苏联 ─ 俄罗斯联邦</div>
+  <div class="latin">🦅 Российская история · 双头鹰之国 🦅</div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:var(--early-color)"></div><span>基辅罗斯·蒙古·莫斯科（862-1547）</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--late-color)"></div><span>沙皇俄国·苏联·联邦（1547-今）</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div><span>重要人物</span></div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--rev-color)"></div><span>重大事件</span></div>
+</div>
+
+<div class="overview-stats">
+  <div class="stat-box"><div class="stat-number">1160+</div><div class="stat-desc">历史跨度（年，862起）</div></div>
+  <div class="stat-box"><div class="stat-number">9</div><div class="stat-desc">大时代分期</div></div>
+  <div class="stat-box"><div class="stat-number">40+</div><div class="stat-desc">收录统治者</div></div>
+  <div class="stat-box"><div class="stat-number">1547</div><div class="stat-desc">伊凡四世加冕沙皇</div></div>
+  <div class="stat-box"><div class="stat-number">1917</div><div class="stat-desc">二月革命 · 帝制终结</div></div>
+  <div class="stat-box"><div class="stat-number">莫斯科</div><div class="stat-desc">首都</div></div>
+</div>
+
+<div class="container">
+
+<div class="lifecycle-section">
+  <h2>俄罗斯历史时代对照图</h2>
+  <div class="note">各时代的起止年代，鼠标悬停查看详情</div>
+  <div class="gantt-container"><div class="gantt-chart" id="ganttChart"></div></div>
+</div>
+
+<!-- ==================== 基辅罗斯与莫斯科 ==================== -->
+<div class="section-title early">基辅罗斯 · 蒙古 · 莫斯科</div>
+<div style="text-align:center;color:#999;font-size:13px;margin-bottom:20px;">862年 — 1547年 · 留里克王朝 · 罗斯受洗 · 摆脱蒙古</div>
+
+<div class="timeline early">
+  <!-- 基辅罗斯 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="era-card">
+        <div class="order">1</div>
+        <div class="era-name">基辅罗斯</div>
+        <div class="era-jp">Киевская Русь · Kievan Rus'</div>
+        <div class="era-meta">
+          <div class="meta-item"><span class="meta-label">年代：</span><span class="meta-value">862 - 1240</span></div>
+          <div class="meta-item"><span class="meta-label">代表君主：</span><span class="meta-value">弗拉基米尔 · 雅罗斯拉夫</span></div>
+        </div>
+        <div class="relation-tag">留里克王朝开基 · 罗斯受洗 · 基辅罗斯鼎盛</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">留里克（传说开基）</span>
+          <span class="minister-tag">奥列格（定都基辅）</span>
+          <span class="minister-tag">弗拉基米尔一世</span>
+          <span class="minister-tag">雅罗斯拉夫（智者）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">862</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">862</span><span>留里克受邀统治诺夫哥罗德（传说）</span></div>
+        <div class="event-item"><span class="event-year">882</span><span>奥列格南征，定都基辅，基辅罗斯形成</span></div>
+        <div class="event-item"><span class="event-year">988</span><span>弗拉基米尔大公受洗，罗斯基督教化（东正教）</span></div>
+        <div class="event-item"><span class="event-year">1019-1054</span><span>雅罗斯拉夫"智者"在位，基辅罗斯鼎盛</span></div>
+        <div class="event-item"><span class="event-year">1237-1240</span><span>蒙古（拔都）西征，基辅陷落，罗斯臣服</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 蒙古统治与莫斯科兴起 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1240</span><span>金帐汗国建立对罗斯诸公国的统治</span></div>
+        <div class="event-item"><span class="event-year">1328</span><span>伊凡一世（钱袋）取得弗拉基米尔大公称号</span></div>
+        <div class="event-item"><span class="event-year">1380</span><span>德米特里·顿斯科伊库里科沃之战获胜（象征性）</span></div>
+        <div class="event-item"><span class="event-year">1472</span><span>伊凡三世迎娶拜占庭末代公主索菲娅</span></div>
+        <div class="event-item"><span class="event-year">1480</span><span>乌格拉河对峙，蒙古统治终结</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1240</div></div>
+    <div class="entry-right">
+      <div class="era-card">
+        <div class="order">2</div>
+        <div class="era-name">蒙古统治与莫斯科兴起</div>
+        <div class="era-jp">Монгольское иго · Moscow Rising</div>
+        <div class="era-meta">
+          <div class="meta-item"><span class="meta-label">年代：</span><span class="meta-value">1240 - 1480</span></div>
+          <div class="meta-item"><span class="meta-label">代表君主：</span><span class="meta-value">伊凡一世 · 伊凡三世</span></div>
+        </div>
+        <div class="relation-tag">金帐汗国统治 · 莫斯科公国崛起 · "第三罗马"</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">伊凡一世（钱袋）</span>
+          <span class="minister-tag">德米特里·顿斯科伊</span>
+          <span class="minister-tag">伊凡三世（大帝）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 莫斯科大公国 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="era-card">
+        <div class="order">3</div>
+        <div class="era-name">莫斯科大公国</div>
+        <div class="era-jp">Великое княжество Московское</div>
+        <div class="era-meta">
+          <div class="meta-item"><span class="meta-label">年代：</span><span class="meta-value">1283 - 1547</span></div>
+          <div class="meta-item"><span class="meta-label">代表君主：</span><span class="meta-value">伊凡三世 · 瓦西里三世</span></div>
+        </div>
+        <div class="relation-tag">统一罗斯诸公国 · 摆脱蒙古 · 中央集权奠基</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">伊凡三世（统一罗斯）</span>
+          <span class="minister-tag">瓦西里三世</span>
+          <span class="minister-tag">索菲娅·帕列奥洛格（拜占庭公主）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1480</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1478</span><span>伊凡三世吞并诺夫哥罗德</span></div>
+        <div class="event-item"><span class="event-year">1480</span><span>乌格拉河对峙，正式摆脱蒙古统治</span></div>
+        <div class="event-item"><span class="event-year">1497</span><span>颁布《1497年法典》，强化中央集权</span></div>
+        <div class="event-item"><span class="event-year">1505-1533</span><span>瓦西里三世继续统一，吞并普斯科夫等</span></div>
+        <div class="event-item"><span class="event-year">1547</span><span>伊凡四世加冕"沙皇"，莫斯科大公国时代结束</span></div>
+      </div>
+    </div>
+  </div></div>
+
+</div><!-- end early timeline -->
+
+<!-- ===== 沙皇时代分界 ===== -->
+<div class="transition-divider">
+  <div class="divider-line"></div>
+  <div class="divider-text">伊凡四世加冕沙皇 · 1547年 · 沙皇俄国开端</div>
+</div>
+
+<!-- ==================== 沙皇俄国与近现代 ==================== -->
+<div class="section-title late">沙 皇 俄 国 与 近 现 代</div>
+<div style="text-align:center;color:#999;font-size:13px;margin-bottom:20px;">1547年 — 今 · 罗曼诺夫王朝 · 帝国 · 苏联 · 俄罗斯联邦</div>
+
+<div class="timeline late">
+  <!-- 沙皇俄国·留里克末期 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1547</span><span>伊凡四世（雷帝）加冕，首称"沙皇"</span></div>
+        <div class="event-item"><span class="event-year">1552/1556</span><span>征服喀山、阿斯特拉罕汗国，扩张东南</span></div>
+        <div class="event-item"><span class="event-year">1565-1572</span><span>推行特辖制，恐怖统治</span></div>
+        <div class="event-item"><span class="event-year">1581</span><span>盛怒中误杀太子伊凡</span></div>
+        <div class="event-item"><span class="event-year">1598</span><span>费奥多尔一世无嗣，留里克王朝终结</span></div>
+        <div class="event-item"><span class="event-year">1598-1613</span><span>混乱时期：戈东诺夫、伪季米特里、波兰干涉</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1547</div></div>
+    <div class="entry-right">
+      <div class="era-card">
+        <div class="order">4</div>
+        <div class="era-name">沙皇俄国·留里克末期</div>
+        <div class="era-jp">Царство Русское · Tsardom of Russia</div>
+        <div class="era-meta">
+          <div class="meta-item"><span class="meta-label">年代：</span><span class="meta-value">1547 - 1613</span></div>
+          <div class="meta-item"><span class="meta-label">代表沙皇：</span><span class="meta-value">伊凡四世 · 费奥多尔一世</span></div>
+        </div>
+        <div class="relation-tag">伊凡雷帝 · 扩张与恐怖 · 王朝绝嗣 · 混乱时期</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">伊凡四世（雷帝）</span>
+          <span class="minister-tag">鲍里斯·戈东诺夫</span>
+          <span class="minister-tag">米宁与波扎尔斯基（救国义军）</span>
+          <span class="minister-tag negative">伪季米特里一世</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 罗曼诺夫王朝早期 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="era-card">
+        <div class="order">5</div>
+        <div class="era-name">罗曼诺夫王朝早期</div>
+        <div class="era-jp">Романовы · House of Romanov</div>
+        <div class="era-meta">
+          <div class="meta-item"><span class="meta-label">年代：</span><span class="meta-value">1613 - 1721</span></div>
+          <div class="meta-item"><span class="meta-label">代表沙皇：</span><span class="meta-value">米哈伊尔 · 彼得一世</span></div>
+        </div>
+        <div class="relation-tag">王朝开基 · 彼得大帝西化改革 · 帝国诞生</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">米哈伊尔一世（王朝首帝）</span>
+          <span class="minister-tag">阿列克谢（会议法典）</span>
+          <span class="minister-tag">彼得一世（大帝）</span>
+          <span class="minister-tag">尼基塔·佐托夫（彼得之师）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1613</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1613</span><span>缙绅会议推选米哈伊尔·罗曼诺夫，王朝开始</span></div>
+        <div class="event-item"><span class="event-year">1649</span><span>阿列克谢颁布《会议法典》，农奴制强化</span></div>
+        <div class="event-item"><span class="event-year">1689</span><span>彼得一世亲政，启动西化改革</span></div>
+        <div class="event-item"><span class="event-year">1703</span><span>兴建圣彼得堡，1709波尔塔瓦大捷</span></div>
+        <div class="event-item"><span class="event-year">1721</span><span>彼得称"全俄罗斯皇帝"，俄罗斯帝国建立</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 俄罗斯帝国 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1725</span><span>彼得一世病逝，宫廷政变频仍</span></div>
+        <div class="event-item"><span class="event-year">1762</span><span>叶卡捷琳娜二世（大帝）即位</span></div>
+        <div class="event-item"><span class="event-year">1773</span><span>普加乔夫起义（俄国史上最大农奴起义）</span></div>
+        <div class="event-item"><span class="event-year">1783</span><span>吞并克里米亚</span></div>
+        <div class="event-item"><span class="event-year">1812</span><span>拿破仑入侵，莫斯科大火，法军败退</span></div>
+        <div class="event-item"><span class="event-year">1825</span><span>十二月党人起义（贵族革命）</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1721</div></div>
+    <div class="entry-right">
+      <div class="era-card">
+        <div class="order">6</div>
+        <div class="era-name">俄罗斯帝国</div>
+        <div class="era-jp">Российская империя · Russian Empire</div>
+        <div class="era-meta">
+          <div class="meta-item"><span class="meta-label">年代：</span><span class="meta-value">1721 - 1855</span></div>
+          <div class="meta-item"><span class="meta-label">代表皇帝：</span><span class="meta-value">叶卡捷琳娜二世 · 亚历山大一世</span></div>
+        </div>
+        <div class="relation-tag">开明专制 · 领土大扩张 · 拿破仑战争 · 欧洲宪兵</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">叶卡捷琳娜二世（大帝）</span>
+          <span class="minister-tag">彼得三世（被废）</span>
+          <span class="minister-tag">普加乔夫（起义领袖）</span>
+          <span class="minister-tag">库图佐夫（1812统帅）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 帝国改革与衰落 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="era-card">
+        <div class="order">7</div>
+        <div class="era-name">帝国改革与衰落</div>
+        <div class="era-jp">Реформы и падение империи</div>
+        <div class="era-meta">
+          <div class="meta-item"><span class="meta-label">年代：</span><span class="meta-value">1855 - 1917</span></div>
+          <div class="meta-item"><span class="meta-label">代表皇帝：</span><span class="meta-value">亚历山大二世 · 尼古拉二世</span></div>
+        </div>
+        <div class="relation-tag">农奴制改革 · 革命浪潮 · 一战 · 帝制终结</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">亚历山大二世（解放者）</span>
+          <span class="minister-tag">尼古拉二世（末代沙皇）</span>
+          <span class="minister-tag">斯托雷平（改革首相）</span>
+          <span class="minister-tag negative">拉斯普京（妖僧）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1855</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1861</span><span>亚历山大二世废除农奴制</span></div>
+        <div class="event-item"><span class="event-year">1867</span><span>将阿拉斯加卖给美国</span></div>
+        <div class="event-item"><span class="event-year">1891</span><span>西伯利亚大铁路动工</span></div>
+        <div class="event-item"><span class="event-year">1904-1905</span><span>日俄战争失败，1905革命与血腥星期日</span></div>
+        <div class="event-item"><span class="event-year">1914</span><span>加入第一次世界大战</span></div>
+        <div class="event-item"><span class="event-year">1917</span><span>二月革命，尼古拉二世退位，帝制终结</span></div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 苏联时代 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1917</span><span>十月革命，布尔什维克夺权</span></div>
+        <div class="event-item"><span class="event-year">1922</span><span>苏联成立</span></div>
+        <div class="event-item"><span class="event-year">1928-1937</span><span>五年计划工业化，集体化与大清洗</span></div>
+        <div class="event-item"><span class="event-year">1941-1945</span><span>卫国战争，1945攻克柏林</span></div>
+        <div class="event-item"><span class="event-year">1956</span><span>赫鲁晓夫秘密报告，去斯大林化</span></div>
+        <div class="event-item"><span class="event-year">1985-1991</span><span>戈尔巴乔夫改革（公开性·新思维），1991苏联解体</span></div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1917</div></div>
+    <div class="entry-right">
+      <div class="era-card">
+        <div class="order">8</div>
+        <div class="era-name">苏联时代</div>
+        <div class="era-jp">Советский Союз · Soviet Union</div>
+        <div class="era-meta">
+          <div class="meta-item"><span class="meta-label">年代：</span><span class="meta-value">1917 - 1991</span></div>
+          <div class="meta-item"><span class="meta-label">领袖：</span><span class="meta-value">列宁 · 斯大林 · 戈尔巴乔夫</span></div>
+        </div>
+        <div class="relation-tag">十月革命 · 五年计划 · 卫国战争 · 冷战 · 解体</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">列宁（十月革命）</span>
+          <span class="minister-tag">斯大林</span>
+          <span class="minister-tag">赫鲁晓夫</span>
+          <span class="minister-tag">勃列日涅夫</span>
+          <span class="minister-tag">戈尔巴乔夫（末任总书记）</span>
+        </div>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- 俄罗斯联邦 -->
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="era-card">
+        <div class="order">9</div>
+        <div class="era-name">俄罗斯联邦</div>
+        <div class="era-jp">Российская Федерация · Russia</div>
+        <div class="era-meta">
+          <div class="meta-item"><span class="meta-label">年代：</span><span class="meta-value">1991 - 今</span></div>
+          <div class="meta-item"><span class="meta-label">总统：</span><span class="meta-value">叶利钦 · 普京</span></div>
+        </div>
+        <div class="relation-tag">苏联解体后新国家 · 叶利钦时代 · 普京时代</div>
+      </div>
+      <div class="ministers-panel">
+        <h4>👤 重要人物</h4>
+        <div class="minister-list">
+          <span class="minister-tag">叶利钦（首任总统）</span>
+          <span class="minister-tag">普京（现任）</span>
+          <span class="minister-tag">梅德韦杰夫（2008-2012总统）</span>
+        </div>
+      </div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1991</div></div>
+    <div class="entry-right">
+      <div class="events-panel">
+        <h4>📜 重大事件</h4>
+        <div class="event-item"><span class="event-year">1991</span><span>八一九事件，苏联解体，叶利钦当选总统</span></div>
+        <div class="event-item"><span class="event-year">1998</span><span>金融危机，卢布暴跌</span></div>
+        <div class="event-item"><span class="event-year">2000</span><span>普京就任总统，能源经济复苏</span></div>
+        <div class="event-item"><span class="event-year">2008</span><span>梅德韦杰夫任总统，普京任总理</span></div>
+        <div class="event-item"><span class="event-year">2014</span><span>克里米亚并入俄罗斯</span></div>
+        <div class="event-item"><span class="event-year">2022</span><span>俄乌冲突爆发</span></div>
+      </div>
+    </div>
+  </div></div>
+
+</div><!-- end late timeline -->
+
+<!-- ==================== 统治者世系总表 ==================== -->
+<div class="ruler-section">
+  <h2>历代统治者世系总表</h2>
+  <div class="note">基辅罗斯大公 — 莫斯科大公 — 沙皇 — 罗曼诺夫王朝 — 苏联领导人 — 联邦总统；部分早期系年与谱系存在争议</div>
+  <div class="ruler-group">
+    <h3>基辅罗斯大公（862-1240）</h3>
+    <div class="range">留里克王朝 · 系年据《往年纪事》传统纪年</div>
+    <div class="ruler-list">
+      <div class="ruler-item"><span class="no">留里克</span><span class="name">留里克</span><span class="reign">862-879（传说开基）</span></div>
+      <div class="ruler-item"><span class="no">奥列格</span><span class="name">奥列格（先见之明者）</span><span class="reign">879-912</span></div>
+      <div class="ruler-item"><span class="no">伊戈尔</span><span class="name">伊戈尔·留里科维奇</span><span class="reign">912-945</span></div>
+      <div class="ruler-item"><span class="no">斯维亚托斯拉夫</span><span class="name">斯维亚托斯拉夫一世</span><span class="reign">945-972</span></div>
+      <div class="ruler-item"><span class="no">弗拉基米尔</span><span class="name">弗拉基米尔一世（圣者）</span><span class="reign">980-1015</span></div>
+      <div class="ruler-item"><span class="no">雅罗斯拉夫</span><span class="name">雅罗斯拉夫（智者）</span><span class="reign">1019-1054</span></div>
+      <div class="ruler-item"><span class="no">莫诺马赫</span><span class="name">弗拉基米尔·莫诺马赫</span><span class="reign">1113-1125</span></div>
+    </div>
+  </div>
+
+  <div class="ruler-group">
+    <h3>莫斯科大公（1283-1547）</h3>
+    <div class="range">莫斯科公国崛起并统一罗斯诸公国</div>
+    <div class="ruler-list">
+      <div class="ruler-item"><span class="no">伊凡一世</span><span class="name">伊凡一世（钱袋）</span><span class="reign">1325-1340</span></div>
+      <div class="ruler-item"><span class="no">德米特里</span><span class="name">德米特里（顿斯科伊）</span><span class="reign">1359-1389</span></div>
+      <div class="ruler-item"><span class="no">瓦西里一世</span><span class="name">瓦西里一世</span><span class="reign">1389-1425</span></div>
+      <div class="ruler-item"><span class="no">伊凡三世</span><span class="name">伊凡三世（大帝）</span><span class="reign">1462-1505</span></div>
+      <div class="ruler-item"><span class="no">瓦西里三世</span><span class="name">瓦西里三世</span><span class="reign">1505-1533</span></div>
+    </div>
+  </div>
+
+  <div class="ruler-group">
+    <h3>沙皇·留里克王朝（1547-1598）</h3>
+    <div class="range">伊凡四世加冕"沙皇"，王朝在费奥多尔一世后绝嗣</div>
+    <div class="ruler-list">
+      <div class="ruler-item"><span class="no">伊凡四世</span><span class="name">伊凡四世（雷帝）</span><span class="reign">1533-1584（1547加冕）</span></div>
+      <div class="ruler-item"><span class="no">费奥多尔</span><span class="name">费奥多尔一世（最后留里克沙皇）</span><span class="reign">1584-1598</span></div>
+    </div>
+  </div>
+
+  <div class="ruler-group">
+    <h3>混乱时期（1598-1613）</h3>
+    <div class="range">王朝绝嗣后的内战、伪沙皇与外国干涉</div>
+    <div class="ruler-list">
+      <div class="ruler-item"><span class="no">戈东诺夫</span><span class="name">鲍里斯·戈东诺夫</span><span class="reign">1598-1605</span></div>
+      <div class="ruler-item"><span class="no">费奥多尔二世</span><span class="name">费奥多尔二世</span><span class="reign">1605</span></div>
+      <div class="ruler-item"><span class="no">伪季米特里</span><span class="name">伪季米特里一世</span><span class="reign">1605-1606</span></div>
+      <div class="ruler-item"><span class="no">瓦西里四世</span><span class="name">瓦西里四世（叔伊斯基）</span><span class="reign">1606-1610</span></div>
+    </div>
+  </div>
+
+  <div class="ruler-group">
+    <h3>沙皇/皇帝·罗曼诺夫王朝（1613-1917）</h3>
+    <div class="range">从米哈伊尔开基到尼古拉二世退位，统治三百余年</div>
+    <div class="ruler-list">
+      <div class="ruler-item"><span class="no">米哈伊尔</span><span class="name">米哈伊尔一世（王朝首帝）</span><span class="reign">1613-1645</span></div>
+      <div class="ruler-item"><span class="no">阿列克谢</span><span class="name">阿列克谢一世</span><span class="reign">1645-1676</span></div>
+      <div class="ruler-item"><span class="no">费奥多尔三世</span><span class="name">费奥多尔三世</span><span class="reign">1676-1682</span></div>
+      <div class="ruler-item"><span class="no">伊凡五世</span><span class="name">伊凡五世（与彼得共治）</span><span class="reign">1682-1696</span></div>
+      <div class="ruler-item"><span class="no">彼得一世</span><span class="name">彼得一世（大帝）★</span><span class="reign">1682-1725</span></div>
+      <div class="ruler-item"><span class="no">叶卡捷琳娜一世</span><span class="name">叶卡捷琳娜一世</span><span class="reign">1725-1727</span></div>
+      <div class="ruler-item"><span class="no">彼得二世</span><span class="name">彼得二世</span><span class="reign">1727-1730</span></div>
+      <div class="ruler-item"><span class="no">安娜</span><span class="name">安娜·伊凡诺夫娜</span><span class="reign">1730-1740</span></div>
+      <div class="ruler-item"><span class="no">伊丽莎白</span><span class="name">伊丽莎白·彼得罗夫娜</span><span class="reign">1741-1762</span></div>
+      <div class="ruler-item"><span class="no">彼得三世</span><span class="name">彼得三世（被废）</span><span class="reign">1762</span></div>
+      <div class="ruler-item"><span class="no">叶卡捷琳娜二世</span><span class="name">叶卡捷琳娜二世（大帝）★</span><span class="reign">1762-1796</span></div>
+      <div class="ruler-item"><span class="no">保罗一世</span><span class="name">保罗一世</span><span class="reign">1796-1801</span></div>
+      <div class="ruler-item"><span class="no">亚历山大一世</span><span class="name">亚历山大一世（击败拿破仑）</span><span class="reign">1801-1825</span></div>
+      <div class="ruler-item"><span class="no">尼古拉一世</span><span class="name">尼古拉一世</span><span class="reign">1825-1855</span></div>
+      <div class="ruler-item"><span class="no">亚历山大二世</span><span class="name">亚历山大二世（解放者）</span><span class="reign">1855-1881</span></div>
+      <div class="ruler-item"><span class="no">亚历山大三世</span><span class="name">亚历山大三世</span><span class="reign">1881-1894</span></div>
+      <div class="ruler-item"><span class="no">尼古拉二世</span><span class="name">尼古拉二世（末代沙皇）</span><span class="reign">1894-1917</span></div>
+    </div>
+  </div>
+
+  <div class="ruler-group">
+    <h3>苏联领导人（1917-1991）</h3>
+    <div class="range">苏共历任最高领导人</div>
+    <div class="ruler-list">
+      <div class="ruler-item"><span class="no">列宁</span><span class="name">弗拉基米尔·列宁</span><span class="reign">1917-1924</span></div>
+      <div class="ruler-item"><span class="no">斯大林</span><span class="name">约瑟夫·斯大林</span><span class="reign">1924-1953</span></div>
+      <div class="ruler-item"><span class="no">赫鲁晓夫</span><span class="name">尼基塔·赫鲁晓夫</span><span class="reign">1953-1964</span></div>
+      <div class="ruler-item"><span class="no">勃列日涅夫</span><span class="name">列昂尼德·勃列日涅夫</span><span class="reign">1964-1982</span></div>
+      <div class="ruler-item"><span class="no">安德罗波夫</span><span class="name">尤里·安德罗波夫</span><span class="reign">1982-1984</span></div>
+      <div class="ruler-item"><span class="no">契尔年科</span><span class="name">康斯坦丁·契尔年科</span><span class="reign">1984-1985</span></div>
+      <div class="ruler-item"><span class="no">戈尔巴乔夫</span><span class="name">米哈伊尔·戈尔巴乔夫（末任）</span><span class="reign">1985-1991</span></div>
+    </div>
+  </div>
+
+  <div class="ruler-group">
+    <h3>俄罗斯联邦总统（1991-今）</h3>
+    <div class="range">苏联解体后的民选总统制</div>
+    <div class="ruler-list">
+      <div class="ruler-item"><span class="no">叶利钦</span><span class="name">鲍里斯·叶利钦（首任）</span><span class="reign">1991-1999</span></div>
+      <div class="ruler-item"><span class="no">普京</span><span class="name">弗拉基米尔·普京</span><span class="reign">1999-2008 / 2012-今</span></div>
+      <div class="ruler-item"><span class="no">梅德韦杰夫</span><span class="name">德米特里·梅德韦杰夫</span><span class="reign">2008-2012</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 世系与时代变迁图 ==================== -->
+<div class="family-tree-section">
+  <h2>王朝主线与时代变迁</h2>
+  <div class="tree-container">
+    <svg class="tree-svg" viewBox="0 0 1300 880" width="1300" height="880" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="rikG" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#8b1a1a;stop-opacity:1"/><stop offset="100%" style="stop-color:#dc2626;stop-opacity:1"/>
+        </linearGradient>
+        <linearGradient id="romG" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#b45309;stop-opacity:1"/><stop offset="100%" style="stop-color:#f59e0b;stop-opacity:1"/>
+        </linearGradient>
+        <linearGradient id="eraG" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#1e3a8a;stop-opacity:1"/><stop offset="100%" style="stop-color:#3b82f6;stop-opacity:1"/>
+        </linearGradient>
+        <filter id="sh"><feDropShadow dx="1" dy="2" stdDeviation="3" flood-opacity="0.15"/></filter>
+        <marker id="aR" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#b91c1c"/></marker>
+        <marker id="aG" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#b45309"/></marker>
+        <marker id="aB" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0,8 3,0 6" fill="#1e3a8a"/></marker>
+      </defs>
+
+      <!-- 面板1：王朝主线 -->
+      <rect x="0" y="0" width="1300" height="420" fill="#fef2f2" rx="12"/>
+      <text x="20" y="30" font-size="16" fill="#8b1a1a" font-weight="bold" font-family="PingFang SC,serif">王朝主线 · 留里克 → 罗曼诺夫（节选重要君主）</text>
+
+      <g font-family="PingFang SC,serif">
+        <rect x="30" y="70" width="92" height="52" rx="8" fill="url(#rikG)" filter="url(#sh)"/>
+        <text x="76" y="91" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">留里克</text>
+        <text x="76" y="108" text-anchor="middle" fill="#fecaca" font-size="8">862 传说开基</text>
+
+        <rect x="127" y="70" width="92" height="52" rx="8" fill="url(#rikG)" filter="url(#sh)"/>
+        <text x="173" y="91" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">弗拉基米尔</text>
+        <text x="173" y="108" text-anchor="middle" fill="#fecaca" font-size="8">988 罗斯受洗</text>
+
+        <rect x="224" y="70" width="92" height="52" rx="8" fill="url(#rikG)" filter="url(#sh)"/>
+        <text x="270" y="91" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">雅罗斯拉夫</text>
+        <text x="270" y="108" text-anchor="middle" fill="#fecaca" font-size="8">1019-1054 智者</text>
+
+        <rect x="321" y="70" width="92" height="52" rx="8" fill="url(#rikG)" filter="url(#sh)"/>
+        <text x="367" y="91" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">伊凡一世</text>
+        <text x="367" y="108" text-anchor="middle" fill="#fecaca" font-size="8">1325 钱袋</text>
+
+        <rect x="418" y="70" width="92" height="52" rx="8" fill="url(#rikG)" filter="url(#sh)"/>
+        <text x="464" y="91" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">伊凡三世</text>
+        <text x="464" y="108" text-anchor="middle" fill="#fecaca" font-size="8">1462-1505 大帝</text>
+
+        <rect x="515" y="70" width="92" height="52" rx="8" fill="url(#rikG)" filter="url(#sh)"/>
+        <text x="561" y="91" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">伊凡四世</text>
+        <text x="561" y="108" text-anchor="middle" fill="#fecaca" font-size="8">1547 雷帝</text>
+
+        <rect x="612" y="70" width="92" height="52" rx="8" fill="url(#rikG)" filter="url(#sh)"/>
+        <text x="658" y="91" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">费奥多尔</text>
+        <text x="658" y="108" text-anchor="middle" fill="#fecaca" font-size="8">1584-1598 绝嗣</text>
+
+        <rect x="709" y="70" width="92" height="52" rx="8" fill="url(#romG)" filter="url(#sh)"/>
+        <text x="755" y="91" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">米哈伊尔</text>
+        <text x="755" y="108" text-anchor="middle" fill="#fde68a" font-size="8">1613 罗曼诺夫</text>
+
+        <rect x="806" y="70" width="92" height="52" rx="8" fill="url(#romG)" filter="url(#sh)"/>
+        <text x="852" y="91" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">彼得一世</text>
+        <text x="852" y="108" text-anchor="middle" fill="#fde68a" font-size="8">1689-1725 大帝</text>
+
+        <rect x="903" y="70" width="92" height="52" rx="8" fill="url(#romG)" filter="url(#sh)"/>
+        <text x="949" y="91" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">叶卡捷琳娜</text>
+        <text x="949" y="108" text-anchor="middle" fill="#fde68a" font-size="8">1762-1796 二世</text>
+
+        <rect x="1000" y="70" width="92" height="52" rx="8" fill="url(#romG)" filter="url(#sh)"/>
+        <text x="1046" y="91" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">亚历山大一世</text>
+        <text x="1046" y="108" text-anchor="middle" fill="#fde68a" font-size="8">1801-1825</text>
+
+        <rect x="1097" y="70" width="92" height="52" rx="8" fill="url(#romG)" filter="url(#sh)"/>
+        <text x="1143" y="91" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">亚历山大二世</text>
+        <text x="1143" y="108" text-anchor="middle" fill="#fde68a" font-size="8">1855-1881 解放者</text>
+
+        <rect x="1194" y="70" width="92" height="52" rx="8" fill="url(#romG)" filter="url(#sh)"/>
+        <text x="1240" y="91" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">尼古拉二世</text>
+        <text x="1240" y="108" text-anchor="middle" fill="#fde68a" font-size="8">1894-1917 末代</text>
+
+        <line x1="122" y1="96" x2="125" y2="96" stroke="#b91c1c" stroke-width="2" marker-end="url(#aR)"/>
+        <line x1="219" y1="96" x2="222" y2="96" stroke="#b91c1c" stroke-width="2" marker-end="url(#aR)"/>
+        <line x1="316" y1="96" x2="319" y2="96" stroke="#b91c1c" stroke-width="2" marker-end="url(#aR)"/>
+        <line x1="413" y1="96" x2="416" y2="96" stroke="#b91c1c" stroke-width="2" marker-end="url(#aR)"/>
+        <line x1="510" y1="96" x2="513" y2="96" stroke="#b91c1c" stroke-width="2" marker-end="url(#aR)"/>
+        <line x1="607" y1="96" x2="610" y2="96" stroke="#b91c1c" stroke-width="2" marker-end="url(#aR)"/>
+        <line x1="704" y1="96" x2="707" y2="96" stroke="#b45309" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#aG)"/>
+        <line x1="801" y1="96" x2="804" y2="96" stroke="#b45309" stroke-width="2" marker-end="url(#aG)"/>
+        <line x1="898" y1="96" x2="901" y2="96" stroke="#b45309" stroke-width="2" marker-end="url(#aG)"/>
+        <line x1="995" y1="96" x2="998" y2="96" stroke="#b45309" stroke-width="2" marker-end="url(#aG)"/>
+        <line x1="1092" y1="96" x2="1095" y2="96" stroke="#b45309" stroke-width="2" marker-end="url(#aG)"/>
+        <line x1="1189" y1="96" x2="1192" y2="96" stroke="#b45309" stroke-width="2" marker-end="url(#aG)"/>
+      </g>
+
+      <!-- 转折标注 -->
+      <g font-family="PingFang SC,serif" fill="#7f1d1d">
+        <text x="173" y="150" text-anchor="middle" font-size="10" font-weight="bold">988 罗斯受洗（东正教）</text>
+        <text x="367" y="150" text-anchor="middle" font-size="10" font-weight="bold">1240-1480 蒙古统治</text>
+        <text x="464" y="150" text-anchor="middle" font-size="10" font-weight="bold">1480 摆脱蒙古</text>
+        <text x="658" y="150" text-anchor="middle" font-size="10" font-weight="bold">1598-1613 混乱时期</text>
+        <text x="852" y="150" text-anchor="middle" font-size="10" font-weight="bold">1721 帝国成立</text>
+        <text x="1143" y="150" text-anchor="middle" font-size="10" font-weight="bold">1861 废农奴制</text>
+        <text x="1240" y="150" text-anchor="middle" font-size="10" font-weight="bold">1917 帝制终结</text>
+      </g>
+      <line x1="20" y1="170" x2="1280" y2="170" stroke="#b91c1c" stroke-width="1.5" stroke-dasharray="10,5"/>
+      <text x="650" y="165" text-anchor="middle" fill="#8b1a1a" font-size="11" font-weight="bold" font-family="PingFang SC,serif">── 留里克王朝（红）→ 混乱时期 → 罗曼诺夫王朝（金）· 1917年后为苏联与联邦 ──</text>
+      <text x="650" y="200" text-anchor="middle" fill="#6b7280" font-size="11" font-family="PingFang SC,serif">费奥多尔一世无嗣，留里克王朝终结；1613年缙绅会议推选米哈伊尔·罗曼诺夫，开启统治三百余年的罗曼诺夫王朝。</text>
+      <text x="650" y="222" text-anchor="middle" fill="#6b7280" font-size="11" font-family="PingFang SC,serif">1917年二月革命尼古拉二世退位，罗曼诺夫王朝结束；其后为苏联七十四年与今日的俄罗斯联邦。</text>
+
+      <!-- 面板2：时代变迁 -->
+      <rect x="0" y="440" width="1300" height="420" fill="#eff6ff" rx="12"/>
+      <text x="20" y="470" font-size="16" fill="#1e3a8a" font-weight="bold" font-family="PingFang SC,serif">时代变迁 · 基辅罗斯 → 蒙古 → 莫斯科 → 沙皇/帝国 → 苏联 → 联邦</text>
+
+      <g font-family="PingFang SC,serif">
+        <rect x="40" y="520" width="180" height="64" rx="8" fill="url(#eraG)" filter="url(#sh)"/>
+        <text x="130" y="543" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">基辅罗斯</text>
+        <text x="130" y="562" text-anchor="middle" fill="#bfdbfe" font-size="9">862-1240 · 留里克王朝</text>
+
+        <rect x="250" y="520" width="180" height="64" rx="8" fill="url(#eraG)" filter="url(#sh)"/>
+        <text x="340" y="543" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">金帐汗国统治</text>
+        <text x="340" y="562" text-anchor="middle" fill="#bfdbfe" font-size="9">1240-1480 · 蒙古</text>
+
+        <rect x="460" y="520" width="180" height="64" rx="8" fill="url(#eraG)" filter="url(#sh)"/>
+        <text x="550" y="543" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">莫斯科公国</text>
+        <text x="550" y="562" text-anchor="middle" fill="#bfdbfe" font-size="9">1480-1547 · 统一集权</text>
+
+        <rect x="670" y="520" width="180" height="64" rx="8" fill="url(#eraG)" filter="url(#sh)"/>
+        <text x="760" y="543" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">沙皇俄国</text>
+        <text x="760" y="562" text-anchor="middle" fill="#bfdbfe" font-size="9">1547-1721 · 专制扩张</text>
+
+        <rect x="880" y="520" width="180" height="64" rx="8" fill="url(#eraG)" filter="url(#sh)"/>
+        <text x="970" y="543" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">俄罗斯帝国</text>
+        <text x="970" y="562" text-anchor="middle" fill="#bfdbfe" font-size="9">1721-1917 · 改革与革命</text>
+
+        <rect x="1090" y="520" width="180" height="64" rx="8" fill="url(#eraG)" filter="url(#sh)"/>
+        <text x="1180" y="543" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">苏联·联邦</text>
+        <text x="1180" y="562" text-anchor="middle" fill="#bfdbfe" font-size="9">1917-今 · 苏共·总统制</text>
+
+        <line x1="220" y1="552" x2="248" y2="552" stroke="#1e3a8a" stroke-width="2" marker-end="url(#aB)"/>
+        <line x1="430" y1="552" x2="458" y2="552" stroke="#1e3a8a" stroke-width="2" marker-end="url(#aB)"/>
+        <line x1="640" y1="552" x2="668" y2="552" stroke="#1e3a8a" stroke-width="2" marker-end="url(#aB)"/>
+        <line x1="850" y1="552" x2="878" y2="552" stroke="#1e3a8a" stroke-width="2" marker-end="url(#aB)"/>
+        <line x1="1060" y1="552" x2="1088" y2="552" stroke="#1e3a8a" stroke-width="2" marker-end="url(#aB)"/>
+      </g>
+
+      <!-- 说明行 -->
+      <g font-family="PingFang SC,serif" fill="#6b7280">
+        <text x="130" y="616" text-anchor="middle" font-size="9">罗斯受洗 · 编年史传统</text>
+        <text x="340" y="616" text-anchor="middle" font-size="9">莫斯科缴纳贡赋而崛起</text>
+        <text x="550" y="616" text-anchor="middle" font-size="9">伊凡三世统一罗斯</text>
+        <text x="760" y="616" text-anchor="middle" font-size="9">伊凡雷帝 · 罗曼诺夫</text>
+        <text x="970" y="616" text-anchor="middle" font-size="9">彼得大帝 → 叶卡捷琳娜</text>
+        <text x="1180" y="616" text-anchor="middle" font-size="9">十月革命 → 解体 → 联邦</text>
+      </g>
+      <text x="650" y="660" text-anchor="middle" fill="#7f1d1d" font-size="11" font-weight="bold" font-family="PingFang SC,serif">1917年二月革命终结帝制，同年十月革命建立苏联；1991年苏联解体，俄罗斯联邦继承其国际地位。</text>
+
+      <!-- 图例 -->
+      <g font-family="PingFang SC,serif">
+        <rect x="40" y="720" width="1220" height="110" rx="8" fill="#fff" stroke="#ccc"/>
+        <text x="60" y="744" font-size="13" font-weight="bold" fill="#333">图例</text>
+        <rect x="60" y="756" width="15" height="12" rx="3" fill="url(#rikG)"/>
+        <text x="85" y="767" font-size="10" fill="#333">留里克王朝（862-1598）</text>
+        <rect x="280" y="756" width="15" height="12" rx="3" fill="url(#romG)"/>
+        <text x="305" y="767" font-size="10" fill="#333">罗曼诺夫王朝（1613-1917）</text>
+        <rect x="520" y="756" width="15" height="12" rx="3" fill="url(#eraG)"/>
+        <text x="545" y="767" font-size="10" fill="#333">时代分期</text>
+        <line x1="760" y1="762" x2="800" y2="762" stroke="#b45309" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#aG)"/>
+        <text x="810" y="767" font-size="10" fill="#333">王朝更替（绝嗣/推选）</text>
+        <text x="60" y="800" font-size="11" font-weight="bold" fill="#444">关键年份</text>
+        <text x="60" y="818" font-size="10" fill="#555">862 留里克开基 · 988 罗斯受洗 · 1240 蒙古征服 · 1380 库里科沃之战 · 1480 摆脱蒙古 · 1547 伊凡四世加冕沙皇</text>
+        <text x="60" y="836" font-size="10" fill="#555">1598 留里克绝嗣 · 1613 罗曼诺夫开基 · 1689 彼得亲政 · 1721 帝国 · 1812 拿破仑败退 · 1861 废农奴 · 1917 二月革命与十月革命 · 1991 苏联解体</text>
+      </g>
+    </svg>
+  </div>
+</div>
+
+</div><!-- end container -->
+
+<div class="footer">
+  <p>俄罗斯历史自862年留里克王朝肇始，历经基辅罗斯、蒙古统治、莫斯科公国统一，1547年伊凡四世加冕为沙皇，1721年彼得大帝改称皇帝建立帝国。</p>
+  <p style="margin-top:8px;">1613年罗曼诺夫王朝建立，统治至1917年二月革命尼古拉二世退位；此后苏联七十四年，1991年解体后为俄罗斯联邦。</p>
+  <p style="margin-top:8px;">彼得大帝西化改革、叶卡捷琳娜二世"开明专制"、亚历山大二世废除农奴制、十月革命与卫国战争，皆为世界历史的重要篇章。</p>
+  <p style="margin-top:8px;">数据来源：《俄国史》等权威著作 · 早期基辅罗斯系年为编年史传统纪年 · 仅供学习参考</p>
+</div>
+
+<script>
+(function(){
+  const eras = [
+    { name:'基辅罗斯', start:862, end:1240, type:'early', note:'留里克王朝 · 罗斯受洗 · 基辅陷落' },
+    { name:'蒙古统治', start:1240, end:1480, type:'early', note:'金帐汗国 · 莫斯科趁势崛起' },
+    { name:'莫斯科公国', start:1480, end:1547, type:'early', note:'伊凡三世统一罗斯 · 中央集权' },
+    { name:'沙皇俄国', start:1547, end:1721, type:'late', note:'伊凡雷帝 · 混乱时期 · 罗曼诺夫 · 彼得大帝' },
+    { name:'俄罗斯帝国', start:1721, end:1917, type:'late', note:'叶卡捷琳娜二世 · 拿破仑战争 · 农奴制改革 · 革命' },
+    { name:'苏联', start:1917, end:1991, type:'late', note:'十月革命 · 卫国战争 · 冷战 · 解体' },
+    { name:'俄罗斯联邦', start:1991, end:2024, type:'late', note:'叶利钦时代 · 普京时代' },
+  ];
+
+  const minYear=800, maxYear=2030, totalYears=maxYear-minYear;
+  const colors = { early:'#8b1a1a', late:'#1e3a8a' };
+
+  const container = document.getElementById('ganttChart');
+  let headerHTML = '<div class="gantt-header"><div class="gantt-label" style="width:130px">年份</div><div class="gantt-bar-area" style="position:relative;height:30px;">';
+  for(let y=900;y<=2000;y+=100){
+    headerHTML += `<span class="gantt-year-tick" style="left:${((y-minYear)/totalYears)*100}%">${y}</span>`;
+  }
+  headerHTML += '</div></div>';
+  container.innerHTML = headerHTML;
+
+  let bodyHTML = '<div class="gantt-body">';
+  eras.forEach(era => {
+    const color = colors[era.type];
+    const left = ((era.start-minYear)/totalYears)*100;
+    const width = Math.max(((era.end-era.start)/totalYears)*100, 0.5);
+    bodyHTML += `<div class="gantt-row"><div class="gantt-label" style="color:${color};width:130px">${era.name}</div><div class="gantt-bar-area"><div class="gantt-bar" style="left:${left}%;width:${width}%;background:${color};"><div class="tooltip">${era.name} ${era.start}-${era.end}<br>${era.note}</div></div></div></div>`;
+  });
+  bodyHTML += '</div>';
+  container.innerHTML += bodyHTML;
+})();
+</script>
+</body>
+</html>

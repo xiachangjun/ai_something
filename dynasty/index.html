@@ -331,6 +331,12 @@
   .card.japan .banner-latin { color: #fbbf24; }
   .card.japan .meta-chip { border-color: #b91c1c40; color: #f87171; }
 
+  .card.russia::before { background: linear-gradient(90deg, #8b1a1a, #1e3a8a); }
+  .card.russia .card-banner { background: linear-gradient(135deg, #3b0a0a, #8b1a1a, #1e3a8a); }
+  .card.russia .banner-title { color: #fef2f2; }
+  .card.russia .banner-latin { color: #fbbf24; }
+  .card.russia .meta-chip { border-color: #8b1a1a40; color: #f87171; }
+
   /* Footer */
   .footer {
     text-align: center;
@@ -375,6 +381,10 @@
     <div class="timeline-group">
       <div class="timeline-group-label">日 本</div>
       <div class="timeline-track" id="trackJapan"></div>
+    </div>
+    <div class="timeline-group">
+      <div class="timeline-group-label">俄 国</div>
+      <div class="timeline-track" id="trackRussia"></div>
     </div>
     <div class="timeline-scale" id="timelineScale"></div>
   </div>
@@ -606,6 +616,34 @@
       </div>
     </a>
 
+    <!-- 俄国 -->
+    <a href="russia-history.html" class="card russia">
+      <div class="card-banner">
+        <div class="banner-icon">🦅</div>
+        <div class="banner-title">俄 国</div>
+        <div class="banner-latin">Россия · Russia</div>
+      </div>
+      <div class="card-body">
+        <h2>俄罗斯历史时代与沙皇世系简表</h2>
+        <div class="card-meta">
+          <div class="meta-chip">862 - 今</div>
+          <div class="meta-chip">1160+年</div>
+          <div class="meta-chip">40+位统治者</div>
+        </div>
+        <div class="card-desc">
+          从基辅罗斯留里克王朝到今日俄罗斯联邦：罗斯受洗、蒙古统治、莫斯科统一，伊凡雷帝加冕沙皇，
+          罗曼诺夫王朝三百余年，彼得与叶卡捷琳娜的帝国时代，十月革命与苏联，直至解体后的联邦。
+        </div>
+        <div class="card-tags">
+          <span>罗斯受洗</span><span>彼得大帝</span><span>叶卡捷琳娜二世</span><span>罗曼诺夫王朝</span><span>十月革命</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <span class="enter-text">查看详情</span>
+        <span class="arrow">→</span>
+      </div>
+    </a>
+
     <!-- 清朝 -->
     <a href="qing-dynasty.html" class="card qing">
       <div class="card-banner">
@@ -638,7 +676,7 @@
 
   <div class="footer">
     <p>数据来源：各朝代正史及权威历史著作 · 仅供学习参考</p>
-    <p style="margin-top:6px;color:#404040;">共 9 份王朝简表 · 持续更新中</p>
+    <p style="margin-top:6px;color:#404040;">共 10 份王朝简表 · 持续更新中</p>
   </div>
 
 </div>
@@ -667,6 +705,11 @@
       { name:'大和-平安', full:'日本古代', years:'250 - 1185', dur:'935年', start:250, end:1185, href:'japan-history.html', grad:'linear-gradient(90deg,#b91c1c,#ef4444)', note:'大和·飞鸟·奈良·平安 · 天皇亲政→摄关院政' },
       { name:'镰仓-江户', full:'武家时代', years:'1185 - 1868', dur:'683年', start:1185, end:1868, href:'japan-history.html', grad:'linear-gradient(90deg,#7f1d1d,#b91c1c)', note:'镰仓·室町·安土桃山·江户 · 幕府政治' },
       { name:'明治-令和', full:'近现代日本', years:'1868 - 2022', dur:'154年', start:1868, end:2022, href:'japan-history.html', grad:'linear-gradient(90deg,#1e3a8a,#3b82f6)', note:'明治维新 · 二战 · 和平宪法 · 平成令和' }
+    ],
+    russia: [
+      { name:'基辅-莫斯科', full:'基辅罗斯与莫斯科', years:'862 - 1547', dur:'685年', start:862, end:1547, href:'russia-history.html', grad:'linear-gradient(90deg,#8b1a1a,#dc2626)', note:'留里克王朝 · 罗斯受洗 · 蒙古统治 · 莫斯科统一' },
+      { name:'沙皇-帝国', full:'沙皇俄国与帝国', years:'1547 - 1917', dur:'370年', start:1547, end:1917, href:'russia-history.html', grad:'linear-gradient(90deg,#b45309,#f59e0b)', note:'伊凡雷帝 · 罗曼诺夫王朝 · 彼得大帝 · 叶卡捷琳娜二世' },
+      { name:'苏联-联邦', full:'苏联与俄罗斯联邦', years:'1917 - 2022', dur:'105年', start:1917, end:2022, href:'russia-history.html', grad:'linear-gradient(90deg,#1e3a8a,#3b82f6)', note:'十月革命 · 卫国战争 · 苏联解体 · 普京时代' }
     ]
   };
 
