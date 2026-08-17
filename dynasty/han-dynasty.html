@@ -476,7 +476,7 @@
     { name:'汉少帝', birth:176, death:190, reigns:[{s:189,e:189}], type:'late' },
     { name:'汉献帝', birth:181, death:234, reigns:[{s:189,e:220}], type:'late' },
   ];
-  const fmtR = y => y<0 ? '前'+(-y) : y;
+  const fmtY = y => y<0 ? '前'+(-y) : y;
   const minYear=-260, maxYear=240, totalYears=maxYear-minYear;
   const colors = { early:'#b91c1c', late:'#7c2d12' };
   const container = document.getElementById('ganttChart');
@@ -495,9 +495,9 @@
     emp.reigns.forEach(r => {
       const rl = ((r.s-minYear)/totalYears)*100;
       const rw = Math.max(((r.e-r.s)/totalYears)*100, 0.5);
-      rb += `<div class="gantt-bar reign-bar" style="left:${rl}%;width:${rw}%;background:${c};"><div class="tooltip">在位：${fmtR(r.s)}-${fmtR(r.e)}</div></div>`;
+      rb += `<div class="gantt-bar reign-bar" style="left:${rl}%;width:${rw}%;background:${c};"><div class="tooltip">在位：${fmtY(r.s)}-${fmtY(r.e)}（${r.e-r.s}年）</div></div>`;
     });
-    bodyHTML += `<div class="gantt-row"><div class="gantt-label" style="color:${c};width:150px">${emp.name}</div><div class="gantt-bar-area"><div class="gantt-bar" style="left:${ll}%;width:${lw}%;background:${c};"><div class="tooltip">生卒：${fmtR(emp.birth)}-${fmtR(emp.death)}</div></div>${rb}</div></div>`;
+    bodyHTML += `<div class="gantt-row"><div class="gantt-label" style="color:${c};width:150px">${emp.name}</div><div class="gantt-bar-area"><div class="gantt-bar" style="left:${ll}%;width:${lw}%;background:${c};"><div class="tooltip">生卒：${fmtY(emp.birth)}-${fmtY(emp.death)}（${emp.death-emp.birth}岁）<br>在位：${fmtY(emp.reigns[0].s)}-${fmtY(emp.reigns[0].e)}</div></div>${rb}</div></div>`;
   });
   bodyHTML += '</div>';
   container.innerHTML += bodyHTML;
