@@ -63,7 +63,8 @@
   .gantt-row{display:flex;align-items:center;height:32px;margin:2px 0}
   .gantt-label{width:130px;font-size:12px;font-weight:600;text-align:right;padding-right:12px;flex-shrink:0;white-space:nowrap}
   .gantt-bar-area{flex:1;position:relative;height:100%}
-  .gantt-bar{position:absolute;height:12px;top:50%;transform:translateY(-50%);border-radius:6px;opacity:.85;cursor:pointer}
+  .gantt-bar{position:absolute;height:10px;top:50%;transform:translateY(-50%);border-radius:5px;opacity:.3;cursor:pointer}
+  .gantt-bar.reign-bar{height:20px;opacity:.85;z-index:1}
   .gantt-bar:hover{opacity:1;filter:brightness(1.1)}
   .gantt-bar .tooltip{display:none;position:absolute;bottom:calc(100% + 5px);left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:4px 8px;border-radius:4px;font-size:11px;white-space:nowrap;z-index:10}
   .gantt-bar:hover .tooltip{display:block}
@@ -695,10 +696,11 @@
     let rb = '';
     emp.reigns.forEach(r => {
       const rl = ((r.s-minYear)/totalYears)*100;
-      const rw = Math.max(((r.e-r.s)/totalYears)*100, 0.5);
-      rb += `<div class="gantt-bar reign-bar" style="left:${rl}%;width:${rw}%;background:${c};"><div class="tooltip">在位：${fmtY(r.s)}-${fmtY(r.e)}（${r.e-r.s}年）</div></div>`;
+      const rw = Math.max(((r.e-r.s)/totalYears)*100, 0.4);
+      const totalReign = emp.reigns.reduce((a,b)=>a+(b.e-b.s),0);
+      rb += `<div class="gantt-bar reign-bar" style="left:${rl}%;width:${rw}%;background:${c};"><div class="tooltip">在位：${fmtY(r.s)}-${fmtY(r.e)}（共${totalReign}年）</div></div>`;
     });
-    bodyHTML += `<div class="gantt-row"><div class="gantt-label" style="color:${c};width:130px">${emp.name}</div><div class="gantt-bar-area"><div class="gantt-bar" style="left:${ll}%;width:${lw}%;background:${c};"><div class="tooltip">生卒：${fmtY(emp.birth)}-${fmtY(emp.death)}（${emp.death-emp.birth}岁）<br>在位：${fmtY(emp.reigns[0].s)}-${fmtY(emp.reigns[0].e)}</div></div>${rb}</div></div>`;
+    bodyHTML += `<div class="gantt-row"><div class="gantt-label" style="color:${c};width:130px">${emp.name}</div><div class="gantt-bar-area"><div class="gantt-bar" style="left:${ll}%;width:${lw}%;background:${c};"><div class="tooltip">生卒：${fmtY(emp.birth)}-${fmtY(emp.death)}（${emp.death-emp.birth}岁）</div></div>${rb}</div></div>`;
   });
   bodyHTML += '</div>';
   container.innerHTML += bodyHTML;
