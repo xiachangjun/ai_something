@@ -11,6 +11,14 @@
         ],
         "createdAt": "2026-11-03T06:18:22.444Z",
         "reason": "Agent: toolshed pixel panels use a 4px hard offset shadow, same as the existing tool pages"
+      },
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-11-03T08:16:57.099Z"
       }
     ]
   }
