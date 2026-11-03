@@ -317,43 +317,45 @@ h1 {
 .del { padding: 8px 12px; background: var(--white); }
 .del.is-armed { background: var(--red); }
 
-.jump {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 14px;
-}
-.jump button {
-  min-width: 52px;
-  min-height: 40px;
-  padding: 4px 8px;
-  border: 4px solid var(--ink);
-  background: var(--white);
-  font-weight: 900;
-  cursor: pointer;
-  box-shadow: 3px 3px 0 var(--ink);
-}
-.jump button.is-on { background: var(--yellow); }
-
 .year {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  align-items: stretch;
 }
 
 .panel {
   position: relative;
+  width: 100%;
   border: 4px solid var(--ink);
   background: var(--paper);
   box-shadow: 8px 8px 0 var(--ink);
   padding: 12px;
+  text-align: left;
   transition: transform 100ms, box-shadow 100ms;
 }
-.panel:hover {
-  transform: translateY(-8px);
-  box-shadow: 12px 16px 0 var(--ink);
+.panel.is-open {
+  grid-column: 1 / -1;
+  background: #fff4a8;
 }
-.panel.is-selected-month { background: #fff4a8; }
+.panel.is-folded {
+  appearance: none;
+  aspect-ratio: 1;
+  min-height: 0;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+.panel.is-folded:hover {
+  transform: scale(1.06) rotate(-2deg);
+  box-shadow: 12px 16px 0 var(--ink);
+  z-index: 2;
+}
+.panel.is-folded:active {
+  transform: translate(4px, 4px);
+  box-shadow: none;
+}
 .panel .halftone {
   position: absolute;
   inset: 0;
@@ -363,7 +365,7 @@ h1 {
   background-size: 4px 4px;
   transition: opacity 100ms;
 }
-.panel:hover .halftone { opacity: 0.12; }
+.panel.is-folded:hover .halftone { opacity: 0.12; }
 .stamp {
   position: absolute;
   top: 8px;
@@ -380,7 +382,7 @@ h1 {
   transition: transform 100ms;
   pointer-events: none;
 }
-.panel:hover .stamp { transform: scale(1) rotate(-8deg); }
+.panel.is-folded:hover .stamp { transform: scale(1) rotate(-8deg); }
 
 .month-head {
   display: flex;
@@ -412,6 +414,18 @@ h1 {
   line-height: 0.8;
 }
 .pair span { font-weight: 900; font-size: 1.05rem; }
+.panel.is-folded .month-head h2 { font-size: clamp(1.05rem, 2.6vw, 1.45rem); }
+.panel.is-folded .pair {
+  flex: 1;
+  margin: 6px 0 0;
+  min-height: 0;
+}
+.panel.is-folded .pair div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.panel.is-folded .pair b { font-size: clamp(2.4rem, 8vw, 4.4rem); }
 
 .week, .days {
   display: grid;
@@ -466,10 +480,11 @@ body:has(#kindClimb:checked) #climbFields { display: block; }
 .toast.show { opacity: 1; }
 
 @media (max-width: 900px) {
-  .year { grid-template-columns: 1fr 1fr; }
+  .year { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 @media (max-width: 700px) {
-  .board, .form-grid, .year { grid-template-columns: 1fr; }
+  .board, .form-grid { grid-template-columns: 1fr; }
+  .year { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .year-row {
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
@@ -575,7 +590,6 @@ body:has(#kindClimb:checked) #climbFields { display: block; }
       <div class="entries" id="dayEntries"></div>
     </section>
 
-    <nav class="jump" id="monthJump" aria-label="月份"></nav>
     <div class="year" id="yearGrid"></div>
   </div>
 </div>
@@ -730,24 +744,13 @@ body:has(#kindClimb:checked) #climbFields { display: block; }
     });
   }
 
-  function renderJump() {
-    var nav = document.getElementById('monthJump');
-    var current = selected.slice(5, 7);
-    if (!nav.childElementCount) {
-      MONTHS.forEach(function (name, index) {
-        var btn = document.createElement('button');
-        btn.type = 'button';
-        btn.dataset.month = pad(index + 1);
-        btn.textContent = String(index + 1);
-        nav.appendChild(btn);
-      });
-    }
-    Array.prototype.forEach.call(nav.children, function (btn) {
-      var on = btn.dataset.month === current;
-      btn.classList.toggle('is-on', on);
-      if (on) btn.setAttribute('aria-current', 'true');
-      else btn.removeAttribute('aria-current');
-    });
+  function pickDateInMonth(year, month) {
+    var today = todayISO();
+    if (Number(today.slice(0, 4)) === year && Number(today.slice(5, 7)) === month + 1) return today;
+    var day = Number(selected.slice(8, 10));
+    var last = new Date(year, month + 1, 0).getDate();
+    if (day > last) day = last;
+    return year + '-' + pad(month + 1) + '-' + pad(day);
   }
 
   function dayLabel(value, list) {
@@ -762,11 +765,12 @@ body:has(#kindClimb:checked) #climbFields { display: block; }
     return text;
   }
 
-  function renderMonth(year, month) {
-    var article = document.createElement('article');
-    article.className = 'panel';
+  function renderMonth(year, month, open) {
+    var article = document.createElement(open ? 'article' : 'button');
+    article.className = 'panel ' + (open ? 'is-open' : 'is-folded');
     article.id = 'month-' + pad(month + 1);
-    if (selected.slice(0, 7) === year + '-' + pad(month + 1)) article.classList.add('is-selected-month');
+    article.dataset.month = pad(month + 1);
+    if (!open) article.type = 'button';
 
     var dots = document.createElement('span');
     dots.className = 'halftone';
@@ -781,8 +785,8 @@ body:has(#kindClimb:checked) #climbFields { display: block; }
     var h2 = document.createElement('h2');
     h2.textContent = MONTHS[month];
     head.appendChild(h2);
-    var now = new Date();
-    if (now.getFullYear() === year && now.getMonth() === month) {
+    var isNow = new Date().getFullYear() === year && new Date().getMonth() === month;
+    if (isNow) {
       var badge = document.createElement('span');
       badge.className = 'now';
       badge.textContent = '本月';
@@ -790,6 +794,12 @@ body:has(#kindClimb:checked) #climbFields { display: block; }
     }
 
     var stats = summarize(forMonth(year, month));
+    if (open) {
+      article.setAttribute('aria-expanded', 'true');
+    } else {
+      article.setAttribute('aria-expanded', 'false');
+      article.setAttribute('aria-label', MONTHS[month] + (isNow ? ' 本月' : '') + ' 攀' + stats.climb + ' 氧' + stats.sessions);
+    }
     var pair = document.createElement('div');
     pair.className = 'pair';
     [['climb', '攀', stats.climb], ['cardio', '氧', stats.sessions]].forEach(function (item) {
@@ -860,7 +870,8 @@ body:has(#kindClimb:checked) #climbFields { display: block; }
       btn.append(num, marks);
       days.appendChild(btn);
     }
-    article.append(dots, stamp, head, pair, week, days);
+    article.append(dots, stamp, head, pair);
+    if (open) article.append(week, days);
     return article;
   }
 
@@ -907,8 +918,13 @@ body:has(#kindClimb:checked) #climbFields { display: block; }
     renderBoard();
     var grid = document.getElementById('yearGrid');
     grid.replaceChildren();
-    for (var month = 0; month < 12; month++) grid.appendChild(renderMonth(viewYear(), month));
-    renderJump();
+    var year = viewYear();
+    var open = Number(selected.slice(5, 7)) - 1;
+    grid.appendChild(renderMonth(year, open, true));
+    for (var month = 0; month < 12; month++) {
+      if (month === open) continue;
+      grid.appendChild(renderMonth(year, month, false));
+    }
     renderDay();
     syncForm();
   }
@@ -1097,23 +1113,20 @@ body:has(#kindClimb:checked) #climbFields { display: block; }
   minutesInput.addEventListener('input', clearError);
   countInput.addEventListener('input', clearError);
   document.getElementById('yearGrid').addEventListener('click', function (event) {
-    var btn = event.target.closest('[data-date]');
-    if (!btn) return;
-    selectDate(btn.dataset.date, false);
+    var day = event.target.closest('[data-date]');
+    if (day) {
+      selectDate(day.dataset.date, false);
+      return;
+    }
+    var fold = event.target.closest('.is-folded[data-month]');
+    if (!fold) return;
+    selectDate(pickDateInMonth(viewYear(), Number(fold.dataset.month) - 1), true);
   });
   document.getElementById('dayEntries').addEventListener('click', function (event) {
     var edit = event.target.closest('[data-edit]');
     if (edit) { startEdit(edit.dataset.edit); return; }
     var del = event.target.closest('[data-del]');
     if (del) removeEntry(del.dataset.del);
-  });
-  document.getElementById('monthJump').addEventListener('click', function (event) {
-    var btn = event.target.closest('[data-month]');
-    if (!btn) return;
-    var el = document.getElementById('month-' + btn.dataset.month);
-    if (!el) return;
-    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
   });
   window.addEventListener('hashchange', function () {
     var value = location.hash.replace('#', '');
