@@ -202,8 +202,14 @@ setInterval(function() {
   db.prepare('DELETE FROM login_attempts WHERE attempt_time < ?').run(cutoff);
 }, CLEANUP_INTERVAL);
 
+var siteRoot = path.join(__dirname, '..');
+app.use(function (req, res, next) {
+  if (req.path === '/api' || req.path.indexOf('/api/') === 0) return next();
+  express.static(siteRoot, { index: 'index.html', dotfiles: 'deny' })(req, res, next);
+});
+
 // 启动
 app.listen(PORT, '127.0.0.1', function() {
-  console.log('Birthday API running on http://127.0.0.1:' + PORT);
+  console.log('Open http://127.0.0.1:' + PORT + '/');
   console.log('Token: ' + API_TOKEN);
 });
