@@ -2,433 +2,672 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>🎂 生日记录</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>生日记录</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=ZCOOL+KuaiLe&display=swap">
 <script src="https://cdn.jsdelivr.net/npm/solar2lunar@2.0.5/dist/index.min.js"></script>
 <script>window.solar2lunar = window.returnExports;</script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+[hidden] { display: none !important; }
 
 :root {
-  --px-bg:        #1a1a2e;
-  --px-surface:   #16213e;
-  --px-card:      #0f3460;
-  --px-accent:    #e94560;
-  --px-pink:      #ff6b9d;
-  --px-gold:      #ffd700;
-  --px-green:     #4ade80;
-  --px-cyan:      #22d3ee;
-  --px-text:      #e8e8e8;
-  --px-dim:       #8892a0;
-  --px-border:    #2a2a4a;
-  --px-font:      'Press Start 2P', monospace;
+  --ink: #2c2c2c;
+  --paper: #fffef5;
+  --red: #ff6b6b;
+  --teal: #4ecdc4;
+  --yellow: #ffd93d;
+  --font: "ZCOOL KuaiLe", "Patrick Hand", "PingFang SC", sans-serif;
+  --hand: "Patrick Hand", "ZCOOL KuaiLe", sans-serif;
 }
+
+html { color-scheme: light; }
 
 body {
-  background: var(--px-bg);
-  background-image:
-    radial-gradient(circle at 20% 30%, rgba(233,69,96,0.06) 0%, transparent 60%),
-    radial-gradient(circle at 80% 70%, rgba(34,211,238,0.06) 0%, transparent 60%),
-    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.01) 2px, rgba(255,255,255,0.01) 4px);
-  color: var(--px-text);
-  font-family: var(--px-font);
-  font-size: 14px;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 24px 14px 50px;
+  background-color: var(--paper);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 31px,
+    #4ecdc4 31px,
+    #4ecdc4 32px
+  );
+  color: var(--ink);
+  font-family: var(--font);
+  font-weight: 700;
+  line-height: 1.4;
 }
 
-body::after {
-  content: ''; position: fixed; inset: 0; pointer-events: none;
-  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.08) 2px, rgba(0,0,0,0.08) 4px);
-  z-index: 9999;
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 28px;
+  border-left: 2px dashed var(--red);
+  pointer-events: none;
+  z-index: 2;
 }
 
-.px-box {
-  background: var(--px-surface); border: 3px solid var(--px-border);
-  padding: 28px 24px; box-shadow: inset 0 0 0 1px rgba(233,69,96,0.08), 4px 4px 0 rgba(0,0,0,0.4);
+::selection { background: var(--yellow); color: var(--ink); }
+:focus-visible { outline: 2px dashed var(--ink); outline-offset: 3px; }
+
+.page {
   position: relative;
+  z-index: 1;
+  width: min(720px, 100%);
+  margin: 0 auto;
+  padding: 20px 16px 56px 48px;
 }
-.px-box::before { content: ''; position: absolute; top: -3px; left: -3px; right: -3px; height: 3px; background: linear-gradient(90deg, var(--px-accent), var(--px-cyan), var(--px-gold)); }
 
-.px-btn {
-  font-family: var(--px-font); font-size: 12px; padding: 12px 24px;
-  border: 2px solid var(--px-border); background: var(--px-card);
-  color: var(--px-text); cursor: pointer; letter-spacing: 1px;
-  transition: all 0.1s step-start; box-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+.top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  margin-bottom: 18px;
 }
-.px-btn:hover { transform: translate(-1px, -1px); box-shadow: 3px 3px 0 rgba(0,0,0,0.5); }
-.px-btn:active { transform: translate(1px, 1px); box-shadow: 1px 1px 0 rgba(0,0,0,0.5); }
-.px-btn.primary { background: var(--px-accent); border-color: var(--px-pink); color: #fff; }
-.px-btn.danger { background: #991b1b; border-color: #dc2626; color: #fff; }
-.px-btn.small { padding: 8px 14px; font-size: 10px; }
 
-.px-input {
-  font-family: var(--px-font); font-size: 12px; padding: 12px 14px;
-  background: #0a0a1a; border: 2px solid var(--px-border);
-  color: var(--px-cyan); outline: none; width: 100%;
-  transition: border-color 0.1s step-start; letter-spacing: 0.5px;
+h1 {
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  line-height: 1.05;
+  background: var(--yellow);
+  padding: 0 0.12em;
+  transform: rotate(-1.2deg);
 }
-.px-input:focus { border-color: var(--px-cyan); box-shadow: 0 0 12px rgba(34,211,238,0.2); }
-.px-input::placeholder { color: #3a3a5a; }
 
-.title { text-align: center; margin-bottom: 28px; }
-.title h1 { font-size: 22px; color: var(--px-accent); text-shadow: 2px 2px 0 rgba(0,0,0,0.5); letter-spacing: 3px; margin-bottom: 6px; }
-.title p { font-size: 11px; color: var(--px-dim); letter-spacing: 2px; }
+.top .grow { margin-left: auto; }
 
-#passwordGate { width: 100%; max-width: 440px; text-align: center; }
-#passwordGate .lock-icon { font-size: 48px; display: block; margin-bottom: 16px; }
-#passwordGate h2 { font-size: 16px; color: var(--px-accent); letter-spacing: 2px; margin-bottom: 20px; }
-#passwordGate .px-input { text-align: center; letter-spacing: 4px; font-size: 16px; margin-bottom: 16px; }
-#passwordGate .error { font-size: 10px; color: var(--px-accent); margin-top: 8px; letter-spacing: 1px; opacity: 0; transition: opacity 0.2s; }
-#passwordGate .error.show { opacity: 1; }
-#mainApp.hidden { display: none; }
-
-#mainApp { width: 100%; max-width: 600px; }
-
-.form-box { margin-bottom: 28px; }
-.form-row { margin-bottom: 14px; }
-.form-row label { display: block; font-size: 11px; color: var(--px-dim); margin-bottom: 6px; letter-spacing: 1px; }
-.form-row-inline { display: flex; gap: 10px; align-items: center; }
-.form-row-inline .px-input { flex: 1; }
-
-.type-toggle { display: flex; gap: 6px; margin-bottom: 14px; }
-.type-btn {
-  flex: 1; font-family: var(--px-font); font-size: 10px; padding: 10px;
-  border: 2px solid var(--px-border); background: var(--px-card);
-  color: var(--px-dim); cursor: pointer; transition: all 0.1s step-start; text-align: center;
+.btn {
+  border-radius: 2px;
+  border: 2px dashed var(--ink);
+  font-family: var(--font);
+  font-weight: 700;
+  color: var(--ink);
+  background: var(--paper);
+  box-shadow: 3px 3px 0 var(--teal);
+  cursor: pointer;
+  text-decoration: none;
+  min-height: 40px;
+  padding: 6px 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: box-shadow 200ms ease-in-out, transform 200ms ease-in-out, background 200ms ease-in-out;
 }
-.type-btn.active { background: var(--px-accent); border-color: var(--px-pink); color: #fff; }
-.type-btn:hover:not(.active) { border-color: var(--px-cyan); color: var(--px-cyan); }
+.btn.ink { background: var(--ink); color: var(--paper); box-shadow: 3px 3px 0 var(--red); }
+.btn.red { background: var(--red); }
+.btn.yellow { background: var(--yellow); }
+.btn:hover { transform: translate(1px, 1px) rotate(-1.4deg); box-shadow: 5px 5px 0 var(--teal); }
+.btn.ink:hover { box-shadow: 5px 5px 0 var(--red); }
+.btn:active { transform: translate(2px, 2px) scale(0.98); box-shadow: none; }
+.btn:focus-visible { box-shadow: 2px 2px 0 var(--yellow); }
+.btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
 
-.birthday-list { display: flex; flex-direction: column; gap: 14px; }
-.bday-card {
-  background: var(--px-card); border: 2px solid var(--px-border);
-  padding: 20px; position: relative; box-shadow: 2px 2px 0 rgba(0,0,0,0.3);
-  animation: cardIn 0.3s step-start;
+.bench {
+  margin-bottom: 18px;
+  padding: 18px 16px 16px;
+  background: var(--paper);
+  border: 2px dashed var(--ink);
+  border-radius: 2px;
+  box-shadow: 4px 4px 0 var(--teal);
 }
-@keyframes cardIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-.bday-card .name { font-size: 16px; color: var(--px-gold); letter-spacing: 2px; margin-bottom: 10px; }
-.bday-card .dates { display: flex; gap: 18px; flex-wrap: wrap; margin-bottom: 10px; }
-.bday-card .dates span { font-size: 11px; color: var(--px-dim); letter-spacing: 0.5px; }
-.bday-card .dates strong { color: var(--px-text); font-weight: normal; }
-.bday-card .countdown { font-size: 13px; color: var(--px-cyan); letter-spacing: 1px; padding-top: 10px; border-top: 1px solid var(--px-border); }
-.bday-card .countdown.today { color: var(--px-gold); text-shadow: 0 0 8px rgba(255,215,0,0.3); }
-.bday-card .countdown.past { color: var(--px-dim); }
-.bday-card .del-btn {
-  position: absolute; top: 10px; right: 10px;
-  font-family: var(--px-font); font-size: 10px; padding: 5px 10px;
-  border: 1px solid #991b1b; background: transparent; color: #991b1b; cursor: pointer;
-  transition: all 0.1s step-start;
-}
-.bday-card .del-btn:hover { background: #991b1b; color: #fff; }
 
-.empty-state { text-align: center; padding: 40px 20px; color: var(--px-dim); font-size: 13px; letter-spacing: 1px; line-height: 2; }
-.empty-state .emoji-big { font-size: 36px; margin-bottom: 12px; display: block; }
+.gate-box { max-width: 420px; transform: rotate(-0.4deg); }
+.gate-box h2 { font-size: 1.3rem; margin-bottom: 12px; }
+.hint { font-family: var(--hand); font-weight: 400; font-size: 1rem; margin-bottom: 12px; }
 
-.nav-bar {
-  display: flex; justify-content: space-between; align-items: center;
-  margin-bottom: 22px; padding-bottom: 14px; border-bottom: 2px solid var(--px-border);
+label.field { display: block; margin-bottom: 10px; }
+label.field span { display: block; margin-bottom: 6px; }
+
+input[type="password"],
+input[type="text"],
+input[type="date"] {
+  width: 100%;
+  min-height: 44px;
+  padding: 8px 10px;
+  border: 2px dashed var(--ink);
+  border-radius: 2px;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 1rem;
+  font-weight: 700;
 }
-.nav-bar .nav-title { font-size: 13px; color: var(--px-dim); letter-spacing: 1px; }
+input::placeholder { color: #5c5346; opacity: 1; }
+input:focus {
+  outline: none;
+  border-color: var(--red);
+  box-shadow: 2px 2px 0 var(--yellow);
+}
+
+.err {
+  min-height: 1.3em;
+  margin-top: 10px;
+  color: var(--ink);
+  background: var(--red);
+  padding: 4px 8px;
+  border: 2px dashed var(--ink);
+  border-radius: 2px;
+}
+.err:empty { display: none; }
+
+.types { display: flex; gap: 8px; margin-bottom: 12px; }
+.types .btn { flex: 1; }
+.types .btn.is-on { background: var(--yellow); }
+
+.preview {
+  font-family: var(--hand);
+  font-weight: 400;
+  margin: 0 0 12px;
+  padding: 8px 10px;
+  background: var(--yellow);
+  border: 2px dashed var(--ink);
+  border-radius: 2px;
+}
+
+.actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; margin-top: 12px; }
+
+.list { display: flex; flex-direction: column; gap: 14px; }
+
+.note {
+  position: relative;
+  padding: 16px 14px 14px;
+  background: var(--paper);
+  border: 2px dashed var(--ink);
+  border-radius: 2px;
+  box-shadow: 3px 3px 0 var(--teal);
+  transform: rotate(-0.5deg);
+}
+.note:nth-child(even) { transform: rotate(0.6deg); box-shadow: 3px 3px 0 var(--red); }
+.note:nth-child(3n) { transform: rotate(-0.2deg); }
+.note h3 { font-size: 1.45rem; margin-bottom: 6px; padding-right: 72px; }
+.note .dates {
+  font-family: var(--hand);
+  font-weight: 400;
+  font-size: 1.05rem;
+  margin-bottom: 8px;
+}
+.note .countdown { font-size: 1.05rem; }
+.note .countdown.today {
+  display: inline-block;
+  background: var(--yellow);
+  padding: 0 0.2em;
+}
+.note .countdown.past { font-family: var(--hand); font-weight: 400; }
+.note .del { position: absolute; top: 10px; right: 10px; min-height: 34px; padding: 4px 10px; }
+
+.bar {
+  margin-top: 10px;
+  height: 10px;
+  border: 2px dashed var(--ink);
+  border-radius: 2px;
+  background: var(--paper);
+}
+.bar i {
+  display: block;
+  height: 100%;
+  background: var(--teal);
+}
+
+.empty, .loading {
+  padding: 28px 16px;
+  text-align: center;
+  font-family: var(--hand);
+  font-weight: 400;
+  font-size: 1.15rem;
+  border: 2px dashed var(--ink);
+  border-radius: 2px;
+  background: var(--paper);
+  box-shadow: 3px 3px 0 var(--yellow);
+}
 
 .toast {
-  position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
-  background: var(--px-card); border: 2px solid var(--px-border);
-  padding: 14px 28px; font-size: 12px; color: var(--px-text);
-  letter-spacing: 1px; z-index: 10001; opacity: 0;
-  transition: opacity 0.2s step-start; pointer-events: none; white-space: nowrap;
+  position: fixed;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  z-index: 5;
+  padding: 10px 14px;
+  border: 2px dashed var(--ink);
+  border-radius: 2px;
+  background: var(--yellow);
+  color: var(--ink);
+  font-weight: 700;
+  box-shadow: 3px 3px 0 var(--teal);
+  opacity: 0;
+  pointer-events: none;
 }
 .toast.show { opacity: 1; }
+.toast.err { background: var(--red); }
 
-.progress-bar { height: 5px; background: var(--px-border); margin-top: 8px; position: relative; }
-.progress-bar .fill { height: 100%; background: linear-gradient(90deg, var(--px-accent), var(--px-cyan)); transition: width 0.3s step-start; }
+@media (max-width: 640px) {
+  body::before { left: 16px; }
+  .page { padding: 14px 12px 48px 32px; }
+  .top .grow { margin-left: 0; }
+}
 
-.loading { text-align: center; padding: 40px; color: var(--px-dim); font-size: 13px; letter-spacing: 2px; }
-.loading .spin { display: inline-block; animation: spin 1s steps(8) infinite; }
-@keyframes spin { to { transform: rotate(360deg); } }
-
-@media (max-width: 480px) {
-  .title h1 { font-size: 17px; }
-  .bday-card .dates { flex-direction: column; gap: 6px; }
-  .form-row-inline { flex-direction: column; }
-  .px-box { padding: 18px 14px; }
-  body { font-size: 12px; padding: 18px 10px 40px; }
-  .bday-card .name { font-size: 14px; }
+@media (prefers-reduced-motion: reduce) {
+  .btn, .btn:hover, .btn:active { transition: none; transform: none; }
 }
 </style>
 </head>
 <body>
-
-<div id="passwordGate">
-  <div class="title">
-    <h1>🔒 BIRTHDAY <span>_</span></h1>
-    <p>✦ 请输入密码 ✦</p>
-  </div>
-  <div class="px-box" style="text-align:center;">
-    <span class="lock-icon">🔒</span>
-    <h2>PASSWORD REQUIRED</h2>
-    <input type="password" id="passwordInput" class="px-input" placeholder="输入密码" maxlength="20" autocomplete="off">
-    <button class="px-btn primary" onclick="checkPassword()" style="width:100%;">UNLOCK</button>
-    <div class="error" id="passwordError">❌ 密码错误</div>
-  </div>
-</div>
-
-<div id="mainApp" class="hidden">
-  <div class="title" style="margin-bottom:20px;">
-    <h1>🎂 BIRTHDAY <span>_</span></h1>
-    <p>✦ 生日记录 · 农历阳历 · 倒计时 ✦</p>
-  </div>
-  <div class="nav-bar">
-    <span class="nav-title">📋 BIRTHDAY LIST</span>
-    <button class="px-btn small primary" onclick="showAddForm()">+ ADD</button>
+<div class="page">
+  <div class="top">
+    <a class="btn ink" href="index.html">返回</a>
+    <h1>生日记录</h1>
+    <button class="btn yellow grow" type="button" id="addBtn" hidden>添加</button>
   </div>
 
-  <div id="addForm" class="form-box px-box" style="display:none;">
-    <p style="font-size:13px; letter-spacing:1px; margin-bottom:18px;">+ NEW BIRTHDAY</p>
-    <div class="form-row">
-      <label>NAME</label>
-      <input type="text" id="inputName" class="px-input" placeholder="姓名" maxlength="30">
-    </div>
-    <div class="form-row">
-      <label>BIRTHDAY TYPE</label>
-      <div class="type-toggle">
-        <button class="type-btn active" id="typeSolar" onclick="setDateType('solar')">☀ 阳历</button>
-        <button class="type-btn" id="typeLunar" onclick="setDateType('lunar')">🌙 阴历</button>
+  <section class="bench gate-box" id="passwordGate">
+    <h2>输入密码</h2>
+    <p class="hint">阴历、阳历、倒计时都在里面。</p>
+    <form id="gateForm">
+      <label class="field">
+        <span>密码</span>
+        <input type="password" id="passwordInput" maxlength="20" autocomplete="current-password">
+      </label>
+      <button class="btn ink" type="submit" id="loginBtn">进入</button>
+      <p class="err" id="passwordError" role="alert"></p>
+    </form>
+  </section>
+
+  <div id="mainApp" hidden>
+    <form class="bench" id="addForm" hidden>
+      <h2 id="formTitle">新记录</h2>
+      <label class="field">
+        <span>姓名</span>
+        <input type="text" id="inputName" maxlength="30" placeholder="怎么称呼">
+      </label>
+      <div class="types" role="group" aria-label="历法">
+        <button class="btn is-on" type="button" id="typeSolar" data-act="type" data-type="solar">阳历</button>
+        <button class="btn" type="button" id="typeLunar" data-act="type" data-type="lunar">阴历</button>
       </div>
-    </div>
-    <div class="form-row">
-      <label id="dateLabel">☀ 阳历日期</label>
-      <input type="date" id="inputDate" class="px-input">
-    </div>
-    <div id="lunarPreview" style="display:none; font-size:11px; color:var(--px-dim); letter-spacing:1px; margin-bottom:14px; padding:10px; background:rgba(34,211,238,0.05); border:1px solid var(--px-border);"></div>
-    <div class="form-row-inline" style="justify-content:flex-end; margin-top:18px;">
-      <button class="px-btn" onclick="hideAddForm()">CANCEL</button>
-      <button class="px-btn primary" onclick="saveBirthday()">SAVE</button>
-    </div>
-  </div>
+      <label class="field">
+        <span id="dateLabel">阳历日期</span>
+        <input type="date" id="inputDate">
+      </label>
+      <p class="preview" id="lunarPreview" hidden></p>
+      <div class="actions">
+        <button class="btn" type="button" id="cancelBtn">取消</button>
+        <button class="btn ink" type="submit">保存</button>
+      </div>
+    </form>
 
-  <div class="birthday-list" id="birthdayList"></div>
-  <div class="empty-state" id="emptyState" style="display:none;">
-    <span class="emoji-big">🎂</span>还没有记录生日<br>点击 [+ ADD] 添加吧
-  </div>
-  <div class="loading" id="loadingState">
-    <span class="spin">⏳</span> 加载中...
+    <div class="list" id="birthdayList"></div>
+    <p class="empty" id="emptyState" hidden>还没有记录。点「添加」写一条。</p>
+    <p class="loading" id="loadingState" hidden>加载中</p>
   </div>
 </div>
 
-<div class="toast" id="toast"></div>
+<p class="toast" id="toast" role="status"></p>
 
 <script>
-let unlocked = false;
-let apiToken = localStorage.getItem('birthday_token') || '';
+(function () {
+  var TOKEN_KEY = 'birthday_token';
+  var API_BASE = '/api/birthdays';
+  var LUNAR_MONTHS = ['正','二','三','四','五','六','七','八','九','十','冬','腊'];
+  var LUNAR_DAYS = ['初一','初二','初三','初四','初五','初六','初七','初八','初九','初十','十一','十二','十三','十四','十五','十六','十七','十八','十九','二十','廿一','廿二','廿三','廿四','廿五','廿六','廿七','廿八','廿九','三十'];
 
-async function autoLogin() {
-  const token = localStorage.getItem('birthday_token');
-  if (!token) return;
-  try {
-    const res = await fetch('/api/birthdays', { headers: { 'x-api-token': token } });
-    if (res.ok) { apiToken = token; unlocked = true; document.getElementById('passwordGate').style.display = 'none'; document.getElementById('mainApp').classList.remove('hidden'); loadBirthdays(); }
-  } catch(e) {}
-}
+  var unlocked = false;
+  var apiToken = localStorage.getItem(TOKEN_KEY) || '';
+  var currentType = 'solar';
+  var editingId = null;
+  var birthdays = [];
+  var toastTimer = 0;
 
-async function checkPassword() {
-  const input = document.getElementById('passwordInput'), error = document.getElementById('passwordError'), btn = document.querySelector('#passwordGate .px-btn');
-  btn.disabled = true; btn.textContent = '验证中...';
-  try {
-    const res = await fetch('/api/auth/login', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({password:input.value}) });
-    const data = await res.json();
-    if (res.ok && data.success) {
-      unlocked = true; apiToken = data.token; localStorage.setItem('birthday_token', apiToken);
-      document.getElementById('passwordGate').style.display = 'none';
-      document.getElementById('mainApp').classList.remove('hidden'); loadBirthdays();
-    } else if (data.locked) {
-      error.textContent = data.message || '❌ 尝试次数过多，请稍后再试';
-      error.classList.add('show'); input.value = ''; setTimeout(() => error.classList.remove('show'), 3000);
-    } else {
-      error.textContent = data.message || '❌ 密码错误';
-      error.classList.add('show'); input.value = ''; input.focus(); setTimeout(() => error.classList.remove('show'), 2000);
-    }
-  } catch(e) { error.textContent = '❌ 验证失败，请检查网络'; error.classList.add('show'); setTimeout(() => error.classList.remove('show'), 3000); }
-  finally { btn.disabled = false; btn.textContent = 'UNLOCK'; }
-}
-
-function onEnterSubmit(e) { if (e.key === 'Enter') checkPassword(); }
-
-let currentType = 'solar', editingId = null, countdownTimer = null, birthdays = [];
-const API_BASE = '/api/birthdays';
-
-async function apiGet() {
-  const res = await fetch(API_BASE, { headers: {'x-api-token':apiToken} });
-  if (res.status === 401) { showToast('🔒 登录已过期，请刷新页面'); return []; }
-  if (!res.ok) throw new Error('API error: '+res.status);
-  return res.json();
-}
-async function apiPost(data) {
-  const res = await fetch(API_BASE, { method:'POST', headers: {'Content-Type':'application/json','x-api-token':apiToken}, body:JSON.stringify(data) });
-  if (res.status === 401) { showToast('🔒 登录已过期，请刷新页面'); return null; }
-  if (!res.ok) throw new Error('API error: '+res.status);
-  return res.json();
-}
-async function apiDelete(id) {
-  const res = await fetch(API_BASE+'/'+id, { method:'DELETE', headers: {'x-api-token':apiToken} });
-  if (res.status === 401) { showToast('🔒 登录已过期，请刷新页面'); return null; }
-  if (!res.ok) throw new Error('API error: '+res.status);
-  return res.json();
-}
-
-function setDateType(type) {
-  currentType = type;
-  document.getElementById('typeSolar').classList.toggle('active', type==='solar');
-  document.getElementById('typeLunar').classList.toggle('active', type==='lunar');
-  document.getElementById('dateLabel').textContent = type==='solar' ? '☀ 阳历日期' : '🌙 阴历日期';
-  document.getElementById('lunarPreview').style.display = 'none';
-}
-
-function updateLunarPreview() {
-  const dateVal = document.getElementById('inputDate').value, preview = document.getElementById('lunarPreview');
-  if (!dateVal || currentType==='solar') { preview.style.display='none'; return; }
-  const parts = dateVal.split('-');
-  if (parts.length!==3) { preview.style.display='none'; return; }
-  const ly=parseInt(parts[0]), lm=parseInt(parts[1]), ld=parseInt(parts[2]);
-  try {
-    const result = solar2lunar.lunar2solar(ly,lm,ld,false);
-    if (result) {
-      const sd = result.cYear+'-'+String(result.cMonth).padStart(2,'0')+'-'+String(result.cDay).padStart(2,'0');
-      preview.innerHTML = '🌙 农历 '+ly+'年 '+lm+'月 '+ld+'日 → ☀ '+sd;
-      preview.style.display = 'block';
-    }
-  } catch(e) { preview.style.display='none'; }
-}
-
-async function loadBirthdays() {
-  try {
-    document.getElementById('loadingState').style.display='block';
-    document.getElementById('emptyState').style.display='none';
-    birthdays = await apiGet();
-    document.getElementById('loadingState').style.display='none';
-    renderList();
-  } catch(e) {
-    document.getElementById('loadingState').style.display='none';
-    document.getElementById('emptyState').style.display='block';
-    document.getElementById('emptyState').innerHTML = '<span class="emoji-big">😵</span>加载失败<br>请检查网络连接';
-    showToast('❌ 加载失败: '+e.message);
+  function $(id) { return document.getElementById(id); }
+  function toast(msg, err) {
+    var el = $('toast');
+    el.textContent = msg;
+    el.classList.toggle('err', !!err);
+    el.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () {
+      el.classList.remove('show');
+      el.textContent = '';
+    }, 2200);
   }
-}
+  function showApp() {
+    $('passwordGate').hidden = true;
+    $('mainApp').hidden = false;
+    $('addBtn').hidden = false;
+  }
+  function showGate() {
+    $('passwordGate').hidden = false;
+    $('mainApp').hidden = true;
+    $('addBtn').hidden = true;
+  }
 
-function showAddForm() {
-  editingId = null; document.getElementById('inputName').value='';
-  document.getElementById('inputDate').value=''; setDateType('solar');
-  document.getElementById('lunarPreview').style.display='none';
-  document.getElementById('addForm').style.display='block';
-  document.getElementById('inputName').focus();
-}
-function hideAddForm() { document.getElementById('addForm').style.display='none'; }
-
-async function saveBirthday() {
-  const name = document.getElementById('inputName').value.trim(), dateVal = document.getElementById('inputDate').value;
-  if (!name) { showToast('请输入姓名'); return; }
-  if (!dateVal) { showToast('请选择日期'); return; }
-  const payload = { name, type:currentType, date:dateVal };
-  if (currentType==='lunar') { const parts=dateVal.split('-'); payload.lunarYear=parseInt(parts[0]); payload.lunarMonth=parseInt(parts[1]); payload.lunarDay=parseInt(parts[2]); }
-  try {
-    if (editingId) { await apiDelete(editingId); await apiPost(payload); showToast('✅ 已更新'); }
-    else { await apiPost(payload); showToast('✅ 已添加'); }
-    hideAddForm(); await loadBirthdays();
-  } catch(e) { showToast('❌ 保存失败: '+e.message); }
-}
-
-async function deleteBirthday(id) {
-  if (!confirm('删除此生日记录？')) return;
-  try { await apiDelete(id); await loadBirthdays(); showToast('🗑️ 已删除'); } catch(e) { showToast('❌ 删除失败: '+e.message); }
-}
-
-function calcCountdown(bday) {
-  const now = new Date(), currentYear = now.getFullYear();
-  let targetDate = null;
-  if (bday.lunarMonth && bday.lunarDay) {
+  async function autoLogin() {
+    var token = localStorage.getItem(TOKEN_KEY);
+    if (!token) return;
     try {
-      let result = solar2lunar.lunar2solar(currentYear, bday.lunarMonth, bday.lunarDay, false);
-      if (result) {
-        targetDate = new Date(result.cYear, result.cMonth-1, result.cDay);
-        if (targetDate < new Date(currentYear, now.getMonth(), now.getDate())) {
-          result = solar2lunar.lunar2solar(currentYear+1, bday.lunarMonth, bday.lunarDay, false);
-          if (result) targetDate = new Date(result.cYear, result.cMonth-1, result.cDay);
-        }
+      var res = await fetch(API_BASE, { headers: { 'x-api-token': token } });
+      if (res.ok) {
+        apiToken = token;
+        unlocked = true;
+        showApp();
+        loadBirthdays();
       }
-    } catch(e) { return {text:'--', isToday:false, isPast:false, diffMs:0}; }
-  } else {
-    const parts = bday.date.split('-');
-    targetDate = new Date(currentYear, parseInt(parts[1])-1, parseInt(parts[2]));
-    if (targetDate < new Date(currentYear, now.getMonth(), now.getDate()))
-      targetDate = new Date(currentYear+1, parseInt(parts[1])-1, parseInt(parts[2]));
+    } catch (err) {}
   }
-  if (!targetDate) return {text:'--', isToday:false, isPast:false, diffMs:0};
-  const diffMs = targetDate.getTime() - now.getTime();
-  const isToday = targetDate.toDateString() === now.toDateString();
-  if (isToday) return {text:'🎉 今天就是生日！', isToday:true, isPast:false, diffMs:0};
-  const diffDays = Math.floor(diffMs/(1000*60*60*24));
-  let text = diffDays>0 ? '距离生日还有 '+diffDays+' 天' : '距离生日还有不到 1 天';
-  return {text, isToday:false, isPast:diffMs<0, diffMs};
-}
 
-function solarToLunar(year, month, day) {
-  try { const r=solar2lunar.solar2lunar(year,month,day); return r?{year:r.lYear,month:r.lMonth,day:r.lDay}:null; } catch(e) { return null; }
-}
-function lunarToSolar(year, month, day) {
-  try { const r=solar2lunar.lunar2solar(year,month,day,false); return r?r.cYear+'-'+String(r.cMonth).padStart(2,'0')+'-'+String(r.cDay).padStart(2,'0'):null; } catch(e) { return null; }
-}
+  async function checkPassword() {
+    var input = $('passwordInput');
+    var error = $('passwordError');
+    var btn = $('loginBtn');
+    error.textContent = '';
+    btn.disabled = true;
+    btn.textContent = '核对中';
+    try {
+      var res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: input.value })
+      });
+      var data = await res.json();
+      if (res.ok && data.success) {
+        unlocked = true;
+        apiToken = data.token;
+        localStorage.setItem(TOKEN_KEY, apiToken);
+        input.value = '';
+        showApp();
+        loadBirthdays();
+      } else if (data.locked) {
+        error.textContent = '试得太多，过一会儿再来';
+        input.value = '';
+      } else {
+        error.textContent = data.remaining != null ? '密码错了，还剩 ' + data.remaining + ' 次' : '密码错了';
+        input.value = '';
+        input.focus();
+      }
+    } catch (err) {
+      error.textContent = '连不上，先确认服务开着';
+    } finally {
+      btn.disabled = false;
+      btn.textContent = '进入';
+    }
+  }
 
-const LUNAR_MONTHS = ['正','二','三','四','五','六','七','八','九','十','冬','腊'];
-const LUNAR_DAYS = ['初一','初二','初三','初四','初五','初六','初七','初八','初九','初十','十一','十二','十三','十四','十五','十六','十七','十八','十九','二十','廿一','廿二','廿三','廿四','廿五','廿六','廿七','廿八','廿九','三十'];
+  async function apiGet() {
+    var res = await fetch(API_BASE, { headers: { 'x-api-token': apiToken } });
+    if (res.status === 401) { toast('登录过期，刷新再进', true); return []; }
+    if (!res.ok) throw new Error('读取失败');
+    return res.json();
+  }
+  async function apiPost(data) {
+    var res = await fetch(API_BASE, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-api-token': apiToken },
+      body: JSON.stringify(data)
+    });
+    if (res.status === 401) { toast('登录过期，刷新再进', true); return null; }
+    if (!res.ok) throw new Error('保存失败');
+    return res.json();
+  }
+  async function apiDelete(id) {
+    var res = await fetch(API_BASE + '/' + id, {
+      method: 'DELETE',
+      headers: { 'x-api-token': apiToken }
+    });
+    if (res.status === 401) { toast('登录过期，刷新再进', true); return null; }
+    if (!res.ok) throw new Error('删除失败');
+    return res.json();
+  }
 
-function fmtLunar(m,d) { return '🌙 农历'+(LUNAR_MONTHS[m-1]||m)+'月'+(LUNAR_DAYS[d-1]||d+'日'); }
-function fmtSolarShort(dateStr) { const p=dateStr.split('-'); return '☀ 公历'+parseInt(p[1])+'月'+parseInt(p[2])+'日'; }
-function getSolarDate(b) { if (b.type==='solar') return b.date; return lunarToSolar(b.lunarYear, b.lunarMonth, b.lunarDay); }
-function getLunarDate(b) { if (b.type==='lunar' && b.lunarMonth && b.lunarDay) return {month:b.lunarMonth, day:b.lunarDay}; const p=b.date.split('-'); return solarToLunar(parseInt(p[0]),parseInt(p[1]),parseInt(p[2])); }
-function dualDateDisplay(b) { const solar=getSolarDate(b), lunar=getLunarDate(b); let parts=[]; if(solar) parts.push(fmtSolarShort(solar)); if(lunar) parts.push(fmtLunar(lunar.month,lunar.day)); return parts.join(' ｜ '); }
+  function setDateType(type) {
+    currentType = type;
+    $('typeSolar').classList.toggle('is-on', type === 'solar');
+    $('typeLunar').classList.toggle('is-on', type === 'lunar');
+    $('dateLabel').textContent = type === 'solar' ? '阳历日期' : '阴历日期';
+    $('lunarPreview').hidden = true;
+    updateLunarPreview();
+  }
 
-function renderList() {
-  const container = document.getElementById('birthdayList'), empty = document.getElementById('emptyState');
-  if (birthdays.length===0) { container.innerHTML=''; empty.style.display='block'; return; }
-  empty.style.display='none';
-  const withCountdown = birthdays.map(b=>({b, cd:calcCountdown(b)}));
-  withCountdown.sort((a,b)=>{
-    if(a.cd.isToday) return -1; if(b.cd.isToday) return 1;
-    if(a.cd.isPast && !b.cd.isPast) return 1; if(!a.cd.isPast && b.cd.isPast) return -1;
-    return a.cd.diffMs - b.cd.diffMs;
+  function updateLunarPreview() {
+    var dateVal = $('inputDate').value;
+    var preview = $('lunarPreview');
+    if (!dateVal || currentType === 'solar') { preview.hidden = true; return; }
+    var parts = dateVal.split('-');
+    if (parts.length !== 3) { preview.hidden = true; return; }
+    var ly = parseInt(parts[0], 10);
+    var lm = parseInt(parts[1], 10);
+    var ld = parseInt(parts[2], 10);
+    try {
+      var result = solar2lunar.lunar2solar(ly, lm, ld, false);
+      if (result) {
+        var sd = result.cYear + '-' + String(result.cMonth).padStart(2, '0') + '-' + String(result.cDay).padStart(2, '0');
+        preview.textContent = '农历 ' + ly + ' 年 ' + lm + ' 月 ' + ld + ' 日 → 公历 ' + sd;
+        preview.hidden = false;
+      } else {
+        preview.hidden = true;
+      }
+    } catch (err) {
+      preview.hidden = true;
+    }
+  }
+
+  async function loadBirthdays() {
+    try {
+      $('loadingState').hidden = false;
+      $('emptyState').hidden = true;
+      $('birthdayList').replaceChildren();
+      birthdays = await apiGet();
+      $('loadingState').hidden = true;
+      renderList();
+    } catch (err) {
+      $('loadingState').hidden = true;
+      $('emptyState').hidden = false;
+      $('emptyState').textContent = '加载失败，检查网络再试。';
+      toast('加载失败', true);
+    }
+  }
+
+  function showAddForm() {
+    editingId = null;
+    $('inputName').value = '';
+    $('inputDate').value = '';
+    setDateType('solar');
+    $('lunarPreview').hidden = true;
+    $('addForm').hidden = false;
+    $('inputName').focus();
+  }
+  function hideAddForm() { $('addForm').hidden = true; }
+
+  async function saveBirthday() {
+    var name = $('inputName').value.trim();
+    var dateVal = $('inputDate').value;
+    if (!name) { toast('先写姓名', true); return; }
+    if (!dateVal) { toast('先选日期', true); return; }
+    var payload = { name: name, type: currentType, date: dateVal };
+    if (currentType === 'lunar') {
+      var parts = dateVal.split('-');
+      payload.lunarYear = parseInt(parts[0], 10);
+      payload.lunarMonth = parseInt(parts[1], 10);
+      payload.lunarDay = parseInt(parts[2], 10);
+    }
+    try {
+      if (editingId) {
+        await apiDelete(editingId);
+        await apiPost(payload);
+        toast('已更新');
+      } else {
+        await apiPost(payload);
+        toast('已添加');
+      }
+      hideAddForm();
+      await loadBirthdays();
+    } catch (err) {
+      toast('保存失败', true);
+    }
+  }
+
+  async function deleteBirthday(id) {
+    if (!confirm('删除这条生日？')) return;
+    try {
+      await apiDelete(id);
+      await loadBirthdays();
+      toast('已删除');
+    } catch (err) {
+      toast('删除失败', true);
+    }
+  }
+
+  function calcCountdown(bday) {
+    var now = new Date();
+    var currentYear = now.getFullYear();
+    var targetDate = null;
+    if (bday.lunarMonth && bday.lunarDay) {
+      try {
+        var result = solar2lunar.lunar2solar(currentYear, bday.lunarMonth, bday.lunarDay, false);
+        if (result) {
+          targetDate = new Date(result.cYear, result.cMonth - 1, result.cDay);
+          if (targetDate < new Date(currentYear, now.getMonth(), now.getDate())) {
+            result = solar2lunar.lunar2solar(currentYear + 1, bday.lunarMonth, bday.lunarDay, false);
+            if (result) targetDate = new Date(result.cYear, result.cMonth - 1, result.cDay);
+          }
+        }
+      } catch (err) {
+        return { text: '--', isToday: false, isPast: false, diffMs: 0 };
+      }
+    } else {
+      var parts = bday.date.split('-');
+      targetDate = new Date(currentYear, parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+      if (targetDate < new Date(currentYear, now.getMonth(), now.getDate())) {
+        targetDate = new Date(currentYear + 1, parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+      }
+    }
+    if (!targetDate) return { text: '--', isToday: false, isPast: false, diffMs: 0 };
+    var diffMs = targetDate.getTime() - now.getTime();
+    var isToday = targetDate.toDateString() === now.toDateString();
+    if (isToday) return { text: '今天就是生日', isToday: true, isPast: false, diffMs: 0 };
+    var diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    var text = diffDays > 0 ? '还有 ' + diffDays + ' 天' : '不到 1 天';
+    return { text: text, isToday: false, isPast: diffMs < 0, diffMs: diffMs };
+  }
+
+  function solarToLunar(year, month, day) {
+    try {
+      var r = solar2lunar.solar2lunar(year, month, day);
+      return r ? { year: r.lYear, month: r.lMonth, day: r.lDay } : null;
+    } catch (err) { return null; }
+  }
+  function lunarToSolar(year, month, day) {
+    try {
+      var r = solar2lunar.lunar2solar(year, month, day, false);
+      return r ? r.cYear + '-' + String(r.cMonth).padStart(2, '0') + '-' + String(r.cDay).padStart(2, '0') : null;
+    } catch (err) { return null; }
+  }
+  function fmtLunar(m, d) { return '农历' + (LUNAR_MONTHS[m - 1] || m) + '月' + (LUNAR_DAYS[d - 1] || d + '日'); }
+  function fmtSolarShort(dateStr) {
+    var p = dateStr.split('-');
+    return '公历' + parseInt(p[1], 10) + '月' + parseInt(p[2], 10) + '日';
+  }
+  function getSolarDate(b) {
+    if (b.type === 'solar') return b.date;
+    return lunarToSolar(b.lunarYear, b.lunarMonth, b.lunarDay);
+  }
+  function getLunarDate(b) {
+    if (b.type === 'lunar' && b.lunarMonth && b.lunarDay) return { month: b.lunarMonth, day: b.lunarDay };
+    var p = b.date.split('-');
+    return solarToLunar(parseInt(p[0], 10), parseInt(p[1], 10), parseInt(p[2], 10));
+  }
+  function dualDateDisplay(b) {
+    var solar = getSolarDate(b);
+    var lunar = getLunarDate(b);
+    var parts = [];
+    if (solar) parts.push(fmtSolarShort(solar));
+    if (lunar) parts.push(fmtLunar(lunar.month, lunar.day));
+    return parts.join(' · ');
+  }
+
+  function renderList() {
+    var container = $('birthdayList');
+    var empty = $('emptyState');
+    if (!birthdays.length) {
+      container.replaceChildren();
+      empty.hidden = false;
+      empty.textContent = '还没有记录。点「添加」写一条。';
+      return;
+    }
+    empty.hidden = true;
+    var withCountdown = birthdays.map(function (b) { return { b: b, cd: calcCountdown(b) }; });
+    withCountdown.sort(function (a, b) {
+      if (a.cd.isToday) return -1;
+      if (b.cd.isToday) return 1;
+      if (a.cd.isPast && !b.cd.isPast) return 1;
+      if (!a.cd.isPast && b.cd.isPast) return -1;
+      return a.cd.diffMs - b.cd.diffMs;
+    });
+    container.replaceChildren();
+    withCountdown.forEach(function (item) {
+      var b = item.b;
+      var cd = item.cd;
+      var note = document.createElement('article');
+      note.className = 'note';
+      var del = document.createElement('button');
+      del.type = 'button';
+      del.className = 'btn red del';
+      del.setAttribute('data-act', 'del');
+      del.setAttribute('data-id', b.id);
+      del.textContent = '删除';
+      var name = document.createElement('h3');
+      name.textContent = b.name;
+      var dates = document.createElement('p');
+      dates.className = 'dates';
+      dates.textContent = dualDateDisplay(b);
+      var count = document.createElement('p');
+      count.className = 'countdown';
+      if (cd.isToday) count.classList.add('today');
+      else if (cd.isPast) count.classList.add('past');
+      count.textContent = cd.text;
+      note.appendChild(del);
+      note.appendChild(name);
+      note.appendChild(dates);
+      note.appendChild(count);
+      if (cd.diffMs > 0 && !cd.isToday) {
+        var progress = Math.max(0, Math.min(100, (365 * 86400000 - cd.diffMs) / (365 * 86400000) * 100));
+        var bar = document.createElement('div');
+        bar.className = 'bar';
+        bar.setAttribute('aria-hidden', 'true');
+        var fill = document.createElement('i');
+        fill.style.width = progress.toFixed(0) + '%';
+        bar.appendChild(fill);
+        note.appendChild(bar);
+      }
+      container.appendChild(note);
+    });
+  }
+
+  $('gateForm').addEventListener('submit', function (event) {
+    event.preventDefault();
+    checkPassword();
   });
-  container.innerHTML = withCountdown.map(({b,cd})=>{
-    let cdClass=''; if(cd.isToday) cdClass='today'; else if(cd.isPast) cdClass='past';
-    const dates = dualDateDisplay(b);
-    let progress=0; if(cd.diffMs>0 && !cd.isToday) progress=Math.max(0,Math.min(100,(365*86400000-cd.diffMs)/(365*86400000)*100));
-    return '<div class="bday-card">'+
-      '<button class="del-btn" onclick="deleteBirthday(\''+b.id+'\')">✕</button>'+
-      '<div class="name">🎂 '+b.name+'</div>'+
-      '<div class="dates"><span>'+dates+'</span></div>'+
-      '<div class="countdown '+cdClass+'">'+cd.text+'</div>'+
-      (cd.diffMs>0 && !cd.isToday ? '<div class="progress-bar"><div class="fill" style="width:'+progress.toFixed(0)+'%"></div></div>' : '')+
-    '</div>';
-  }).join('');
-}
+  $('addForm').addEventListener('submit', function (event) {
+    event.preventDefault();
+    saveBirthday();
+  });
+  $('addBtn').addEventListener('click', showAddForm);
+  $('cancelBtn').addEventListener('click', hideAddForm);
+  $('inputDate').addEventListener('change', updateLunarPreview);
+  document.addEventListener('click', function (event) {
+    var btn = event.target.closest('[data-act]');
+    if (!btn) return;
+    var act = btn.getAttribute('data-act');
+    if (act === 'type') setDateType(btn.getAttribute('data-type'));
+    if (act === 'del') deleteBirthday(btn.getAttribute('data-id'));
+  });
 
-function showToast(msg) {
-  const el=document.getElementById('toast'); el.textContent=msg; el.classList.add('show');
-  clearTimeout(el._timer); el._timer=setTimeout(()=>el.classList.remove('show'),2500);
-}
+  setInterval(function () {
+    if (unlocked && !$('mainApp').hidden) renderList();
+  }, 60000);
 
-window.setDateType=setDateType; window.showAddForm=showAddForm; window.hideAddForm=hideAddForm;
-window.saveBirthday=saveBirthday; window.deleteBirthday=deleteBirthday; window.checkPassword=checkPassword;
-
-document.getElementById('inputDate').addEventListener('change', updateLunarPreview);
-document.getElementById('passwordInput').addEventListener('keydown', onEnterSubmit);
-countdownTimer = setInterval(renderList, 60000);
-autoLogin();
-if (!apiToken) document.getElementById('passwordInput').focus();
+  autoLogin();
+  if (!apiToken) $('passwordInput').focus();
+})();
 </script>
 </body>
 </html>
