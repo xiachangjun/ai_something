@@ -28,6 +28,15 @@
         ],
         "createdAt": "2026-11-03T08:28:00.194Z",
         "reason": "Agent: doodle paper #fffef5 is the homepage stylekit ground, reused on SQL 工具 chrome"
+      },
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          "生日记录.html"
+        ],
+        "createdAt": "2026-11-03T08:50:14.542Z",
+        "reason": "Agent: doodle paper #fffef5 is the homepage stylekit ground, reused on 生日记录 chrome"
       }
     ]
   }
