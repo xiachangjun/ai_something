@@ -2,282 +2,375 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>⚡ TOOLSHED</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小工具集</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=ZCOOL+KuaiLe&display=swap">
 <style>
-/* ═══════════════ 像素风全局 ═══════════════ */
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --px-bg:        #1a1a2e;
-  --px-surface:   #16213e;
-  --px-card:      #0f3460;
-  --px-accent:    #e94560;
-  --px-pink:      #ff6b9d;
-  --px-gold:      #ffd700;
-  --px-green:     #4ade80;
-  --px-cyan:      #22d3ee;
-  --px-text:      #e8e8e8;
-  --px-dim:       #8892a0;
-  --px-border:    #2a2a4a;
-  --px-shadow:    rgba(233,69,96,0.25);
-  --px-font:      'Press Start 2P', monospace;
-  --px-size:      10px;
+  --ink: #2c2c2c;
+  --paper: #fffef5;
+  --leaf: #f8f7f0;
+  --red: #ff6b6b;
+  --teal: #4ecdc4;
+  --yellow: #ffd93d;
+  --font: "ZCOOL KuaiLe", "Patrick Hand", "PingFang SC", sans-serif;
+  --hand: "Patrick Hand", "ZCOOL KuaiLe", sans-serif;
 }
+
+html { color-scheme: light; }
 
 body {
-  background: var(--px-bg);
-  background-image:
-    radial-gradient(circle at 20% 30%, rgba(233,69,96,0.06) 0%, transparent 60%),
-    radial-gradient(circle at 80% 70%, rgba(34,211,238,0.06) 0%, transparent 60%),
-    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.01) 2px, rgba(255,255,255,0.01) 4px);
-  color: var(--px-text);
-  font-family: var(--px-font);
-  font-size: var(--px-size);
   min-height: 100vh;
+  background-color: var(--paper);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 31px,
+    #4ecdc4 31px,
+    #4ecdc4 32px
+  );
+  color: var(--ink);
+  font-family: var(--font);
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 52px;
+  width: 0;
+  border-left: 2px dashed var(--red);
+  pointer-events: none;
+  z-index: 2;
+}
+
+::selection { background: var(--yellow); color: var(--ink); }
+
+:focus-visible {
+  outline: 2px dashed var(--ink);
+  outline-offset: 3px;
+}
+
+.spiral {
+  position: fixed;
+  top: 12px;
+  bottom: 12px;
+  left: 10px;
+  z-index: 3;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 40px 12px 60px;
-  image-rendering: pixelated;
-}
-
-/* 扫描线 overlay */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
+  justify-content: space-evenly;
   pointer-events: none;
-  background: repeating-linear-gradient(0deg,
-    transparent, transparent 2px,
-    rgba(0,0,0,0.08) 2px, rgba(0,0,0,0.08) 4px);
-  z-index: 9999;
+}
+.hole {
+  width: 18px;
+  height: 18px;
+  border: 2px dashed var(--ink);
+  border-radius: 2px;
+  background: var(--paper);
+  box-shadow: 2px 2px 0 var(--teal);
 }
 
-/* ───── 像素容器 ───── */
-.px-box {
-  background: var(--px-surface);
-  border: 3px solid var(--px-border);
-  border-radius: 0;
-  padding: 24px 20px;
-  box-shadow:
-    inset 0 0 0 1px rgba(233,69,96,0.08),
-    4px 4px 0 rgba(0,0,0,0.4);
-  image-rendering: pixelated;
-  position: relative;
-}
-.px-box::before {
-  content: '';
+.stain, .star, .squiggle {
   position: absolute;
-  top: -3px; left: -3px; right: -3px;
-  height: 3px;
-  background: linear-gradient(90deg, var(--px-accent), var(--px-cyan), var(--px-gold));
+  pointer-events: none;
+  z-index: 0;
 }
 
-/* ───── 像素卡片网格 ───── */
-.grid {
+.page {
+  position: relative;
+  z-index: 1;
+  width: min(920px, 100%);
+  margin: 0 auto;
+  padding: 36px 20px 64px 72px;
+}
+
+.mast {
+  margin: 8px 0 36px;
+  transform: rotate(-1.6deg);
+}
+.mast h1 {
+  display: inline;
+  font-size: clamp(2.6rem, 8vw, 5.4rem);
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+  background: var(--yellow);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  padding: 0 0.12em;
+}
+.mast p {
+  margin-top: 10px;
+  font-family: var(--hand);
+  font-size: clamp(1.2rem, 3vw, 1.7rem);
+  text-decoration: underline;
+  text-decoration-style: wavy;
+  text-decoration-color: var(--red);
+  text-underline-offset: 6px;
+}
+
+.board {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 16px;
-  width: 100%;
-  max-width: 860px;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 22px 18px;
 }
 
 .card {
-  background: var(--px-card);
-  border: 2px solid var(--px-border);
-  padding: 20px;
-  text-decoration: none;
-  color: inherit;
-  box-shadow: 2px 2px 0 rgba(0,0,0,0.3);
-  transition: all 0.1s step-start;
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 8px;
-  position: relative;
-  animation: cardIn 0.3s step-start;
-  cursor: pointer;
+  padding: 22px 18px 18px;
+  border-radius: 2px;
+  background: var(--paper);
+  border: 2px dashed var(--ink);
+  box-shadow: 4px 4px 0 var(--teal);
+  color: var(--ink);
+  text-decoration: none;
+  transform: rotate(var(--tilt, -0.8deg));
+  transition: box-shadow 200ms ease-in-out, border-color 200ms ease-in-out, background 200ms ease-in-out;
 }
+.card:nth-child(3n) { box-shadow: 4px 4px 0 var(--red); }
+.card:nth-child(1) { --tilt: -1.5deg; }
+.card:nth-child(2) { --tilt: 1.2deg; }
+.card:nth-child(3) { --tilt: -0.6deg; }
+.card:nth-child(4) { --tilt: 1.4deg; }
+.card:nth-child(5) { --tilt: -1.1deg; }
+.card:nth-child(6) { --tilt: 0.7deg; }
+.card:nth-child(7) { --tilt: -1.3deg; }
+.card:nth-child(8) { --tilt: 1deg; }
+.card:nth-child(9) { --tilt: -0.4deg; }
+.card:nth-child(10) { --tilt: 1.6deg; }
+.card:nth-child(11) { --tilt: -0.9deg; }
+
 .card:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 4px 4px 0 rgba(0,0,0,0.4);
-  border-color: var(--px-cyan);
+  border-color: var(--ink);
+  box-shadow: 6px 6px 0 var(--teal);
+  animation: jitter 180ms steps(2) infinite;
 }
+.card:nth-child(3n):hover { box-shadow: 6px 6px 0 var(--red); }
 .card:active {
-  transform: translate(1px, 1px);
-  box-shadow: 1px 1px 0 rgba(0,0,0,0.4);
+  animation: none;
+  transform: translate(2px, 2px) scale(0.98) rotate(var(--tilt, -0.8deg));
+  box-shadow: none;
+}
+.card:focus-visible {
+  box-shadow: 2px 2px 0 var(--yellow);
 }
 
-@keyframes cardIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+@keyframes jitter {
+  0% { transform: translate(1px, 0) rotate(calc(var(--tilt) - 0.7deg)); }
+  100% { transform: translate(-1px, 1px) rotate(calc(var(--tilt) + 0.7deg)); }
 }
 
-.card .icon {
-  font-size: 28px;
-  line-height: 1;
+.doodle {
+  width: 44px;
+  height: 44px;
+  flex: none;
 }
-.card .name {
-  font-size: 11px;
-  color: var(--px-gold);
-  letter-spacing: 1px;
-  text-transform: uppercase;
+.doodle path, .doodle circle, .doodle rect, .doodle line, .doodle ellipse, .doodle polygon {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2.2;
+  stroke-dasharray: 6 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
-.card .desc {
-  font-size: 8px;
-  color: var(--px-dim);
-  letter-spacing: 0.5px;
-  line-height: 1.8;
+
+.name {
+  font-size: clamp(1.25rem, 2.4vw, 1.55rem);
+  font-weight: 700;
 }
-.card .tag {
-  display: inline-block;
-  font-size: 7px;
-  padding: 3px 6px;
-  background: rgba(34,211,238,0.1);
-  border: 1px solid var(--px-border);
-  color: var(--px-cyan);
-  letter-spacing: 0.5px;
-  margin-top: 4px;
+.desc {
+  font-family: var(--hand);
+  font-size: 1.05rem;
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+.tape, .pin, .clip {
+  position: absolute;
+  pointer-events: none;
+  z-index: 2;
+}
+.tape {
+  top: -11px;
+  left: 28%;
+  width: 54px;
+  height: 18px;
+  background: var(--yellow);
+  border: 2px dashed var(--ink);
+  border-radius: 2px;
+  transform: rotate(-9deg);
+}
+.pin {
+  top: -9px;
+  right: 16px;
+  width: 16px;
+  height: 16px;
+  background: var(--red);
+  border: 2px dashed var(--ink);
+  border-radius: 2px;
+  transform: rotate(12deg);
+}
+.clip {
+  top: -14px;
+  right: 22px;
+  width: 18px;
+  height: 28px;
+}
+
+.tag {
   align-self: flex-start;
+  margin-top: 4px;
+  padding: 2px 8px;
+  background: var(--yellow);
+  border: 2px dashed var(--ink);
+  border-radius: 2px;
+  font-size: 0.95rem;
+  transform: rotate(-3deg);
 }
 
-/* ───── 标题 ───── */
-.title {
+.foot {
+  margin-top: 42px;
+  font-family: var(--hand);
+  font-size: 1.1rem;
   text-align: center;
-  margin-bottom: 32px;
-  width: 100%;
-  max-width: 860px;
-}
-.title h1 {
-  font-size: 20px;
-  color: var(--px-accent);
-  text-shadow: 2px 2px 0 rgba(0,0,0,0.5);
-  letter-spacing: 4px;
-  margin-bottom: 6px;
-}
-.title h1 .blink {
-  animation: blink 1s step-end infinite;
-}
-@keyframes blink { 50% { opacity: 0; } }
-.title p {
-  font-size: 8px;
-  color: var(--px-dim);
-  letter-spacing: 2px;
-}
-.title .powered {
-  font-size: 7px;
-  color: #3a3a5a;
-  letter-spacing: 1px;
-  margin-top: 8px;
+  transform: rotate(1deg);
+  text-decoration: underline;
+  text-decoration-style: wavy;
+  text-decoration-color: var(--teal);
+  text-underline-offset: 5px;
 }
 
-/* ───── 页脚 ───── */
-footer {
-  margin-top: 40px;
-  font-size: 7px;
-  color: #3a3a5a;
-  letter-spacing: 1px;
-  text-align: center;
-  line-height: 2;
+@media (max-width: 700px) {
+  body::before { left: 36px; }
+  .page { padding: 24px 14px 48px 52px; }
+  .hole { width: 14px; height: 14px; }
+  .board { grid-template-columns: 1fr; }
+  .spiral { left: 8px; }
 }
 
-/* ───── 响应式 ───── */
-@media (max-width: 480px) {
-  .title h1 { font-size: 14px; }
-  .grid { grid-template-columns: 1fr; }
-  .card { padding: 16px; }
-  body { padding: 24px 10px 40px; }
+@media (prefers-reduced-motion: reduce) {
+  .card, .card:hover, .card:active { animation: none; transition: none; }
+  .card:hover { transform: rotate(var(--tilt, -0.8deg)); }
 }
 </style>
 </head>
 <body>
-
-<div class="title">
-  <h1>⚡ TOOL<span class="blink">_</span>SHED</h1>
-  <p>✦ 小 工 具 集 ✦</p>
-  <div class="powered">~~ 像素工坊 ~~</div>
+<div class="spiral" aria-hidden="true">
+  <span class="hole"></span><span class="hole"></span><span class="hole"></span>
+  <span class="hole"></span><span class="hole"></span><span class="hole"></span>
+  <span class="hole"></span><span class="hole"></span>
 </div>
 
-<div class="grid">
+<svg class="stain" aria-hidden="true" width="160" height="120" viewBox="0 0 160 120" style="right:4%; bottom:8%; transform:rotate(-18deg)">
+  <ellipse cx="80" cy="60" rx="58" ry="38" fill="none" stroke="#4ecdc4" stroke-width="3" stroke-dasharray="7 4"/>
+  <ellipse cx="82" cy="62" rx="40" ry="24" fill="none" stroke="#4ecdc4" stroke-width="2" stroke-dasharray="5 4"/>
+</svg>
+<svg class="star" aria-hidden="true" width="48" height="48" viewBox="0 0 48 48" style="left:18%; top:22px; transform:rotate(-12deg)">
+  <path d="M24 4 L28 18 H42 L30 26 L34 40 L24 32 L14 40 L18 26 L6 18 H20 Z" fill="none" stroke="#ff6b6b" stroke-width="2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+</svg>
+<svg class="squiggle" aria-hidden="true" width="90" height="28" viewBox="0 0 90 28" style="right:16%; top:70px">
+  <path d="M4 16 C 16 4, 28 28, 40 14 S 64 4, 86 18" fill="none" stroke="#2c2c2c" stroke-width="2" stroke-dasharray="6 3" stroke-linecap="round"/>
+</svg>
 
-  <a class="card" href="健身打卡.html">
-    <div class="icon">🧗</div>
-    <div class="name">健身打卡</div>
-    <div class="desc">年次数 · 月次数<br>攀岩 / 有氧</div>
-    <span class="tag">新增</span>
-  </a>
+<main class="page">
+  <header class="mast">
+    <h1>小工具集</h1>
+    <p>toolshed</p>
+  </header>
 
-  <a class="card" href="欧洲建筑史.html">
-    <div class="icon">🏛️</div>
-    <div class="name">欧洲建筑史</div>
-    <div class="desc">石头写成的历史 · 从古希腊神庙到现代主义<br>时间轴 / 图鉴 / 风格对比 / 地图 / 测验</div>
-    <span class="tag">新增</span>
-  </a>
+  <section class="board" aria-label="工具">
+    <a class="card" href="健身打卡.html">
+      <span class="tape" aria-hidden="true"></span>
+      <svg class="doodle" viewBox="0 0 48 48" aria-hidden="true"><path d="M8 38 L18 22 L24 30 L32 14 L40 38"/><path d="M20 22 l4-10 6 4 -4 8"/><line x1="6" y1="40" x2="42" y2="40"/></svg>
+      <span class="name">健身打卡</span>
+      <span class="desc">年次数 · 月次数<br>攀岩 / 有氧</span>
+      <span class="tag">新增</span>
+    </a>
 
-  <a class="card" href="dynasty/">
-    <div class="icon">👑</div>
-    <div class="name">王朝世系简表</div>
-    <div class="desc">秦汉三国晋南北朝 · 唐宋元明清 · 印度日本 · 英法俄君主 · 罗马帝国<br>世系图 / 时间轴 / 甘特图全景</div>
-    <span class="tag">18 份简表</span>
-  </a>
+    <a class="card" href="欧洲建筑史.html">
+      <span class="pin" aria-hidden="true"></span>
+      <svg class="doodle" viewBox="0 0 48 48" aria-hidden="true"><path d="M8 20 L24 8 L40 20"/><path d="M12 20 V40 H36 V20"/><path d="M18 40 V26 H22 V40"/><path d="M26 40 V26 H30 V40"/></svg>
+      <span class="name">欧洲建筑史</span>
+      <span class="desc">石头写成的历史 · 从古希腊神庙到现代主义<br>时间轴 / 图鉴 / 风格对比 / 地图 / 测验</span>
+      <span class="tag">新增</span>
+    </a>
 
-  <a class="card" href="sql工具.html">
-    <div class="icon">🗄️</div>
-    <div class="name">SQL 工具</div>
-    <div class="desc">SQL 语句辅助编写与格式化<br>在线查询调试</div>
-  </a>
+    <a class="card" href="dynasty/">
+      <svg class="clip" viewBox="0 0 18 28" aria-hidden="true"><path d="M6 8 V4 H12 V18 C12 22 6 22 6 18 V10 H11" fill="none" stroke="#2c2c2c" stroke-width="2" stroke-dasharray="4 2" stroke-linecap="round"/></svg>
+      <svg class="doodle" viewBox="0 0 48 48" aria-hidden="true"><path d="M10 20 L24 10 L38 20 L32 20 V36 H16 V20 Z"/><path d="M18 28 H30"/></svg>
+      <span class="name">王朝世系简表</span>
+      <span class="desc">秦汉三国晋南北朝 · 唐宋元明清 · 印度日本 · 英法俄君主 · 罗马帝国<br>世系图 / 时间轴 / 甘特图全景</span>
+      <span class="tag">18 份简表</span>
+    </a>
 
-  <a class="card" href="宝可梦相克查询工具.html">
-    <div class="icon">⚡</div>
-    <div class="name">宝可梦相克</div>
-    <div class="desc">快速查询宝可梦属性克制关系<br>对战策略助手</div>
-  </a>
+    <a class="card" href="sql工具.html">
+      <span class="tape" aria-hidden="true"></span>
+      <svg class="doodle" viewBox="0 0 48 48" aria-hidden="true"><ellipse cx="24" cy="12" rx="14" ry="6"/><path d="M10 12 V30 C10 34 38 34 38 30 V12"/><path d="M10 20 C10 24 38 24 38 20"/><path d="M10 26 C10 30 38 30 38 26"/></svg>
+      <span class="name">SQL 工具</span>
+      <span class="desc">SQL 语句辅助编写与格式化<br>在线查询调试</span>
+    </a>
 
-  <a class="card" href="骰子工具.html">
-    <div class="icon">🎲</div>
-    <div class="name">骰子工具</div>
-    <div class="desc">多种骰子的在线投掷模拟<br>TRPG 跑团必备</div>
-  </a>
+    <a class="card" href="宝可梦相克查询工具.html">
+      <span class="pin" aria-hidden="true"></span>
+      <svg class="doodle" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 6 L28 18 H40 L30 26 L34 40 L24 30 L14 40 L18 26 L8 18 H20 Z"/></svg>
+      <span class="name">宝可梦相克</span>
+      <span class="desc">快速查询宝可梦属性克制关系<br>对战策略助手</span>
+    </a>
 
-  <a class="card" href="生日记录.html">
-    <div class="icon">🎂</div>
-    <div class="name">生日记录</div>
-    <div class="desc">记录阴历 / 阳历生日<br>倒计时提醒</div>
-  </a>
+    <a class="card" href="骰子工具.html">
+      <svg class="clip" viewBox="0 0 18 28" aria-hidden="true"><path d="M6 8 V4 H12 V18 C12 22 6 22 6 18 V10 H11" fill="none" stroke="#2c2c2c" stroke-width="2" stroke-dasharray="4 2" stroke-linecap="round"/></svg>
+      <svg class="doodle" viewBox="0 0 48 48" aria-hidden="true"><rect x="10" y="10" width="28" height="28" rx="2"/><rect x="16" y="16" width="3" height="3"/><rect x="29" y="16" width="3" height="3"/><rect x="22" y="22" width="3" height="3"/><rect x="16" y="29" width="3" height="3"/><rect x="29" y="29" width="3" height="3"/></svg>
+      <span class="name">骰子工具</span>
+      <span class="desc">多种骰子的在线投掷模拟<br>TRPG 跑团必备</span>
+    </a>
 
-  <a class="card" href="五十音图学习.html">
-    <div class="icon">🌸</div>
-    <div class="name">五十音图</div>
-    <div class="desc">点击听读音 / 闪卡复习<br>平假名 &amp; 片假名</div>
-  </a>
+    <a class="card" href="生日记录.html">
+      <span class="tape" aria-hidden="true"></span>
+      <svg class="doodle" viewBox="0 0 48 48" aria-hidden="true"><path d="M12 22 H36 V38 H12 Z"/><path d="M18 22 V16"/><path d="M30 22 V16"/><path d="M16 16 q2-6 4 0"/><path d="M28 16 q2-6 4 0"/><path d="M12 28 H36"/></svg>
+      <span class="name">生日记录</span>
+      <span class="desc">记录阴历 / 阳历生日<br>倒计时提醒</span>
+    </a>
 
-  <a class="card" href="cocktail-recipes.html">
-    <div class="icon">🍸</div>
-    <div class="name">鸡尾酒配方</div>
-    <div class="desc">经典鸡尾酒调制指南<br>配方速查</div>
-  </a>
+    <a class="card" href="五十音图学习.html">
+      <span class="pin" aria-hidden="true"></span>
+      <svg class="doodle" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 10 C16 16 14 28 24 34 C34 28 32 16 24 10 Z"/><path d="M24 18 C20 24 20 30 24 36 C28 30 28 24 24 18 Z"/><circle cx="24" cy="24" r="2"/></svg>
+      <span class="name">五十音图</span>
+      <span class="desc">点击听读音 / 闪卡复习<br>平假名 &amp; 片假名</span>
+    </a>
 
-  <a class="card" href="html预览.html">
-    <div class="icon">🔧</div>
-    <div class="name">HTML 预览</div>
-    <div class="desc">在线编辑 · 实时预览<br>一键压缩 HTML</div>
-    <span class="tag">新增</span>
-  </a>
+    <a class="card" href="cocktail-recipes.html">
+      <svg class="clip" viewBox="0 0 18 28" aria-hidden="true"><path d="M6 8 V4 H12 V18 C12 22 6 22 6 18 V10 H11" fill="none" stroke="#2c2c2c" stroke-width="2" stroke-dasharray="4 2" stroke-linecap="round"/></svg>
+      <svg class="doodle" viewBox="0 0 48 48" aria-hidden="true"><path d="M14 8 H34 L26 22 V34 H30 V38 H18 V34 H22 V22 Z"/></svg>
+      <span class="name">鸡尾酒配方</span>
+      <span class="desc">经典鸡尾酒调制指南<br>配方速查</span>
+    </a>
 
-  <a class="card" href="菜谱记录.html">
-    <div class="icon">🍳</div>
-    <div class="name">菜谱记录</div>
-    <div class="desc">记录拿手菜的材料与步骤<br>内置锅包肉示例</div>
-    <span class="tag">新增</span>
-  </a>
+    <a class="card" href="html预览.html">
+      <span class="tape" aria-hidden="true"></span>
+      <svg class="doodle" viewBox="0 0 48 48" aria-hidden="true"><path d="M16 12 L8 24 L16 36"/><path d="M32 12 L40 24 L32 36"/><path d="M26 10 L22 38"/></svg>
+      <span class="name">HTML 预览</span>
+      <span class="desc">在线编辑 · 实时预览<br>一键压缩 HTML</span>
+      <span class="tag">新增</span>
+    </a>
 
-</div>
+    <a class="card" href="菜谱记录.html">
+      <span class="pin" aria-hidden="true"></span>
+      <svg class="doodle" viewBox="0 0 48 48" aria-hidden="true"><ellipse cx="22" cy="28" rx="14" ry="10"/><path d="M36 24 H42 V32 H36"/><path d="M14 20 Q18 12 22 20"/></svg>
+      <span class="name">菜谱记录</span>
+      <span class="desc">记录拿手菜的材料与步骤<br>内置锅包肉示例</span>
+      <span class="tag">新增</span>
+    </a>
+  </section>
 
-<footer>
-  ✦ 2026 · 像 素 工 坊 ✦
-</footer>
-
+  <p class="foot">2026</p>
+</main>
 </body>
 </html>
