@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "hard-offset-shadow",
+        "value": "*",
+        "files": [
+          "健身打卡.html"
+        ],
+        "createdAt": "2026-11-03T06:18:22.444Z",
+        "reason": "Agent: toolshed pixel panels use a 4px hard offset shadow, same as the existing tool pages"
+      }
+    ]
+  }
+}

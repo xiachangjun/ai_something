@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>健身打卡</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bangers&family=ZCOOL+KuaiLe&display=swap">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+[hidden] { display: none !important; }
+
+:root {
+  --ink: #1a1a1a;
+  --paper: #fffef0;
+  --red: #ff3333;
+  --yellow: #ffcc00;
+  --blue: #3366ff;
+  --green: #33cc33;
+  --white: #ffffff;
+  --font: "ZCOOL KuaiLe", "PingFang SC", "Hiragino Sans GB", sans-serif;
+  --display: "Bangers", "ZCOOL KuaiLe", sans-serif;
+}
+
+html { color-scheme: light; }
+
+body {
+  min-height: 100vh;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle, var(--ink) 1px, transparent 1px);
+  background-size: 4px 4px;
+  opacity: 0.16;
+  z-index: 0;
+}
+
+::selection { background: var(--yellow); color: var(--ink); }
+
+:focus-visible {
+  outline: 4px solid var(--blue);
+  outline-offset: 2px;
+}
+
+button, input { font: inherit; color: inherit; }
+a.btn { text-decoration: none; }
+
+.page {
+  position: relative;
+  z-index: 1;
+  width: min(1120px, 100%);
+  margin: 0 auto;
+  padding: 20px 16px 48px;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+h1 {
+  font-weight: 900;
+  font-size: clamp(2.4rem, 6vw, 4.2rem);
+  letter-spacing: 0.04em;
+  line-height: 0.95;
+  text-shadow: 3px 3px 0 var(--red), -3px -3px 0 var(--blue);
+}
+
+.btn {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 8px 14px;
+  border: 4px solid var(--ink);
+  background: var(--red);
+  color: var(--ink);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  box-shadow: 4px 4px 0 var(--ink);
+  cursor: pointer;
+  transition: transform 100ms, box-shadow 100ms, background 100ms;
+}
+
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0;
+  background-image: radial-gradient(circle, var(--ink) 1px, transparent 1px);
+  background-size: 4px 4px;
+  transition: opacity 100ms;
+}
+
+.btn:hover {
+  transform: scale(1.1) rotate(-3deg);
+  background: var(--yellow);
+  box-shadow: 8px 8px 0 var(--ink);
+}
+
+.btn:hover::before { opacity: 0.2; }
+
+.btn:active {
+  transform: translate(4px, 4px);
+  box-shadow: none;
+}
+
+.btn.blue { background: var(--blue); color: var(--white); }
+.btn.blue:hover { background: var(--yellow); color: var(--ink); }
+.btn.ink { background: var(--ink); color: var(--white); }
+.btn.ink:hover { background: var(--yellow); color: var(--ink); }
+
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field span { font-weight: 900; font-size: 1rem; }
+
+.px {
+  width: 100%;
+  min-height: 48px;
+  padding: 8px 10px;
+  border: 4px solid var(--ink);
+  background: var(--white);
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.px:focus {
+  outline: none;
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+.gate {
+  min-height: 70vh;
+  display: grid;
+  place-items: center;
+}
+
+.gate-box, .panel, .log {
+  border: 4px solid var(--ink);
+  background: var(--white);
+  box-shadow: 6px 6px 0 var(--ink);
+}
+
+.gate-box {
+  width: min(420px, 100%);
+  padding: 22px 18px;
+  display: grid;
+  gap: 14px;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px 28px;
+  margin: 8px 0 22px;
+  padding: 10px 4px 18px;
+  background-image: repeating-linear-gradient(-18deg, transparent, transparent 12px, rgba(26,26,26,0.14) 12px, rgba(26,26,26,0.14) 14px);
+}
+
+.bubble {
+  position: relative;
+  border: 4px solid var(--ink);
+  border-radius: 1.75rem;
+  box-shadow: 8px 8px 0 var(--ink);
+  padding: 10px 16px 18px;
+  text-align: center;
+}
+
+.bubble::after {
+  content: "";
+  position: absolute;
+  left: 36px;
+  bottom: -13px;
+  width: 22px;
+  height: 22px;
+  background: inherit;
+  border-right: 4px solid var(--ink);
+  border-bottom: 4px solid var(--ink);
+  transform: rotate(45deg);
+}
+
+.bubble.climb { background: var(--yellow); color: var(--ink); }
+.bubble.cardio { background: var(--blue); color: var(--white); }
+
+.bubble b {
+  display: block;
+  font-family: var(--display);
+  font-size: clamp(5.2rem, 16vw, 8.6rem);
+  font-weight: 900;
+  line-height: 0.78;
+  letter-spacing: 0.02em;
+}
+
+.bubble i {
+  display: block;
+  margin-top: 4px;
+  font-style: normal;
+  font-weight: 900;
+  font-size: clamp(1.3rem, 3vw, 1.8rem);
+}
+
+.year-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas: "prev board next";
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+#prevYear { grid-area: prev; }
+#nextYear { grid-area: next; }
+.board { grid-area: board; }
+
+.log {
+  position: relative;
+  padding: 14px;
+  margin-bottom: 18px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 12px;
+}
+
+.span-2 { grid-column: 1 / -1; }
+
+.seg { display: flex; gap: 8px; }
+.seg-opt {
+  position: relative;
+  flex: 1;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 4px solid var(--ink);
+  background: var(--white);
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.seg-opt input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  margin: 0;
+  cursor: pointer;
+}
+.seg-opt:has(input:checked) {
+  background: var(--red);
+  color: var(--ink);
+}
+.seg-opt.incline:has(input:checked) { background: var(--blue); color: var(--white); }
+.seg-opt.elliptical:has(input:checked) { background: var(--green); color: var(--ink); }
+
+.measure {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: end;
+}
+.measure .grow { flex: 1; min-width: 140px; }
+.unit { font-weight: 900; font-size: 1.2rem; padding-bottom: 10px; }
+
+.actions { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.err {
+  min-height: 1.2em;
+  font-weight: 900;
+  color: var(--ink);
+  background: var(--red);
+  padding: 0 8px;
+}
+.err:empty { background: transparent; padding: 0; }
+
+.day-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 4px solid var(--ink);
+  font-weight: 900;
+  font-size: 1.15rem;
+}
+
+.entries { display: grid; gap: 8px; margin-top: 10px; }
+.entry { display: flex; gap: 8px; }
+.chip, .del {
+  min-height: 44px;
+  border: 4px solid var(--ink);
+  background: var(--white);
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.chip { flex: 1; text-align: left; padding: 8px 12px; }
+.chip.climb { background: var(--yellow); }
+.chip.incline { background: var(--blue); color: var(--white); }
+.chip.elliptical { background: var(--green); }
+.chip.is-editing { outline: 4px solid var(--ink); outline-offset: 2px; }
+.del { padding: 8px 12px; background: var(--white); }
+.del.is-armed { background: var(--red); }
+
+.jump {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.jump button {
+  min-width: 52px;
+  min-height: 40px;
+  padding: 4px 8px;
+  border: 4px solid var(--ink);
+  background: var(--white);
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.jump button.is-on { background: var(--yellow); }
+
+.year {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.panel {
+  position: relative;
+  border: 4px solid var(--ink);
+  background: var(--paper);
+  box-shadow: 8px 8px 0 var(--ink);
+  padding: 12px;
+  transition: transform 100ms, box-shadow 100ms;
+}
+.panel:hover {
+  transform: translateY(-8px);
+  box-shadow: 12px 16px 0 var(--ink);
+}
+.panel.is-selected-month { background: #fff4a8; }
+.panel .halftone {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background-image: radial-gradient(circle, var(--ink) 1px, transparent 1px);
+  background-size: 4px 4px;
+  transition: opacity 100ms;
+}
+.panel:hover .halftone { opacity: 0.12; }
+.stamp {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
+  padding: 0 6px;
+  border: 4px solid var(--ink);
+  background: var(--red);
+  color: var(--ink);
+  font-family: var(--display);
+  font-size: 1.4rem;
+  line-height: 1;
+  transform: scale(0) rotate(-8deg);
+  transition: transform 100ms;
+  pointer-events: none;
+}
+.panel:hover .stamp { transform: scale(1) rotate(-8deg); }
+
+.month-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+}
+.month-head h2 { font-size: clamp(1.4rem, 2vw, 1.8rem); font-weight: 900; }
+.now { background: var(--yellow); border: 4px solid var(--ink); padding: 0 6px; font-weight: 900; }
+
+.pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 8px 0 10px;
+}
+.pair div {
+  border: 4px solid var(--ink);
+  text-align: center;
+  padding: 4px 4px 8px;
+}
+.pair .climb { background: var(--yellow); }
+.pair .cardio { background: var(--blue); color: var(--white); }
+.pair b {
+  display: block;
+  font-family: var(--display);
+  font-size: clamp(3rem, 5vw, 4.4rem);
+  font-weight: 900;
+  line-height: 0.8;
+}
+.pair span { font-weight: 900; font-size: 1.05rem; }
+
+.week, .days {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 4px;
+}
+.week span { text-align: center; font-weight: 900; font-size: 0.85rem; }
+.day, .day-pad { min-height: 46px; }
+.day {
+  border: 4px solid var(--ink);
+  background: var(--white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 2px 0 3px;
+  cursor: pointer;
+  font-weight: 900;
+}
+.day:hover { background: var(--yellow); }
+.day.is-selected { background: var(--red); }
+.day.is-today .num { color: var(--blue); }
+.day.is-selected.is-today .num,
+.day.is-selected .num,
+.day.is-selected .mark { color: var(--ink); }
+.num { font-family: var(--display); font-size: 1rem; line-height: 1; }
+.marks { min-height: 22px; display: flex; flex-direction: column; align-items: center; }
+.mark { font-size: 12px; font-weight: 900; line-height: 1.15; }
+.mark.climb { color: var(--ink); }
+.mark.incline { color: var(--blue); }
+.mark.elliptical { color: #146614; }
+
+#climbFields { display: none; }
+body:has(#kindClimb:checked) #cardioFields { display: none; }
+body:has(#kindClimb:checked) #climbFields { display: block; }
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  z-index: 5;
+  border: 4px solid var(--ink);
+  background: var(--yellow);
+  color: var(--ink);
+  font-weight: 900;
+  padding: 10px 14px;
+  box-shadow: 4px 4px 0 var(--ink);
+  opacity: 0;
+  pointer-events: none;
+}
+.toast.show { opacity: 1; }
+
+@media (max-width: 900px) {
+  .year { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 700px) {
+  .board, .form-grid, .year { grid-template-columns: 1fr; }
+  .year-row {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "board board"
+      "prev next";
+  }
+  .measure { flex-direction: column; align-items: stretch; }
+  .page { padding: 14px 10px 36px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn, .panel, .stamp, .btn::before, .panel .halftone { transition: none; }
+  .btn:hover, .panel:hover, .btn:active { transform: none; }
+  .stamp { transform: none; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <section class="gate" id="gate">
+    <form class="gate-box" id="gateForm">
+      <h1>健身打卡</h1>
+      <label class="field">
+        <span>密码</span>
+        <input class="px" id="passwordInput" type="password" autocomplete="current-password" maxlength="20">
+      </label>
+      <button class="btn" id="unlockBtn" type="submit">进入</button>
+      <p class="err" id="gateError" role="alert"></p>
+    </form>
+  </section>
+
+  <div id="app" hidden>
+    <div class="top">
+      <a class="btn ink" href="index.html">返回</a>
+      <button class="btn blue" id="todayBtn" type="button">今天</button>
+    </div>
+    <h1>健身打卡</h1>
+
+    <div class="year-row">
+      <button class="btn" id="prevYear" type="button">上年</button>
+      <div class="board" id="board" aria-live="polite"></div>
+      <button class="btn" id="nextYear" type="button">下年</button>
+    </div>
+
+    <section class="log" aria-label="记一条">
+      <form id="logForm" novalidate>
+        <div class="form-grid">
+          <label class="field">
+            <span>日期</span>
+            <input class="px" id="dateInput" type="date">
+          </label>
+          <div class="field">
+            <span id="modeLabel">类型</span>
+            <div class="seg" role="radiogroup" aria-labelledby="modeLabel">
+              <label class="seg-opt">
+                <input type="radio" name="kind" id="kindCardio" value="cardio" checked>
+                <span>有氧</span>
+              </label>
+              <label class="seg-opt">
+                <input type="radio" name="kind" id="kindClimb" value="climb">
+                <span>攀岩</span>
+              </label>
+            </div>
+          </div>
+          <div class="span-2" id="cardioFields">
+            <div class="measure">
+              <div class="grow">
+                <span id="machineLabel">器械</span>
+                <div class="seg" role="radiogroup" aria-labelledby="machineLabel">
+                  <label class="seg-opt incline">
+                    <input type="radio" name="machine" id="machineIncline" value="incline" checked>
+                    <span>爬坡</span>
+                  </label>
+                  <label class="seg-opt elliptical">
+                    <input type="radio" name="machine" id="machineElliptical" value="elliptical">
+                    <span>椭圆机</span>
+                  </label>
+                </div>
+              </div>
+              <label class="grow field">
+                <span>分钟</span>
+                <input class="px" id="minutesInput" type="number" inputmode="numeric" min="1" max="300" step="1" value="30">
+              </label>
+            </div>
+          </div>
+          <div class="span-2" id="climbFields">
+            <label class="field" style="max-width:220px">
+              <span>次数</span>
+              <input class="px" id="countInput" type="number" inputmode="numeric" min="1" max="99" step="1" value="1">
+            </label>
+          </div>
+          <p class="err span-2" id="formError" role="alert"></p>
+          <div class="actions span-2">
+            <button class="btn" id="saveBtn" type="submit">记下</button>
+            <button class="btn ink" id="cancelEdit" type="button" hidden>取消</button>
+          </div>
+        </div>
+      </form>
+      <div class="day-line">
+        <p id="dayWhen"></p>
+        <p id="daySum"></p>
+      </div>
+      <div class="entries" id="dayEntries"></div>
+    </section>
+
+    <nav class="jump" id="monthJump" aria-label="月份"></nav>
+    <div class="year" id="yearGrid"></div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function () {
+  var TOKEN_KEY = 'birthday_token';
+  var MONTHS = ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
+  var WEEK = ['一','二','三','四','五','六','日'];
+  var apiToken = localStorage.getItem(TOKEN_KEY) || '';
+  var entries = [];
+  var selected = '';
+  var editingId = null;
+  var pendingDeleteId = null;
+  var toastTimer = 0;
+  var saving = false;
+
+  var dateInput = document.getElementById('dateInput');
+  var minutesInput = document.getElementById('minutesInput');
+  var countInput = document.getElementById('countInput');
+  var formError = document.getElementById('formError');
+  var saveBtn = document.getElementById('saveBtn');
+  var cancelEdit = document.getElementById('cancelEdit');
+  var gate = document.getElementById('gate');
+  var app = document.getElementById('app');
+  var gateError = document.getElementById('gateError');
+
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function iso(d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
+  function parseISO(value) {
+    var p = value.split('-');
+    return new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2]));
+  }
+  function isValidDate(value) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+    return iso(parseISO(value)) === value;
+  }
+  function todayISO() { return iso(new Date()); }
+  function viewYear() { return Number(selected.slice(0, 4)); }
+  function longDate(value) {
+    var d = parseISO(value);
+    return (d.getMonth() + 1) + '/' + d.getDate() + ' 周' + '日一二三四五六'[d.getDay()];
+  }
+
+  function toast(msg) {
+    var el = document.getElementById('toast');
+    el.textContent = msg;
+    el.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () {
+      el.classList.remove('show');
+      el.textContent = '';
+    }, 1800);
+  }
+
+  function showGate(msg) {
+    gate.hidden = false;
+    app.hidden = true;
+    gateError.textContent = msg || '';
+  }
+
+  function showApp() {
+    gate.hidden = true;
+    app.hidden = false;
+    gateError.textContent = '';
+  }
+
+  async function api(path, options) {
+    var opts = options || {};
+    var headers = Object.assign({ 'x-api-token': apiToken }, opts.headers || {});
+    var res;
+    try {
+      res = await fetch(path, {
+        method: opts.method || 'GET',
+        headers: headers,
+        body: opts.body
+      });
+    } catch (err) {
+      throw new Error('offline');
+    }
+    if (res.status === 401) {
+      localStorage.removeItem(TOKEN_KEY);
+      apiToken = '';
+      showGate('重新进入');
+      throw new Error('unauthorized');
+    }
+    return res;
+  }
+
+  function currentKind() {
+    var picked = document.querySelector('input[name="kind"]:checked');
+    return picked ? picked.value : 'cardio';
+  }
+  function currentMachine() {
+    var picked = document.querySelector('input[name="machine"]:checked');
+    return picked ? picked.value : 'incline';
+  }
+  function readInt(input, max) {
+    var raw = String(input.value).trim();
+    if (!/^\d+$/.test(raw)) return null;
+    var n = Number(raw);
+    if (n < 1 || n > max) return null;
+    return n;
+  }
+  function clearError() { formError.textContent = ''; }
+
+  function summarize(list) {
+    var climb = 0, sessions = 0, minutes = 0, incline = 0, elliptical = 0;
+    list.forEach(function (entry) {
+      if (entry.kind === 'climb') climb += entry.count;
+      else {
+        sessions += 1;
+        minutes += entry.minutes;
+        if (entry.machine === 'incline') incline += entry.minutes;
+        else elliptical += entry.minutes;
+      }
+    });
+    return { climb: climb, sessions: sessions, minutes: minutes, incline: incline, elliptical: elliptical };
+  }
+  function forYear(year) {
+    return entries.filter(function (entry) { return Number(entry.date.slice(0, 4)) === year; });
+  }
+  function forMonth(year, month) {
+    var key = year + '-' + pad(month + 1);
+    return entries.filter(function (entry) { return entry.date.slice(0, 7) === key; });
+  }
+  function forDay(value) {
+    return entries.filter(function (entry) { return entry.date === value; })
+      .sort(function (a, b) { return (a.createdAt || 0) - (b.createdAt || 0); });
+  }
+
+  function syncForm() {
+    if (dateInput.value !== selected) dateInput.value = selected;
+    saveBtn.textContent = editingId ? '改好' : '记下';
+    cancelEdit.hidden = !editingId;
+  }
+
+  function renderBoard() {
+    var stats = summarize(forYear(viewYear()));
+    var board = document.getElementById('board');
+    board.replaceChildren();
+    [['climb', '攀岩', stats.climb], ['cardio', '有氧', stats.sessions]].forEach(function (item) {
+      var bubble = document.createElement('p');
+      bubble.className = 'bubble ' + item[0];
+      var num = document.createElement('b');
+      num.textContent = String(item[2]);
+      var label = document.createElement('i');
+      label.textContent = item[1];
+      bubble.append(num, label);
+      board.appendChild(bubble);
+    });
+  }
+
+  function renderJump() {
+    var nav = document.getElementById('monthJump');
+    var current = selected.slice(5, 7);
+    if (!nav.childElementCount) {
+      MONTHS.forEach(function (name, index) {
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.dataset.month = pad(index + 1);
+        btn.textContent = String(index + 1);
+        nav.appendChild(btn);
+      });
+    }
+    Array.prototype.forEach.call(nav.children, function (btn) {
+      var on = btn.dataset.month === current;
+      btn.classList.toggle('is-on', on);
+      if (on) btn.setAttribute('aria-current', 'true');
+      else btn.removeAttribute('aria-current');
+    });
+  }
+
+  function dayLabel(value, list) {
+    var d = parseISO(value);
+    var text = (d.getMonth() + 1) + '月' + d.getDate() + '日';
+    if (value === todayISO()) text += ' 今天';
+    if (!list.length) return text;
+    var stats = summarize(list);
+    if (stats.climb) text += ' 攀' + stats.climb;
+    if (stats.incline) text += ' 坡' + stats.incline;
+    if (stats.elliptical) text += ' 椭' + stats.elliptical;
+    return text;
+  }
+
+  function renderMonth(year, month) {
+    var article = document.createElement('article');
+    article.className = 'panel';
+    article.id = 'month-' + pad(month + 1);
+    if (selected.slice(0, 7) === year + '-' + pad(month + 1)) article.classList.add('is-selected-month');
+
+    var dots = document.createElement('span');
+    dots.className = 'halftone';
+    dots.setAttribute('aria-hidden', 'true');
+    var stamp = document.createElement('span');
+    stamp.className = 'stamp';
+    stamp.textContent = 'POW';
+    stamp.setAttribute('aria-hidden', 'true');
+
+    var head = document.createElement('div');
+    head.className = 'month-head';
+    var h2 = document.createElement('h2');
+    h2.textContent = MONTHS[month];
+    head.appendChild(h2);
+    var now = new Date();
+    if (now.getFullYear() === year && now.getMonth() === month) {
+      var badge = document.createElement('span');
+      badge.className = 'now';
+      badge.textContent = '本月';
+      head.appendChild(badge);
+    }
+
+    var stats = summarize(forMonth(year, month));
+    var pair = document.createElement('div');
+    pair.className = 'pair';
+    [['climb', '攀', stats.climb], ['cardio', '氧', stats.sessions]].forEach(function (item) {
+      var box = document.createElement('div');
+      box.className = item[0];
+      var num = document.createElement('b');
+      num.textContent = String(item[2]);
+      var label = document.createElement('span');
+      label.textContent = item[1];
+      box.append(num, label);
+      pair.appendChild(box);
+    });
+
+    var week = document.createElement('div');
+    week.className = 'week';
+    WEEK.forEach(function (name) {
+      var span = document.createElement('span');
+      span.textContent = name;
+      week.appendChild(span);
+    });
+
+    var days = document.createElement('div');
+    days.className = 'days';
+    var firstPad = (new Date(year, month, 1).getDay() + 6) % 7;
+    var count = new Date(year, month + 1, 0).getDate();
+    var i;
+    for (i = 0; i < firstPad; i++) {
+      var blank = document.createElement('span');
+      blank.className = 'day-pad';
+      blank.setAttribute('aria-hidden', 'true');
+      days.appendChild(blank);
+    }
+    for (i = 1; i <= count; i++) {
+      var value = year + '-' + pad(month + 1) + '-' + pad(i);
+      var list = entries.filter(function (entry) { return entry.date === value; });
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'day';
+      btn.dataset.date = value;
+      if (value === selected) btn.classList.add('is-selected');
+      if (value === todayISO()) btn.classList.add('is-today');
+      var labelText = dayLabel(value, list);
+      btn.setAttribute('aria-label', labelText);
+      var num = document.createElement('span');
+      num.className = 'num';
+      num.textContent = String(i);
+      var marks = document.createElement('span');
+      marks.className = 'marks';
+      var dayStats = summarize(list);
+      if (dayStats.climb) {
+        var climbMark = document.createElement('span');
+        climbMark.className = 'mark climb';
+        climbMark.textContent = '攀' + dayStats.climb;
+        marks.appendChild(climbMark);
+      }
+      if (dayStats.incline) {
+        var inclineMark = document.createElement('span');
+        inclineMark.className = 'mark incline';
+        inclineMark.textContent = '坡' + dayStats.incline;
+        marks.appendChild(inclineMark);
+      }
+      if (dayStats.elliptical) {
+        var ellMark = document.createElement('span');
+        ellMark.className = 'mark elliptical';
+        ellMark.textContent = '椭' + dayStats.elliptical;
+        marks.appendChild(ellMark);
+      }
+      btn.append(num, marks);
+      days.appendChild(btn);
+    }
+    article.append(dots, stamp, head, pair, week, days);
+    return article;
+  }
+
+  function entryName(entry) {
+    if (entry.kind === 'climb') return '攀岩 ' + entry.count;
+    return (entry.machine === 'incline' ? '爬坡 ' : '椭圆 ') + entry.minutes;
+  }
+
+  function renderDay() {
+    document.getElementById('dayWhen').textContent = longDate(selected);
+    var list = forDay(selected);
+    var sum = document.getElementById('daySum');
+    sum.replaceChildren();
+    if (list.length) {
+      var stats = summarize(list);
+      sum.textContent = '攀 ' + stats.climb + ' · 氧 ' + stats.sessions;
+    } else {
+      sum.textContent = '';
+    }
+    var box = document.getElementById('dayEntries');
+    box.replaceChildren();
+    list.forEach(function (entry) {
+      var row = document.createElement('div');
+      row.className = 'entry';
+      var chip = document.createElement('button');
+      chip.type = 'button';
+      chip.className = 'chip ' + (entry.kind === 'climb' ? 'climb' : entry.machine);
+      if (entry.id === editingId) chip.classList.add('is-editing');
+      chip.dataset.edit = entry.id;
+      chip.textContent = entryName(entry);
+      var del = document.createElement('button');
+      del.type = 'button';
+      del.className = 'del';
+      del.dataset.del = entry.id;
+      del.textContent = pendingDeleteId === entry.id ? '确定' : '删';
+      if (pendingDeleteId === entry.id) del.classList.add('is-armed');
+      row.append(chip, del);
+      box.appendChild(row);
+    });
+  }
+
+  function render() {
+    document.getElementById('yearGrid').setAttribute('aria-label', viewYear() + '年');
+    renderBoard();
+    var grid = document.getElementById('yearGrid');
+    grid.replaceChildren();
+    for (var month = 0; month < 12; month++) grid.appendChild(renderMonth(viewYear(), month));
+    renderJump();
+    renderDay();
+    syncForm();
+  }
+
+  function setHash(value) {
+    if (location.hash === '#' + value) return;
+    history.replaceState(null, '', '#' + value);
+  }
+
+  function selectDate(value, shouldScroll) {
+    if (!isValidDate(value)) return;
+    selected = value;
+    pendingDeleteId = null;
+    setHash(value);
+    render();
+    if (!shouldScroll) return;
+    var el = document.getElementById('month-' + value.slice(5, 7));
+    if (!el) return;
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+  }
+
+  function startEdit(id) {
+    var entry = entries.filter(function (item) { return item.id === id; })[0];
+    if (!entry) return;
+    editingId = id;
+    pendingDeleteId = null;
+    selected = entry.date;
+    setHash(entry.date);
+    if (entry.kind === 'climb') {
+      document.getElementById('kindClimb').checked = true;
+      countInput.value = String(entry.count);
+    } else {
+      document.getElementById('kindCardio').checked = true;
+      document.getElementById(entry.machine === 'elliptical' ? 'machineElliptical' : 'machineIncline').checked = true;
+      minutesInput.value = String(entry.minutes);
+    }
+    clearError();
+    render();
+    (entry.kind === 'climb' ? countInput : minutesInput).focus();
+  }
+
+  async function removeEntry(id) {
+    if (pendingDeleteId !== id) {
+      pendingDeleteId = id;
+      renderDay();
+      return;
+    }
+    var res;
+    try { res = await api('/api/fitness/' + encodeURIComponent(id), { method: 'DELETE' }); }
+    catch (err) { if (err.message === 'offline') toast('连不上'); return; }
+    if (!res.ok) { toast('没删掉'); return; }
+    entries = entries.filter(function (entry) { return entry.id !== id; });
+    if (editingId === id) editingId = null;
+    pendingDeleteId = null;
+    toast('已删');
+    render();
+  }
+
+  async function loadEntries() {
+    var res = await api('/api/fitness');
+    if (!res.ok) throw new Error('load');
+    entries = await res.json();
+  }
+
+  document.getElementById('gateForm').addEventListener('submit', async function (event) {
+    event.preventDefault();
+    var btn = document.getElementById('unlockBtn');
+    var input = document.getElementById('passwordInput');
+    btn.disabled = true;
+    gateError.textContent = '';
+    try {
+      var res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: input.value })
+      });
+      var data = await res.json();
+      if (res.ok && data.success) {
+        apiToken = data.token;
+        localStorage.setItem(TOKEN_KEY, apiToken);
+        input.value = '';
+        await openApp();
+      } else if (data.locked) {
+        gateError.textContent = '稍后再试';
+        input.value = '';
+      } else {
+        gateError.textContent = '不对';
+        input.value = '';
+        input.focus();
+      }
+    } catch (err) {
+      gateError.textContent = '连不上';
+    } finally {
+      btn.disabled = false;
+    }
+  });
+
+  async function openApp() {
+    var fromHash = location.hash.replace('#', '');
+    selected = isValidDate(fromHash) ? fromHash : todayISO();
+    setHash(selected);
+    try {
+      await loadEntries();
+    } catch (err) {
+      if (err.message === 'unauthorized') return;
+      showGate('连不上');
+      return;
+    }
+    showApp();
+    render();
+  }
+
+  document.getElementById('logForm').addEventListener('submit', async function (event) {
+    event.preventDefault();
+    if (saving) return;
+    clearError();
+    var value = dateInput.value;
+    if (!isValidDate(value)) {
+      formError.textContent = '日期无效';
+      dateInput.focus();
+      return;
+    }
+    var kind = currentKind();
+    var payload = { date: value, kind: kind };
+    if (kind === 'climb') {
+      var count = readInt(countInput, 99);
+      if (count == null) {
+        formError.textContent = '次数 1-99';
+        countInput.focus();
+        return;
+      }
+      payload.count = count;
+    } else {
+      var minutes = readInt(minutesInput, 300);
+      if (minutes == null) {
+        formError.textContent = '分钟 1-300';
+        minutesInput.focus();
+        return;
+      }
+      payload.machine = currentMachine();
+      payload.minutes = minutes;
+    }
+    saving = true;
+    var edited = editingId;
+    var res;
+    try {
+      res = await api(edited ? '/api/fitness/' + encodeURIComponent(edited) : '/api/fitness', {
+        method: edited ? 'PUT' : 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+    } catch (err) {
+      saving = false;
+      if (err.message === 'offline') toast('连不上');
+      return;
+    }
+    saving = false;
+    if (!res.ok) { formError.textContent = '没记上'; return; }
+    var row = await res.json();
+    if (edited) {
+      entries = entries.map(function (entry) { return entry.id === edited ? row : entry; });
+    } else {
+      entries = entries.concat([row]);
+    }
+    editingId = null;
+    pendingDeleteId = null;
+    selected = row.date;
+    setHash(row.date);
+    toast(edited ? '已改' : '已记');
+    render();
+  });
+
+  document.getElementById('prevYear').addEventListener('click', function () {
+    var next = (viewYear() - 1) + selected.slice(4);
+    if (!isValidDate(next)) next = (viewYear() - 1) + selected.slice(4, 8) + '28';
+    selectDate(next, true);
+  });
+  document.getElementById('nextYear').addEventListener('click', function () {
+    var next = (viewYear() + 1) + selected.slice(4);
+    if (!isValidDate(next)) next = (viewYear() + 1) + selected.slice(4, 8) + '28';
+    selectDate(next, true);
+  });
+  document.getElementById('todayBtn').addEventListener('click', function () { selectDate(todayISO(), true); });
+  cancelEdit.addEventListener('click', function () { editingId = null; clearError(); render(); });
+  minutesInput.addEventListener('input', clearError);
+  countInput.addEventListener('input', clearError);
+  document.getElementById('yearGrid').addEventListener('click', function (event) {
+    var btn = event.target.closest('[data-date]');
+    if (!btn) return;
+    selectDate(btn.dataset.date, false);
+  });
+  document.getElementById('dayEntries').addEventListener('click', function (event) {
+    var edit = event.target.closest('[data-edit]');
+    if (edit) { startEdit(edit.dataset.edit); return; }
+    var del = event.target.closest('[data-del]');
+    if (del) removeEntry(del.dataset.del);
+  });
+  document.getElementById('monthJump').addEventListener('click', function (event) {
+    var btn = event.target.closest('[data-month]');
+    if (!btn) return;
+    var el = document.getElementById('month-' + btn.dataset.month);
+    if (!el) return;
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+  });
+  window.addEventListener('hashchange', function () {
+    var value = location.hash.replace('#', '');
+    if (isValidDate(value) && value !== selected && !app.hidden) selectDate(value, false);
+  });
+
+  if (apiToken) openApp();
+})();
+</script>
+</body>
+</html>

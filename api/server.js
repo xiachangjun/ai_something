@@ -25,6 +25,7 @@ const db = new Database(dbPath);
 
 db.exec('CREATE TABLE IF NOT EXISTS birthdays (id TEXT PRIMARY KEY, name TEXT NOT NULL, type TEXT NOT NULL CHECK(type IN (\'solar\', \'lunar\')), date TEXT NOT NULL, lunarYear INTEGER, lunarMonth INTEGER, lunarDay INTEGER, createdAt INTEGER NOT NULL)');
 db.exec('CREATE TABLE IF NOT EXISTS login_attempts (ip TEXT NOT NULL, attempt_time INTEGER NOT NULL, PRIMARY KEY (ip))');
+db.exec('CREATE TABLE IF NOT EXISTS fitness_logs (id TEXT PRIMARY KEY, date TEXT NOT NULL, kind TEXT NOT NULL CHECK(kind IN (\'cardio\', \'climb\')), machine TEXT CHECK(machine IN (\'incline\', \'elliptical\')), minutes INTEGER, count INTEGER, createdAt INTEGER NOT NULL)');
 
 function isLocked(ip) {
   var row = db.prepare('SELECT attempt_time FROM login_attempts WHERE ip = ?').get(ip);
@@ -139,6 +140,60 @@ app.post('/api/birthdays/seed', authMiddleware, function(req, res) {
   tx(seedData);
   var rows = db.prepare('SELECT id, name, type, date, lunarYear, lunarMonth, lunarDay FROM birthdays ORDER BY createdAt ASC').all();
   res.status(201).json({ message: 'seeded', data: rows });
+});
+
+function isIsoDate(value) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  var parts = value.split('-').map(Number);
+  var date = new Date(parts[0], parts[1] - 1, parts[2]);
+  return date.getFullYear() === parts[0] && date.getMonth() === parts[1] - 1 && date.getDate() === parts[2];
+}
+
+function readFitness(body) {
+  if (!body || !isIsoDate(body.date)) return null;
+  if (body.kind === 'climb') {
+    var count = Number(body.count);
+    if (!Number.isInteger(count) || count < 1 || count > 99) return null;
+    return { date: body.date, kind: 'climb', machine: null, minutes: null, count: count };
+  }
+  if (body.kind === 'cardio' && (body.machine === 'incline' || body.machine === 'elliptical')) {
+    var minutes = Number(body.minutes);
+    if (!Number.isInteger(minutes) || minutes < 1 || minutes > 300) return null;
+    return { date: body.date, kind: 'cardio', machine: body.machine, minutes: minutes, count: null };
+  }
+  return null;
+}
+
+function fitnessRow(id) {
+  return db.prepare('SELECT id, date, kind, machine, minutes, count, createdAt FROM fitness_logs WHERE id = ?').get(id);
+}
+
+app.get('/api/fitness', authMiddleware, function(req, res) {
+  var rows = db.prepare('SELECT id, date, kind, machine, minutes, count, createdAt FROM fitness_logs ORDER BY date ASC, createdAt ASC').all();
+  res.json(rows);
+});
+
+app.post('/api/fitness', authMiddleware, function(req, res) {
+  var data = readFitness(req.body);
+  if (!data) return res.status(400).json({ error: 'invalid' });
+  var id = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+  var createdAt = Date.now();
+  db.prepare('INSERT INTO fitness_logs (id, date, kind, machine, minutes, count, createdAt) VALUES (?,?,?,?,?,?,?)').run(id, data.date, data.kind, data.machine, data.minutes, data.count, createdAt);
+  res.status(201).json(fitnessRow(id));
+});
+
+app.put('/api/fitness/:id', authMiddleware, function(req, res) {
+  var data = readFitness(req.body);
+  if (!data) return res.status(400).json({ error: 'invalid' });
+  var result = db.prepare('UPDATE fitness_logs SET date = ?, kind = ?, machine = ?, minutes = ?, count = ? WHERE id = ?').run(data.date, data.kind, data.machine, data.minutes, data.count, req.params.id);
+  if (result.changes === 0) return res.status(404).json({ error: 'not_found' });
+  res.json(fitnessRow(req.params.id));
+});
+
+app.delete('/api/fitness/:id', authMiddleware, function(req, res) {
+  var result = db.prepare('DELETE FROM fitness_logs WHERE id = ?').run(req.params.id);
+  if (result.changes === 0) return res.status(404).json({ error: 'not_found' });
+  res.json({ success: true });
 });
 
 // 定期清理
