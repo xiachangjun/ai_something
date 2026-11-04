@@ -114,6 +114,7 @@
   .timeline-seg.gap:hover { filter: none; box-shadow: none; }
   .timeline-seg.lane { height: 50%; }
   .timeline-seg.lane-1 { top: 50%; }
+  #trackChina { height: 76px; }
 
   .seg-tip {
     position: fixed; z-index: 1000; pointer-events: none;
@@ -461,6 +462,48 @@
   .card.yuan .banner-latin { color: #fbbf24; }
   .card.yuan .meta-chip { border-color: #1e3a8a40; color: #818cf8; }
 
+  .card.xia::before { background: linear-gradient(90deg, #0f766e, #b45309); }
+  .card.xia .card-banner { background: linear-gradient(135deg, #042f2e, #0f766e, #b45309); }
+  .card.xia .banner-title { color: #ecfdf5; }
+  .card.xia .banner-latin { color: #fbbf24; }
+  .card.xia .meta-chip { border-color: #0f766e40; color: #2dd4bf; }
+
+  .card.shang::before { background: linear-gradient(90deg, #9a3412, #b45309); }
+  .card.shang .card-banner { background: linear-gradient(135deg, #431407, #9a3412, #b45309); }
+  .card.shang .banner-title { color: #fff7ed; }
+  .card.shang .banner-latin { color: #fbbf24; }
+  .card.shang .meta-chip { border-color: #9a341240; color: #fb923c; }
+
+  .card.zhou::before { background: linear-gradient(90deg, #1d4ed8, #b45309); }
+  .card.zhou .card-banner { background: linear-gradient(135deg, #1e3a8a, #1d4ed8, #b45309); }
+  .card.zhou .banner-title { color: #eff6ff; }
+  .card.zhou .banner-latin { color: #fbbf24; }
+  .card.zhou .meta-chip { border-color: #1d4ed840; color: #60a5fa; }
+
+  .card.shiliu::before { background: linear-gradient(90deg, #7c3aed, #b45309); }
+  .card.shiliu .card-banner { background: linear-gradient(135deg, #4c1d95, #7c3aed, #b45309); }
+  .card.shiliu .banner-title { color: #f5f3ff; }
+  .card.shiliu .banner-latin { color: #fbbf24; }
+  .card.shiliu .meta-chip { border-color: #7c3aed40; color: #c4b5fd; }
+
+  .card.liao::before { background: linear-gradient(90deg, #0369a1, #1e3a8a); }
+  .card.liao .card-banner { background: linear-gradient(135deg, #0c4a6e, #0369a1, #1e3a8a); }
+  .card.liao .banner-title { color: #e0f2fe; }
+  .card.liao .banner-latin { color: #fbbf24; }
+  .card.liao .meta-chip { border-color: #0369a140; color: #38bdf8; }
+
+  .card.xixia::before { background: linear-gradient(90deg, #c2410c, #b45309); }
+  .card.xixia .card-banner { background: linear-gradient(135deg, #7c2d12, #c2410c, #b45309); }
+  .card.xixia .banner-title { color: #fff7ed; }
+  .card.xixia .banner-latin { color: #fbbf24; }
+  .card.xixia .meta-chip { border-color: #c2410c40; color: #fb923c; }
+
+  .card.jinchao::before { background: linear-gradient(90deg, #b91c1c, #f59e0b); }
+  .card.jinchao .card-banner { background: linear-gradient(135deg, #7f1d1d, #b91c1c, #f59e0b); }
+  .card.jinchao .banner-title { color: #fef2f2; }
+  .card.jinchao .banner-latin { color: #fbbf24; }
+  .card.jinchao .meta-chip { border-color: #b91c1c40; color: #f87171; }
+
 
   /* Footer */
   .footer {
@@ -515,20 +558,101 @@
       <div class="timeline-group-label">印 度</div>
       <div class="timeline-track" id="trackIndia"></div>
     </div>
-    <div class="timeline-scale" id="timelineScale"><span class="scale-note">公元纪年 · 前27 — 2022</span></div>
+    <div class="timeline-scale" id="timelineScale"><span class="scale-note">公元纪年 · 约前2100 — 2022</span></div>
   </div>
 
   <!-- 卡片 -->
   <div class="cards-toolbar">
     <div class="cards-filter" id="cardsFilter">
-      <button class="filter-btn active" data-group="all">🗂 全部 <span class="cnt">18</span></button>
-      <button class="filter-btn" data-group="china">🇨🇳 中国 <span class="cnt">12</span></button>
+      <button class="filter-btn active" data-group="all">🗂 全部 <span class="cnt">25</span></button>
+      <button class="filter-btn" data-group="china">🇨🇳 中国 <span class="cnt">19</span></button>
       <button class="filter-btn" data-group="europe">🇪🇺 欧洲 <span class="cnt">4</span></button>
       <button class="filter-btn" data-group="asia">🇯🇵 亚洲 <span class="cnt">2</span></button>
     </div>
-    <div class="cards-count" id="cardsCount">显示 18 / 18 份简表</div>
+    <div class="cards-count" id="cardsCount">显示 25 / 25 份简表</div>
   </div>
   <div class="cards-grid">
+
+    <!-- 夏朝世系简表 -->
+    <a href="xia-dynasty.html" class="card xia" data-group="china" data-tsmin="-2070" data-tsmax="-1600">
+      <div class="card-banner">
+        <div class="banner-icon">夏</div>
+        <div class="banner-title">夏 朝</div>
+        <div class="banner-latin">Xia Dynasty</div>
+      </div>
+      <div class="card-body">
+        <h2>夏朝世系简表</h2>
+        <div class="card-meta">
+          <div class="meta-chip">约前2070 - 前1600</div>
+          <div class="meta-chip">约470年 · 17王</div>
+        </div>
+        <div class="card-desc">
+          传统史书中的第一个世袭王朝。禹治水受禅、启家天下，太康失国、少康中兴，至桀亡于鸣条。年代多依传说，考古常与二里头对照。
+        </div>
+        <div class="card-tags">
+          <span>大禹治水</span><span>家天下</span><span>少康中兴</span><span>鸣条之战</span><span>二里头</span>
+        </div>
+      </div>
+      <div class="card-timescale"></div>
+      <div class="card-footer">
+        <span class="enter-text">查看详情</span>
+        <span class="arrow">→</span>
+      </div>
+    </a>
+
+    <!-- 商朝世系简表 -->
+    <a href="shang-dynasty.html" class="card shang" data-group="china" data-tsmin="-1600" data-tsmax="-1046">
+      <div class="card-banner">
+        <div class="banner-icon">商</div>
+        <div class="banner-title">商 朝</div>
+        <div class="banner-latin">Shang Dynasty</div>
+      </div>
+      <div class="card-body">
+        <h2>商朝世系简表</h2>
+        <div class="card-meta">
+          <div class="meta-chip">约前1600 - 前1046</div>
+          <div class="meta-chip">约550年 · 31王</div>
+        </div>
+        <div class="card-desc">
+          目前最早有当时文字可考的中原王朝。汤伐桀都亳，盘庚迁殷，武丁中兴与妇好征战见诸甲骨，至帝辛亡于牧野。
+        </div>
+        <div class="card-tags">
+          <span>鸣条之战</span><span>盘庚迁殷</span><span>武丁中兴</span><span>甲骨文</span><span>牧野之战</span>
+        </div>
+      </div>
+      <div class="card-timescale"></div>
+      <div class="card-footer">
+        <span class="enter-text">查看详情</span>
+        <span class="arrow">→</span>
+      </div>
+    </a>
+
+    <!-- 周朝世系简表 -->
+    <a href="zhou-dynasty.html" class="card zhou" data-group="china" data-tsmin="-1046" data-tsmax="-256">
+      <div class="card-banner">
+        <div class="banner-icon">周</div>
+        <div class="banner-title">周 朝</div>
+        <div class="banner-latin">Zhou Dynasty</div>
+      </div>
+      <div class="card-body">
+        <h2>周朝世系简表</h2>
+        <div class="card-meta">
+          <div class="meta-chip">前1046 - 前256</div>
+          <div class="meta-chip">790年 · 西周+东周</div>
+        </div>
+        <div class="card-desc">
+          分封与宗法的古典时代。武王克商、成康之治、国人暴动开启确切纪年；平王东迁后天子守府，春秋霸政、战国兼并，前256秦灭周。
+        </div>
+        <div class="card-tags">
+          <span>牧野克商</span><span>共和元年</span><span>平王东迁</span><span>春秋霸主</span><span>秦灭周</span>
+        </div>
+      </div>
+      <div class="card-timescale"></div>
+      <div class="card-footer">
+        <span class="enter-text">查看详情</span>
+        <span class="arrow">→</span>
+      </div>
+    </a>
 
     <!-- 秦朝皇帝世系简表 -->
     <a href="qin-dynasty.html" class="card qin" data-group="china" data-tsmin="-221" data-tsmax="-207">
@@ -629,6 +753,33 @@
         </div>
         <div class="card-tags">
           <span>八王之乱</span><span>永嘉之乱</span><span>衣冠南渡</span><span>淝水之战</span><span>王与马共天下</span>
+        </div>
+      </div>
+      <div class="card-timescale"></div>
+      <div class="card-footer">
+        <span class="enter-text">查看详情</span>
+        <span class="arrow">→</span>
+      </div>
+    </a>
+
+    <!-- 十六国世系简表 -->
+    <a href="shiliuguo-dynasty.html" class="card shiliu" data-group="china" data-tsmin="304" data-tsmax="439">
+      <div class="card-banner">
+        <div class="banner-icon">胡</div>
+        <div class="banner-title">十六国</div>
+        <div class="banner-latin">Sixteen Kingdoms</div>
+      </div>
+      <div class="card-body">
+        <h2>十六国世系简表</h2>
+        <div class="card-meta">
+          <div class="meta-chip">304 - 439</div>
+          <div class="meta-chip">135年 · 与东晋并立</div>
+        </div>
+        <div class="card-desc">
+          永嘉之后匈奴、羯、鲜卑、氐、羌在北方建号。苻坚一度统一北方，淝水战败后再分裂；439年北魏灭北凉，十六国结束。
+        </div>
+        <div class="card-tags">
+          <span>刘渊建汉</span><span>石勒后赵</span><span>苻坚前秦</span><span>淝水之战</span><span>北魏灭北凉</span>
         </div>
       </div>
       <div class="card-timescale"></div>
@@ -808,6 +959,33 @@
       </div>
     </a>
 
+    <!-- 辽朝皇帝世系简表 -->
+    <a href="liao-dynasty.html" class="card liao" data-group="china" data-tsmin="916" data-tsmax="1125">
+      <div class="card-banner">
+        <div class="banner-icon">辽</div>
+        <div class="banner-title">辽 朝</div>
+        <div class="banner-latin">Liao Dynasty</div>
+      </div>
+      <div class="card-body">
+        <h2>辽朝皇帝世系简表</h2>
+        <div class="card-meta">
+          <div class="meta-chip">916 - 1125</div>
+          <div class="meta-chip">209年 · 9位皇帝</div>
+        </div>
+        <div class="card-desc">
+          契丹耶律氏所建。阿保机称帝，太宗得燕云十六州，圣宗朝澶渊之盟后与宋约为兄弟之国；天祚亡于金，耶律大石西迁建西辽。
+        </div>
+        <div class="card-tags">
+          <span>阿保机</span><span>燕云十六州</span><span>澶渊之盟</span><span>萧太后</span><span>西辽</span>
+        </div>
+      </div>
+      <div class="card-timescale"></div>
+      <div class="card-footer">
+        <span class="enter-text">查看详情</span>
+        <span class="arrow">→</span>
+      </div>
+    </a>
+
     <!-- 宋朝 -->
     <a href="song-dynasty.html" class="card song" data-group="china" data-tsmin="960" data-tsmax="1279">
       <div class="card-banner">
@@ -828,6 +1006,60 @@
         </div>
         <div class="card-tags">
           <span>陈桥兵变</span><span>王安石变法</span><span>靖康之变</span><span>岳飞北伐</span><span>崖山海战</span>
+        </div>
+      </div>
+      <div class="card-timescale"></div>
+      <div class="card-footer">
+        <span class="enter-text">查看详情</span>
+        <span class="arrow">→</span>
+      </div>
+    </a>
+
+    <!-- 西夏皇帝世系简表 -->
+    <a href="xixia-dynasty.html" class="card xixia" data-group="china" data-tsmin="1038" data-tsmax="1227">
+      <div class="card-banner">
+        <div class="banner-icon">夏</div>
+        <div class="banner-title">西 夏</div>
+        <div class="banner-latin">Western Xia</div>
+      </div>
+      <div class="card-body">
+        <h2>西夏皇帝世系简表</h2>
+        <div class="card-meta">
+          <div class="meta-chip">1038 - 1227</div>
+          <div class="meta-chip">189年 · 10位皇帝</div>
+        </div>
+        <div class="card-desc">
+          党项拓跋氏所建，都兴庆府（今银川）。元昊称帝并创西夏文，与宋辽金鼎立西北；1227年亡于蒙古，文献多毁。
+        </div>
+        <div class="card-tags">
+          <span>李元昊</span><span>西夏文</span><span>庆历和议</span><span>兴庆府</span><span>蒙古灭夏</span>
+        </div>
+      </div>
+      <div class="card-timescale"></div>
+      <div class="card-footer">
+        <span class="enter-text">查看详情</span>
+        <span class="arrow">→</span>
+      </div>
+    </a>
+
+    <!-- 金朝皇帝世系简表（女真，不是晋朝） -->
+    <a href="jinchao-dynasty.html" class="card jinchao" data-group="china" data-tsmin="1115" data-tsmax="1234">
+      <div class="card-banner">
+        <div class="banner-icon">金</div>
+        <div class="banner-title">金 朝</div>
+        <div class="banner-latin">Jin · Jurchen</div>
+      </div>
+      <div class="card-body">
+        <h2>金朝皇帝世系简表</h2>
+        <div class="card-meta">
+          <div class="meta-chip">1115 - 1234</div>
+          <div class="meta-chip">119年 · 10位皇帝</div>
+        </div>
+        <div class="card-desc">
+          女真完颜氏所建，与本目录晋朝不是同一页。阿骨打反辽建国，太宗灭辽与北宋，海陵迁燕，世宗大定；1234年蔡州城破，金亡。
+        </div>
+        <div class="card-tags">
+          <span>完颜阿骨打</span><span>靖康之变</span><span>海陵迁燕</span><span>大定之治</span><span>蔡州亡国</span>
         </div>
       </div>
       <div class="card-timescale"></div>
@@ -1042,25 +1274,32 @@
 
   <div class="footer">
     <p>数据来源：各朝代正史及权威历史著作 · 仅供学习参考</p>
-    <p style="margin-top:6px;color:#404040;">共 18 份王朝简表 · 持续更新中</p>
+    <p style="margin-top:6px;color:#404040;">共 25 份王朝简表 · 持续更新中</p>
   </div>
 
 </div>
 
 <script>
 (function(){
-  var MIN = -27, MAX = 2030, TOTAL = MAX - MIN;
+  var MIN = -2100, MAX = 2030, TOTAL = MAX - MIN;
   var tracks = {
     china: [
-      { name:'秦', full:'秦朝', years:'前221 - 前207', dur:'15年', start:-221, end:-207, href:'qin-dynasty.html', grad:'linear-gradient(90deg,#374151,#b8860b)', note:'统一六国 · 郡县制 · 二世而亡（早于刻度起点，按最小宽度显示）' },
-      { name:'汉', full:'汉朝', years:'前202 - 220', dur:'405年', start:-202, end:220, href:'han-dynasty.html', grad:'linear-gradient(90deg,#b91c1c,#7c2d12)', note:'文景之治 · 汉武盛世 · 光武中兴（部分早于刻度起点）' },
+      { name:'夏', full:'夏朝', years:'约前2070 - 前1600', dur:'约470年', start:-2070, end:-1600, href:'xia-dynasty.html', grad:'linear-gradient(90deg,#0f766e,#b45309)', note:'禹启家天下 · 少康中兴 · 桀亡于汤（年代依通行传说年表）' },
+      { name:'商', full:'商朝', years:'约前1600 - 前1046', dur:'约550年', start:-1600, end:-1046, href:'shang-dynasty.html', grad:'linear-gradient(90deg,#9a3412,#b45309)', note:'汤伐桀 · 盘庚迁殷 · 武丁中兴 · 牧野之战' },
+      { name:'周', full:'周朝', years:'前1046 - 前256', dur:'790年', start:-1046, end:-256, href:'zhou-dynasty.html', grad:'linear-gradient(90deg,#1d4ed8,#b45309)', note:'武王克商 · 共和元年 · 平王东迁 · 秦灭周' },
+      { name:'秦', full:'秦朝', years:'前221 - 前207', dur:'15年', start:-221, end:-207, href:'qin-dynasty.html', grad:'linear-gradient(90deg,#374151,#b8860b)', note:'统一六国 · 郡县制 · 二世而亡' },
+      { name:'汉', full:'汉朝', years:'前202 - 220', dur:'405年', start:-202, end:220, href:'han-dynasty.html', grad:'linear-gradient(90deg,#b91c1c,#7c2d12)', note:'文景之治 · 汉武盛世 · 光武中兴' },
       { name:'三国', full:'三国', years:'220 - 280', dur:'60年', start:220, end:263, href:'three-kingdoms.html', grad:'linear-gradient(90deg,#1e3a8a,#b91c1c)', note:'魏蜀吴鼎立（段至蜀亡263，吴亡于280）' },
       { name:'晋', full:'晋朝', years:'265 - 420', dur:'155年', start:265, end:420, href:'jin-dynasty.html', grad:'linear-gradient(90deg,#92400e,#1e40af)', note:'八王之乱 · 永嘉南渡 · 淝水之战' },
+      { name:'十六国', full:'十六国', years:'304 - 439', dur:'135年', start:304, end:439, lane:1, href:'shiliuguo-dynasty.html', grad:'linear-gradient(90deg,#7c3aed,#b45309)', note:'五胡十六国 · 与东晋并立 · 北魏灭北凉' },
       { name:'南北朝', full:'南北朝', years:'420 - 589', dur:'169年', start:420, end:589, href:'nanbeichao-dynasty.html', grad:'linear-gradient(90deg,#0e7490,#b45309)', note:'南朝宋齐梁陈 · 北朝北魏周齐' },
       { name:'隋', full:'隋朝', years:'589 - 618', dur:'29年', start:589, end:618, href:'sui-dynasty.html', grad:'linear-gradient(90deg,#0e7490,#b45309)', note:'581建隋 · 589灭陈统一 · 大运河' },
       { name:'唐', full:'唐朝', years:'618 - 907', dur:'289年', start:618, end:907, href:'tang-dynasty.html', grad:'linear-gradient(90deg,#9b1b30,#c0392b)', note:'贞观之治 · 开元盛世' },
       { name:'五代', full:'五代十国', years:'907 - 960', dur:'53年', start:907, end:960, href:'wudai-dynasty.html', grad:'linear-gradient(90deg,#475569,#b91c1c)', note:'后梁后唐后晋后汉后周 · 十国并立' },
+      { name:'辽', full:'辽朝', years:'916 - 1125', dur:'209年', start:916, end:1125, lane:1, href:'liao-dynasty.html', grad:'linear-gradient(90deg,#0369a1,#1e3a8a)', note:'契丹 · 燕云十六州 · 澶渊之盟' },
       { name:'宋', full:'宋朝', years:'960 - 1279', dur:'319年', start:960, end:1279, href:'song-dynasty.html', grad:'linear-gradient(90deg,#b8860b,#daa520)', note:'北宋 · 南宋 · 文盛武弱' },
+      { name:'西夏', full:'西夏', years:'1038 - 1227', dur:'189年', start:1038, end:1227, lane:1, href:'xixia-dynasty.html', grad:'linear-gradient(90deg,#c2410c,#b45309)', note:'党项 · 元昊称帝 · 亡于蒙古' },
+      { name:'金', full:'金朝', years:'1115 - 1234', dur:'119年', start:1115, end:1234, lane:1, href:'jinchao-dynasty.html', grad:'linear-gradient(90deg,#b91c1c,#f59e0b)', note:'女真完颜 · 靖康之变 · 蔡州亡国（不是晋朝）' },
       { name:'元', full:'元朝', years:'1279 - 1368', dur:'89年', start:1279, end:1368, href:'yuan-dynasty.html', grad:'linear-gradient(90deg,#1e3a8a,#7c2d12)', note:'1271建元 · 1279灭南宋统一（段自灭宋起）' },
       { name:'明', full:'明朝', years:'1368 - 1644', dur:'276年', start:1368, end:1644, href:'ming-dynasty.html', grad:'linear-gradient(90deg,#8b0000,#dc2626)', note:'洪武开国 → 崇祯殉国' },
       { name:'清', full:'清朝', years:'1644 - 1912', dur:'268年', start:1644, end:1912, href:'qing-dynasty.html', grad:'linear-gradient(90deg,#1a3a5c,#c9941e)', note:'康乾盛世 → 辛亥革命' }
@@ -1113,14 +1352,14 @@
   var scale = document.getElementById('timelineScale');
   var startTick = document.createElement('span');
   startTick.className = 'tick start';
-  startTick.innerHTML = '<i></i>前27';
+  startTick.innerHTML = '<i></i>约前2100';
   scale.appendChild(startTick);
-  [0, 500, 1000, 1500].forEach(function(y){
+  [-1000, 0, 1000, 1500].forEach(function(y){
     var pos = ((y - MIN) / TOTAL) * 100;
     var s = document.createElement('span');
     s.className = 'tick';
     s.style.left = pos + '%';
-    s.innerHTML = '<i></i>' + y;
+    s.innerHTML = '<i></i>' + (y < 0 ? '前' + (-y) : y);
     scale.appendChild(s);
   });
   var endTick = document.createElement('span');
@@ -1171,7 +1410,7 @@
   });
 
   // 卡片迷你时间条（统一时间比例）
-  var TMIN = -50, TMAX = 2030, TTOTAL = TMAX - TMIN;
+  var TMIN = -2100, TMAX = 2030, TTOTAL = TMAX - TMIN;
   document.querySelectorAll('.card-timescale').forEach(function(el){
     var card = el.closest('.card');
     if (!card) return;

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>西夏皇帝世系简表 (1038-1227)</title>
+<style>
+  :root{--bg:#f7f5f2;--card-bg:#fff;--early-color:#c2410c;--late-color:#9a3412;--text:#1c1917;--text-light:#6b7280;--border:#d1d5db;--event-bg:#fff7ed;--minister-bg:#fef9ee;--highlight:#c2410c;--gold:#b8860b;--rev-color:#7f1d1d}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:"PingFang SC","Microsoft YaHei","Noto Serif SC",serif;background:var(--bg);color:var(--text);line-height:1.6}
+  .header{text-align:center;padding:50px 20px 30px;background:linear-gradient(135deg,#7c2d12 0%,#c2410c 55%,#b45309 100%);color:#fff7ed;position:relative;overflow:hidden}
+  .header::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffd700' fill-opacity='0.05'%3E%3Cpath d='M20 5l3 10h10l-8 6 3 10-8-6-8 6 3-10-8-6h10z'/%3E%3C/g%3E%3C/svg%3E");opacity:.6}
+  .header h1{font-size:40px;font-weight:900;letter-spacing:10px;position:relative;z-index:1;text-shadow:2px 2px 4px rgba(0,0,0,.5)}
+  .header .subtitle{font-size:18px;margin-top:12px;color:#fbbf24;letter-spacing:6px;position:relative;z-index:1}
+  .header .period{font-size:14px;margin-top:8px;color:#e7e5e4;letter-spacing:3px;position:relative;z-index:1}
+  .legend{display:flex;justify-content:center;gap:24px;padding:18px;background:#fff;border-bottom:2px solid var(--border);flex-wrap:wrap}
+  .legend-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-light)}
+  .legend-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0}
+  .container{max-width:1400px;margin:0 auto;padding:20px}
+  .section-title{text-align:center;padding:30px 20px 20px;font-size:28px;font-weight:bold;letter-spacing:6px;position:relative}
+  .section-title.early{color:var(--early-color)}.section-title.late{color:var(--late-color)}
+  .section-title::after{content:'';display:block;width:80px;height:3px;margin:12px auto 0}
+  .section-title.early::after{background:var(--early-color)}.section-title.late::after{background:var(--late-color)}
+  .timeline{position:relative;padding:20px 0}
+  .timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:4px;transform:translateX(-50%);z-index:0}
+  .timeline.early::before{background:var(--early-color)}.timeline.late::before{background:var(--late-color)}
+  .timeline-entry{display:flex;align-items:flex-start;position:relative;margin-bottom:20px}
+  .entry-content{display:flex;width:100%;align-items:flex-start}.entry-left,.entry-right{width:48%;padding:0 15px}
+  .entry-center{width:4%;display:flex;justify-content:center;position:relative;z-index:1}
+  .year-marker{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold;color:#fff;flex-shrink:0;z-index:2}
+  .early .year-marker{background:var(--early-color)}.late .year-marker{background:var(--late-color)}
+  .emperor-card{background:var(--card-bg);border-radius:12px;padding:20px;box-shadow:0 4px 20px rgba(0,0,0,.08);border-left:5px solid;position:relative;transition:transform .3s,box-shadow .3s}
+  .emperor-card:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,.15)}
+  .early .emperor-card{border-left-color:var(--early-color)}.late .emperor-card{border-left-color:var(--late-color)}
+  .emperor-card .order{position:absolute;top:-10px;right:15px;background:var(--highlight);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold}
+  .emperor-name{font-size:20px;font-weight:bold;margin-bottom:2px}
+  .emperor-latin{font-size:12px;color:var(--text-light);font-style:italic;margin-bottom:8px}
+  .emperor-meta{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;margin:10px 0;font-size:12px}
+  .meta-item{display:flex;align-items:center;gap:4px}.meta-label{color:var(--text-light);white-space:nowrap}.meta-value{font-weight:600}
+  .life-bar{height:8px;background:#eee;border-radius:4px;margin:10px 0 5px;position:relative;overflow:visible}
+  .life-bar .reign{position:absolute;height:100%;border-radius:4px;opacity:.8}
+  .early .life-bar .reign{background:var(--early-color)}.late .life-bar .reign{background:var(--late-color)}
+  .life-bar-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--text-light)}
+  .relation-tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;margin-top:6px;border:1px solid}
+  .early .relation-tag{background:#f1f5f9;color:#c2410c;border-color:#cbd5e1}
+  .late .relation-tag{background:#fef2f2;color:#9a3412;border-color:#fca5a5}
+  .events-panel{background:var(--event-bg);border-radius:10px;padding:14px;margin-top:5px;border:1px solid #d6d3d1}
+  .events-panel h4{font-size:13px;color:var(--highlight);margin-bottom:8px}
+  .event-item{font-size:12px;padding:4px 0;border-bottom:1px dashed #d6d3d1;display:flex;gap:6px}
+  .event-item:last-child{border-bottom:none}
+  .event-year{color:var(--highlight);font-weight:bold;white-space:nowrap;min-width:52px}
+  .ministers-panel{background:var(--minister-bg);border-radius:10px;padding:14px;margin-top:8px;border:1px solid #fcd34d}
+  .ministers-panel h4{font-size:13px;color:#92400e;margin-bottom:8px}
+  .minister-list{display:flex;flex-wrap:wrap;gap:5px}
+  .minister-tag{font-size:11px;padding:3px 8px;background:#fef9ee;color:#92400e;border-radius:12px;border:1px solid #fcd34d}
+  .minister-tag.negative{background:#fde8e8;color:#b91c1c;border-color:#f0b8b8}
+  .family-tree-section,.lifecycle-section{margin:40px 0;padding:30px;background:#fff;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.06)}
+  .family-tree-section h2,.lifecycle-section h2{text-align:center;font-size:24px;color:var(--text);margin-bottom:10px;letter-spacing:4px}
+  .lifecycle-section .note{text-align:center;font-size:12px;color:var(--text-light);margin-bottom:20px}
+  .tree-container{overflow-x:auto;padding:20px 0}
+  .gantt-container{overflow-x:auto;padding:10px 0}.gantt-chart{min-width:800px}
+  .gantt-row{display:flex;align-items:center;height:32px;margin:2px 0}
+  .gantt-label{width:140px;font-size:12px;font-weight:600;text-align:right;padding-right:12px;flex-shrink:0;white-space:nowrap}
+  .gantt-bar-area{flex:1;position:relative;height:100%}
+  .gantt-bar{position:absolute;height:10px;top:50%;transform:translateY(-50%);border-radius:5px;opacity:.3;cursor:pointer}
+  .gantt-bar.reign-bar{height:20px;opacity:.85;z-index:1}
+  .gantt-bar:hover{opacity:1;filter:brightness(1.1)}
+  .gantt-bar .tooltip{display:none;position:absolute;bottom:calc(100% + 5px);left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:4px 8px;border-radius:4px;font-size:11px;white-space:nowrap;z-index:10}
+  .gantt-bar:hover .tooltip{display:block}
+  .gantt-header{display:flex;align-items:center;height:30px;border-bottom:2px solid var(--border);margin-bottom:10px}
+  .gantt-year-tick{position:absolute;font-size:10px;color:var(--text-light);transform:translateX(-50%);top:0}
+  .overview-stats{display:flex;justify-content:center;gap:28px;padding:20px;flex-wrap:wrap}
+  .stat-box{text-align:center;padding:15px 22px;background:#fff;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.06);min-width:110px}
+  .stat-number{font-size:26px;font-weight:bold;color:var(--highlight)}
+  .stat-desc{font-size:12px;color:var(--text-light);margin-top:4px}
+  .footer{text-align:center;padding:30px;color:var(--text-light);font-size:13px;border-top:2px solid var(--border);margin-top:40px}
+  .note-box{max-width:900px;margin:0 auto 24px;padding:14px 18px;background:#fff;border:1px dashed #d6d3d1;border-radius:10px;font-size:13px;color:#57534e;line-height:1.8}
+  @media(max-width:900px){.entry-content{flex-direction:column!important;align-items:center}.entry-left,.entry-right{width:100%;padding:10px 0}.entry-center{width:100%;justify-content:center;margin:10px 0}.timeline::before{display:none}.header h1{font-size:28px;letter-spacing:4px}}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>西夏皇帝世系简表</h1>
+  <div class="subtitle">党 项 · 大 夏</div>
+  <div class="period">1038年 — 1227年 · 与宋辽金并立 · 灭于蒙古</div>
+</div>
+<div class="legend"><div class="legend-item"><div class="legend-dot" style="background:#c2410c"></div><span>夏帝</span></div><div class="legend-item"><div class="legend-dot" style="background:#b8860b"></div><span>重要人物</span></div><div class="legend-item"><div class="legend-dot" style="background:#7f1d1d"></div><span>重大事件</span></div></div>
+<div class="overview-stats"><div class="stat-box"><div class="stat-number">189</div><div class="stat-desc">国祚（年）</div></div><div class="stat-box"><div class="stat-number">10</div><div class="stat-desc">皇帝</div></div><div class="stat-box"><div class="stat-number">兴庆府</div><div class="stat-desc">都城（今银川）</div></div><div class="stat-box"><div class="stat-number">西夏文</div><div class="stat-desc">创制文字</div></div></div>
+<div class="container">
+<div class="lifecycle-section">
+  <h2>君主生卒与在位时间对照图</h2>
+  <div class="note">浅色条为生卒跨度，深色条为在位。年代多依通行年表，仅供对照。</div>
+  <div class="gantt-container"><div class="gantt-chart" id="ganttChart"></div></div>
+</div>
+<div class="section-title early">西 夏</div><div style="text-align:center;color:#999;font-size:13px;margin-bottom:20px;">1038 — 1227 · 兴庆府</div><div class="note-box">党项拓跋氏唐时赐姓李。元昊称帝后创西夏文，与宋、辽、金鼎立于西北。无独立正史，事迹散见宋辽金史。</div><div class="timeline early>  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">1</div>
+        <div class="emperor-name">夏景宗 李元昊</div>
+        <div class="emperor-latin">Li Yuanhao</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1003-1048（45岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1038-1048</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:77.8%;width:22.2%"></div></div>
+        <div class="life-bar-labels"><span>1003</span><span>1038 在位</span><span>1048</span></div>
+        <div class="relation-tag">称帝 · 创西夏文</div>
+      </div>
+      <div class="ministers-panel"><h4>重要人物</h4><div class="minister-list"><span class="minister-tag">野利后</span><span class="minister-tag">没藏讹庞</span></div></div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1038</div></div>
+    <div class="entry-right"><div class="events-panel"><h4>重大事件</h4><div class="event-item"><span class="event-year">1038</span><span>称帝，国号大夏</span></div><div class="event-item"><span class="event-year">1044</span><span>宋夏庆历和议</span></div><div class="event-item"><span class="event-year">1048</span><span>遇刺</span></div></div></div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left"><div class="events-panel"><h4>重大事件</h4><div class="event-item"><span class="event-year">亲政</span><span>废蕃礼用汉礼，与宋时战时和</span></div></div></div>
+    <div class="entry-center"><div class="year-marker">1048</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">2</div>
+        <div class="emperor-name">夏毅宗 李谅祚</div>
+        <div class="emperor-latin">Li Liangzuo</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1047-1068（21岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1048-1068</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:4.8%;width:95.2%"></div></div>
+        <div class="life-bar-labels"><span>1047</span><span>1048 在位</span><span>1068</span></div>
+        <div class="relation-tag">幼年即位 · 汉礼</div>
+      </div>
+      <div class="ministers-panel"><h4>重要人物</h4><div class="minister-list"><span class="minister-tag">没藏太后</span></div></div>
+    </div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">3</div>
+        <div class="emperor-name">夏惠宗 李秉常</div>
+        <div class="emperor-latin">Li Bingchang</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1061-1086（25岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1068-1086</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:28.0%;width:72.0%"></div></div>
+        <div class="life-bar-labels"><span>1061</span><span>1068 在位</span><span>1086</span></div>
+        <div class="relation-tag">梁太后专权</div>
+      </div>
+      <div class="ministers-panel"><h4>重要人物</h4><div class="minister-list"><span class="minister-tag">梁太后</span></div></div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1068</div></div>
+    <div class="entry-right"><div class="events-panel"><h4>重大事件</h4><div class="event-item"><span class="event-year">囚帝</span><span>因欲附宋被太后幽禁</span></div></div></div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left"><div class="events-panel"><h4>重大事件</h4><div class="event-item"><span class="event-year">亲政</span><span>收梁氏权</span></div><div class="event-item"><span class="event-year">金</span><span>辽亡后向金称臣</span></div></div></div>
+    <div class="entry-center"><div class="year-marker">1086</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">4</div>
+        <div class="emperor-name">夏崇宗 李乾顺</div>
+        <div class="emperor-latin">Li Qianshun</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1083-1139（56岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1086-1139</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:5.4%;width:94.6%"></div></div>
+        <div class="life-bar-labels"><span>1083</span><span>1086 在位</span><span>1139</span></div>
+        <div class="relation-tag">长期在位 · 联辽抗宋转而附金</div>
+      </div>
+      <div class="ministers-panel"><h4>重要人物</h4><div class="minister-list"><span class="minister-tag">梁乙逋</span></div></div>
+    </div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">5</div>
+        <div class="emperor-name">夏仁宗 李仁孝</div>
+        <div class="emperor-latin">Li Renxiao</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1124-1193（69岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1139-1193</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:21.7%;width:78.3%"></div></div>
+        <div class="life-bar-labels"><span>1124</span><span>1139 在位</span><span>1193</span></div>
+        <div class="relation-tag">西夏文化高峰</div>
+      </div>
+      
+    </div>
+    <div class="entry-center"><div class="year-marker">1139</div></div>
+    <div class="entry-right"><div class="events-panel"><h4>重大事件</h4><div class="event-item"><span class="event-year">科举</span><span>崇儒，设科举</span></div><div class="event-item"><span class="event-year">番汉</span><span>《番汉合时掌中珠》</span></div></div></div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left"><div class="events-panel"><h4>重大事件</h4><div class="event-item"><span class="event-year">1206</span><span>李安全废之</span></div></div></div>
+    <div class="entry-center"><div class="year-marker">1193</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">6</div>
+        <div class="emperor-name">夏桓宗 李纯祐</div>
+        <div class="emperor-latin">Li Chunyou</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1177-1206（29岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1193-1206</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:55.2%;width:44.8%"></div></div>
+        <div class="life-bar-labels"><span>1177</span><span>1193 在位</span><span>1206</span></div>
+        <div class="relation-tag">被废</div>
+      </div>
+      <div class="ministers-panel"><h4>重要人物</h4><div class="minister-list"><span class="minister-tag">李安全</span></div></div>
+    </div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">7</div>
+        <div class="emperor-name">夏襄宗 李安全</div>
+        <div class="emperor-latin">Li Anquan</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1170-1211（41岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1206-1211</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:87.8%;width:12.2%"></div></div>
+        <div class="life-bar-labels"><span>1170</span><span>1206 在位</span><span>1211</span></div>
+        <div class="relation-tag">附蒙古 · 被废</div>
+      </div>
+      
+    </div>
+    <div class="entry-center"><div class="year-marker">1206</div></div>
+    <div class="entry-right"><div class="events-panel"><h4>重大事件</h4><div class="event-item"><span class="event-year">附蒙</span><span>先附成吉思汗，后被神宗所代</span></div></div></div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left"><div class="events-panel"><h4>重大事件</h4><div class="event-item"><span class="event-year">抗蒙</span><span>时叛时服，传位献宗</span></div></div></div>
+    <div class="entry-center"><div class="year-marker">1211</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">8</div>
+        <div class="emperor-name">夏神宗 李遵顼</div>
+        <div class="emperor-latin">Li Zunxu</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1163-1226（63岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1211-1223</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:76.2%;width:19.0%"></div></div>
+        <div class="life-bar-labels"><span>1163</span><span>1211 在位</span><span>1226</span></div>
+        <div class="relation-tag">传位于子</div>
+      </div>
+      
+    </div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">9</div>
+        <div class="emperor-name">夏献宗 李德旺</div>
+        <div class="emperor-latin">Li Dewang</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1181-1226（45岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1223-1226</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:93.3%;width:6.7%"></div></div>
+        <div class="life-bar-labels"><span>1181</span><span>1223 在位</span><span>1226</span></div>
+        <div class="relation-tag">蒙古围困中卒</div>
+      </div>
+      
+    </div>
+    <div class="entry-center"><div class="year-marker">1223</div></div>
+    <div class="entry-right"><div class="events-panel"><h4>重大事件</h4><div class="event-item"><span class="event-year">1226</span><span>病卒，侄李晛即位</span></div></div></div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left"><div class="events-panel"><h4>重大事件</h4><div class="event-item"><span class="event-year">1227</span><span>中兴府陷，李晛降，旋被杀，西夏亡。成吉思汗亦卒于灭夏之役</span></div></div></div>
+    <div class="entry-center"><div class="year-marker">1226</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">10</div>
+        <div class="emperor-name">夏末主 李晛</div>
+        <div class="emperor-latin">Li Xian</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">？-1227</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1226-1227</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:70%;width:30%"></div></div>
+        <div class="life-bar-labels"><span>？</span><span>1226 在位</span><span>1227</span></div>
+        <div class="relation-tag">降蒙古 · 西夏亡</div>
+      </div>
+      <div class="ministers-panel"><h4>重要人物</h4><div class="minister-list"><span class="minister-tag">成吉思汗</span></div></div>
+    </div>
+  </div></div>
+</div>
+<div class="family-tree-section">
+  <h2>拓跋/李氏</h2>
+  <div class="tree-container">
+<svg viewBox="0 0 1000 220" width="1000" height="220" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1000" height="220" rx="12" fill="#fff7ed"/>
+  <text x="500" y="40" text-anchor="middle" font-size="16" fill="#c2410c" font-weight="bold" font-family="PingFang SC,serif">元昊称帝 → 庆历和议 → 仁孝崇儒 → 蒙古灭夏</text>
+  <text x="500" y="120" text-anchor="middle" fill="#57534e" font-size="12" font-family="PingFang SC,serif">西夏文与佛教遗存集中于今宁夏、甘肃。1227 年亡国，文献多毁。</text>
+</svg>
+</div>
+</div>
+</div>
+<div class="footer">
+  <p>西夏是党项所建。没有单独列入二十四史，但有完整帝系。1227 年亡于蒙古。</p><p style='margin-top:8px;'>数据来源：《宋史·夏国传》《金史》 · 仅供学习参考</p>
+  <p style="margin-top:8px;"><a href="index.html" style="color:#78716c">← 返回王朝目录</a></p>
+</div>
+
+<script>
+(function(){
+  const emperors = [{ name:'夏景宗 李元昊', birth:1003, death:1048, reigns:[{s:1038,e:1048}], type:'early' },{ name:'夏毅宗 李谅祚', birth:1047, death:1068, reigns:[{s:1048,e:1068}], type:'early' },{ name:'夏惠宗 李秉常', birth:1061, death:1086, reigns:[{s:1068,e:1086}], type:'early' },{ name:'夏崇宗 李乾顺', birth:1083, death:1139, reigns:[{s:1086,e:1139}], type:'early' },{ name:'夏仁宗 李仁孝', birth:1124, death:1193, reigns:[{s:1139,e:1193}], type:'early' },{ name:'夏桓宗 李纯祐', birth:1177, death:1206, reigns:[{s:1193,e:1206}], type:'early' },{ name:'夏襄宗 李安全', birth:1170, death:1211, reigns:[{s:1206,e:1211}], type:'early' },{ name:'夏神宗 李遵顼', birth:1163, death:1226, reigns:[{s:1211,e:1223}], type:'early' },{ name:'夏献宗 李德旺', birth:1181, death:1226, reigns:[{s:1223,e:1226}], type:'early' },{ name:'夏末主 李晛', birth:1226, death:1227, reigns:[{s:1226,e:1227}], type:'early' }];
+  const minYear=1000, maxYear=1230, totalYears=maxYear-minYear;
+  const fmtY = y => y<0 ? '前'+(-y) : String(y);
+  const colors = {early:'#c2410c'};
+  const container = document.getElementById('ganttChart');
+  if (!container) return;
+  let headerHTML = '<div class="gantt-header"><div class="gantt-label" style="width:140px">年份</div><div class="gantt-bar-area" style="position:relative;height:30px;">';
+  [1000,1030,1060,1090,1120,1150,1180,1210].forEach(function(y){
+    headerHTML += '<span class="gantt-year-tick" style="left:'+(((y-minYear)/totalYears)*100)+'%">'+fmtY(y)+'</span>';
+  });
+  headerHTML += '</div></div>';
+  let bodyHTML = '<div class="gantt-body">';
+  emperors.forEach(function(emp){
+    const c = colors[emp.type] || colors.early;
+    const ll = ((emp.birth-minYear)/totalYears)*100;
+    const lw = Math.max(((emp.death-emp.birth)/totalYears)*100, 0.4);
+    let rb = '';
+    emp.reigns.forEach(function(r){
+      const rl = ((r.s-minYear)/totalYears)*100;
+      const rw = Math.max(((r.e-r.s)/totalYears)*100, 0.4);
+      rb += '<div class="gantt-bar reign-bar" style="left:'+rl+'%;width:'+rw+'%;background:'+c+';"><div class="tooltip">在位：'+fmtY(r.s)+'-'+fmtY(r.e)+'</div></div>';
+    });
+    bodyHTML += '<div class="gantt-row"><div class="gantt-label" style="color:'+c+';width:140px">'+emp.name+'</div><div class="gantt-bar-area"><div class="gantt-bar" style="left:'+ll+'%;width:'+lw+'%;background:'+c+';"><div class="tooltip">生卒：'+fmtY(emp.birth)+'-'+fmtY(emp.death)+'</div></div>'+rb+'</div></div>';
+  });
+  container.innerHTML = headerHTML + bodyHTML;
+})();
+</script>
+
+</body>
+</html>
