@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>金朝皇帝世系简表 (1115-1234)</title>
+<style>
+  :root{--bg:#f7f5f2;--card-bg:#fff;--early-color:#b91c1c;--late-color:#7f1d1d;--text:#1c1917;--text-light:#6b7280;--border:#d1d5db;--event-bg:#fef2f2;--minister-bg:#fef9ee;--highlight:#b91c1c;--gold:#b8860b;--rev-color:#7f1d1d}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:"PingFang SC","Microsoft YaHei","Noto Serif SC",serif;background:var(--bg);color:var(--text);line-height:1.6}
+  .header{text-align:center;padding:50px 20px 30px;background:linear-gradient(135deg,#7f1d1d 0%,#b91c1c 55%,#f59e0b 100%);color:#fef2f2;position:relative;overflow:hidden}
+  .header::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffd700' fill-opacity='0.05'%3E%3Cpath d='M20 5l3 10h10l-8 6 3 10-8-6-8 6 3-10-8-6h10z'/%3E%3C/g%3E%3C/svg%3E");opacity:.6}
+  .header h1{font-size:40px;font-weight:900;letter-spacing:10px;position:relative;z-index:1;text-shadow:2px 2px 4px rgba(0,0,0,.5)}
+  .header .subtitle{font-size:18px;margin-top:12px;color:#fbbf24;letter-spacing:6px;position:relative;z-index:1}
+  .header .period{font-size:14px;margin-top:8px;color:#e7e5e4;letter-spacing:3px;position:relative;z-index:1}
+  .legend{display:flex;justify-content:center;gap:24px;padding:18px;background:#fff;border-bottom:2px solid var(--border);flex-wrap:wrap}
+  .legend-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-light)}
+  .legend-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0}
+  .container{max-width:1400px;margin:0 auto;padding:20px}
+  .section-title{text-align:center;padding:30px 20px 20px;font-size:28px;font-weight:bold;letter-spacing:6px;position:relative}
+  .section-title.early{color:var(--early-color)}.section-title.late{color:var(--late-color)}
+  .section-title::after{content:'';display:block;width:80px;height:3px;margin:12px auto 0}
+  .section-title.early::after{background:var(--early-color)}.section-title.late::after{background:var(--late-color)}
+  .timeline{position:relative;padding:20px 0}
+  .timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:4px;transform:translateX(-50%);z-index:0}
+  .timeline.early::before{background:var(--early-color)}.timeline.late::before{background:var(--late-color)}
+  .timeline-entry{display:flex;align-items:flex-start;position:relative;margin-bottom:20px}
+  .entry-content{display:flex;width:100%;align-items:flex-start}.entry-left,.entry-right{width:48%;padding:0 15px}
+  .entry-center{width:4%;display:flex;justify-content:center;position:relative;z-index:1}
+  .year-marker{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold;color:#fff;flex-shrink:0;z-index:2}
+  .early .year-marker{background:var(--early-color)}.late .year-marker{background:var(--late-color)}
+  .emperor-card{background:var(--card-bg);border-radius:12px;padding:20px;box-shadow:0 4px 20px rgba(0,0,0,.08);border-left:5px solid;position:relative;transition:transform .3s,box-shadow .3s}
+  .emperor-card:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,.15)}
+  .early .emperor-card{border-left-color:var(--early-color)}.late .emperor-card{border-left-color:var(--late-color)}
+  .emperor-card .order{position:absolute;top:-10px;right:15px;background:var(--highlight);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold}
+  .emperor-name{font-size:20px;font-weight:bold;margin-bottom:2px}
+  .emperor-latin{font-size:12px;color:var(--text-light);font-style:italic;margin-bottom:8px}
+  .emperor-meta{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;margin:10px 0;font-size:12px}
+  .meta-item{display:flex;align-items:center;gap:4px}.meta-label{color:var(--text-light);white-space:nowrap}.meta-value{font-weight:600}
+  .life-bar{height:8px;background:#eee;border-radius:4px;margin:10px 0 5px;position:relative;overflow:visible}
+  .life-bar .reign{position:absolute;height:100%;border-radius:4px;opacity:.8}
+  .early .life-bar .reign{background:var(--early-color)}.late .life-bar .reign{background:var(--late-color)}
+  .life-bar-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--text-light)}
+  .relation-tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;margin-top:6px;border:1px solid}
+  .early .relation-tag{background:#f1f5f9;color:#b91c1c;border-color:#cbd5e1}
+  .late .relation-tag{background:#fef2f2;color:#7f1d1d;border-color:#fca5a5}
+  .events-panel{background:var(--event-bg);border-radius:10px;padding:14px;margin-top:5px;border:1px solid #d6d3d1}
+  .events-panel h4{font-size:13px;color:var(--highlight);margin-bottom:8px}
+  .event-item{font-size:12px;padding:4px 0;border-bottom:1px dashed #d6d3d1;display:flex;gap:6px}
+  .event-item:last-child{border-bottom:none}
+  .event-year{color:var(--highlight);font-weight:bold;white-space:nowrap;min-width:52px}
+  .ministers-panel{background:var(--minister-bg);border-radius:10px;padding:14px;margin-top:8px;border:1px solid #fcd34d}
+  .ministers-panel h4{font-size:13px;color:#92400e;margin-bottom:8px}
+  .minister-list{display:flex;flex-wrap:wrap;gap:5px}
+  .minister-tag{font-size:11px;padding:3px 8px;background:#fef9ee;color:#92400e;border-radius:12px;border:1px solid #fcd34d}
+  .minister-tag.negative{background:#fde8e8;color:#b91c1c;border-color:#f0b8b8}
+  .family-tree-section,.lifecycle-section{margin:40px 0;padding:30px;background:#fff;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.06)}
+  .family-tree-section h2,.lifecycle-section h2{text-align:center;font-size:24px;color:var(--text);margin-bottom:10px;letter-spacing:4px}
+  .lifecycle-section .note{text-align:center;font-size:12px;color:var(--text-light);margin-bottom:20px}
+  .tree-container{overflow-x:auto;padding:20px 0}
+  .gantt-container{overflow-x:auto;padding:10px 0}.gantt-chart{min-width:800px}
+  .gantt-row{display:flex;align-items:center;height:32px;margin:2px 0}
+  .gantt-label{width:140px;font-size:12px;font-weight:600;text-align:right;padding-right:12px;flex-shrink:0;white-space:nowrap}
+  .gantt-bar-area{flex:1;position:relative;height:100%}
+  .gantt-bar{position:absolute;height:10px;top:50%;transform:translateY(-50%);border-radius:5px;opacity:.3;cursor:pointer}
+  .gantt-bar.reign-bar{height:20px;opacity:.85;z-index:1}
+  .gantt-bar:hover{opacity:1;filter:brightness(1.1)}
+  .gantt-bar .tooltip{display:none;position:absolute;bottom:calc(100% + 5px);left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:4px 8px;border-radius:4px;font-size:11px;white-space:nowrap;z-index:10}
+  .gantt-bar:hover .tooltip{display:block}
+  .gantt-header{display:flex;align-items:center;height:30px;border-bottom:2px solid var(--border);margin-bottom:10px}
+  .gantt-year-tick{position:absolute;font-size:10px;color:var(--text-light);transform:translateX(-50%);top:0}
+  .overview-stats{display:flex;justify-content:center;gap:28px;padding:20px;flex-wrap:wrap}
+  .stat-box{text-align:center;padding:15px 22px;background:#fff;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.06);min-width:110px}
+  .stat-number{font-size:26px;font-weight:bold;color:var(--highlight)}
+  .stat-desc{font-size:12px;color:var(--text-light);margin-top:4px}
+  .footer{text-align:center;padding:30px;color:var(--text-light);font-size:13px;border-top:2px solid var(--border);margin-top:40px}
+  .note-box{max-width:900px;margin:0 auto 24px;padding:14px 18px;background:#fff;border:1px dashed #d6d3d1;border-radius:10px;font-size:13px;color:#57534e;line-height:1.8}
+  @media(max-width:900px){.entry-content{flex-direction:column!important;align-items:center}.entry-left,.entry-right{width:100%;padding:10px 0}.entry-center{width:100%;justify-content:center;margin:10px 0}.timeline::before{display:none}.header h1{font-size:28px;letter-spacing:4px}}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>金朝皇帝世系简表</h1>
+  <div class="subtitle">女 真 · 完 颜</div>
+  <div class="period">1115年 — 1234年 · 灭辽灭北宋 · 亡于蒙古与南宋夹攻</div>
+</div>
+<div class="legend"><div class="legend-item"><div class="legend-dot" style="background:#b91c1c"></div><span>金帝</span></div><div class="legend-item"><div class="legend-dot" style="background:#b8860b"></div><span>重要人物</span></div><div class="legend-item"><div class="legend-dot" style="background:#7f1d1d"></div><span>重大事件</span></div></div>
+<div class="overview-stats"><div class="stat-box"><div class="stat-number">119</div><div class="stat-desc">国祚（年）</div></div><div class="stat-box"><div class="stat-number">10</div><div class="stat-desc">皇帝</div></div><div class="stat-box"><div class="stat-number">会宁→中都→汴</div><div class="stat-desc">都城</div></div><div class="stat-box"><div class="stat-number">1127</div><div class="stat-desc">靖康之变</div></div></div>
+<div class="container">
+<div class="lifecycle-section">
+  <h2>君主生卒与在位时间对照图</h2>
+  <div class="note">浅色条为生卒跨度，深色条为在位。年代多依通行年表，仅供对照。</div>
+  <div class="gantt-container"><div class="gantt-chart" id="ganttChart"></div></div>
+</div>
+<div class="section-title early">金</div><div style="text-align:center;color:#999;font-size:13px;margin-bottom:20px;">1115 — 1234 · 与南宋、西夏并立</div><div class="note-box">此页是女真完颜氏的金朝，不是司马氏晋朝。正史有《金史》。</div><div class="timeline early>  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">1</div>
+        <div class="emperor-name">金太祖 完颜阿骨打</div>
+        <div class="emperor-latin">Aguda</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1068-1123（55岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1115-1123</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:85.5%;width:14.5%"></div></div>
+        <div class="life-bar-labels"><span>1068</span><span>1115 在位</span><span>1123</span></div>
+        <div class="relation-tag">反辽建国</div>
+      </div>
+      <div class="ministers-panel"><h4>重要人物</h4><div class="minister-list"><span class="minister-tag">完颜粘罕</span><span class="minister-tag">完颜兀术（幼）</span></div></div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1115</div></div>
+    <div class="entry-right"><div class="events-panel"><h4>重大事件</h4><div class="event-item"><span class="event-year">1114</span><span>起兵宁江州</span></div><div class="event-item"><span class="event-year">1115</span><span>会宁称帝，国号金</span></div><div class="event-item"><span class="event-year">1122</span><span>取辽中京</span></div></div></div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left"><div class="events-panel"><h4>重大事件</h4><div class="event-item"><span class="event-year">1125</span><span>俘天祚，辽亡</span></div><div class="event-item"><span class="event-year">1127</span><span>靖康之变，俘徽钦，北宋亡</span></div></div></div>
+    <div class="entry-center"><div class="year-marker">1123</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">2</div>
+        <div class="emperor-name">金太宗 完颜晟</div>
+        <div class="emperor-latin">Emperor Taizong of Jin</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1075-1135（60岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1123-1135</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:80.0%;width:20.0%"></div></div>
+        <div class="life-bar-labels"><span>1075</span><span>1123 在位</span><span>1135</span></div>
+        <div class="relation-tag">灭辽灭北宋</div>
+      </div>
+      <div class="ministers-panel"><h4>重要人物</h4><div class="minister-list"><span class="minister-tag">完颜宗翰</span><span class="minister-tag">完颜宗望</span></div></div>
+    </div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">3</div>
+        <div class="emperor-name">金熙宗 完颜亶</div>
+        <div class="emperor-latin">Emperor Xizong of Jin</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1119-1149（30岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1135-1149</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:53.3%;width:46.7%"></div></div>
+        <div class="life-bar-labels"><span>1119</span><span>1135 在位</span><span>1149</span></div>
+        <div class="relation-tag">汉化改革 · 被弑</div>
+      </div>
+      <div class="ministers-panel"><h4>重要人物</h4><div class="minister-list"><span class="minister-tag">完颜亮</span></div></div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1135</div></div>
+    <div class="entry-right"><div class="events-panel"><h4>重大事件</h4><div class="event-item"><span class="event-year">改革</span><span>废勃极烈，用汉官制</span></div><div class="event-item"><span class="event-year">1141</span><span>绍兴和议</span></div><div class="event-item"><span class="event-year">1149</span><span>海陵王弑之</span></div></div></div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left"><div class="events-panel"><h4>重大事件</h4><div class="event-item"><span class="event-year">1153</span><span>迁都燕京</span></div><div class="event-item"><span class="event-year">1161</span><span>采石之战败于宋，被部将杀于瓜洲</span></div></div></div>
+    <div class="entry-center"><div class="year-marker">1149</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">4</div>
+        <div class="emperor-name">海陵王 完颜亮</div>
+        <div class="emperor-latin">Prince Hailing</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1122-1161（39岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1149-1161</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:69.2%;width:30.8%"></div></div>
+        <div class="life-bar-labels"><span>1122</span><span>1149 在位</span><span>1161</span></div>
+        <div class="relation-tag">迁燕 · 正隆南征败死</div>
+      </div>
+      <div class="ministers-panel"><h4>重要人物</h4><div class="minister-list"><span class="minister-tag">虞允文</span></div></div>
+    </div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">5</div>
+        <div class="emperor-name">金世宗 完颜雍</div>
+        <div class="emperor-latin">Emperor Shizong of Jin</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1123-1189（66岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1161-1189</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:57.6%;width:42.4%"></div></div>
+        <div class="life-bar-labels"><span>1123</span><span>1161 在位</span><span>1189</span></div>
+        <div class="relation-tag">大定之治</div>
+      </div>
+      
+    </div>
+    <div class="entry-center"><div class="year-marker">1161</div></div>
+    <div class="entry-right"><div class="events-panel"><h4>重大事件</h4><div class="event-item"><span class="event-year">大定</span><span>与宋再和，金的全盛被称为「小尧舜」</span></div></div></div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left"><div class="events-panel"><h4>重大事件</h4><div class="event-item"><span class="event-year">泰和</span><span>律法、科举、女真进士</span></div><div class="event-item"><span class="event-year">蒙古</span><span>北边已受蒙古压力</span></div></div></div>
+    <div class="entry-center"><div class="year-marker">1189</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">6</div>
+        <div class="emperor-name">金章宗 完颜璟</div>
+        <div class="emperor-latin">Emperor Zhangzong of Jin</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1168-1208（40岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1189-1208</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:52.5%;width:47.5%"></div></div>
+        <div class="life-bar-labels"><span>1168</span><span>1189 在位</span><span>1208</span></div>
+        <div class="relation-tag">文化高峰 · 北境转紧</div>
+      </div>
+      
+    </div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">7</div>
+        <div class="emperor-name">卫绍王 完颜永济</div>
+        <div class="emperor-latin">Prince Weishao</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1153-1213（60岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1208-1213</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:91.7%;width:8.3%"></div></div>
+        <div class="life-bar-labels"><span>1153</span><span>1208 在位</span><span>1213</span></div>
+        <div class="relation-tag">蒙古破中都前夜</div>
+      </div>
+      <div class="ministers-panel"><h4>重要人物</h4><div class="minister-list"><span class="minister-tag">成吉思汗</span></div></div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1208</div></div>
+    <div class="entry-right"><div class="events-panel"><h4>重大事件</h4><div class="event-item"><span class="event-year">1211</span><span>野狐岭，金军大败</span></div><div class="event-item"><span class="event-year">1213</span><span>被弑</span></div></div></div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left"><div class="events-panel"><h4>重大事件</h4><div class="event-item"><span class="event-year">1214</span><span>迁都南京（汴京）</span></div><div class="event-item"><span class="event-year">中都</span><span>次年中都陷于蒙古</span></div></div></div>
+    <div class="entry-center"><div class="year-marker">1213</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">8</div>
+        <div class="emperor-name">金宣宗 完颜珣</div>
+        <div class="emperor-latin">Emperor Xuanzong of Jin</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1163-1224（61岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1213-1224</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:82.0%;width:18.0%"></div></div>
+        <div class="life-bar-labels"><span>1163</span><span>1213 在位</span><span>1224</span></div>
+        <div class="relation-tag">迁汴</div>
+      </div>
+      
+    </div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">9</div>
+        <div class="emperor-name">金哀宗 完颜守绪</div>
+        <div class="emperor-latin">Emperor Aizong of Jin</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">1198-1234（36岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1224-1234</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:72.2%;width:27.8%"></div></div>
+        <div class="life-bar-labels"><span>1198</span><span>1224 在位</span><span>1234</span></div>
+        <div class="relation-tag">蔡州亡国</div>
+      </div>
+      <div class="ministers-panel"><h4>重要人物</h4><div class="minister-list"><span class="minister-tag">完颜陈和尚</span></div></div>
+    </div>
+    <div class="entry-center"><div class="year-marker">1224</div></div>
+    <div class="entry-right"><div class="events-panel"><h4>重大事件</h4><div class="event-item"><span class="event-year">1232</span><span>三峰山惨败</span></div><div class="event-item"><span class="event-year">1233</span><span>汴京降，奔蔡州</span></div><div class="event-item"><span class="event-year">1234</span><span>蔡州破，自缢</span></div></div></div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left"><div class="events-panel"><h4>重大事件</h4><div class="event-item"><span class="event-year">1234</span><span>哀宗传位，城即破，承麟战死</span></div></div></div>
+    <div class="entry-center"><div class="year-marker">1234</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">10</div>
+        <div class="emperor-name">金末帝 完颜承麟</div>
+        <div class="emperor-latin">Emperor Modi of Jin</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">？-1234</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">1234-1234（半日）</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:70%;width:30%"></div></div>
+        <div class="life-bar-labels"><span>？</span><span>1234 在位</span><span>1234</span></div>
+        <div class="relation-tag">城破被杀 · 金亡</div>
+      </div>
+      
+    </div>
+  </div></div>
+</div>
+<div class="family-tree-section">
+  <h2>完颜氏</h2>
+  <div class="tree-container">
+<svg viewBox="0 0 1000 240" width="1000" height="240" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1000" height="240" rx="12" fill="#fef2f2"/>
+  <text x="500" y="36" text-anchor="middle" font-size="16" fill="#b91c1c" font-weight="bold" font-family="PingFang SC,serif">阿骨打反辽 → 靖康之变 → 海陵迁燕 → 大定之治 → 蔡州亡</text>
+  <text x="500" y="120" text-anchor="middle" fill="#57534e" font-size="12" font-family="PingFang SC,serif">金与南宋以淮为界。蒙古起后先破中都，再与宋联军灭金于蔡州。</text>
+</svg>
+</div>
+</div>
+</div>
+<div class="footer">
+  <p>金朝由女真完颜氏所建，与本目录中的晋朝不是同一页。1234 年蔡州城破，金亡。</p><p style='margin-top:8px;'>数据来源：《金史》 · 仅供学习参考</p>
+  <p style="margin-top:8px;"><a href="index.html" style="color:#78716c">← 返回王朝目录</a></p>
+</div>
+
+<script>
+(function(){
+  const emperors = [{ name:'金太祖 完颜阿骨打', birth:1068, death:1123, reigns:[{s:1115,e:1123}], type:'early' },{ name:'金太宗 完颜晟', birth:1075, death:1135, reigns:[{s:1123,e:1135}], type:'early' },{ name:'金熙宗 完颜亶', birth:1119, death:1149, reigns:[{s:1135,e:1149}], type:'early' },{ name:'海陵王 完颜亮', birth:1122, death:1161, reigns:[{s:1149,e:1161}], type:'early' },{ name:'金世宗 完颜雍', birth:1123, death:1189, reigns:[{s:1161,e:1189}], type:'early' },{ name:'金章宗 完颜璟', birth:1168, death:1208, reigns:[{s:1189,e:1208}], type:'early' },{ name:'卫绍王 完颜永济', birth:1153, death:1213, reigns:[{s:1208,e:1213}], type:'early' },{ name:'金宣宗 完颜珣', birth:1163, death:1224, reigns:[{s:1213,e:1224}], type:'early' },{ name:'金哀宗 完颜守绪', birth:1198, death:1234, reigns:[{s:1224,e:1234}], type:'early' },{ name:'金末帝 完颜承麟', birth:1234, death:1234, reigns:[{s:1234,e:1234}], type:'early' }];
+  const minYear=1060, maxYear=1240, totalYears=maxYear-minYear;
+  const fmtY = y => y<0 ? '前'+(-y) : String(y);
+  const colors = {early:'#b91c1c'};
+  const container = document.getElementById('ganttChart');
+  if (!container) return;
+  let headerHTML = '<div class="gantt-header"><div class="gantt-label" style="width:140px">年份</div><div class="gantt-bar-area" style="position:relative;height:30px;">';
+  [1060,1080,1100,1120,1140,1160,1180,1200,1220,1240].forEach(function(y){
+    headerHTML += '<span class="gantt-year-tick" style="left:'+(((y-minYear)/totalYears)*100)+'%">'+fmtY(y)+'</span>';
+  });
+  headerHTML += '</div></div>';
+  let bodyHTML = '<div class="gantt-body">';
+  emperors.forEach(function(emp){
+    const c = colors[emp.type] || colors.early;
+    const ll = ((emp.birth-minYear)/totalYears)*100;
+    const lw = Math.max(((emp.death-emp.birth)/totalYears)*100, 0.4);
+    let rb = '';
+    emp.reigns.forEach(function(r){
+      const rl = ((r.s-minYear)/totalYears)*100;
+      const rw = Math.max(((r.e-r.s)/totalYears)*100, 0.4);
+      rb += '<div class="gantt-bar reign-bar" style="left:'+rl+'%;width:'+rw+'%;background:'+c+';"><div class="tooltip">在位：'+fmtY(r.s)+'-'+fmtY(r.e)+'</div></div>';
+    });
+    bodyHTML += '<div class="gantt-row"><div class="gantt-label" style="color:'+c+';width:140px">'+emp.name+'</div><div class="gantt-bar-area"><div class="gantt-bar" style="left:'+ll+'%;width:'+lw+'%;background:'+c+';"><div class="tooltip">生卒：'+fmtY(emp.birth)+'-'+fmtY(emp.death)+'</div></div>'+rb+'</div></div>';
+  });
+  container.innerHTML = headerHTML + bodyHTML;
+})();
+</script>
+
+</body>
+</html>

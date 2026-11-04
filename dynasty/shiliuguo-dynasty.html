@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>十六国世系简表 (304-439)</title>
+<style>
+  :root{--bg:#f7f5f2;--card-bg:#fff;--early-color:#7c3aed;--late-color:#b45309;--text:#1c1917;--text-light:#6b7280;--border:#d1d5db;--event-bg:#f5f3ff;--minister-bg:#fef9ee;--highlight:#7c3aed;--gold:#b8860b;--rev-color:#7f1d1d}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:"PingFang SC","Microsoft YaHei","Noto Serif SC",serif;background:var(--bg);color:var(--text);line-height:1.6}
+  .header{text-align:center;padding:50px 20px 30px;background:linear-gradient(135deg,#4c1d95 0%,#7c3aed 55%,#b45309 100%);color:#f5f3ff;position:relative;overflow:hidden}
+  .header::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffd700' fill-opacity='0.05'%3E%3Cpath d='M20 5l3 10h10l-8 6 3 10-8-6-8 6 3-10-8-6h10z'/%3E%3C/g%3E%3C/svg%3E");opacity:.6}
+  .header h1{font-size:40px;font-weight:900;letter-spacing:10px;position:relative;z-index:1;text-shadow:2px 2px 4px rgba(0,0,0,.5)}
+  .header .subtitle{font-size:18px;margin-top:12px;color:#fbbf24;letter-spacing:6px;position:relative;z-index:1}
+  .header .period{font-size:14px;margin-top:8px;color:#e7e5e4;letter-spacing:3px;position:relative;z-index:1}
+  .legend{display:flex;justify-content:center;gap:24px;padding:18px;background:#fff;border-bottom:2px solid var(--border);flex-wrap:wrap}
+  .legend-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-light)}
+  .legend-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0}
+  .container{max-width:1400px;margin:0 auto;padding:20px}
+  .section-title{text-align:center;padding:30px 20px 20px;font-size:28px;font-weight:bold;letter-spacing:6px;position:relative}
+  .section-title.early{color:var(--early-color)}.section-title.late{color:var(--late-color)}
+  .section-title::after{content:'';display:block;width:80px;height:3px;margin:12px auto 0}
+  .section-title.early::after{background:var(--early-color)}.section-title.late::after{background:var(--late-color)}
+  .timeline{position:relative;padding:20px 0}
+  .timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:4px;transform:translateX(-50%);z-index:0}
+  .timeline.early::before{background:var(--early-color)}.timeline.late::before{background:var(--late-color)}
+  .timeline-entry{display:flex;align-items:flex-start;position:relative;margin-bottom:20px}
+  .entry-content{display:flex;width:100%;align-items:flex-start}.entry-left,.entry-right{width:48%;padding:0 15px}
+  .entry-center{width:4%;display:flex;justify-content:center;position:relative;z-index:1}
+  .year-marker{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold;color:#fff;flex-shrink:0;z-index:2}
+  .early .year-marker{background:var(--early-color)}.late .year-marker{background:var(--late-color)}
+  .emperor-card{background:var(--card-bg);border-radius:12px;padding:20px;box-shadow:0 4px 20px rgba(0,0,0,.08);border-left:5px solid;position:relative;transition:transform .3s,box-shadow .3s}
+  .emperor-card:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,.15)}
+  .early .emperor-card{border-left-color:var(--early-color)}.late .emperor-card{border-left-color:var(--late-color)}
+  .emperor-card .order{position:absolute;top:-10px;right:15px;background:var(--highlight);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold}
+  .emperor-name{font-size:20px;font-weight:bold;margin-bottom:2px}
+  .emperor-latin{font-size:12px;color:var(--text-light);font-style:italic;margin-bottom:8px}
+  .emperor-meta{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;margin:10px 0;font-size:12px}
+  .meta-item{display:flex;align-items:center;gap:4px}.meta-label{color:var(--text-light);white-space:nowrap}.meta-value{font-weight:600}
+  .life-bar{height:8px;background:#eee;border-radius:4px;margin:10px 0 5px;position:relative;overflow:visible}
+  .life-bar .reign{position:absolute;height:100%;border-radius:4px;opacity:.8}
+  .early .life-bar .reign{background:var(--early-color)}.late .life-bar .reign{background:var(--late-color)}
+  .life-bar-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--text-light)}
+  .relation-tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;margin-top:6px;border:1px solid}
+  .early .relation-tag{background:#f1f5f9;color:#7c3aed;border-color:#cbd5e1}
+  .late .relation-tag{background:#fef2f2;color:#b45309;border-color:#fca5a5}
+  .events-panel{background:var(--event-bg);border-radius:10px;padding:14px;margin-top:5px;border:1px solid #d6d3d1}
+  .events-panel h4{font-size:13px;color:var(--highlight);margin-bottom:8px}
+  .event-item{font-size:12px;padding:4px 0;border-bottom:1px dashed #d6d3d1;display:flex;gap:6px}
+  .event-item:last-child{border-bottom:none}
+  .event-year{color:var(--highlight);font-weight:bold;white-space:nowrap;min-width:52px}
+  .ministers-panel{background:var(--minister-bg);border-radius:10px;padding:14px;margin-top:8px;border:1px solid #fcd34d}
+  .ministers-panel h4{font-size:13px;color:#92400e;margin-bottom:8px}
+  .minister-list{display:flex;flex-wrap:wrap;gap:5px}
+  .minister-tag{font-size:11px;padding:3px 8px;background:#fef9ee;color:#92400e;border-radius:12px;border:1px solid #fcd34d}
+  .minister-tag.negative{background:#fde8e8;color:#b91c1c;border-color:#f0b8b8}
+  .family-tree-section,.lifecycle-section{margin:40px 0;padding:30px;background:#fff;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.06)}
+  .family-tree-section h2,.lifecycle-section h2{text-align:center;font-size:24px;color:var(--text);margin-bottom:10px;letter-spacing:4px}
+  .lifecycle-section .note{text-align:center;font-size:12px;color:var(--text-light);margin-bottom:20px}
+  .tree-container{overflow-x:auto;padding:20px 0}
+  .gantt-container{overflow-x:auto;padding:10px 0}.gantt-chart{min-width:800px}
+  .gantt-row{display:flex;align-items:center;height:32px;margin:2px 0}
+  .gantt-label{width:140px;font-size:12px;font-weight:600;text-align:right;padding-right:12px;flex-shrink:0;white-space:nowrap}
+  .gantt-bar-area{flex:1;position:relative;height:100%}
+  .gantt-bar{position:absolute;height:10px;top:50%;transform:translateY(-50%);border-radius:5px;opacity:.3;cursor:pointer}
+  .gantt-bar.reign-bar{height:20px;opacity:.85;z-index:1}
+  .gantt-bar:hover{opacity:1;filter:brightness(1.1)}
+  .gantt-bar .tooltip{display:none;position:absolute;bottom:calc(100% + 5px);left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:4px 8px;border-radius:4px;font-size:11px;white-space:nowrap;z-index:10}
+  .gantt-bar:hover .tooltip{display:block}
+  .gantt-header{display:flex;align-items:center;height:30px;border-bottom:2px solid var(--border);margin-bottom:10px}
+  .gantt-year-tick{position:absolute;font-size:10px;color:var(--text-light);transform:translateX(-50%);top:0}
+  .overview-stats{display:flex;justify-content:center;gap:28px;padding:20px;flex-wrap:wrap}
+  .stat-box{text-align:center;padding:15px 22px;background:#fff;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.06);min-width:110px}
+  .stat-number{font-size:26px;font-weight:bold;color:var(--highlight)}
+  .stat-desc{font-size:12px;color:var(--text-light);margin-top:4px}
+  .footer{text-align:center;padding:30px;color:var(--text-light);font-size:13px;border-top:2px solid var(--border);margin-top:40px}
+  .note-box{max-width:900px;margin:0 auto 24px;padding:14px 18px;background:#fff;border:1px dashed #d6d3d1;border-radius:10px;font-size:13px;color:#57534e;line-height:1.8}
+  @media(max-width:900px){.entry-content{flex-direction:column!important;align-items:center}.entry-left,.entry-right{width:100%;padding:10px 0}.entry-center{width:100%;justify-content:center;margin:10px 0}.timeline::before{display:none}.header h1{font-size:28px;letter-spacing:4px}}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>十六国世系简表</h1>
+  <div class="subtitle">五 胡 十 六 国</div>
+  <div class="period">304年 — 439年 · 与东晋并立 · 北魏统一北方后结束</div>
+</div>
+<div class="legend"><div class="legend-item"><div class="legend-dot" style="background:#7c3aed"></div><span>匈奴/羯/氐/羌/鲜卑</span></div><div class="legend-item"><div class="legend-dot" style="background:#b45309"></div><span>河西诸凉</span></div><div class="legend-item"><div class="legend-dot" style="background:#7f1d1d"></div><span>重大事件</span></div></div>
+<div class="overview-stats"><div class="stat-box"><div class="stat-number">135</div><div class="stat-desc">约略年数</div></div><div class="stat-box"><div class="stat-number">16</div><div class="stat-desc">主要政权</div></div><div class="stat-box"><div class="stat-number">304</div><div class="stat-desc">刘渊建汉</div></div><div class="stat-box"><div class="stat-number">439</div><div class="stat-desc">北魏灭北凉</div></div></div>
+<div class="container">
+<div class="lifecycle-section">
+  <h2>君主生卒与在位时间对照图</h2>
+  <div class="note">十六国君主极多，图中只收开国或影响最大的几位。</div>
+  <div class="gantt-container"><div class="gantt-chart" id="ganttChart"></div></div>
+</div>
+<div class="section-title early">中 原 与 东 北</div><div style="text-align:center;color:#999;font-size:13px;margin-bottom:20px;">汉赵 · 后赵 · 前燕 · 前秦 · 后燕 · 后秦</div><div class="note-box">永嘉之后，匈奴、羯、鲜卑、氐、羌在北方建号。苻坚一度统一北方，淝水战败后再次分裂。</div><div class="timeline early>  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">1</div>
+        <div class="emperor-name">刘渊（汉/前赵）</div>
+        <div class="emperor-latin">Liu Yuan</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">251-310（59岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">304-310</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:89.8%;width:10.2%"></div></div>
+        <div class="life-bar-labels"><span>251</span><span>304 在位</span><span>310</span></div>
+        <div class="relation-tag">匈奴 · 十六国序幕</div>
+      </div>
+      <div class="ministers-panel"><h4>重要人物</h4><div class="minister-list"><span class="minister-tag">刘聪</span><span class="minister-tag">王弥</span></div></div>
+    </div>
+    <div class="entry-center"><div class="year-marker">304</div></div>
+    <div class="entry-right"><div class="events-panel"><h4>重大事件</h4><div class="event-item"><span class="event-year">304</span><span>于左国城称汉王，永嘉之乱的源头之一</span></div><div class="event-item"><span class="event-year">308</span><span>称帝，都平阳</span></div></div></div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left"><div class="events-panel"><h4>重大事件</h4><div class="event-item"><span class="event-year">319</span><span>称赵王</span></div><div class="event-item"><span class="event-year">329</span><span>灭前赵</span></div><div class="event-item"><span class="event-year">333</span><span>卒，从子石虎继</span></div></div></div>
+    <div class="entry-center"><div class="year-marker">319</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">2</div>
+        <div class="emperor-name">石勒（后赵）</div>
+        <div class="emperor-latin">Shi Le</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">274-333（59岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">319-333</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:76.3%;width:23.7%"></div></div>
+        <div class="life-bar-labels"><span>274</span><span>319 在位</span><span>333</span></div>
+        <div class="relation-tag">羯 · 以军功立国</div>
+      </div>
+      <div class="ministers-panel"><h4>重要人物</h4><div class="minister-list"><span class="minister-tag">张宾</span><span class="minister-tag">石虎</span></div></div>
+    </div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">3</div>
+        <div class="emperor-name">慕容皝（前燕）</div>
+        <div class="emperor-latin">Murong Huang</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">297-348（51岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">337-348</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:78.4%;width:21.6%"></div></div>
+        <div class="life-bar-labels"><span>297</span><span>337 在位</span><span>348</span></div>
+        <div class="relation-tag">鲜卑慕容 · 龙城</div>
+      </div>
+      <div class="ministers-panel"><h4>重要人物</h4><div class="minister-list"><span class="minister-tag">慕容儁</span></div></div>
+    </div>
+    <div class="entry-center"><div class="year-marker">337</div></div>
+    <div class="entry-right"><div class="events-panel"><h4>重大事件</h4><div class="event-item"><span class="event-year">337</span><span>称燕王</span></div><div class="event-item"><span class="event-year">342</span><span>迁龙城</span></div></div></div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left"><div class="events-panel"><h4>重大事件</h4><div class="event-item"><span class="event-year">357</span><span>杀苻生自立</span></div><div class="event-item"><span class="event-year">370-376</span><span>灭燕、凉，北方暂统</span></div><div class="event-item"><span class="event-year">383</span><span>淝水之战大败于东晋</span></div></div></div>
+    <div class="entry-center"><div class="year-marker">357</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">4</div>
+        <div class="emperor-name">苻坚（前秦）</div>
+        <div class="emperor-latin">Fu Jian</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">338-385（47岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">357-385</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:40.4%;width:59.6%"></div></div>
+        <div class="life-bar-labels"><span>338</span><span>357 在位</span><span>385</span></div>
+        <div class="relation-tag">氐 · 统一北方 · 淝水之败</div>
+      </div>
+      <div class="ministers-panel"><h4>重要人物</h4><div class="minister-list"><span class="minister-tag">王猛</span><span class="minister-tag">慕容垂</span><span class="minister-tag">谢安</span></div></div>
+    </div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">5</div>
+        <div class="emperor-name">慕容垂（后燕）</div>
+        <div class="emperor-latin">Murong Chui</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">326-396（70岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">384-396</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:82.9%;width:17.1%"></div></div>
+        <div class="life-bar-labels"><span>326</span><span>384 在位</span><span>396</span></div>
+        <div class="relation-tag">淝水后复燕</div>
+      </div>
+      <div class="ministers-panel"><h4>重要人物</h4><div class="minister-list"><span class="minister-tag">慕容宝</span></div></div>
+    </div>
+    <div class="entry-center"><div class="year-marker">384</div></div>
+    <div class="entry-right"><div class="events-panel"><h4>重大事件</h4><div class="event-item"><span class="event-year">384</span><span>于荥阳称燕王</span></div><div class="event-item"><span class="event-year">396</span><span>攻北魏，病卒</span></div></div></div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left"><div class="events-panel"><h4>重大事件</h4><div class="event-item"><span class="event-year">384</span><span>称万年秦王</span></div><div class="event-item"><span class="event-year">385</span><span>缢杀苻坚</span></div></div></div>
+    <div class="entry-center"><div class="year-marker">384</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">6</div>
+        <div class="emperor-name">姚苌（后秦）</div>
+        <div class="emperor-latin">Yao Chang</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">330-393（63岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">384-393</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:85.7%;width:14.3%"></div></div>
+        <div class="life-bar-labels"><span>330</span><span>384 在位</span><span>393</span></div>
+        <div class="relation-tag">羌 · 杀苻坚</div>
+      </div>
+      <div class="ministers-panel"><h4>重要人物</h4><div class="minister-list"><span class="minister-tag">姚兴</span></div></div>
+    </div>
+  </div></div>
+</div><div class="section-title late">河 西 与 夏 燕</div><div style="text-align:center;color:#999;font-size:13px;margin-bottom:20px;">后凉 · 南凉 · 北凉 · 西凉 · 胡夏 · 北燕</div><div class="note-box">河西走廊同时有数个凉国。439 北魏太武帝灭北凉，十六国时代结束，进入北朝。</div><div class="timeline late>  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">7</div>
+        <div class="emperor-name">吕光（后凉）</div>
+        <div class="emperor-latin">Lü Guang</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">337-399（62岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">386-399</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:79.0%;width:21.0%"></div></div>
+        <div class="life-bar-labels"><span>337</span><span>386 在位</span><span>399</span></div>
+        <div class="relation-tag">氐 · 河西</div>
+      </div>
+      
+    </div>
+    <div class="entry-center"><div class="year-marker">386</div></div>
+    <div class="entry-right"><div class="events-panel"><h4>重大事件</h4><div class="event-item"><span class="event-year">386</span><span>据姑臧称酒泉公，后称天王</span></div></div></div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left"><div class="events-panel"><h4>重大事件</h4><div class="event-item"><span class="event-year">397</span><span>称西平王</span></div></div></div>
+    <div class="entry-center"><div class="year-marker">397</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">8</div>
+        <div class="emperor-name">秃发乌孤（南凉）</div>
+        <div class="emperor-latin">Tufa Wugu</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">？-399</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">397-399</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:70%;width:30%"></div></div>
+        <div class="life-bar-labels"><span>？</span><span>397 在位</span><span>399</span></div>
+        <div class="relation-tag">鲜卑秃发 · 青海</div>
+      </div>
+      
+    </div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">9</div>
+        <div class="emperor-name">沮渠蒙逊（北凉）</div>
+        <div class="emperor-latin">Juqu Mengxun</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">368-433（65岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">401-433</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:50.8%;width:49.2%"></div></div>
+        <div class="life-bar-labels"><span>368</span><span>401 在位</span><span>433</span></div>
+        <div class="relation-tag">卢水胡 · 十六国最晚亡者之一</div>
+      </div>
+      <div class="ministers-panel"><h4>重要人物</h4><div class="minister-list"><span class="minister-tag">沮渠牧犍</span></div></div>
+    </div>
+    <div class="entry-center"><div class="year-marker">401</div></div>
+    <div class="entry-right"><div class="events-panel"><h4>重大事件</h4><div class="event-item"><span class="event-year">401</span><span>杀段业，据张掖</span></div><div class="event-item"><span class="event-year">439</span><span>其子牧犍降北魏，十六国结束</span></div></div></div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left"><div class="events-panel"><h4>重大事件</h4><div class="event-item"><span class="event-year">400</span><span>于敦煌称凉公</span></div><div class="event-item"><span class="event-year">唐</span><span>李唐自认西凉后裔</span></div></div></div>
+    <div class="entry-center"><div class="year-marker">400</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">10</div>
+        <div class="emperor-name">李暠（西凉）</div>
+        <div class="emperor-latin">Li Gao</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">351-417（66岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">400-417</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:74.2%;width:25.8%"></div></div>
+        <div class="life-bar-labels"><span>351</span><span>400 在位</span><span>417</span></div>
+        <div class="relation-tag">汉 · 唐祖所出</div>
+      </div>
+      
+    </div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left">
+      <div class="emperor-card">
+        <div class="order">11</div>
+        <div class="emperor-name">赫连勃勃（胡夏）</div>
+        <div class="emperor-latin">Helian Bobo</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">381-425（44岁）</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">407-425</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:59.1%;width:40.9%"></div></div>
+        <div class="life-bar-labels"><span>381</span><span>407 在位</span><span>425</span></div>
+        <div class="relation-tag">匈奴铁弗 · 统万城</div>
+      </div>
+      
+    </div>
+    <div class="entry-center"><div class="year-marker">407</div></div>
+    <div class="entry-right"><div class="events-panel"><h4>重大事件</h4><div class="event-item"><span class="event-year">407</span><span>称天王、大单于，国号夏</span></div><div class="event-item"><span class="event-year">413</span><span>筑统万城</span></div></div></div>
+  </div></div>
+  <div class="timeline-entry"><div class="entry-content">
+    <div class="entry-left"><div class="events-panel"><h4>重大事件</h4><div class="event-item"><span class="event-year">409</span><span>杀慕容云，称天王</span></div><div class="event-item"><span class="event-year">436</span><span>北魏灭北燕</span></div></div></div>
+    <div class="entry-center"><div class="year-marker">409</div></div>
+    <div class="entry-right">
+      <div class="emperor-card">
+        <div class="order">12</div>
+        <div class="emperor-name">冯跋（北燕）</div>
+        <div class="emperor-latin">Feng Ba</div>
+        <div class="emperor-meta">
+          <div class="meta-item"><span class="meta-label">生卒：</span><span class="meta-value">？-430</span></div>
+          <div class="meta-item"><span class="meta-label">在位：</span><span class="meta-value">409-430</span></div>
+        </div>
+        <div class="life-bar"><div class="reign" style="left:70%;width:30%"></div></div>
+        <div class="life-bar-labels"><span>？</span><span>409 在位</span><span>430</span></div>
+        <div class="relation-tag">汉 · 辽东</div>
+      </div>
+      
+    </div>
+  </div></div>
+</div>
+<div class="family-tree-section">
+  <h2>十六国分合</h2>
+  <div class="tree-container">
+<svg viewBox="0 0 1100 300" width="1100" height="300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1100" height="300" rx="12" fill="#f5f3ff"/>
+  <text x="550" y="32" text-anchor="middle" font-size="16" fill="#7c3aed" font-weight="bold" font-family="PingFang SC,serif">刘渊建汉 → 石勒后赵 → 苻坚暂统北方 → 淝水后再分裂 → 北魏灭北凉</text>
+  <text x="550" y="70" text-anchor="middle" fill="#57534e" font-size="13" font-family="PingFang SC,serif">成汉 · 汉/前赵 · 后赵 · 前凉 · 前燕 · 前秦 · 后秦 · 后燕 · 西秦 · 后凉 · 南凉 · 南燕 · 西凉 · 北凉 · 夏 · 北燕</text>
+  <text x="550" y="140" text-anchor="middle" fill="#57534e" font-size="12" font-family="PingFang SC,serif">与东晋（317-420）同时。南方是门阀与淝水，北方是胡汉政权迅速兴灭。</text>
+  <text x="550" y="168" text-anchor="middle" fill="#57534e" font-size="12" font-family="PingFang SC,serif">前秦统一是十六国里唯一接近「北中国一统」的时刻，随淝水崩溃。</text>
+</svg>
+</div>
+</div>
+</div>
+<div class="footer">
+  <p>十六国与东晋并立。北魏太武帝太延五年（439）灭北凉，北方再统一，史称北朝开始。</p><p style='margin-top:8px;'>数据来源：《晋书·载记》《魏书》 · 仅供学习参考</p>
+  <p style="margin-top:8px;"><a href="index.html" style="color:#78716c">← 返回王朝目录</a></p>
+</div>
+
+<script>
+(function(){
+  const emperors = [{ name:'刘渊（汉/前赵）', birth:251, death:310, reigns:[{s:304,e:310}], type:'early' },{ name:'石勒（后赵）', birth:274, death:333, reigns:[{s:319,e:333}], type:'early' },{ name:'慕容皝（前燕）', birth:297, death:348, reigns:[{s:337,e:348}], type:'early' },{ name:'苻坚（前秦）', birth:338, death:385, reigns:[{s:357,e:385}], type:'early' },{ name:'慕容垂（后燕）', birth:326, death:396, reigns:[{s:384,e:396}], type:'early' },{ name:'姚苌（后秦）', birth:330, death:393, reigns:[{s:384,e:393}], type:'early' },{ name:'吕光（后凉）', birth:337, death:399, reigns:[{s:386,e:399}], type:'late' },{ name:'秃发乌孤（南凉）', birth:397, death:399, reigns:[{s:397,e:399}], type:'late' },{ name:'沮渠蒙逊（北凉）', birth:368, death:433, reigns:[{s:401,e:433}], type:'late' },{ name:'李暠（西凉）', birth:351, death:417, reigns:[{s:400,e:417}], type:'late' },{ name:'赫连勃勃（胡夏）', birth:381, death:425, reigns:[{s:407,e:425}], type:'late' },{ name:'冯跋（北燕）', birth:409, death:430, reigns:[{s:409,e:430}], type:'late' }];
+  const minYear=250, maxYear=440, totalYears=maxYear-minYear;
+  const fmtY = y => y<0 ? '前'+(-y) : String(y);
+  const colors = {early:'#7c3aed',late:'#b45309'};
+  const container = document.getElementById('ganttChart');
+  if (!container) return;
+  let headerHTML = '<div class="gantt-header"><div class="gantt-label" style="width:140px">年份</div><div class="gantt-bar-area" style="position:relative;height:30px;">';
+  [250,290,330,370,410].forEach(function(y){
+    headerHTML += '<span class="gantt-year-tick" style="left:'+(((y-minYear)/totalYears)*100)+'%">'+fmtY(y)+'</span>';
+  });
+  headerHTML += '</div></div>';
+  let bodyHTML = '<div class="gantt-body">';
+  emperors.forEach(function(emp){
+    const c = colors[emp.type] || colors.early;
+    const ll = ((emp.birth-minYear)/totalYears)*100;
+    const lw = Math.max(((emp.death-emp.birth)/totalYears)*100, 0.4);
+    let rb = '';
+    emp.reigns.forEach(function(r){
+      const rl = ((r.s-minYear)/totalYears)*100;
+      const rw = Math.max(((r.e-r.s)/totalYears)*100, 0.4);
+      rb += '<div class="gantt-bar reign-bar" style="left:'+rl+'%;width:'+rw+'%;background:'+c+';"><div class="tooltip">在位：'+fmtY(r.s)+'-'+fmtY(r.e)+'</div></div>';
+    });
+    bodyHTML += '<div class="gantt-row"><div class="gantt-label" style="color:'+c+';width:140px">'+emp.name+'</div><div class="gantt-bar-area"><div class="gantt-bar" style="left:'+ll+'%;width:'+lw+'%;background:'+c+';"><div class="tooltip">生卒：'+fmtY(emp.birth)+'-'+fmtY(emp.death)+'</div></div>'+rb+'</div></div>';
+  });
+  container.innerHTML = headerHTML + bodyHTML;
+})();
+</script>
+
+</body>
+</html>
