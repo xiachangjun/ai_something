@@ -16,6 +16,7 @@
   --yellow: #ffcc00;
   --blue: #3366ff;
   --green: #33cc33;
+  --orange: #ff7a18;
   --white: #ffffff;
   --font: "ZCOOL KuaiLe", "PingFang SC", "Hiragino Sans GB", sans-serif;
   --display: "Bangers", "ZCOOL KuaiLe", sans-serif;
@@ -165,7 +166,7 @@ h1 {
 
 .board {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 22px 28px;
   margin: 8px 0 22px;
   padding: 10px 4px 18px;
@@ -196,11 +197,12 @@ h1 {
 
 .bubble.climb { background: var(--yellow); color: var(--ink); }
 .bubble.cardio { background: var(--blue); color: var(--white); }
+.bubble.strength { background: var(--orange); color: var(--ink); }
 
 .bubble b {
   display: block;
   font-family: var(--display);
-  font-size: clamp(5.2rem, 16vw, 8.6rem);
+  font-size: clamp(3.4rem, 10vw, 7.2rem);
   font-weight: 900;
   line-height: 0.78;
   letter-spacing: 0.02em;
@@ -267,6 +269,7 @@ h1 {
 }
 .seg-opt.incline:has(input:checked) { background: var(--blue); color: var(--white); }
 .seg-opt.elliptical:has(input:checked) { background: var(--green); color: var(--ink); }
+.seg-opt.strength:has(input:checked) { background: var(--orange); color: var(--ink); }
 
 .measure {
   display: flex;
@@ -313,6 +316,7 @@ h1 {
 .chip.climb { background: var(--yellow); }
 .chip.incline { background: var(--blue); color: var(--white); }
 .chip.elliptical { background: var(--green); }
+.chip.strength { background: var(--orange); }
 .chip.is-editing { outline: 4px solid var(--ink); outline-offset: 2px; }
 .del { padding: 8px 12px; background: var(--white); }
 .del.is-armed { background: var(--red); }
@@ -395,7 +399,7 @@ h1 {
 
 .pair {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
   margin: 8px 0 10px;
 }
@@ -406,6 +410,7 @@ h1 {
 }
 .pair .climb { background: var(--yellow); }
 .pair .cardio { background: var(--blue); color: var(--white); }
+.pair .strength { background: var(--orange); color: var(--ink); }
 .pair b {
   display: block;
   font-family: var(--display);
@@ -457,10 +462,13 @@ h1 {
 .mark.climb { color: var(--ink); }
 .mark.incline { color: var(--blue); }
 .mark.elliptical { color: #146614; }
+.mark.strength { color: #b34700; }
 
-#climbFields { display: none; }
-body:has(#kindClimb:checked) #cardioFields { display: none; }
-body:has(#kindClimb:checked) #climbFields { display: block; }
+#countFields { display: none; }
+body:has(#kindClimb:checked) #cardioFields,
+body:has(#kindStrength:checked) #cardioFields { display: none; }
+body:has(#kindClimb:checked) #countFields,
+body:has(#kindStrength:checked) #countFields { display: block; }
 
 .toast {
   position: fixed;
@@ -483,7 +491,7 @@ body:has(#kindClimb:checked) #climbFields { display: block; }
   .year { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 @media (max-width: 700px) {
-  .board, .form-grid { grid-template-columns: 1fr; }
+  .form-grid { grid-template-columns: 1fr; }
   .year { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .year-row {
     grid-template-columns: 1fr 1fr;
@@ -547,6 +555,10 @@ body:has(#kindClimb:checked) #climbFields { display: block; }
                 <input type="radio" name="kind" id="kindClimb" value="climb">
                 <span>攀岩</span>
               </label>
+              <label class="seg-opt strength">
+                <input type="radio" name="kind" id="kindStrength" value="strength">
+                <span>力量</span>
+              </label>
             </div>
           </div>
           <div class="span-2" id="cardioFields">
@@ -570,7 +582,7 @@ body:has(#kindClimb:checked) #climbFields { display: block; }
               </label>
             </div>
           </div>
-          <div class="span-2" id="climbFields">
+          <div class="span-2" id="countFields">
             <label class="field" style="max-width:220px">
               <span>次数</span>
               <input class="px" id="countInput" type="number" inputmode="numeric" min="1" max="99" step="1" value="1">
@@ -698,9 +710,10 @@ body:has(#kindClimb:checked) #climbFields { display: block; }
   function clearError() { formError.textContent = ''; }
 
   function summarize(list) {
-    var climb = 0, sessions = 0, minutes = 0, incline = 0, elliptical = 0;
+    var climb = 0, sessions = 0, minutes = 0, incline = 0, elliptical = 0, strength = 0;
     list.forEach(function (entry) {
       if (entry.kind === 'climb') climb += entry.count;
+      else if (entry.kind === 'strength') strength += entry.count;
       else {
         sessions += 1;
         minutes += entry.minutes;
@@ -708,7 +721,7 @@ body:has(#kindClimb:checked) #climbFields { display: block; }
         else elliptical += entry.minutes;
       }
     });
-    return { climb: climb, sessions: sessions, minutes: minutes, incline: incline, elliptical: elliptical };
+    return { climb: climb, sessions: sessions, minutes: minutes, incline: incline, elliptical: elliptical, strength: strength };
   }
   function forYear(year) {
     return entries.filter(function (entry) { return Number(entry.date.slice(0, 4)) === year; });
@@ -732,7 +745,7 @@ body:has(#kindClimb:checked) #climbFields { display: block; }
     var stats = summarize(forYear(viewYear()));
     var board = document.getElementById('board');
     board.replaceChildren();
-    [['climb', '攀岩', stats.climb], ['cardio', '有氧', stats.sessions]].forEach(function (item) {
+    [['climb', '攀岩', stats.climb], ['cardio', '有氧', stats.sessions], ['strength', '力量', stats.strength]].forEach(function (item) {
       var bubble = document.createElement('p');
       bubble.className = 'bubble ' + item[0];
       var num = document.createElement('b');
@@ -760,6 +773,7 @@ body:has(#kindClimb:checked) #climbFields { display: block; }
     if (!list.length) return text;
     var stats = summarize(list);
     if (stats.climb) text += ' 攀' + stats.climb;
+    if (stats.strength) text += ' 力' + stats.strength;
     if (stats.incline) text += ' 坡' + stats.incline;
     if (stats.elliptical) text += ' 椭' + stats.elliptical;
     return text;
@@ -798,11 +812,11 @@ body:has(#kindClimb:checked) #climbFields { display: block; }
       article.setAttribute('aria-expanded', 'true');
     } else {
       article.setAttribute('aria-expanded', 'false');
-      article.setAttribute('aria-label', MONTHS[month] + (isNow ? ' 本月' : '') + ' 攀' + stats.climb + ' 氧' + stats.sessions);
+      article.setAttribute('aria-label', MONTHS[month] + (isNow ? ' 本月' : '') + ' 攀' + stats.climb + ' 氧' + stats.sessions + ' 力' + stats.strength);
     }
     var pair = document.createElement('div');
     pair.className = 'pair';
-    [['climb', '攀', stats.climb], ['cardio', '氧', stats.sessions]].forEach(function (item) {
+    [['climb', '攀', stats.climb], ['cardio', '氧', stats.sessions], ['strength', '力', stats.strength]].forEach(function (item) {
       var box = document.createElement('div');
       box.className = item[0];
       var num = document.createElement('b');
@@ -855,6 +869,12 @@ body:has(#kindClimb:checked) #climbFields { display: block; }
         climbMark.textContent = '攀' + dayStats.climb;
         marks.appendChild(climbMark);
       }
+      if (dayStats.strength) {
+        var strengthMark = document.createElement('span');
+        strengthMark.className = 'mark strength';
+        strengthMark.textContent = '力' + dayStats.strength;
+        marks.appendChild(strengthMark);
+      }
       if (dayStats.incline) {
         var inclineMark = document.createElement('span');
         inclineMark.className = 'mark incline';
@@ -877,6 +897,7 @@ body:has(#kindClimb:checked) #climbFields { display: block; }
 
   function entryName(entry) {
     if (entry.kind === 'climb') return '攀岩 ' + entry.count;
+    if (entry.kind === 'strength') return '力量 ' + entry.count;
     return (entry.machine === 'incline' ? '爬坡 ' : '椭圆 ') + entry.minutes;
   }
 
@@ -887,7 +908,7 @@ body:has(#kindClimb:checked) #climbFields { display: block; }
     sum.replaceChildren();
     if (list.length) {
       var stats = summarize(list);
-      sum.textContent = '攀 ' + stats.climb + ' · 氧 ' + stats.sessions;
+      sum.textContent = '攀 ' + stats.climb + ' · 氧 ' + stats.sessions + ' · 力 ' + stats.strength;
     } else {
       sum.textContent = '';
     }
@@ -898,7 +919,7 @@ body:has(#kindClimb:checked) #climbFields { display: block; }
       row.className = 'entry';
       var chip = document.createElement('button');
       chip.type = 'button';
-      chip.className = 'chip ' + (entry.kind === 'climb' ? 'climb' : entry.machine);
+      chip.className = 'chip ' + (entry.kind === 'climb' ? 'climb' : entry.kind === 'strength' ? 'strength' : entry.machine);
       if (entry.id === editingId) chip.classList.add('is-editing');
       chip.dataset.edit = entry.id;
       chip.textContent = entryName(entry);
@@ -957,6 +978,9 @@ body:has(#kindClimb:checked) #climbFields { display: block; }
     if (entry.kind === 'climb') {
       document.getElementById('kindClimb').checked = true;
       countInput.value = String(entry.count);
+    } else if (entry.kind === 'strength') {
+      document.getElementById('kindStrength').checked = true;
+      countInput.value = String(entry.count);
     } else {
       document.getElementById('kindCardio').checked = true;
       document.getElementById(entry.machine === 'elliptical' ? 'machineElliptical' : 'machineIncline').checked = true;
@@ -964,7 +988,7 @@ body:has(#kindClimb:checked) #climbFields { display: block; }
     }
     clearError();
     render();
-    (entry.kind === 'climb' ? countInput : minutesInput).focus();
+    (entry.kind === 'cardio' ? minutesInput : countInput).focus();
   }
 
   async function removeEntry(id) {
@@ -1050,7 +1074,7 @@ body:has(#kindClimb:checked) #climbFields { display: block; }
     }
     var kind = currentKind();
     var payload = { date: value, kind: kind };
-    if (kind === 'climb') {
+    if (kind === 'climb' || kind === 'strength') {
       var count = readInt(countInput, 99);
       if (count == null) {
         formError.textContent = '次数 1-99';

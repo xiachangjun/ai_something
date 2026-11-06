@@ -25,7 +25,20 @@ const db = new Database(dbPath);
 
 db.exec('CREATE TABLE IF NOT EXISTS birthdays (id TEXT PRIMARY KEY, name TEXT NOT NULL, type TEXT NOT NULL CHECK(type IN (\'solar\', \'lunar\')), date TEXT NOT NULL, lunarYear INTEGER, lunarMonth INTEGER, lunarDay INTEGER, createdAt INTEGER NOT NULL)');
 db.exec('CREATE TABLE IF NOT EXISTS login_attempts (ip TEXT NOT NULL, attempt_time INTEGER NOT NULL, PRIMARY KEY (ip))');
-db.exec('CREATE TABLE IF NOT EXISTS fitness_logs (id TEXT PRIMARY KEY, date TEXT NOT NULL, kind TEXT NOT NULL CHECK(kind IN (\'cardio\', \'climb\')), machine TEXT CHECK(machine IN (\'incline\', \'elliptical\')), minutes INTEGER, count INTEGER, createdAt INTEGER NOT NULL)');
+function ensureFitnessLogs() {
+  var schema = 'CREATE TABLE fitness_logs (id TEXT PRIMARY KEY, date TEXT NOT NULL, kind TEXT NOT NULL CHECK(kind IN (\'cardio\', \'climb\', \'strength\')), machine TEXT CHECK(machine IS NULL OR machine IN (\'incline\', \'elliptical\')), minutes INTEGER, count INTEGER, createdAt INTEGER NOT NULL)';
+  db.exec(schema.replace('CREATE TABLE fitness_logs', 'CREATE TABLE IF NOT EXISTS fitness_logs'));
+  var info = db.prepare("SELECT sql FROM sqlite_master WHERE type='table' AND name='fitness_logs'").get();
+  if (info && info.sql.indexOf("'strength'") !== -1) return;
+  var migrate = db.transaction(function () {
+    db.exec(schema.replace('CREATE TABLE fitness_logs', 'CREATE TABLE fitness_logs_new'));
+    db.exec('INSERT INTO fitness_logs_new (id, date, kind, machine, minutes, count, createdAt) SELECT id, date, kind, machine, minutes, count, createdAt FROM fitness_logs');
+    db.exec('DROP TABLE fitness_logs');
+    db.exec('ALTER TABLE fitness_logs_new RENAME TO fitness_logs');
+  });
+  migrate();
+}
+ensureFitnessLogs();
 
 function isLocked(ip) {
   var row = db.prepare('SELECT attempt_time FROM login_attempts WHERE ip = ?').get(ip);
@@ -151,10 +164,10 @@ function isIsoDate(value) {
 
 function readFitness(body) {
   if (!body || !isIsoDate(body.date)) return null;
-  if (body.kind === 'climb') {
+  if (body.kind === 'climb' || body.kind === 'strength') {
     var count = Number(body.count);
     if (!Number.isInteger(count) || count < 1 || count > 99) return null;
-    return { date: body.date, kind: 'climb', machine: null, minutes: null, count: count };
+    return { date: body.date, kind: body.kind, machine: null, minutes: null, count: count };
   }
   if (body.kind === 'cardio' && (body.machine === 'incline' || body.machine === 'elliptical')) {
     var minutes = Number(body.minutes);
