@@ -37,6 +37,15 @@
         ],
         "createdAt": "2026-11-03T08:50:14.542Z",
         "reason": "Agent: doodle paper #fffef5 is the homepage stylekit ground, reused on 生日记录 chrome"
+      },
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          "健身打卡.html"
+        ],
+        "createdAt": "2026-11-06T06:18:38.750Z",
+        "reason": "Agent: doodle paper #fffef0 is the homepage stylekit ground, reused on 健身打卡 chrome"
       }
     ]
   }
