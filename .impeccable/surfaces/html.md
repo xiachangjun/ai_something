@@ -13,7 +13,7 @@ OWN-WORLD: The toolshed pixel system already shipping in index.html: ground #1a1
 
 STORY: The user reads this year's climbing counts and aerobic time across twelve months, selects a day, and records either a climbing count or incline/elliptical minutes. Totals are the sum of what they typed, shown on the year line and again on each month.
 
-FIRST VIEWPORT: The title 健身打卡, a year switcher, and the year's totals in that same heading line. Under it, a log strip bound to the selected day, with 记下这一天 as the primary action. The first months of the wall follow immediately.
+FIRST VIEWPORT: The title Gym Log, a year switcher, and the year's totals in that same heading line. Under it, a log strip bound to the selected day, with Save as the primary action. The first months of the wall follow immediately. Day cells put the date on the left and that day's work on the right.
 
 FORM: Year-wall calendar, the structure the brief names, position 1 of 1. seed: none (unavailable)
 
