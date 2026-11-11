@@ -799,7 +799,7 @@ body:has(#kindStrength:checked) #countFields { display: block; }
   function dayMarks(stats) {
     var lines = [];
     if (stats.climb) lines.push({ kind: 'climb', text: 'Climb ' + stats.climb });
-    if (stats.strength) lines.push({ kind: 'strength', text: 'Lift ' + stats.strength });
+    if (stats.strength) lines.push({ kind: 'strength', text: 'Strength ' + stats.strength });
     if (stats.incline) lines.push({ kind: 'incline', text: 'Incline ' + stats.incline });
     if (stats.elliptical) lines.push({ kind: 'elliptical', text: 'Ellip ' + stats.elliptical });
     return lines;
@@ -850,7 +850,7 @@ body:has(#kindStrength:checked) #countFields { display: block; }
     }
     var pair = document.createElement('div');
     pair.className = 'pair';
-    [['climb', 'Climb', stats.climb], ['cardio', 'Cardio', stats.sessions], ['strength', 'Lift', stats.strength]].forEach(function (item) {
+    [['climb', 'Climb', stats.climb], ['cardio', 'Cardio', stats.sessions], ['strength', 'Strength', stats.strength]].forEach(function (item) {
       var box = document.createElement('div');
       box.className = item[0];
       var num = document.createElement('b');
