@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>健身打卡</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bangers&family=ZCOOL+KuaiLe&display=swap">
+<title>Gym Log</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bangers&display=swap">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 [hidden] { display: none !important; }
@@ -18,8 +18,8 @@
   --green: #33cc33;
   --orange: #ff7a18;
   --white: #ffffff;
-  --font: "ZCOOL KuaiLe", "PingFang SC", "Hiragino Sans GB", sans-serif;
-  --display: "Bangers", "ZCOOL KuaiLe", sans-serif;
+  --font: "Trebuchet MS", "Gill Sans", "Avenir Next", sans-serif;
+  --display: "Bangers", "Trebuchet MS", sans-serif;
 }
 
 html { color-scheme: light; }
@@ -40,7 +40,7 @@ body::before {
   pointer-events: none;
   background-image: radial-gradient(circle, var(--ink) 1px, transparent 1px);
   background-size: 4px 4px;
-  opacity: 0.16;
+  opacity: 0.08;
   z-index: 0;
 }
 
@@ -170,7 +170,7 @@ h1 {
   gap: 22px 28px;
   margin: 8px 0 22px;
   padding: 10px 4px 18px;
-  background-image: repeating-linear-gradient(-18deg, transparent, transparent 12px, rgba(26,26,26,0.14) 12px, rgba(26,26,26,0.14) 14px);
+  background-image: repeating-linear-gradient(-18deg, transparent, transparent 12px, rgba(26,26,26,0.08) 12px, rgba(26,26,26,0.08) 14px);
 }
 
 .bubble {
@@ -418,7 +418,8 @@ h1 {
   font-weight: 900;
   line-height: 0.8;
 }
-.pair span { font-weight: 900; font-size: 1.05rem; }
+.pair span { font-weight: 900; font-size: 0.92rem; }
+.panel.is-folded .pair span { font-size: 0.78rem; }
 .panel.is-folded .month-head h2 { font-size: clamp(1.05rem, 2.6vw, 1.45rem); }
 .panel.is-folded .pair {
   flex: 1;
@@ -435,20 +436,22 @@ h1 {
 .week, .days {
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr));
-  gap: 4px;
+  gap: 6px;
 }
-.week span { text-align: center; font-weight: 900; font-size: 0.85rem; }
-.day, .day-pad { min-height: 46px; }
+.week span { text-align: left; font-weight: 900; font-size: 0.8rem; padding: 0 4px; }
+.day, .day-pad { min-height: 52px; }
 .day {
   border: 4px solid var(--ink);
   background: var(--white);
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: flex-start;
-  padding: 2px 0 3px;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 8px;
   cursor: pointer;
   font-weight: 900;
+  text-align: left;
 }
 .day:hover { background: var(--yellow); }
 .day.is-selected { background: var(--red); }
@@ -456,9 +459,29 @@ h1 {
 .day.is-selected.is-today .num,
 .day.is-selected .num,
 .day.is-selected .mark { color: var(--ink); }
-.num { font-family: var(--display); font-size: 1rem; line-height: 1; }
-.marks { min-height: 22px; display: flex; flex-direction: column; align-items: center; }
-.mark { font-size: 12px; font-weight: 900; line-height: 1.15; }
+.num {
+  font-family: var(--display);
+  font-size: 1.55rem;
+  line-height: 1;
+  flex: 0 0 auto;
+  min-width: 1.15em;
+}
+.marks {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 1px;
+}
+.mark {
+  font-size: 1rem;
+  font-weight: 900;
+  line-height: 1.15;
+  white-space: nowrap;
+}
+.cal-scroll { overflow-x: auto; padding-bottom: 4px; }
 .mark.climb { color: var(--ink); }
 .mark.incline { color: var(--blue); }
 .mark.elliptical { color: #146614; }
@@ -501,6 +524,12 @@ body:has(#kindStrength:checked) #countFields { display: block; }
   }
   .measure { flex-direction: column; align-items: stretch; }
   .page { padding: 14px 10px 36px; }
+  .week, .days {
+    gap: 4px;
+    min-width: 720px;
+  }
+  .day, .day-pad { min-height: 48px; }
+  .mark { font-size: 0.88rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -514,84 +543,84 @@ body:has(#kindStrength:checked) #countFields { display: block; }
 <div class="page">
   <section class="gate" id="gate">
     <form class="gate-box" id="gateForm">
-      <h1>健身打卡</h1>
+      <h1>Gym Log</h1>
       <label class="field">
-        <span>密码</span>
+        <span>Password</span>
         <input class="px" id="passwordInput" type="password" autocomplete="current-password" maxlength="20">
       </label>
-      <button class="btn" id="unlockBtn" type="submit">进入</button>
+      <button class="btn" id="unlockBtn" type="submit">Enter</button>
       <p class="err" id="gateError" role="alert"></p>
     </form>
   </section>
 
   <div id="app" hidden>
     <div class="top">
-      <a class="btn ink" href="index.html">返回</a>
-      <button class="btn blue" id="todayBtn" type="button">今天</button>
+      <a class="btn ink" href="index.html">Back</a>
+      <button class="btn blue" id="todayBtn" type="button">Today</button>
     </div>
-    <h1>健身打卡</h1>
+    <h1>Gym Log</h1>
 
     <div class="year-row">
-      <button class="btn" id="prevYear" type="button">上年</button>
+      <button class="btn" id="prevYear" type="button">Prev</button>
       <div class="board" id="board" aria-live="polite"></div>
-      <button class="btn" id="nextYear" type="button">下年</button>
+      <button class="btn" id="nextYear" type="button">Next</button>
     </div>
 
-    <section class="log" aria-label="记一条">
+    <section class="log" aria-label="Log a session">
       <form id="logForm" novalidate>
         <div class="form-grid">
           <label class="field">
-            <span>日期</span>
+            <span>Date</span>
             <input class="px" id="dateInput" type="date">
           </label>
           <div class="field">
-            <span id="modeLabel">类型</span>
+            <span id="modeLabel">Type</span>
             <div class="seg" role="radiogroup" aria-labelledby="modeLabel">
               <label class="seg-opt">
                 <input type="radio" name="kind" id="kindCardio" value="cardio" checked>
-                <span>有氧</span>
+                <span>Cardio</span>
               </label>
               <label class="seg-opt">
                 <input type="radio" name="kind" id="kindClimb" value="climb">
-                <span>攀岩</span>
+                <span>Climb</span>
               </label>
               <label class="seg-opt strength">
                 <input type="radio" name="kind" id="kindStrength" value="strength">
-                <span>力量</span>
+                <span>Strength</span>
               </label>
             </div>
           </div>
           <div class="span-2" id="cardioFields">
             <div class="measure">
               <div class="grow">
-                <span id="machineLabel">器械</span>
+                <span id="machineLabel">Machine</span>
                 <div class="seg" role="radiogroup" aria-labelledby="machineLabel">
                   <label class="seg-opt incline">
                     <input type="radio" name="machine" id="machineIncline" value="incline" checked>
-                    <span>爬坡</span>
+                    <span>Incline</span>
                   </label>
                   <label class="seg-opt elliptical">
                     <input type="radio" name="machine" id="machineElliptical" value="elliptical">
-                    <span>椭圆机</span>
+                    <span>Elliptical</span>
                   </label>
                 </div>
               </div>
               <label class="grow field">
-                <span>分钟</span>
+                <span>Minutes</span>
                 <input class="px" id="minutesInput" type="number" inputmode="numeric" min="1" max="300" step="1" value="30">
               </label>
             </div>
           </div>
           <div class="span-2" id="countFields">
             <label class="field" style="max-width:220px">
-              <span>次数</span>
+              <span>Count</span>
               <input class="px" id="countInput" type="number" inputmode="numeric" min="1" max="99" step="1" value="1">
             </label>
           </div>
           <p class="err span-2" id="formError" role="alert"></p>
           <div class="actions span-2">
-            <button class="btn" id="saveBtn" type="submit">记下</button>
-            <button class="btn ink" id="cancelEdit" type="button" hidden>取消</button>
+            <button class="btn" id="saveBtn" type="submit">Save</button>
+            <button class="btn ink" id="cancelEdit" type="button" hidden>Cancel</button>
           </div>
         </div>
       </form>
@@ -610,8 +639,9 @@ body:has(#kindStrength:checked) #countFields { display: block; }
 <script>
 (function () {
   var TOKEN_KEY = 'birthday_token';
-  var MONTHS = ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
-  var WEEK = ['一','二','三','四','五','六','日'];
+  var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var WEEK = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  var WEEKDAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
   var apiToken = localStorage.getItem(TOKEN_KEY) || '';
   var entries = [];
   var selected = '';
@@ -644,7 +674,7 @@ body:has(#kindStrength:checked) #countFields { display: block; }
   function viewYear() { return Number(selected.slice(0, 4)); }
   function longDate(value) {
     var d = parseISO(value);
-    return (d.getMonth() + 1) + '/' + d.getDate() + ' 周' + '日一二三四五六'[d.getDay()];
+    return WEEKDAYS[d.getDay()] + ', ' + MONTHS[d.getMonth()] + ' ' + d.getDate();
   }
 
   function toast(msg) {
@@ -686,7 +716,7 @@ body:has(#kindStrength:checked) #countFields { display: block; }
     if (res.status === 401) {
       localStorage.removeItem(TOKEN_KEY);
       apiToken = '';
-      showGate('重新进入');
+      showGate('Sign in again');
       throw new Error('unauthorized');
     }
     return res;
@@ -737,7 +767,7 @@ body:has(#kindStrength:checked) #countFields { display: block; }
 
   function syncForm() {
     if (dateInput.value !== selected) dateInput.value = selected;
-    saveBtn.textContent = editingId ? '改好' : '记下';
+    saveBtn.textContent = editingId ? 'Update' : 'Save';
     cancelEdit.hidden = !editingId;
   }
 
@@ -745,7 +775,7 @@ body:has(#kindStrength:checked) #countFields { display: block; }
     var stats = summarize(forYear(viewYear()));
     var board = document.getElementById('board');
     board.replaceChildren();
-    [['climb', '攀岩', stats.climb], ['cardio', '有氧', stats.sessions], ['strength', '力量', stats.strength]].forEach(function (item) {
+    [['climb', 'Climb', stats.climb], ['cardio', 'Cardio', stats.sessions], ['strength', 'Strength', stats.strength]].forEach(function (item) {
       var bubble = document.createElement('p');
       bubble.className = 'bubble ' + item[0];
       var num = document.createElement('b');
@@ -766,16 +796,20 @@ body:has(#kindStrength:checked) #countFields { display: block; }
     return year + '-' + pad(month + 1) + '-' + pad(day);
   }
 
+  function dayMarks(stats) {
+    var lines = [];
+    if (stats.climb) lines.push({ kind: 'climb', text: 'Climb ' + stats.climb });
+    if (stats.strength) lines.push({ kind: 'strength', text: 'Lift ' + stats.strength });
+    if (stats.incline) lines.push({ kind: 'incline', text: 'Incline ' + stats.incline });
+    if (stats.elliptical) lines.push({ kind: 'elliptical', text: 'Ellip ' + stats.elliptical });
+    return lines;
+  }
   function dayLabel(value, list) {
     var d = parseISO(value);
-    var text = (d.getMonth() + 1) + '月' + d.getDate() + '日';
-    if (value === todayISO()) text += ' 今天';
+    var text = MONTHS[d.getMonth()] + ' ' + d.getDate();
+    if (value === todayISO()) text += ' today';
     if (!list.length) return text;
-    var stats = summarize(list);
-    if (stats.climb) text += ' 攀' + stats.climb;
-    if (stats.strength) text += ' 力' + stats.strength;
-    if (stats.incline) text += ' 坡' + stats.incline;
-    if (stats.elliptical) text += ' 椭' + stats.elliptical;
+    dayMarks(summarize(list)).forEach(function (item) { text += ' ' + item.text; });
     return text;
   }
 
@@ -803,7 +837,7 @@ body:has(#kindStrength:checked) #countFields { display: block; }
     if (isNow) {
       var badge = document.createElement('span');
       badge.className = 'now';
-      badge.textContent = '本月';
+      badge.textContent = 'Now';
       head.appendChild(badge);
     }
 
@@ -812,11 +846,11 @@ body:has(#kindStrength:checked) #countFields { display: block; }
       article.setAttribute('aria-expanded', 'true');
     } else {
       article.setAttribute('aria-expanded', 'false');
-      article.setAttribute('aria-label', MONTHS[month] + (isNow ? ' 本月' : '') + ' 攀' + stats.climb + ' 氧' + stats.sessions + ' 力' + stats.strength);
+      article.setAttribute('aria-label', MONTHS[month] + (isNow ? ' now' : '') + ' Climb ' + stats.climb + ' Cardio ' + stats.sessions + ' Strength ' + stats.strength);
     }
     var pair = document.createElement('div');
     pair.className = 'pair';
-    [['climb', '攀', stats.climb], ['cardio', '氧', stats.sessions], ['strength', '力', stats.strength]].forEach(function (item) {
+    [['climb', 'Climb', stats.climb], ['cardio', 'Cardio', stats.sessions], ['strength', 'Lift', stats.strength]].forEach(function (item) {
       var box = document.createElement('div');
       box.className = item[0];
       var num = document.createElement('b');
@@ -862,43 +896,29 @@ body:has(#kindStrength:checked) #countFields { display: block; }
       num.textContent = String(i);
       var marks = document.createElement('span');
       marks.className = 'marks';
-      var dayStats = summarize(list);
-      if (dayStats.climb) {
-        var climbMark = document.createElement('span');
-        climbMark.className = 'mark climb';
-        climbMark.textContent = '攀' + dayStats.climb;
-        marks.appendChild(climbMark);
-      }
-      if (dayStats.strength) {
-        var strengthMark = document.createElement('span');
-        strengthMark.className = 'mark strength';
-        strengthMark.textContent = '力' + dayStats.strength;
-        marks.appendChild(strengthMark);
-      }
-      if (dayStats.incline) {
-        var inclineMark = document.createElement('span');
-        inclineMark.className = 'mark incline';
-        inclineMark.textContent = '坡' + dayStats.incline;
-        marks.appendChild(inclineMark);
-      }
-      if (dayStats.elliptical) {
-        var ellMark = document.createElement('span');
-        ellMark.className = 'mark elliptical';
-        ellMark.textContent = '椭' + dayStats.elliptical;
-        marks.appendChild(ellMark);
-      }
+      dayMarks(summarize(list)).forEach(function (item) {
+        var mark = document.createElement('span');
+        mark.className = 'mark ' + item.kind;
+        mark.textContent = item.text;
+        marks.appendChild(mark);
+      });
       btn.append(num, marks);
       days.appendChild(btn);
     }
     article.append(dots, stamp, head, pair);
-    if (open) article.append(week, days);
+    if (open) {
+      var cal = document.createElement('div');
+      cal.className = 'cal-scroll';
+      cal.append(week, days);
+      article.appendChild(cal);
+    }
     return article;
   }
 
   function entryName(entry) {
-    if (entry.kind === 'climb') return '攀岩 ' + entry.count;
-    if (entry.kind === 'strength') return '力量 ' + entry.count;
-    return (entry.machine === 'incline' ? '爬坡 ' : '椭圆 ') + entry.minutes;
+    if (entry.kind === 'climb') return 'Climb ' + entry.count;
+    if (entry.kind === 'strength') return 'Strength ' + entry.count;
+    return (entry.machine === 'incline' ? 'Incline ' : 'Elliptical ') + entry.minutes;
   }
 
   function renderDay() {
@@ -908,7 +928,7 @@ body:has(#kindStrength:checked) #countFields { display: block; }
     sum.replaceChildren();
     if (list.length) {
       var stats = summarize(list);
-      sum.textContent = '攀 ' + stats.climb + ' · 氧 ' + stats.sessions + ' · 力 ' + stats.strength;
+      sum.textContent = 'Climb ' + stats.climb + ' · Cardio ' + stats.sessions + ' · Strength ' + stats.strength;
     } else {
       sum.textContent = '';
     }
@@ -927,7 +947,7 @@ body:has(#kindStrength:checked) #countFields { display: block; }
       del.type = 'button';
       del.className = 'del';
       del.dataset.del = entry.id;
-      del.textContent = pendingDeleteId === entry.id ? '确定' : '删';
+      del.textContent = pendingDeleteId === entry.id ? 'Sure?' : 'Del';
       if (pendingDeleteId === entry.id) del.classList.add('is-armed');
       row.append(chip, del);
       box.appendChild(row);
@@ -935,7 +955,7 @@ body:has(#kindStrength:checked) #countFields { display: block; }
   }
 
   function render() {
-    document.getElementById('yearGrid').setAttribute('aria-label', viewYear() + '年');
+    document.getElementById('yearGrid').setAttribute('aria-label', String(viewYear()));
     renderBoard();
     var grid = document.getElementById('yearGrid');
     grid.replaceChildren();
@@ -999,12 +1019,12 @@ body:has(#kindStrength:checked) #countFields { display: block; }
     }
     var res;
     try { res = await api('/api/fitness/' + encodeURIComponent(id), { method: 'DELETE' }); }
-    catch (err) { if (err.message === 'offline') toast('连不上'); return; }
-    if (!res.ok) { toast('没删掉'); return; }
+    catch (err) { if (err.message === 'offline') toast('Offline'); return; }
+    if (!res.ok) { toast('Could not delete'); return; }
     entries = entries.filter(function (entry) { return entry.id !== id; });
     if (editingId === id) editingId = null;
     pendingDeleteId = null;
-    toast('已删');
+    toast('Deleted');
     render();
   }
 
@@ -1033,15 +1053,15 @@ body:has(#kindStrength:checked) #countFields { display: block; }
         input.value = '';
         await openApp();
       } else if (data.locked) {
-        gateError.textContent = '稍后再试';
+        gateError.textContent = 'Try later';
         input.value = '';
       } else {
-        gateError.textContent = '不对';
+        gateError.textContent = 'Wrong password';
         input.value = '';
         input.focus();
       }
     } catch (err) {
-      gateError.textContent = '连不上';
+      gateError.textContent = 'Offline';
     } finally {
       btn.disabled = false;
     }
@@ -1055,7 +1075,7 @@ body:has(#kindStrength:checked) #countFields { display: block; }
       await loadEntries();
     } catch (err) {
       if (err.message === 'unauthorized') return;
-      showGate('连不上');
+      showGate('Offline');
       return;
     }
     showApp();
@@ -1068,7 +1088,7 @@ body:has(#kindStrength:checked) #countFields { display: block; }
     clearError();
     var value = dateInput.value;
     if (!isValidDate(value)) {
-      formError.textContent = '日期无效';
+      formError.textContent = 'Bad date';
       dateInput.focus();
       return;
     }
@@ -1077,7 +1097,7 @@ body:has(#kindStrength:checked) #countFields { display: block; }
     if (kind === 'climb' || kind === 'strength') {
       var count = readInt(countInput, 99);
       if (count == null) {
-        formError.textContent = '次数 1-99';
+        formError.textContent = 'Count 1–99';
         countInput.focus();
         return;
       }
@@ -1085,7 +1105,7 @@ body:has(#kindStrength:checked) #countFields { display: block; }
     } else {
       var minutes = readInt(minutesInput, 300);
       if (minutes == null) {
-        formError.textContent = '分钟 1-300';
+        formError.textContent = 'Minutes 1–300';
         minutesInput.focus();
         return;
       }
@@ -1103,11 +1123,11 @@ body:has(#kindStrength:checked) #countFields { display: block; }
       });
     } catch (err) {
       saving = false;
-      if (err.message === 'offline') toast('连不上');
+      if (err.message === 'offline') toast('Offline');
       return;
     }
     saving = false;
-    if (!res.ok) { formError.textContent = '没记上'; return; }
+    if (!res.ok) { formError.textContent = 'Could not save'; return; }
     var row = await res.json();
     if (edited) {
       entries = entries.map(function (entry) { return entry.id === edited ? row : entry; });
@@ -1118,7 +1138,7 @@ body:has(#kindStrength:checked) #countFields { display: block; }
     pendingDeleteId = null;
     selected = row.date;
     setHash(row.date);
-    toast(edited ? '已改' : '已记');
+    toast(edited ? 'Updated' : 'Saved');
     render();
   });
 
