@@ -449,6 +449,7 @@ h1 {
   justify-content: space-between;
   gap: 8px;
   padding: 6px 8px;
+  overflow: hidden;
   cursor: pointer;
   font-weight: 900;
   text-align: left;
@@ -462,9 +463,10 @@ h1 {
 .num {
   font-family: var(--display);
   font-size: 1.55rem;
-  line-height: 1;
-  flex: 0 0 auto;
-  min-width: 1.15em;
+  line-height: 0.9;
+  flex: 0 0 1.6em;
+  width: 1.6em;
+  overflow: hidden;
 }
 .marks {
   min-width: 0;
@@ -474,14 +476,24 @@ h1 {
   align-items: flex-end;
   justify-content: center;
   gap: 1px;
+  overflow: hidden;
 }
 .mark {
   font-size: 1rem;
   font-weight: 900;
   line-height: 1.15;
   white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-.cal-scroll { overflow-x: auto; padding-bottom: 4px; }
+.cal-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  padding-bottom: 6px;
+}
 .mark.climb { color: var(--ink); }
 .mark.incline { color: var(--blue); }
 .mark.elliptical { color: #146614; }
@@ -524,12 +536,27 @@ body:has(#kindStrength:checked) #countFields { display: block; }
   }
   .measure { flex-direction: column; align-items: stretch; }
   .page { padding: 14px 10px 36px; }
-  .week, .days {
-    gap: 4px;
-    min-width: 720px;
+  .board { gap: 12px 10px; }
+  .bubble b { font-size: clamp(2.4rem, 14vw, 4.2rem); }
+  .panel.is-folded .pair div { padding: 2px 1px 4px; }
+  .panel.is-folded .pair span {
+    font-size: 0.58rem;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
   }
-  .day, .day-pad { min-height: 48px; }
-  .mark { font-size: 0.88rem; }
+  .cal-scroll {
+    margin-inline: -4px;
+    padding-inline: 4px;
+  }
+  .week, .days {
+    gap: 5px;
+    grid-template-columns: repeat(7, 9rem);
+    width: max-content;
+  }
+  .day, .day-pad { min-height: 56px; }
+  .day { gap: 6px; padding: 6px 8px; }
+  .num { font-size: 1.35rem; }
+  .mark { font-size: 0.82rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
